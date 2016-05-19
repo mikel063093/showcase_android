@@ -7,7 +7,7 @@ android {
   buildToolsVersion "23.0.3"
 
   defaultConfig {
-    applicationId "co.mikealegria"
+    applicationId "com.co.showcase"
     minSdkVersion 17
     targetSdkVersion 23
     versionCode 1
@@ -51,6 +51,8 @@ dependencies {
   compile 'gr.pantrif:easy-android-splash-screen:0.0.1'
   compile 'com.makeramen:roundedimageview:2.2.1'
 
+  //facebook
+  compile 'com.facebook.android:facebook-android-sdk:4.0.0'
 
   //retrofit  api rest web service
   compile "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"

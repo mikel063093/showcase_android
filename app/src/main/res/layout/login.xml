@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentStart="true"
+      android:layout_alignParentTop="true"
+      android:layout_marginTop="97dp"
+      android:foregroundGravity="center"
+      android:gravity="center"
+      android:orientation="vertical"
+      >
+    <ImageView
+        android:layout_width="@dimen/_128sdp"
+        android:layout_height="@dimen/_128sdp"
+        android:src="@drawable/logo"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textSize="@dimen/_13sdp"
+
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_32sdp"
+        android:gravity="center"
+        android:text="@string/eslogan"
+        android:textSize="@dimen/_14sdp"
+        />
+  </LinearLayout>
+
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/_80sdp"
+      android:layout_alignParentBottom="true"
+      android:layout_alignParentStart="true"
+      android:orientation="vertical"
+      >
+    <com.facebook.login.widget.LoginButton xmlns:fb="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/login_button"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_37sdp"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_1sdp"
+        android:gravity="center"
+        android:textColor="#fff"
+        android:textSize="16dp"
+        fb:login_text="@string/login.fb"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:orientation="horizontal"
+        >
+      <Button
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_marginRight="@dimen/_1sdp"
+          android:layout_weight="1"
+          android:text="@string/ingresar"
+          android:textSize="@dimen/_12sdp"
+
+          />
+      <Button
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_marginLeft="@dimen/_1sdp"
+          android:layout_weight="1"
+          android:text="@string/registrarse"
+          android:textSize="@dimen/_12sdp"
+
+          />
+
+    </LinearLayout>
+  </LinearLayout>
+
+</RelativeLayout>
