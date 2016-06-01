@@ -2,7 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/kelly_green"
     android:orientation="vertical"
+
     >
 
   <LinearLayout
@@ -10,7 +12,7 @@
       android:layout_height="wrap_content"
       android:layout_alignParentStart="true"
       android:layout_alignParentTop="true"
-      android:layout_marginTop="97dp"
+      android:layout_marginTop="@dimen/_97sdp"
       android:foregroundGravity="center"
       android:gravity="center"
       android:orientation="vertical"
@@ -24,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
-        android:textSize="@dimen/_13sdp"
+        android:textSize="@dimen/_14sdp"
 
         />
     <TextView
@@ -33,54 +35,57 @@
         android:layout_gravity="center"
         android:layout_marginLeft="@dimen/_10sdp"
         android:layout_marginRight="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_32sdp"
+        android:layout_marginTop="@dimen/_40sdp"
         android:gravity="center"
         android:text="@string/eslogan"
-        android:textSize="@dimen/_14sdp"
+        android:textSize="@dimen/_16sdp"
         />
   </LinearLayout>
 
 
   <LinearLayout
       android:layout_width="match_parent"
-      android:layout_height="@dimen/_80sdp"
+      android:layout_height="@dimen/_130sdp"
       android:layout_alignParentBottom="true"
-      android:layout_alignParentStart="true"
+      android:layout_marginLeft="@dimen/_18sdp"
+      android:layout_marginRight="@dimen/_18sdp"
       android:orientation="vertical"
       >
     <com.facebook.login.widget.LoginButton xmlns:fb="http://schemas.android.com/apk/res-auto"
         android:id="@+id/login_button"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_37sdp"
-        android:layout_gravity="center"
+        android:layout_height="@dimen/_53sdp"
         android:layout_marginTop="@dimen/_1sdp"
-        android:gravity="center"
         android:textColor="#fff"
         android:textSize="16dp"
         fb:login_text="@string/login.fb"
         />
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
+        android:layout_height="@dimen/_53sdp"
+        android:layout_marginBottom="@dimen/_18sdp"
+        android:layout_marginTop="@dimen/_6sdp"
         android:orientation="horizontal"
         >
       <Button
+          android:id="@+id/button2"
           android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:layout_marginRight="@dimen/_1sdp"
+          android:layout_height="@dimen/_53sdp"
           android:layout_weight="1"
+          android:background="@drawable/btn_singin_selector"
           android:text="@string/ingresar"
           android:textSize="@dimen/_12sdp"
-
+          style="@style/texto_botones_style"
           />
       <Button
           android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:layout_marginLeft="@dimen/_1sdp"
+          android:layout_height="@dimen/_53sdp"
+          android:layout_marginLeft="@dimen/_7sdp"
           android:layout_weight="1"
+          android:background="@drawable/btn_singin_selector"
           android:text="@string/registrarse"
           android:textSize="@dimen/_12sdp"
-
+          style="@style/texto_botones_style"
           />
 
     </LinearLayout>

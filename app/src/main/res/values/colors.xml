@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <resources>
   <color name="primary">#9E9E9E</color>
   <color name="primary_dark">#616161</color>
@@ -10,5 +10,47 @@
   <color name="divider">#B6B6B6</color>
   <color name="gray">#DBDBDD</color>
   <color name="white">#FFFFFF</color>
-
+  <color name="yellow_green">#7ed321</color>
+  <color name="white_1">#ffffff</color>
+  <color name="black">#000000</color>
+  <color name="lincoln_green">#325805</color>
+  <color name="medium_spring_bud">#b8e986</color>
+  <color name="white1">#fffffe</color>
+  <color name="napier_green">#417505</color>
+  <color name="portland_orange">#fe5339</color>
+  <color name="kelly_green">#67ba0b</color>
+  <color name="lapis_lazuli">#3c5a96</color>
+  <color name="orange">#f4a300</color>
+  <color name="cg_red">#dd381e</color>
+  <color name="medium_turquoise">#50e3c2</color>
+  <color name="orange_peel">#ffa100</color>
+  <color name="outer_space">#4a4a4a</color>
+  <color name="manatee">#9b9b9b</color>
+  <color name="davy_grey">#5e5d5d</color>
+  <color name="taupe">#373738</color>
+  <color name="dark_tangerine">#f5a623</color>
+  <color name="manatee1">#979797</color>
+  <color name="gamboge">#eca80b</color>
+  <color name="gamboge1">#e4aa00</color>
+  <color name="white_smoke">#f7f7f7</color>
+  <color name="ruddy">#fe001f</color>
+  <color name="taupe1">#333333</color>
+  <color name="cornflower_blue">#59adeb</color>
+  <color name="usc_gold">#f8cb00</color>
+  <color name="timberwolf">#d8d8d8</color>
+  <color name="munsell">#f2f2f2</color>
+  <color name="apple_green">#8dd312</color>
+  <color name="electric_violet">#9711ff</color>
+  <color name="vivid_violet">#a013fe</color>
+  <color name="candy_apple_red">#fa1212</color>
+  <color name="dark_jungle_green">#202020</color>
+  <color name="coral">#ff7956</color>
+  <color name="deep_saffron">#ffa733</color>
+  <color name="usc_gold1">#ffcd00</color>
+  <color name="taupe2">#554431</color>
+  <color name="coffee">#6a563d</color>
+  <color name="portland_orange1">#ff5023</color>
+  <color name="outer_space1">#494949</color>
+  <color name="pearl_aqua">#75e2c2</color>
 </resources>
+

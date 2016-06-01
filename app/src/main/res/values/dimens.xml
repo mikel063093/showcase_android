@@ -12,4 +12,7 @@
   <dimen name="shot_comments_margin_bottom">0dp</dimen>
 
   <dimen name="content_recycler_view_padding">0dp</dimen>
+  <dimen name="texto_botones_size">20.0sp</dimen>
+  <dimen name="corner_login">10dp</dimen>
+
 </resources>
