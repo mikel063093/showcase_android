@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.multidex.MultiDex;
+import com.facebook.FacebookSdk;
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
 import io.supercharge.rxsnappy.RxSnappy;
@@ -45,6 +46,7 @@ public class AppMain extends Application {
   @Override public void onCreate() {
     super.onCreate();
     context = getApplicationContext();
+    FacebookSdk.sdkInitialize(this.getApplicationContext());
     Logger.init(getString(R.string.app_name))
         .logLevel(BuildConfig.DEBUG ? LogLevel.FULL : LogLevel.NONE);
     initRxDb();

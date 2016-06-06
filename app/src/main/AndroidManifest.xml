@@ -5,24 +5,51 @@
   <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
   <uses-permission android:name="android.permission.INTERNET"/>
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+  <uses-permission android:name="android.permission.INTERNET"/>
+
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+  <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+  <uses-permission android:name="android.permission.WAKE_LOCK"/>
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+  <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
+  <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER"/>
 
   <application
-      android:name="com.co.showcase.AppMain"
+      android:name=".AppMain"
       android:allowBackup="true"
       android:icon="@mipmap/ic_launcher"
       android:label="@string/app_name"
       android:supportsRtl="true"
       android:theme="@style/Showcase.Theme">
-    <activity android:name="com.co.showcase.ui.Master.MasterActivity">
+    <meta-data
+        android:name="com.facebook.sdk.ApplicationId"
+        android:value="@string/facebook_app_id"/>
+
+    <activity
+        android:name="com.facebook.FacebookActivity"
+        android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.Translucent.NoTitleBar"
+        android:windowSoftInputMode="stateAlwaysHidden">
     </activity>
-    <activity android:name="com.co.showcase.ui.detail.DetailActivity">
+    <activity android:name=".ui.Master.MasterActivity">
     </activity>
-    <activity android:name="com.co.showcase.ui.splash.Splash">
+    <activity android:name=".ui.detail.DetailActivity">
+    </activity>
+    <activity android:name=".ui.splash.Splash">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
+
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
+    <activity android:name=".ui.login_main.login">
+    </activity>
+    <activity android:name=".ui.singin.singin">
+    </activity>
+
   </application>
 
 </manifest>

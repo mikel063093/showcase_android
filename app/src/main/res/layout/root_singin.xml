@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    >
+  <android.support.design.widget.AppBarLayout
+      android:id="@+id/tabanim_appbar"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:fitsSystemWindows="true"
+      >
+
+
+    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbar_singin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/kelly_green"
+        android:fitsSystemWindows="true"
+        android:minHeight="?attr/actionBarSize"
+        >
+
+
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabanim_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabGravity="center"
+        app:tabMode="fixed"
+        app:tabTextAppearance="@style/TabTextAppearance"
+        />
+
+
+  </android.support.design.widget.AppBarLayout>
+
+
+  <android.support.v4.view.ViewPager
+      android:id="@+id/view_pager_singin"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      app:layout_behavior="@string/appbar_scrolling_view_behavior"
+      />
+</android.support.design.widget.CoordinatorLayout>
