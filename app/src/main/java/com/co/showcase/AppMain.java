@@ -9,6 +9,7 @@ import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
 import io.supercharge.rxsnappy.RxSnappy;
 import io.supercharge.rxsnappy.RxSnappyClient;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Created by miguelalegria
@@ -53,8 +54,8 @@ public class AppMain extends Application {
   }
 
   @Override protected void attachBaseContext(Context base) {
-    super.attachBaseContext(base);
-    //initRxDb();
+    super.attachBaseContext(CalligraphyContextWrapper.wrap(base));    //initRxDb();
     MultiDex.install(this);
+
   }
 }

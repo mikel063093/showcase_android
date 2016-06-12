@@ -12,7 +12,7 @@ import com.facebook.login.widget.LoginButton;
 
 public class login extends BaseActivity {
 
-  @Bind(R.id.auth_fb) LoginButton authFb;
+ // @Bind(R.id.auth_fb) LoginButton authFb;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);

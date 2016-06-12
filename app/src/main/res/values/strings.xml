@@ -8,15 +8,15 @@
   <string name="registrarse">Registrarse</string>
   <string name="eslogan">Encuentra lo que quieres comprar en un solo lugar</string>
   <string name="Ingresar">Ingresar</string>
-  <string name="no_tienes_cuenta">¿No tienes cuenta? Regístrate aquí</string>
+  <string name="no_tienes_cuenta">¿Aún no tienes cuenta? Regístrate aquí</string>
   <string name="correo">Correo electrónico</string>
   <string name="password">Contraseña</string>
   <string name="nombre">Nombre</string>
   <string name="apellido">Apellido</string>
   <string name="registro">Registrarme</string>
-  <string name="no_tienes_cuenta_registro">¿Ya estas registrado? Ingresa aquí</string>
+  <string name="no_tienes_cuenta_registro">¿Estás registrado? Ingresa aquí</string>
   <string name="encuentra">ENCUENTRA</string>
-  <string name="lo_que_quieres_comprar">LO QUE QUIERES COMPRAR EN UN SÓLO LUGAR</string>
+  <string name="lo_que_quieres_comprar">LO QUE QUIERES COMPRAR\nEN UN SÓLO LUGAR</string>
   <string name="facebook_app_id" translatable="false">300945593370</string>
 </resources>
 

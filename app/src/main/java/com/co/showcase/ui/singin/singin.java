@@ -36,7 +36,8 @@ public class singin extends BaseActivity {
   }
 
   private void renderToolbar() {
-    final Drawable upArrow = getResources().getDrawable(R.drawable.ico_flecha_blanca);
+    final Drawable upArrow = getResources().getDrawable(R.drawable.btn_flechaizquierda);
+
     toolbar.setNavigationIcon(upArrow);
     toolbar.setNavigationOnClickListener(v -> {
       finish();

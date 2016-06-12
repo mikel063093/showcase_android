@@ -24,6 +24,7 @@ import java.util.regex.Pattern;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Created by miguelalegria on 15/5/16 for DemoMike.
@@ -153,5 +154,9 @@ public class BaseActivity extends AppCompatActivity {
       ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).
           hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
+  }
+
+  @Override protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
   }
 }

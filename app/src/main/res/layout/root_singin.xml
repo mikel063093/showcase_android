@@ -12,6 +12,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:fitsSystemWindows="true"
+      app:elevation="0dp"
       >
 
 
@@ -20,11 +21,13 @@
         android:id="@+id/toolbar_singin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/kelly_green"
         android:fitsSystemWindows="true"
         android:minHeight="?attr/actionBarSize"
+        app:elevation="0dp"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        style="@style/MyToolbar"
         >
-
 
     </android.support.v7.widget.Toolbar>
 
@@ -32,9 +35,13 @@
         android:id="@+id/tabanim_tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:elevation="0dp"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:tabGravity="center"
         app:tabMode="fixed"
         app:tabTextAppearance="@style/TabTextAppearance"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        style="@style/TabLayoutStyle"
         />
 
 

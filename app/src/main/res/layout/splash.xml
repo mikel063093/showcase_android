@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/kelly_green"
     android:orientation="vertical"
-
+    tools:ignore="MissingPrefix"
     >
-
+  <ImageView
+      android:id="@+id/imageView2"
+      android:layout_width="@dimen/_181sdp"
+      android:layout_height="@dimen/_291sdp"
+      android:layout_alignParentBottom="true"
+      android:layout_alignParentStart="true"
+      android:background="@drawable/rana_splash"
+      />
   <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -16,31 +24,25 @@
       android:orientation="vertical"
       >
     <ImageView
-        android:layout_width="@dimen/_138sdp"
-        android:layout_height="@dimen/_139sdp"
+        android:layout_width="@dimen/_103sdp"
+        android:layout_height="@dimen/_104sdp"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/_30sdp"
         android:gravity="center"
         android:src="@drawable/logo_showcase"
+        android:id="@+id/imageView3"
         />
-    <ImageView
-        android:layout_width="@dimen/_256sdp"
-        android:layout_height="@dimen/_300sdp"
-        android:layout_marginTop="@dimen/_48sdp"
-        android:background="@drawable/rana_splash"
-        android:id="@+id/imageView2"
-        />
+
 
   </LinearLayout>
 
   <LinearLayout
       android:id="@+id/root_txt"
-      android:layout_width="@dimen/_270sdp"
-      android:layout_height="@dimen/_50sdp"
-      android:layout_marginLeft="@dimen/_21sdp"
-      android:layout_marginRight="@dimen/_72sdp"
-      android:layout_marginTop="@dimen/_300sdp"
-      android:background="@drawable/btn_naranja_selector"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/_18sdp"
+      android:layout_marginTop="@dimen/_285sdp"
+      android:background="@color/portland_orange"
       >
     <TextView
         android:layout_width="wrap_content"
@@ -48,21 +50,32 @@
         android:layout_gravity="center"
         android:layout_marginLeft="@dimen/_10sdp"
         android:layout_marginRight="@dimen/_10sdp"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp"
         android:text="@string/encuentra"
-        android:textSize="@dimen/_30sdp"
+        android:textSize="@dimen/_34sdp"
+        android:textStyle="bold"
+        fontPath="fonts/Circular-Std-Bold.otf"
         style="@style/txt_white_style"
         />
   </LinearLayout>
 
   <TextView
-      android:layout_width="@dimen/_300sdp"
+      android:id="@+id/textView"
+      android:layout_width="wrap_content"
       android:layout_height="@dimen/_63sdp"
       android:layout_below="@+id/root_txt"
-      android:layout_marginLeft="@dimen/_34sdp"
-      android:layout_marginRight="@dimen/_10sdp"
+      android:layout_marginLeft="@dimen/_30sdp"
+      android:layout_marginRight="@dimen/_15sdp"
+      android:layout_marginTop="@dimen/_4sdp"
+      android:lineSpacingExtra="@dimen/_2sdp"
       android:maxLines="2"
-      android:textSize="@dimen/_22sdp"
-      style="@style/txt_white_style"
       android:text="@string/lo_que_quieres_comprar"
+      android:textSize="@dimen/_18sdp"
+      android:textStyle="bold"
+      fontPath="fonts/Circular-Std-Bold.otf"
+      style="@style/txt_white_style"
       />
+
+
 </RelativeLayout>

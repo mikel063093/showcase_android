@@ -6,11 +6,15 @@
     >
   <ImageView
       android:id="@+id/imageView"
-      android:layout_width="match_parent"
-      android:layout_height="@dimen/_173sdp"
+      android:layout_width="@dimen/_300sdp"
+      android:layout_height="@dimen/_130sdp"
       android:layout_alignParentBottom="true"
       android:layout_alignParentStart="true"
+      android:layout_marginLeft="@dimen/_10sdp"
+      android:layout_marginRight="@dimen/_10sdp"
       android:background="@drawable/rana_registro"
+      android:foregroundGravity="center"
+      android:scaleType="center"
       />
   <LinearLayout
       android:layout_width="match_parent"
@@ -19,28 +23,31 @@
       >
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_237sdp"
+        android:layout_height="@dimen/_247sdp"
         android:layout_marginLeft="@dimen/_18sdp"
         android:layout_marginRight="@dimen/_18sdp"
+        android:layout_marginTop="-7dp"
         >
       <android.support.v7.widget.CardView
           android:layout_width="match_parent"
-          android:layout_height="@dimen/_237sdp"
+          android:layout_height="@dimen/_247sdp"
           android:layout_marginLeft="@dimen/_5sdp"
           android:layout_marginRight="@dimen/_5sdp"
+          android:layout_marginTop="@dimen/_7sdp"
           style="@style/card_singin_small"
           />
       <android.support.v7.widget.CardView
           android:layout_width="match_parent"
-          android:layout_height="@dimen/_230sdp"
+          android:layout_height="@dimen/_244sdp"
           style="@style/card_singin"
 
           >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:orientation="vertical"
+            android:layout_gravity="center"
+
             >
           <android.support.design.widget.TextInputLayout
               android:id="@+id/nombreWrapper"
@@ -49,6 +56,8 @@
               android:layout_marginLeft="@dimen/_16sdp"
               android:layout_marginRight="@dimen/_16sdp"
               android:hint="@string/nombre"
+              android:textColorHint="@color/yellow_green"
+
               >
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/edt_nombre"
@@ -57,7 +66,8 @@
                 android:drawableLeft="@drawable/ico_nombreusuario"
                 android:drawablePadding="@dimen/_8sdp"
                 android:inputType="text"
-                style="@style/edt_singin"
+                android:textColor="@color/napier_green"
+                android:theme="@style/edt_singin"
                 />
           </android.support.design.widget.TextInputLayout>
           <android.support.design.widget.TextInputLayout
@@ -67,6 +77,8 @@
               android:layout_marginLeft="@dimen/_16sdp"
               android:layout_marginRight="@dimen/_16sdp"
               android:hint="@string/apellido"
+              android:textColorHint="@color/yellow_green"
+
               >
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/edt_apellido"
@@ -75,7 +87,9 @@
                 android:drawableLeft="@drawable/ico_apellidousuario"
                 android:drawablePadding="@dimen/_8sdp"
                 android:inputType="text"
-                style="@style/edt_singin"
+                android:textColor="@color/napier_green"
+                android:theme="@style/edt_singin"
+
                 />
           </android.support.design.widget.TextInputLayout>
           <android.support.design.widget.TextInputLayout
@@ -85,6 +99,8 @@
               android:layout_marginLeft="@dimen/_16sdp"
               android:layout_marginRight="@dimen/_16sdp"
               android:hint="@string/password"
+              android:textColorHint="@color/yellow_green"
+
               >
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/edt_password"
@@ -93,7 +109,9 @@
                 android:drawableLeft="@drawable/ico_contrasena"
                 android:drawablePadding="@dimen/_8sdp"
                 android:inputType="textPassword"
-                style="@style/edt_singin"
+                android:textColor="@color/napier_green"
+                android:theme="@style/edt_singin"
+
                 />
           </android.support.design.widget.TextInputLayout>
           <android.support.design.widget.TextInputLayout
@@ -103,6 +121,8 @@
               android:layout_marginLeft="@dimen/_16sdp"
               android:layout_marginRight="@dimen/_16sdp"
               android:hint="@string/correo"
+              android:textColorHint="@color/yellow_green"
+
               >
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/edt_email"
@@ -111,7 +131,9 @@
                 android:drawableLeft="@drawable/ico_correo"
                 android:drawablePadding="@dimen/_8sdp"
                 android:inputType="textEmailAddress"
-                style="@style/edt_singin"
+                android:textColor="@color/napier_green"
+                android:theme="@style/edt_singin"
+
                 />
           </android.support.design.widget.TextInputLayout>
         </LinearLayout>
@@ -122,8 +144,10 @@
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/btn_ingresar"
-        android:layout_width="@dimen/_158sdp"
-        android:layout_height="@dimen/_42sdp"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_40sdp"
+        android:paddingLeft="@dimen/_36sdp"
+        android:paddingRight="@dimen/_36sdp"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/_16sdp"
         android:background="@drawable/btn_naranja_selector"
@@ -137,6 +161,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/_46sdp"
         android:text="@string/no_tienes_cuenta_registro"
+        android:textSize="@dimen/_12sdp"
         style="@style/txt_white_style"
         />
   </LinearLayout>
