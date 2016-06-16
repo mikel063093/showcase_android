@@ -1,107 +1,124 @@
 <resources>
 
-  <!-- Base application theme. -->
-  <style name="Showcase.Theme" parent="Theme.AppCompat.Light.NoActionBar">
-    <item name="colorPrimary">@color/kelly_green</item>
-    <item name="colorPrimaryDark">@color/napier_green</item>
-    <item name="colorAccent">@color/yellow_green</item>
-    <item name="android:textColorPrimary">@color/primary_text</item>
-    <item name="android:textColorSecondary">@color/secondary_text</item>
-  </style>
-  >
+    <!-- Base application theme. -->
+    <style name="Showcase.Theme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/kelly_green</item>
+        <item name="colorPrimaryDark">@color/napier_green</item>
+        <item name="colorAccent">@color/yellow_green</item>
+        <item name="android:textColorPrimary">@color/primary_text</item>
+        <item name="android:textColorSecondary">@color/secondary_text</item>
+    </style>
+    >
 
-  <style name="ShotContainerStyle"/>
+    <style name="ShotContainerStyle" />
 
-  <style name="RecentCommentsStyle">
-    <item name="android:background">@color/primary_text</item>
-  </style>
+    <style name="RecentCommentsStyle">
+        <item name="android:background">@color/primary_text</item>
+    </style>
 
-  <style name="ShotHeaderStyle">
-    <item name="android:layout_marginBottom">20dp</item>
-  </style>
+    <style name="ShotHeaderStyle">
+        <item name="android:layout_marginBottom">20dp</item>
+    </style>
 
-  <style name="ArticleContentViewStyle">
-    <item name="android:layout_gravity">center_horizontal</item>
-    <item name="android:layout_marginLeft">@dimen/article_content_horizontal_margin</item>
-    <item name="android:layout_marginRight">@dimen/article_content_horizontal_margin</item>
-  </style>
+    <style name="ArticleContentViewStyle">
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_marginLeft">@dimen/article_content_horizontal_margin</item>
+        <item name="android:layout_marginRight">@dimen/article_content_horizontal_margin</item>
+    </style>
 
-  <!--<item name="fontPath">fonts/${FONT_FILE}</item>-->
-  <style name="texto_botones_style" parent="android:Widget.TextView">
-    <item name="android:textColor">@color/portland_orange</item>
-    <item name="android:textSize">@dimen/texto_botones_size</item>
-    <item name="android:elevation">2dp</item>
-    <item name="android:textStyle">normal</item>
-    <item name="fontPath">fonts/Circular-Std-Book.otf</item>
-  </style>
+    <!--<item name="fontPath">fonts/${FONT_FILE}</item>-->
+    <style name="texto_botones_style" parent="android:Widget.TextView">
+        <item name="android:textColor">@color/portland_orange</item>
+        <item name="android:textSize">@dimen/texto_botones_size</item>
+        <item name="android:elevation">2dp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="fontPath">fonts/Circular-Std-Book.otf</item>
+    </style>
 
-  <style name="boton_login" parent="@android:style/Widget.Button">
-    <item name="android:background">@drawable/btn_singin_selector</item>
-  </style>
+    <style name="boton_login" parent="@android:style/Widget.Button">
+        <item name="android:background">@drawable/btn_singin_selector</item>
+    </style>
 
-  <style name="card_singin" parent="CardView">
-    <item name="cardCornerRadius">5dp</item>
-    <item name="cardElevation">4dp</item>
-    <item name="cardUseCompatPadding">true</item>
-    <item name="android:hardwareAccelerated">true</item>
-    <item name="android:background">@drawable/shape_singin_card</item>
-  </style>
+    <style name="card_singin" parent="CardView">
+        <item name="cardCornerRadius">5dp</item>
+        <item name="cardElevation">4dp</item>
+        <item name="cardUseCompatPadding">true</item>
+        <item name="android:hardwareAccelerated">true</item>
+        <item name="android:background">@drawable/shape_singin_card</item>
+    </style>
 
-  <style name="card_singin_small" parent="CardView">
-    <item name="cardCornerRadius">5dp</item>
-    <item name="cardElevation">1dp</item>
-    <item name="android:hardwareAccelerated">true</item>
-    <item name="cardUseCompatPadding">true</item>
+    <style name="card_singin_small" parent="CardView">
+        <item name="cardCornerRadius">5dp</item>
+        <item name="cardElevation">1dp</item>
+        <item name="android:hardwareAccelerated">true</item>
+        <item name="cardUseCompatPadding">true</item>
+        <item name="android:background">@drawable/shape_singin_card</item>
+    </style>
 
-    <item name="android:background">@drawable/shape_singin_card</item>
-  </style>
+    <style name="card_organe_small" parent="CardView">
+        <item name="cardCornerRadius">5dp</item>
+        <item name="android:background">@drawable/shape_card_orange</item>
+        <item name="android:hardwareAccelerated">true</item>
+        <item name="cardUseCompatPadding">true</item>
+        <item name="cardElevation">1dp</item>
 
-  <style name="txt_white_style" parent="android:Widget.TextView">
-    <item name="android:textColor">@color/white</item>
-    <item name="android:textSize">@dimen/texto_botones_size</item>
-    <item name="android:textStyle">normal</item>
-    <item name="fontPath">fonts/Circular-Std-Book.otf</item>
-  </style>
+    </style>
 
-  <style name="edt_singin" parent="Theme.AppCompat.Light">
-    <item name="android:textColor">@color/napier_green</item>
-    <item name="android:textColorHint">@color/yellow_green</item>
-    <item name="android:textSize">@dimen/_12sdp</item>
-    <item name="fontPath">fonts/Circular-Std-Book.otf</item>
-    <item name="colorControlNormal">@color/yellow_green</item>
-    <item name="colorControlActivated">@color/yellow_green</item>
+    <style name="txt_white_style" parent="android:Widget.TextView">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/texto_botones_size</item>
+        <item name="android:textStyle">normal</item>
+        <item name="fontPath">fonts/Circular-Std-Book.otf</item>
+    </style>
 
-  </style>
+    <style name="edt_singin" parent="Theme.AppCompat.Light">
+        <item name="android:textColor">@color/napier_green</item>
+        <item name="android:textColorHint">@color/yellow_green</item>
+        <item name="android:textSize">@dimen/_12sdp</item>
+        <item name="fontPath">fonts/Circular-Std-Book.otf</item>
+        <item name="colorControlNormal">@color/yellow_green</item>
+        <item name="colorControlActivated">@color/yellow_green</item>
 
-  <style name="TabLayoutTextAppearance" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
-    <item name="android:textSize">10sp</item>
-    <item name="android:textAllCaps">false</item>
-    <item name="android:maxLines">1</item>
-    <item name="fontPath">fonts/Circular-Std-Book.otf</item>
-  </style>
+    </style>
 
-  <style name="TabLayoutStyle" parent="Widget.Design.TabLayout">
-    <item name="tabIndicatorColor">@color/lincoln_green</item>
-    <item name="tabIndicatorHeight">3dp</item>
-    <item name="tabPaddingStart">16dp</item>
-    <item name="tabPaddingEnd">16dp</item>
-    <item name="tabBackground">?attr/selectableItemBackground</item>
-    <item name="tabTextAppearance">@style/TabTextAppearance</item>
-    <item name="tabSelectedTextColor">@color/lincoln_green</item>
-    <item name="android:elevation">0dp</item>
-  </style>
+    <style name="TabLayoutTextAppearance" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:maxLines">1</item>
+        <item name="fontPath">fonts/Circular-Std-Book.otf</item>
+    </style>
 
-  <style name="TabTextAppearance" parent="TextAppearance.Design.Tab">
-    <item name="android:textSize">@dimen/_12sdp</item>
-    <item name="android:textColor">@color/medium_spring_bud</item>
-    <item name="textAllCaps">false</item>
-    <item name="fontPath">fonts/Circular-Std-Book.otf</item>
-    <item name="android:elevation">-1dp</item>
-  </style>
+    <style name="TabLayoutStyle" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">@color/lincoln_green</item>
+        <item name="tabIndicatorHeight">3dp</item>
+        <item name="tabPaddingStart">16dp</item>
+        <item name="tabPaddingEnd">16dp</item>
+        <item name="tabBackground">?attr/selectableItemBackground</item>
+        <item name="tabTextAppearance">@style/TabTextAppearance</item>
+        <item name="tabSelectedTextColor">@color/lincoln_green</item>
+        <item name="android:elevation">0dp</item>
+    </style>
 
-  <style name="MyToolbar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
-    <item name="theme">@style/ThemeOverlay.AppCompat.Dark</item>
-    <item name="android:background">?colorPrimary</item>
-    <item name="android:elevation">-1dp</item>
-  </style>
+    <style name="TabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">@dimen/_12sdp</item>
+        <item name="android:textColor">@color/medium_spring_bud</item>
+        <item name="textAllCaps">false</item>
+        <item name="fontPath">fonts/Circular-Std-Book.otf</item>
+        <item name="android:elevation">-1dp</item>
+    </style>
+
+    <style name="MyToolbar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="theme">@style/ThemeOverlay.AppCompat.Dark</item>
+        <item name="android:background">?colorPrimary</item>
+        <item name="android:elevation">-1dp</item>
+    </style>
+
+    <style name="txt_red_style" parent="android:Widget.TextView">
+        <item name="android:textColor">@color/cg_red</item>
+        <item name="android:textSize">@dimen/texto_botones_size</item>
+        <item name="android:textStyle">normal</item>
+        <item name="fontPath">fonts/Circular-Std-Bold.otf</item>
+
+    </style>
+
 </resources>
