@@ -21,5 +21,12 @@
     <string name="Enviar">Enviar</string>
     <string name="recuperar_password">¿No recuerdas tu\ncontraseña?</string>
     <string name="escribe_tu_correo">Escríbe tu correo electrónico y te harémos\nllegar la forma para recuperarla.</string>
+    <string name="acept">Aceptar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="err_email">Email invalido</string>
+    <string name="err_pass">Password incorrecto</string>
+    <string name="loading">Cargando...</string>
+    <string name="internet_err">Ha ocurrido un problema con tu conexion</string>
+    <string name="general_err">Ha ocurrido un problema</string>
 </resources>
 

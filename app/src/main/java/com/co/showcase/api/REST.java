@@ -28,7 +28,7 @@ public class REST {
     interceptor.setLevel(
         BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.BASIC);
     OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
-    Retrofit retrofit = new Retrofit.Builder().baseUrl("https://itunes.apple.com/")
+    Retrofit retrofit = new Retrofit.Builder().baseUrl("https://test.showcase.com.co/app.php/movil/")
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
         .addConverterFactory(GsonConverterFactory.create(gson))

@@ -21,10 +21,12 @@ public class AppMain extends Application {
     return context;
   }
 
+  @NonNull
   public static AppMain getApp(@NonNull Context context) {
     return (AppMain) context.getApplicationContext();
   }
 
+  @NonNull
   public static AppMain getApp() {
     return getApp(getContex());
   }

@@ -1,6 +1,8 @@
 package com.co.showcase.model;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import com.co.showcase.utils.JSONUtils;
 import com.co.showcase.AppMain;
 import com.co.showcase.BuildConfig;
@@ -22,13 +24,13 @@ import rx.schedulers.Schedulers;
  */
 public abstract class BaseModel {
 
-  protected static RxSnappyClient rxSnappy;
+  private static RxSnappyClient rxSnappy;
 
   static {
     rxSnappy = AppMain.getApp().getRxSnappyClient();
   }
 
-  public static RxSnappyClient getRxSnappy() {
+  private static RxSnappyClient getRxSnappy() {
     return rxSnappy;
   }
 
@@ -53,7 +55,7 @@ public abstract class BaseModel {
     if (BuildConfig.DEBUG) Logger.e(txt);
   }
 
-  public Map<String, Object> jsonToMap(@NonNull String json) {
+  @Nullable public Map<String, Object> jsonToMap(@NonNull String json) {
     try {
       JSONObject jsonObject = new JSONObject(json);
       return jsonToMap(jsonObject);
@@ -63,7 +65,7 @@ public abstract class BaseModel {
     }
   }
 
-  public Map<String, Object> jsonToMap() {
+  @Nullable public Map<String, Object> jsonToMap() {
     try {
       JSONObject jsonObject = new JSONObject(this.toJson());
       return jsonToMap(jsonObject);
@@ -73,7 +75,7 @@ public abstract class BaseModel {
     }
   }
 
-  public Map<String, Object> jsonToMap(JSONObject json) throws JSONException {
+  @NonNull public Map<String, Object> jsonToMap(@NonNull JSONObject json) throws JSONException {
     Map<String, Object> retMap = new HashMap<>();
     if (json != JSONObject.NULL) {
       retMap = JSONUtils.toMap(json);
@@ -91,15 +93,14 @@ public abstract class BaseModel {
     }
   }
 
-  public <T> Observable<T> getObject(Class<T> selectedClass) {
+  @NonNull public <T> Observable<T> getObject(Class<T> selectedClass) {
     return getRxSnappy().getObject(getTag(), selectedClass)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .asObservable();
-
   }
 
-  public <T> Observable<T> getObject() {
+  @NonNull public <T> Observable<T> getObject() {
     Class<T> selectedClass = (Class<T>) this.getClass();
     return getRxSnappy().getObject(getTag(), selectedClass);
   }

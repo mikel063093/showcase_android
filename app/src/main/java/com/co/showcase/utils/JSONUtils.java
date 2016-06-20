@@ -28,7 +28,8 @@ public class JSONUtils {
     }
   }
 
-  public static Map<String, Object> jsonToMap(JSONObject json) throws JSONException {
+  @NonNull
+  public static Map<String, Object> jsonToMap(@NonNull JSONObject json) throws JSONException {
     Map<String, Object> retMap = new HashMap<>();
 
     if (json != JSONObject.NULL) {
@@ -37,7 +38,8 @@ public class JSONUtils {
     return retMap;
   }
 
-  public static Map<String, Object> toMap(JSONObject object) throws JSONException {
+  @NonNull
+  public static Map<String, Object> toMap(@NonNull JSONObject object) throws JSONException {
     Map<String, Object> map = new HashMap<>();
 
     Iterator<String> keysItr = object.keys();
@@ -55,7 +57,8 @@ public class JSONUtils {
     return map;
   }
 
-  public static List<Object> toList(JSONArray array) throws JSONException {
+  @NonNull
+  public static List<Object> toList(@NonNull JSONArray array) throws JSONException {
     List<Object> list = new ArrayList<Object>();
     for (int i = 0; i < array.length(); i++) {
       Object value = array.get(i);
@@ -69,7 +72,7 @@ public class JSONUtils {
     return list;
   }
 
-  public static String mapToString(Map<String, Object> map) {
+  public static String mapToString(@NonNull Map<String, Object> map) {
     StringBuilder stringBuilder = new StringBuilder();
 
     for (String key : map.keySet()) {

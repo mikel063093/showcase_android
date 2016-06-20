@@ -20,7 +20,7 @@ public class Splash extends BaseActivity {
     handler.postDelayed(() -> {
       Intent intent = new Intent(getApplicationContext(), login.class);
       goActv(intent, true);
-    }, 1200);
+    }, 1500);
     setContentView(R.layout.splash);
   }
 }

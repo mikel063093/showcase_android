@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/kelly_green"
@@ -23,16 +24,16 @@
       android:layout_marginRight="@dimen/_14sdp"
       android:orientation="vertical"
       >
-    <!--<com.facebook.login.widget.LoginButton xmlns:fb="http://schemas.android.com/apk/res-auto"-->
-    <!--android:id="@+id/auth_fb"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="@dimen/_40sdp"-->
-    <!--android:layout_marginTop="@dimen/_6sdp"-->
-    <!--android:textColor="#fff"-->
-    <!--android:textSize="16dp"-->
-    <!--android:visibility="gone"-->
-    <!--fb:login_text="@string/login.fb"-->
-    <!--/>-->
+    <com.facebook.login.widget.LoginButton xmlns:fb="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/auth_fb"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_40sdp"
+    android:layout_marginTop="@dimen/_6sdp"
+    android:textColor="#fff"
+    android:textSize="16dp"
+    android:visibility="gone"
+    fb:login_text="@string/login.fb"
+    />
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/btn_fb"
         android:layout_width="@dimen/_272sdp"

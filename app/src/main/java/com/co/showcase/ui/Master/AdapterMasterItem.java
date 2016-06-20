@@ -1,6 +1,8 @@
 package com.co.showcase.ui.Master;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,9 +25,10 @@ import java.util.List;
  * Created by miguelalegria on 16/5/16 for DemoMike.
  */
 public class AdapterMasterItem extends ArrayAdapter<Entre> {
+  @Nullable
   private ViewHolder holder;
 
-  public AdapterMasterItem(Context context, int resource, List<Entre> objects) {
+  public AdapterMasterItem(Context context, int resource, @NonNull List<Entre> objects) {
     super(context, resource, objects);
   }
 
@@ -33,7 +36,8 @@ public class AdapterMasterItem extends ArrayAdapter<Entre> {
   //  super(context, resource, objects);
   //}
 
-  @Override public View getView(int position, View convertView, ViewGroup parent) {
+  @Nullable
+  @Override public View getView(int position, @Nullable View convertView, ViewGroup parent) {
     if (convertView == null) {
       LayoutInflater inflater =
           (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -66,7 +70,9 @@ public class AdapterMasterItem extends ArrayAdapter<Entre> {
   }
 
   static class ViewHolder {
+    @Nullable
     @Bind(R.id.img_icon) ImageView icon;
+    @Nullable
     @Bind(R.id.txt_label) TextView label;
 
     ViewHolder(View view) {

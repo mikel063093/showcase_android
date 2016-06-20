@@ -3,6 +3,7 @@ package com.co.showcase.ui.recuperar;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.Toolbar;
@@ -16,10 +17,13 @@ import butterknife.OnClick;
 
 public class recuperar extends BaseActivity {
 
+    @Nullable
     @Bind(R.id.toolbar)
     Toolbar toolbar;
+    @Nullable
     @Bind(R.id.edt_email)
     AppCompatEditText edtEmail;
+    @Nullable
     @Bind(R.id.emailWrapper)
     TextInputLayout emailWrapper;
 

@@ -1,35 +1,127 @@
 package com.co.showcase.ui.login_main;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
 import com.co.showcase.R;
+import com.co.showcase.api.REST;
+import com.co.showcase.model.Usuario;
 import com.co.showcase.ui.BaseActivity;
 import com.co.showcase.ui.singin.singin;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class login extends BaseActivity {
 
- // @Bind(R.id.auth_fb) LoginButton authFb;
+  private static final int KEY_SINGIN_FB = 2;
+  @Bind(R.id.auth_fb) LoginButton authButton;
+  private CallbackManager callbackManager;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    FacebookSdk.sdkInitialize(getApplicationContext());
+    callbackManager = CallbackManager.Factory.create();
     setContentView(R.layout.login);
     ButterKnife.bind(this);
+    AccessToken accessToken = AccessToken.getCurrentAccessToken();
+    if (accessToken != null) {
+      socialSingin(accessToken.getToken(), KEY_SINGIN_FB);
+    }
   }
 
-  @OnClick({ R.id.btn_fb, R.id.btn_ingresar, R.id.btn_registrar }) public void onClick(View view) {
+  @Nullable private FacebookCallback<LoginResult> loginResultFacebookCallback =
+      new FacebookCallback<LoginResult>() {
+        @Override public void onSuccess(@NonNull LoginResult loginResult) {
+          dismissDialog();
+          AccessToken access_token = loginResult.getAccessToken();
+          socialSingin(access_token.getToken(), KEY_SINGIN_FB);
+        }
+
+        @Override public void onCancel() {
+          dismissDialog();
+          AccessToken accessToken = AccessToken.getCurrentAccessToken();
+          if (accessToken != null) {
+            LoginManager.getInstance().logOut();
+          }
+        }
+
+        @Override public void onError(@NonNull FacebookException exception) {
+
+          dismissDialog();
+
+          AccessToken accessToken = AccessToken.getCurrentAccessToken();
+          if (accessToken != null) {
+            LoginManager.getInstance().logOut();
+          }
+        }
+      };
+
+  @Override protected void onResume() {
+    super.onResume();
+    authButton.setReadPermissions(Arrays.asList("public_profile", "email", "user_friends"));
+    authButton.registerCallback(callbackManager, loginResultFacebookCallback);
+  }
+
+  private void socialSingin(@NonNull String token, int type) {
+    Map<String, String> param = new HashMap<>();
+    param.put("proveedor", type + "");
+    param.put("accessToken", token);
+
+    REST.getRest()
+        .registrarFB(param)
+        .compose(bindToLifecycle())
+        .doOnSubscribe(() -> showDialog(getString(R.string.loading)))
+        .subscribeOn(Schedulers.io())
+        .doOnCompleted(this::dismissDialog)
+        .observeOn(AndroidSchedulers.mainThread())
+        .onErrorResumeNext(Observable.error(new Throwable("Custom error")))
+        .subscribe(this::onSuccesLogin, this::errControl);
+  }
+
+  private void onSuccesLogin(@NonNull Usuario usuario) {
+    usuario.save();
+  }
+
+  @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    callbackManager.onActivityResult(requestCode, resultCode, data);
+  }
+
+  @OnClick({ R.id.btn_fb, R.id.btn_ingresar, R.id.btn_registrar })
+  public void onClick(@NonNull View view) {
     switch (view.getId()) {
       case R.id.btn_fb:
+        authButton.performClick();
         break;
       case R.id.btn_ingresar:
-        goActv(singin.class, false);
+        Intent intent = new Intent(this, singin.class);
+        intent.putExtra(KEY_POSITION, 0);
+        goActv(intent, false);
         break;
       case R.id.btn_registrar:
-        goActv(singin.class, false);
-
+        Intent intent2 = new Intent(this, singin.class);
+        intent2.putExtra(KEY_POSITION, 1);
+        goActv(intent2, false);
         break;
     }
   }

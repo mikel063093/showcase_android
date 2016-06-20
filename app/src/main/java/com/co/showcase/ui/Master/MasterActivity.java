@@ -3,6 +3,7 @@ package com.co.showcase.ui.Master;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.widget.AbsListView;
 import butterknife.Bind;
@@ -24,8 +25,11 @@ import rx.schedulers.Schedulers;
 public class MasterActivity extends BaseActivity {
 
   private static final String CATEGORY = MasterActivity.class.getCanonicalName() + ".CATEGORY";
+  @Nullable
   @Bind(R.id.toolbar_master) Toolbar toolbar;
+  @Nullable
   @Bind(R.id.list_master) AbsListView list;
+  @NonNull
   private List<List<Entre>> entryArr = new ArrayList<>();
 
   @Override protected void onCreate(Bundle savedInstanceState) {
