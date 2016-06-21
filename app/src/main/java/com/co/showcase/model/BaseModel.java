@@ -3,8 +3,9 @@ package com.co.showcase.model;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.co.showcase.utils.JSONUtils;
+import android.util.Log;
 import com.co.showcase.AppMain;
+import com.co.showcase.utils.JSONUtils;
 import com.co.showcase.BuildConfig;
 import com.google.gson.Gson;
 import com.orhanobut.logger.Logger;
@@ -12,11 +13,11 @@ import io.supercharge.rxsnappy.RxSnappyClient;
 import io.supercharge.rxsnappy.exception.RxSnappyException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
+
 import rx.schedulers.Schedulers;
 
 /**
@@ -24,32 +25,25 @@ import rx.schedulers.Schedulers;
  */
 public abstract class BaseModel {
 
-  private static RxSnappyClient rxSnappy;
+  protected static RxSnappyClient rxSnappy;
 
   static {
     rxSnappy = AppMain.getApp().getRxSnappyClient();
   }
 
-  private static RxSnappyClient getRxSnappy() {
+  public static RxSnappyClient getRxSnappy() {
     return rxSnappy;
   }
 
   public abstract String getTag();
 
   public void save() {
-    rxSnappy.setObject(getTag(), this)
-        .subscribeOn(Schedulers.io())
-        .debounce(150, TimeUnit.MILLISECONDS)
-        .subscribe(item -> {
-          Log(item.toJson());
-        }, throwable -> {
-          Log("save fail" + throwable.getMessage());
-        });
+    rxSnappy.setObject(getTag(), this).subscribeOn(Schedulers.io()).subscribe(item -> {
+      Log(item.toJson());
+    }, throwable -> {
+      Log("save fail" + throwable.getMessage());
+    });
   }
-
-  //public void Log(String txt) {
-  //  if (BuildConfig.DEBUG) Logger.e(txt);
-  //}
 
   private static void Log(String txt) {
     if (BuildConfig.DEBUG) Logger.e(txt);
@@ -95,8 +89,8 @@ public abstract class BaseModel {
 
   @NonNull public <T> Observable<T> getObject(Class<T> selectedClass) {
     return getRxSnappy().getObject(getTag(), selectedClass)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
+        //.subscribeOn(Schedulers.io())
+        // .observeOn(AndroidSchedulers.mainThread())
         .asObservable();
   }
 
@@ -105,11 +99,20 @@ public abstract class BaseModel {
     return getRxSnappy().getObject(getTag(), selectedClass);
   }
 
+  static <T> T getObject(String key, Class<T> selectedClass) {
+    try {
+      return getRxSnappy().getObject(key, null, selectedClass).toBlocking().first();
+    } catch (RxSnappyException ex) {
+      Log.e(key, ex.getMessage());
+      return null;
+    }
+  }
+
   public String toJson() {
     return new Gson().toJson(this);
   }
 
-  public String getClassName() {
+  String getClassName() {
     return this.getClass().getSimpleName();
   }
 }

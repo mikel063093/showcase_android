@@ -9,6 +9,7 @@ import android.view.View;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.co.showcase.ui.perfil.perfil;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -37,7 +38,7 @@ public class login extends BaseActivity {
   @Bind(R.id.auth_fb) LoginButton authButton;
   private CallbackManager callbackManager;
 
-  @Override protected void onCreate(Bundle savedInstanceState) {
+  @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     FacebookSdk.sdkInitialize(getApplicationContext());
     callbackManager = CallbackManager.Factory.create();
@@ -45,7 +46,7 @@ public class login extends BaseActivity {
     ButterKnife.bind(this);
     AccessToken accessToken = AccessToken.getCurrentAccessToken();
     if (accessToken != null) {
-      socialSingin(accessToken.getToken(), KEY_SINGIN_FB);
+      socialSingin(accessToken.getToken());
     }
   }
 
@@ -54,7 +55,7 @@ public class login extends BaseActivity {
         @Override public void onSuccess(@NonNull LoginResult loginResult) {
           dismissDialog();
           AccessToken access_token = loginResult.getAccessToken();
-          socialSingin(access_token.getToken(), KEY_SINGIN_FB);
+          socialSingin(access_token.getToken());
         }
 
         @Override public void onCancel() {
@@ -82,10 +83,9 @@ public class login extends BaseActivity {
     authButton.registerCallback(callbackManager, loginResultFacebookCallback);
   }
 
-  private void socialSingin(@NonNull String token, int type) {
+  private void socialSingin(@NonNull String token) {
     Map<String, String> param = new HashMap<>();
-    param.put("proveedor", type + "");
-    param.put("accessToken", token);
+    param.put("access_token", token);
 
     REST.getRest()
         .registrarFB(param)
@@ -94,12 +94,17 @@ public class login extends BaseActivity {
         .subscribeOn(Schedulers.io())
         .doOnCompleted(this::dismissDialog)
         .observeOn(AndroidSchedulers.mainThread())
-        .onErrorResumeNext(Observable.error(new Throwable("Custom error")))
+        //.onErrorResumeNext(Observable.error(new Throwable("Custom error")))
         .subscribe(this::onSuccesLogin, this::errControl);
   }
 
   private void onSuccesLogin(@NonNull Usuario usuario) {
-    usuario.save();
+    if (usuario.getEstado().equalsIgnoreCase("exito")) {
+      usuario.save();
+      goActv(perfil.class, true);
+    } else {
+      showErr(getString(R.string.general_err));
+    }
   }
 
   @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {

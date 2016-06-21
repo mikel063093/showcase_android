@@ -22,17 +22,13 @@ import rx.schedulers.Schedulers;
 public class DetailActivity extends BaseActivity {
 
   public static final String DETAIL = DetailActivity.class.getCanonicalName() + ".DETAIL";
-  @Nullable
-  @Bind(R.id.image_app) ImageView imageApp;
-  @Nullable
-  @Bind(R.id.toolbar_detail) Toolbar toolbar;
-  @Nullable
-  @Bind(R.id.text_title) TextView textTitle;
-  @Nullable
-  @Bind(R.id.text_description) ReadMoreTextView textDescription;
+  @Nullable @Bind(R.id.image_app) ImageView imageApp;
+  @Nullable @Bind(R.id.toolbar_detail) Toolbar toolbar;
+  @Nullable @Bind(R.id.text_title) TextView textTitle;
+  @Nullable @Bind(R.id.text_description) ReadMoreTextView textDescription;
   private Entre entry;
 
-  @Override protected void onCreate(Bundle savedInstanceState) {
+  @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_detail);
     ButterKnife.bind(this);

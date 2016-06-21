@@ -1,32 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-    <string name="app_name">Showcase</string>
-    <string name="category">Categorias</string>
-    <string name="offile">Sin conexión a internet</string>
-    <string name="login.fb">Conectar con Facebook</string>
-    <string name="ingresar">Ingresar</string>
-    <string name="registrarse">Registrarse</string>
-    <string name="eslogan">Encuentra lo que quieres comprar en un solo lugar</string>
-    <string name="Ingresar">Ingresar</string>
-    <string name="no_tienes_cuenta">¿Aún no tienes cuenta? Regístrate aquí</string>
-    <string name="correo">Correo electrónico</string>
-    <string name="password">Contraseña</string>
-    <string name="nombre">Nombre</string>
-    <string name="apellido">Apellido</string>
-    <string name="registro">Registrarme</string>
-    <string name="no_tienes_cuenta_registro">¿Estás registrado? Ingresa aquí</string>
-    <string name="encuentra">ENCUENTRA</string>
-    <string name="lo_que_quieres_comprar">LO QUE QUIERES COMPRAR\nEN UN SÓLO LUGAR</string>
-    <string name="facebook_app_id" translatable="false">1545741209066315</string>
-    <string name="Enviar">Enviar</string>
-    <string name="recuperar_password">¿No recuerdas tu\ncontraseña?</string>
-    <string name="escribe_tu_correo">Escríbe tu correo electrónico y te harémos\nllegar la forma para recuperarla.</string>
-    <string name="acept">Aceptar</string>
-    <string name="cancel">Cancelar</string>
-    <string name="err_email">Email invalido</string>
-    <string name="err_pass">Password incorrecto</string>
-    <string name="loading">Cargando...</string>
-    <string name="internet_err">Ha ocurrido un problema con tu conexion</string>
-    <string name="general_err">Ha ocurrido un problema</string>
+  <string name="app_name">Showcase</string>
+  <string name="category">Categorias</string>
+  <string name="offile">Sin conexión a internet</string>
+  <string name="login.fb">Conectar con Facebook</string>
+  <string name="ingresar">Ingresar</string>
+  <string name="registrarse">Registrarse</string>
+  <string name="eslogan">Encuentra lo que quieres comprar en un solo lugar</string>
+  <string name="Ingresar">Ingresar</string>
+  <string name="no_tienes_cuenta">¿Aún no tienes cuenta? Regístrate aquí</string>
+  <string name="correo">Correo electrónico</string>
+  <string name="password">Contraseña</string>
+  <string name="nombre">Nombre</string>
+  <string name="apellido">Apellido</string>
+  <string name="registro">Registrarme</string>
+  <string name="no_tienes_cuenta_registro">¿Estás registrado? Ingresa aquí</string>
+  <string name="encuentra">ENCUENTRA</string>
+  <string name="lo_que_quieres_comprar">LO QUE QUIERES COMPRAR\nEN UN SÓLO LUGAR</string>
+  <string name="facebook_app_id" translatable="false">1545741209066315</string>
+  <string name="Enviar">Enviar</string>
+  <string name="recuperar_password">¿No recuerdas tu\ncontraseña?</string>
+  <string name="escribe_tu_correo">Escríbe tu correo electrónico y te harémos\nllegar la forma para recuperarla.</string>
+  <string name="acept">Aceptar</string>
+  <string name="cancel">Cancelar</string>
+  <string name="err_email">Email invalido</string>
+  <string name="err_pass">Password incorrecto</string>
+  <string name="loading">Cargando...</string>
+  <string name="internet_err">Ha ocurrido un problema con tu conexion</string>
+  <string name="general_err">Ha ocurrido un problema</string>
+  <string name="perfil">Mi perfil</string>
+  <string name="Guardar">Guardar</string>
+  <string name="telefono_contacto">Teléfono de contacto</string>
 </resources>
 

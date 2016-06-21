@@ -31,7 +31,7 @@ public class singin extends BaseActivity {
   @Nullable @Bind(R.id.view_pager_singin) ViewPager viewPagerSingin;
   private ViewPagerAdapter adapter;
 
-  @Override protected void onCreate(Bundle savedInstanceState) {
+  @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.root_singin);
     ButterKnife.bind(this);

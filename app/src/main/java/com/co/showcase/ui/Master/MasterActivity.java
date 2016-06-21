@@ -25,14 +25,11 @@ import rx.schedulers.Schedulers;
 public class MasterActivity extends BaseActivity {
 
   private static final String CATEGORY = MasterActivity.class.getCanonicalName() + ".CATEGORY";
-  @Nullable
-  @Bind(R.id.toolbar_master) Toolbar toolbar;
-  @Nullable
-  @Bind(R.id.list_master) AbsListView list;
-  @NonNull
-  private List<List<Entre>> entryArr = new ArrayList<>();
+  @Nullable @Bind(R.id.toolbar_master) Toolbar toolbar;
+  @Nullable @Bind(R.id.list_master) AbsListView list;
+  @NonNull private List<List<Entre>> entryArr = new ArrayList<>();
 
-  @Override protected void onCreate(Bundle savedInstanceState) {
+  @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_master);
     ButterKnife.bind(this);
@@ -63,7 +60,7 @@ public class MasterActivity extends BaseActivity {
         .doOnCompleted(() -> Log("End Request"))
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(this::init, throwable -> {
-          getLocalEntry().subscribe(this::init, this::Log);
+          getLocalEntry().subscribe(this::init, Throwable::printStackTrace);
         });
   }
 
@@ -71,7 +68,7 @@ public class MasterActivity extends BaseActivity {
     entryResponse.save();
     getCategories(entryResponse.feed.entry).subscribe(strings -> {
       for (String str : strings) {
-        Log("Categorias "+ str);
+        Log("Categorias " + str);
         getAppsByCategory(str, entryResponse.feed.entry).subscribe(entries -> {
           entryArr.add(entries);
         });

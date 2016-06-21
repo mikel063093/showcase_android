@@ -21,13 +21,18 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.co.showcase.AppMain;
 import com.co.showcase.BuildConfig;
 import com.co.showcase.R;
+import com.co.showcase.api.REST;
 import com.co.showcase.model.EntryResponse;
 import com.co.showcase.model.TabPosition;
+import com.co.showcase.model.Usuario;
 import com.github.pwittchen.reactivenetwork.library.ReactiveNetwork;
 import com.google.gson.Gson;
+import com.onesignal.OneSignal;
 import com.orhanobut.logger.Logger;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -67,7 +72,12 @@ public class BaseActivity extends RxAppCompatActivity {
 
   @Override protected void onResume() {
     super.onResume();
+    initDB();
     isOnpause = false;
+    Usuario usuario = Usuario.GetItem();
+    if (usuario != null) {
+      updateGcm(usuario);
+    }
   }
 
   @Override protected void onStop() {
@@ -80,8 +90,14 @@ public class BaseActivity extends RxAppCompatActivity {
     EventBus.getDefault().register(this);
   }
 
-  @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
+  private void initDB() {
+    AppMain appmain = (AppMain) getApplication();
+    appmain.initRxDb();
+  }
+
+  @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    initDB();
     new ReactiveNetwork().observeConnectivity(this)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -94,6 +110,23 @@ public class BaseActivity extends RxAppCompatActivity {
               break;
           }
         });
+    //
+    //
+  }
+
+  private void updateGcm(Usuario usuario) {
+    OneSignal.idsAvailable((userId, registrationId) -> {
+      Map<String, String> param = new HashMap<>();
+      param.put("id", usuario.getId());
+      param.put("gcmid", userId);
+      REST.getRest()
+          .gcm(param)
+          .compose(bindToLifecycle())
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .onErrorResumeNext(Observable.empty())
+          .subscribe();
+    });
   }
 
   public void Log(String msg) {
@@ -304,7 +337,7 @@ public class BaseActivity extends RxAppCompatActivity {
     if (throwable instanceof HttpException) {
       HttpException err = (HttpException) throwable;
       // log("Status err " + err.code() + err.message());
-      showErr(getString(R.string.internet_err));
+      showErr(err.getMessage() != null ? err.getMessage() : getString(R.string.internet_err));
     } else {
       showErr(getString(R.string.general_err));
     }

@@ -1,0 +1,35 @@
+{
+  "project_info": {
+    "project_number": "865111362091",
+    "project_id": "showcase-40a09"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:865111362091:android:4413cdd98cb4d7ea",
+        "android_client_info": {
+          "package_name": "com.co.showcase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA96NoTdiN7FM9ohgSiiQlyJuvIRhXYKZQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,5 +1,8 @@
 package com.co.showcase.model;
 
+import rx.Observable;
+import rx.schedulers.Schedulers;
+
 /**
  * Created by home on 20/06/16.
  */
@@ -14,6 +17,7 @@ public class Usuario extends BaseModel {
   String mensaje;
   String token;
   String clave;
+  String telefono;
 
   public String getClave() {
     return clave;
@@ -72,14 +76,28 @@ public class Usuario extends BaseModel {
   }
 
   public String getToken() {
-    return token;
+    return "Bearer " + '"' + token + '"';
   }
 
   public void setToken(String token) {
     this.token = token;
   }
 
+  public static Observable<Usuario> getItem() {
+    Usuario usuario = new Usuario();
+    return usuario.getObject(Usuario.class).subscribeOn(Schedulers.io()).asObservable();
+  }
+
+  public static Usuario GetItem() {
+    return getObject(Usuario.class.getSimpleName(), Usuario.class);
+  }
+
+
   @Override public String getTag() {
     return getClassName();
+  }
+
+  public String getTelefono() {
+    return telefono;
   }
 }
