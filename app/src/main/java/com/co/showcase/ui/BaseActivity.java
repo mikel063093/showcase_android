@@ -50,18 +50,17 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
  * Created by miguelalegria on 15/5/16 for DemoMike.
  */
 public class BaseActivity extends RxAppCompatActivity {
-  public static final String KEY_POSITION = "KEYPOSTION";
+  protected static final String KEY_POSITION = "KEYPOSTION";
 
   @NonNull public Gson gson = new Gson();
   private static final String EMAIL_PATTERN =
       "^[a-zA-Z0-9#_~!$&'()*+,;=:.\"(),:;<>@\\[\\]\\\\]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*$";
   private Pattern pattern = Pattern.compile(EMAIL_PATTERN);
-  private Matcher matcher;
   private boolean isOnpause;
   private MaterialDialog loading;
   @Nullable private MaterialDialog materialDialog;
 
-  public void showMessageOnSnakeBar(@NonNull View view, @NonNull String msg) {
+  private void showMessageOnSnakeBar(@NonNull View view, @NonNull String msg) {
     Snackbar.make(view, msg, Snackbar.LENGTH_SHORT).show();
   }
 
@@ -114,7 +113,7 @@ public class BaseActivity extends RxAppCompatActivity {
     //
   }
 
-  private void updateGcm(Usuario usuario) {
+  private void updateGcm(@NonNull Usuario usuario) {
     OneSignal.idsAvailable((userId, registrationId) -> {
       Map<String, String> param = new HashMap<>();
       param.put("id", usuario.getId());
@@ -129,7 +128,7 @@ public class BaseActivity extends RxAppCompatActivity {
     });
   }
 
-  public void Log(String msg) {
+  protected void Log(String msg) {
     if (BuildConfig.DEBUG) Logger.e(msg);
   }
 
@@ -137,12 +136,12 @@ public class BaseActivity extends RxAppCompatActivity {
     if (BuildConfig.DEBUG) Logger.e(throwable.getMessage());
   }
 
-  @NonNull public Observable<EntryResponse> getLocalEntry() {
+  @NonNull protected Observable<EntryResponse> getLocalEntry() {
     EntryResponse entryResponse = new EntryResponse();
     return entryResponse.getObject(EntryResponse.class).asObservable();
   }
 
-  public void configToolbarChild(@NonNull Toolbar toolbar, int idRes) {
+  protected void configToolbarChild(@NonNull Toolbar toolbar, int idRes) {
     AppCompatTextView toolbarText = (AppCompatTextView) toolbar.findViewById(R.id.txt_toolbar);
     toolbarText.setText(getString(idRes));
     final Drawable upArrow = getResources().getDrawable(R.drawable.ico_flecha_blanca);
@@ -153,12 +152,12 @@ public class BaseActivity extends RxAppCompatActivity {
     });
   }
 
-  public void configToolbar(@NonNull Toolbar toolbar, int idRes) {
+  protected void configToolbar(@NonNull Toolbar toolbar, int idRes) {
     AppCompatTextView toolbarText = (AppCompatTextView) toolbar.findViewById(R.id.txt_toolbar);
     toolbarText.setText(getString(idRes));
   }
 
-  public void configToolbarChild(@NonNull Toolbar toolbar, String idRes) {
+  protected void configToolbarChild(@NonNull Toolbar toolbar, String idRes) {
     AppCompatTextView toolbarText = (AppCompatTextView) toolbar.findViewById(R.id.txt_toolbar);
 
     toolbarText.setText(idRes);
@@ -170,20 +169,20 @@ public class BaseActivity extends RxAppCompatActivity {
     });
   }
 
-  public void goActv(Class<?> cls, boolean clear) {
+  protected void goActv(Class<?> cls, boolean clear) {
     Intent intent = new Intent(getApplicationContext(), cls);
     if (clear) intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
     startActivity(intent);
     overridePendingTransition(R.anim.move_right_in_activity, R.anim.move_left_out_activity);
   }
 
-  public void goActv(@NonNull Intent intent, boolean clear) {
+  protected void goActv(@NonNull Intent intent, boolean clear) {
     if (clear) intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
     startActivity(intent);
     overridePendingTransition(R.anim.move_right_in_activity, R.anim.move_left_out_activity);
   }
 
-  @NonNull public Observable<Object> RxParseJson(@NonNull String json, @NonNull Class clss) {
+  @NonNull protected Observable<Object> RxParseJson(@NonNull String json, @NonNull Class clss) {
     return Observable.create(sub -> {
       try {
         sub.onNext(gson.fromJson(json, clss));
@@ -195,7 +194,7 @@ public class BaseActivity extends RxAppCompatActivity {
     });
   }
 
-  @NonNull public Observable<Object> RxParseJson(@NonNull String json, @NonNull Type clss) {
+  @NonNull protected Observable<Object> RxParseJson(@NonNull String json, @NonNull Type clss) {
     return Observable.create(sub -> {
       try {
         sub.onNext(gson.fromJson(json, clss));
@@ -213,7 +212,7 @@ public class BaseActivity extends RxAppCompatActivity {
   }
 
   public boolean validateEmail(@NonNull String email) {
-    matcher = pattern.matcher(email);
+    Matcher matcher = pattern.matcher(email);
     return matcher.matches();
   }
 
@@ -354,7 +353,7 @@ public class BaseActivity extends RxAppCompatActivity {
     return res;
   }
 
-  public void log(String log) {
+  protected void log(String log) {
     Log.e(getClassName(), log);
   }
 

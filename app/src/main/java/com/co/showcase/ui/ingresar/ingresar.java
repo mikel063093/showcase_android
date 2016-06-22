@@ -31,7 +31,7 @@ public class ingresar extends BaseFragment {
   @Nullable @Bind(R.id.edt_email) AppCompatEditText edtEmail;
   @Nullable @Bind(R.id.emailWrapper) TextInputLayout emailWrapper;
 
-  BaseActivity baseActivity;
+  private BaseActivity baseActivity;
 
   @SuppressWarnings("unchecked") @Override
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -71,7 +71,6 @@ public class ingresar extends BaseFragment {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(this::onSuccesValidar, throwable -> baseActivity.errControl(throwable));
       } else {
-
         baseActivity.showMaterialDialog(getString(R.string.err_pass),
             new BaseActivity.onClickCallback() {
               @Override public void onPositive(boolean result) {
@@ -90,12 +89,9 @@ public class ingresar extends BaseFragment {
     } else {
       baseActivity.showMaterialDialog(getString(R.string.err_email),
           new BaseActivity.onClickCallback() {
-            @Override public void onPositive(boolean result) {
-
-            }
+            @Override public void onPositive(boolean result) {}
 
             @Override public void onDissmis() {
-
             }
 
             @Override public void onNegative(boolean result) {

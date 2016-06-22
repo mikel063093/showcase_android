@@ -34,8 +34,7 @@ import java.util.Map;
 
 public class login extends BaseActivity {
 
-  private static final int KEY_SINGIN_FB = 2;
-  @Bind(R.id.auth_fb) LoginButton authButton;
+  @Nullable @Bind(R.id.auth_fb) LoginButton authButton;
   private CallbackManager callbackManager;
 
   @Override public void onCreate(Bundle savedInstanceState) {
@@ -79,6 +78,7 @@ public class login extends BaseActivity {
 
   @Override protected void onResume() {
     super.onResume();
+    assert authButton != null;
     authButton.setReadPermissions(Arrays.asList("public_profile", "email", "user_friends"));
     authButton.registerCallback(callbackManager, loginResultFacebookCallback);
   }
@@ -94,7 +94,7 @@ public class login extends BaseActivity {
         .subscribeOn(Schedulers.io())
         .doOnCompleted(this::dismissDialog)
         .observeOn(AndroidSchedulers.mainThread())
-        //.onErrorResumeNext(Observable.error(new Throwable("Custom error")))
+        .onErrorResumeNext(Observable.error(new Throwable("Custom error")))
         .subscribe(this::onSuccesLogin, this::errControl);
   }
 
@@ -116,6 +116,7 @@ public class login extends BaseActivity {
   public void onClick(@NonNull View view) {
     switch (view.getId()) {
       case R.id.btn_fb:
+        assert authButton != null;
         authButton.performClick();
         break;
       case R.id.btn_ingresar:

@@ -1,5 +1,7 @@
 package com.co.showcase.model;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 
@@ -75,7 +77,7 @@ public class Usuario extends BaseModel {
     this.mensaje = mensaje;
   }
 
-  public String getToken() {
+  @NonNull public String getToken() {
     return "Bearer " + '"' + token + '"';
   }
 
@@ -88,7 +90,7 @@ public class Usuario extends BaseModel {
     return usuario.getObject(Usuario.class).subscribeOn(Schedulers.io()).asObservable();
   }
 
-  public static Usuario GetItem() {
+  @Nullable public static Usuario GetItem() {
     return getObject(Usuario.class.getSimpleName(), Usuario.class);
   }
 

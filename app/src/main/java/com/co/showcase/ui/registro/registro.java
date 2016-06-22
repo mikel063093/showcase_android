@@ -30,83 +30,67 @@ import org.greenrobot.eventbus.EventBus;
 
 public class registro extends BaseFragment {
 
-    @Nullable
-    @Bind(R.id.edt_nombre)
-    AppCompatEditText edtNombre;
-    @Nullable
-    @Bind(R.id.nombreWrapper)
-    TextInputLayout nombreWrapper;
-    @Nullable
-    @Bind(R.id.edt_apellido)
-    AppCompatEditText edtApellido;
-    @Nullable
-    @Bind(R.id.apellidoWrapper)
-    TextInputLayout apellidoWrapper;
-    @Nullable
-    @Bind(R.id.edt_password)
-    AppCompatEditText edtPassword;
-    @Nullable
-    @Bind(R.id.passwordWrapper)
-    TextInputLayout passwordWrapper;
-    @Nullable
-    @Bind(R.id.edt_email)
-    AppCompatEditText edtEmail;
-    @Nullable
-    @Bind(R.id.emailWrapper)
-    TextInputLayout emailWrapper;
-    BaseActivity baseActivity;
+  @Nullable @Bind(R.id.edt_nombre) AppCompatEditText edtNombre;
+  @Nullable @Bind(R.id.nombreWrapper) TextInputLayout nombreWrapper;
+  @Nullable @Bind(R.id.edt_apellido) AppCompatEditText edtApellido;
+  @Nullable @Bind(R.id.apellidoWrapper) TextInputLayout apellidoWrapper;
+  @Nullable @Bind(R.id.edt_password) AppCompatEditText edtPassword;
+  @Nullable @Bind(R.id.passwordWrapper) TextInputLayout passwordWrapper;
+  @Nullable @Bind(R.id.edt_email) AppCompatEditText edtEmail;
+  @Nullable @Bind(R.id.emailWrapper) TextInputLayout emailWrapper;
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.registro, container, false);
-        ButterKnife.bind(this, view);
-        baseActivity = (BaseActivity) getActivity();
-        return view;
+  private BaseActivity baseActivity;
+
+  @SuppressWarnings("unchecked") @Override
+  public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+      @Nullable Bundle savedInstanceState) {
+    View view = inflater.inflate(R.layout.registro, container, false);
+    ButterKnife.bind(this, view);
+    baseActivity = (BaseActivity) getActivity();
+    return view;
+  }
+
+  @Override public void onDestroyView() {
+    super.onDestroyView();
+    ButterKnife.unbind(this);
+  }
+
+  @OnClick({ R.id.btn_ingresar, R.id.txt_no_cuenta }) public void onClick(@NonNull View view) {
+    switch (view.getId()) {
+      case R.id.btn_ingresar:
+        validar();
+        break;
+      case R.id.txt_no_cuenta:
+        EventBus.getDefault().post(new TabPosition(0));
+        break;
     }
+  }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
+  private void validar() {
+    if (validate(edtNombre) && validate(edtApellido) && validate(edtPassword) && validate(
+        edtEmail)) {
+      Usuario usuario = new Usuario();
+      assert edtPassword != null;
+      usuario.setClave(edtPassword.getText().toString());
+      assert edtEmail != null;
+      usuario.setCorreo(edtEmail.getText().toString());
+      assert edtNombre != null;
+      usuario.setNombre(edtNombre.getText().toString());
+      assert edtApellido != null;
+      usuario.setApellido(edtApellido.getText().toString());
+
+      REST.getRest()
+          .registrar(usuario.jsonToMap())
+          .compose(bindToLifecycle())
+          .doOnSubscribe(() -> baseActivity.showDialog(getString(R.string.loading)))
+          .subscribeOn(Schedulers.io())
+          .doOnCompleted(() -> baseActivity.dismissDialog())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(this::onSuccesRegistro, throwable -> baseActivity.errControl(throwable));
     }
+  }
 
-    @OnClick({R.id.btn_ingresar, R.id.txt_no_cuenta})
-    public void onClick(@NonNull View view) {
-        switch (view.getId()) {
-            case R.id.btn_ingresar:
-                validar();
-                break;
-            case R.id.txt_no_cuenta:
-                EventBus.getDefault().post(new TabPosition(0));
-                break;
-        }
-    }
-
-    private void validar() {
-        if (validate(edtNombre) && validate(edtApellido) && validate(edtPassword) && validate(edtEmail)) {
-            Usuario usuario = new Usuario();
-            assert edtPassword != null;
-            usuario.setClave(edtPassword.getText().toString());
-            assert edtEmail != null;
-            usuario.setCorreo(edtEmail.getText().toString());
-            assert edtNombre != null;
-            usuario.setNombre(edtNombre.getText().toString());
-            assert edtApellido != null;
-            usuario.setApellido(edtApellido.getText().toString());
-
-            REST.getRest().registrar(usuario.jsonToMap())
-                    .compose(bindToLifecycle())
-                    .doOnSubscribe(() -> baseActivity.showDialog(getString(R.string.loading)))
-                    .subscribeOn(Schedulers.io())
-                    .doOnCompleted(() -> baseActivity.dismissDialog())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(this::onSuccesRegistro, throwable -> baseActivity.errControl(throwable));
-        }
-    }
-
-    private void onSuccesRegistro(@NonNull Usuario usuario) {
-        usuario.save();
-    }
+  private void onSuccesRegistro(@NonNull Usuario usuario) {
+    usuario.save();
+  }
 }

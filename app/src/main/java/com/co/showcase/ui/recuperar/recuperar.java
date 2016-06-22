@@ -29,6 +29,7 @@ public class recuperar extends BaseActivity {
 
   private void renderToolbar() {
     final Drawable upArrow = getResources().getDrawable(R.drawable.btn_flechaizquierda);
+    assert toolbar != null;
     toolbar.setNavigationIcon(upArrow);
     toolbar.setNavigationOnClickListener(v -> {
       finish();

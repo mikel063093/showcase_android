@@ -11,7 +11,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 
-import android.util.Log;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -29,13 +28,12 @@ public class singin extends BaseActivity {
   @Nullable @Bind(R.id.toolbar_singin) Toolbar toolbar;
   @Nullable @Bind(R.id.tabanim_tabs) TabLayout tabanimTabs;
   @Nullable @Bind(R.id.view_pager_singin) ViewPager viewPagerSingin;
-  private ViewPagerAdapter adapter;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.root_singin);
     ButterKnife.bind(this);
-    adapter = new ViewPagerAdapter(getSupportFragmentManager());
+    ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
     adapter.addFrag(new ingresar(), getString(R.string.ingresar));
     adapter.addFrag(new registro(), getString(R.string.registrarse));
     initTabs(adapter);
@@ -49,6 +47,7 @@ public class singin extends BaseActivity {
   private void renderToolbar() {
     final Drawable upArrow = getResources().getDrawable(R.drawable.btn_flechaizquierda);
 
+    assert toolbar != null;
     toolbar.setNavigationIcon(upArrow);
     toolbar.setNavigationOnClickListener(v -> {
       finish();
@@ -99,7 +98,7 @@ public class singin extends BaseActivity {
     private final List<Fragment> mFragmentList = new ArrayList<>();
     private final List<String> mFragmentTitleList = new ArrayList<>();
 
-    public ViewPagerAdapter(FragmentManager manager) {
+    ViewPagerAdapter(FragmentManager manager) {
       super(manager);
     }
 
@@ -111,7 +110,7 @@ public class singin extends BaseActivity {
       return mFragmentList.size();
     }
 
-    public void addFrag(Fragment fragment, String title) {
+    void addFrag(Fragment fragment, String title) {
       mFragmentList.add(fragment);
       mFragmentTitleList.add(title);
     }
