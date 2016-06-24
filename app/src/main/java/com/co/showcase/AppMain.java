@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.multidex.MultiDex;
 import android.util.Log;
 import com.facebook.FacebookSdk;
+import com.fuck_boilerplate.rx_paparazzo.RxPaparazzo;
 import com.onesignal.OneSignal;
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
@@ -48,6 +49,7 @@ public class AppMain extends Application {
 
   @Override public void onCreate() {
     super.onCreate();
+    RxPaparazzo.register(this);
     context = getApplicationContext();
     initRxDb();
     FacebookSdk.sdkInitialize(this.getApplicationContext());

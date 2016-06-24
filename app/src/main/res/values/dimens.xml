@@ -14,5 +14,6 @@
   <dimen name="content_recycler_view_padding">0dp</dimen>
   <dimen name="texto_botones_size">@dimen/_14sdp</dimen>
   <dimen name="corner_login">10dp</dimen>
+  <dimen name="size_default_height">160dp</dimen>
 
 </resources>

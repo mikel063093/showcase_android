@@ -78,7 +78,7 @@ public class Usuario extends BaseModel {
   }
 
   @NonNull public String getToken() {
-    return "Bearer " + '"' + token + '"';
+    return "Bearer " + token;
   }
 
   public void setToken(String token) {
@@ -93,7 +93,6 @@ public class Usuario extends BaseModel {
   @Nullable public static Usuario GetItem() {
     return getObject(Usuario.class.getSimpleName(), Usuario.class);
   }
-
 
   @Override public String getTag() {
     return getClassName();

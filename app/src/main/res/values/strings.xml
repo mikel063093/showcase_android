@@ -31,5 +31,6 @@
   <string name="perfil">Mi perfil</string>
   <string name="Guardar">Guardar</string>
   <string name="telefono_contacto">Teléfono de contacto</string>
+  <string name="user_canceled">debes seleccionar una imagen</string>
 </resources>
 
