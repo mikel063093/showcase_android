@@ -32,5 +32,6 @@
   <string name="Guardar">Guardar</string>
   <string name="telefono_contacto">Teléfono de contacto</string>
   <string name="user_canceled">debes seleccionar una imagen</string>
+  <string name="check_email">Revisa tu correo electronico para mirar las instrucciones</string>
 </resources>
 

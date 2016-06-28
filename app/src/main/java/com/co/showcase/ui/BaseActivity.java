@@ -144,7 +144,7 @@ public class BaseActivity extends RxAppCompatActivity {
   protected void configToolbarChild(@NonNull Toolbar toolbar, int idRes) {
     AppCompatTextView toolbarText = (AppCompatTextView) toolbar.findViewById(R.id.txt_toolbar);
     toolbarText.setText(getString(idRes));
-    final Drawable upArrow = getResources().getDrawable(R.drawable.ico_flecha_blanca);
+    final Drawable upArrow = getResources().getDrawable(R.drawable.btn_flechaizquierda);
     toolbar.setNavigationIcon(upArrow);
     toolbar.setNavigationOnClickListener(v -> {
       finish();
@@ -161,7 +161,7 @@ public class BaseActivity extends RxAppCompatActivity {
     AppCompatTextView toolbarText = (AppCompatTextView) toolbar.findViewById(R.id.txt_toolbar);
 
     toolbarText.setText(idRes);
-    final Drawable upArrow = getResources().getDrawable(R.drawable.ico_flecha_blanca);
+    final Drawable upArrow = getResources().getDrawable(R.drawable.btn_flechaizquierda);
     toolbar.setNavigationIcon(upArrow);
     toolbar.setNavigationOnClickListener(v -> {
       finish();

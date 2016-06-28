@@ -26,4 +26,6 @@ public interface API {
   @NonNull @FormUrlEncoded @POST("registroRedesMovil") Observable<Usuario> registrarFB(@FieldMap Map<String, String> param);
 
   @NonNull @FormUrlEncoded @POST("registroNotificacion") Observable<Usuario> gcm(@FieldMap Map<String, String> param);
+
+  @NonNull @FormUrlEncoded @POST("recuperar") Observable<Usuario> recuperar(@FieldMap Map<String, String> param);
 }
