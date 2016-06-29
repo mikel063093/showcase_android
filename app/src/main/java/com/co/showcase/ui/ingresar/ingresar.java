@@ -12,7 +12,10 @@ import android.view.ViewGroup;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.jakewharton.rxbinding.widget.RxTextView;
+import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 
 import com.co.showcase.R;
@@ -24,6 +27,8 @@ import com.co.showcase.ui.BaseFragment;
 
 import org.greenrobot.eventbus.EventBus;
 
+import static android.text.TextUtils.isEmpty;
+
 public class ingresar extends BaseFragment {
 
   @Nullable @Bind(R.id.edt_password) AppCompatEditText edtPassword;
@@ -32,6 +37,8 @@ public class ingresar extends BaseFragment {
   @Nullable @Bind(R.id.emailWrapper) TextInputLayout emailWrapper;
 
   private BaseActivity baseActivity;
+  private Observable<CharSequence> emailChangeObservable;
+  private Observable<CharSequence> passwordChangeObservable;
 
   @SuppressWarnings("unchecked") @Override
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -39,7 +46,45 @@ public class ingresar extends BaseFragment {
     View view = inflater.inflate(R.layout.ingresar, container, false);
     ButterKnife.bind(this, view);
     baseActivity = (BaseActivity) getActivity();
+    emailChangeObservable = RxTextView.textChanges(edtEmail).skip(1);
+    passwordChangeObservable = RxTextView.textChanges(edtPassword).skip(1);
+    rxValidationLogin();
     return view;
+  }
+
+  private void rxValidationLogin() {
+    Observable.combineLatest(emailChangeObservable, passwordChangeObservable,
+        new Func2<CharSequence, CharSequence, Boolean>() {
+          @Override public Boolean call(CharSequence newEmail, CharSequence newPassword) {
+            boolean emailValid = !isEmpty(newEmail) && baseActivity.validateEmail(newEmail);
+
+            if (!emailValid) {
+              emailWrapper.setErrorEnabled(true);
+              emailWrapper.setError(getString(R.string.err_email));
+            } else {
+              emailWrapper.setError(null);
+              emailWrapper.setErrorEnabled(false);
+              //baseActivity.Log("email ok");
+            }
+            boolean passValid = !isEmpty(newPassword);
+            if (!passValid) {
+              passwordWrapper.setErrorEnabled(true);
+              passwordWrapper.setError(getString(R.string.err_pass));
+            } else {
+              passwordWrapper.setError(null);
+              passwordWrapper.setErrorEnabled(false);
+              //baseActivity.Log("passok ok");
+            }
+
+            return emailValid && passValid;
+          }
+        })
+        .compose(bindToLifecycle())
+        .subscribe(aBoolean -> {
+          if (aBoolean) {
+            // baseActivity.Log("validacion email && pass ok");
+          }
+        });
   }
 
   @OnClick({ R.id.btn_ingresar, R.id.txt_no_cuenta }) public void onClick(@NonNull View view) {
@@ -89,7 +134,8 @@ public class ingresar extends BaseFragment {
     } else {
       baseActivity.showMaterialDialog(getString(R.string.err_email),
           new BaseActivity.onClickCallback() {
-            @Override public void onPositive(boolean result) {}
+            @Override public void onPositive(boolean result) {
+            }
 
             @Override public void onDissmis() {
             }

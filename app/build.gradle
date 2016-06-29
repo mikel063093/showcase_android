@@ -88,6 +88,7 @@ dependencies {
   compile 'com.google.code.gson:gson:2.6.1'
 
   //rxAndroid
+  compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
   compile 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.4.0'
 
   compile('io.reactivex:rxandroid:1.1.0') {}

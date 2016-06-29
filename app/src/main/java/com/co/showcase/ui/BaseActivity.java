@@ -128,7 +128,7 @@ public class BaseActivity extends RxAppCompatActivity {
     });
   }
 
-  protected void Log(String msg) {
+  public void Log(String msg) {
     if (BuildConfig.DEBUG) Logger.e(msg);
   }
 
@@ -212,6 +212,10 @@ public class BaseActivity extends RxAppCompatActivity {
   }
 
   public boolean validateEmail(@NonNull String email) {
+    Matcher matcher = pattern.matcher(email);
+    return matcher.matches();
+  }
+  public boolean validateEmail(@NonNull CharSequence email) {
     Matcher matcher = pattern.matcher(email);
     return matcher.matches();
   }
