@@ -55,7 +55,7 @@ public class ingresar extends BaseFragment {
   private void rxValidationLogin() {
     Observable.combineLatest(emailChangeObservable, passwordChangeObservable,
         new Func2<CharSequence, CharSequence, Boolean>() {
-          @Override public Boolean call(CharSequence newEmail, CharSequence newPassword) {
+          @NonNull @Override public Boolean call(@NonNull CharSequence newEmail, CharSequence newPassword) {
             boolean emailValid = !isEmpty(newEmail) && baseActivity.validateEmail(newEmail);
 
             if (!emailValid) {

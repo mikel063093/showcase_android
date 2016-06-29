@@ -12,7 +12,10 @@ import android.view.ViewGroup;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.jakewharton.rxbinding.widget.RxTextView;
+import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func4;
 import rx.schedulers.Schedulers;
 
 import com.co.showcase.R;
@@ -23,6 +26,8 @@ import com.co.showcase.ui.BaseActivity;
 import com.co.showcase.ui.BaseFragment;
 
 import org.greenrobot.eventbus.EventBus;
+
+import static android.text.TextUtils.isEmpty;
 
 /**
  * Created by miguelalegria on 5/6/16 for showcase.
@@ -41,13 +46,75 @@ public class registro extends BaseFragment {
 
   private BaseActivity baseActivity;
 
+  private Observable<CharSequence> emailChangeObservable;
+  private Observable<CharSequence> passwordChangeObservable;
+  private Observable<CharSequence> firstNameChangeObservable;
+  private Observable<CharSequence> lastNameChangeObservable;
+
   @SuppressWarnings("unchecked") @Override
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.registro, container, false);
     ButterKnife.bind(this, view);
     baseActivity = (BaseActivity) getActivity();
+    emailChangeObservable = RxTextView.textChanges(edtEmail).skip(1);
+    passwordChangeObservable = RxTextView.textChanges(edtPassword).skip(1);
+    firstNameChangeObservable = RxTextView.textChanges(edtNombre).skip(1);
+    lastNameChangeObservable = RxTextView.textChanges(edtApellido).skip(1);
+    rxValidationRegister();
     return view;
+  }
+
+  private void rxValidationRegister() {
+    Observable.combineLatest(emailChangeObservable, passwordChangeObservable,
+        firstNameChangeObservable, lastNameChangeObservable, (email, pass, first, last) -> {
+          boolean emailValid = !isEmpty(email) && baseActivity.validateEmail(email);
+
+          if (!emailValid) {
+            assert emailWrapper != null;
+            emailWrapper.setErrorEnabled(true);
+            emailWrapper.setError(getString(R.string.err_email));
+          } else {
+            assert emailWrapper != null;
+            emailWrapper.setError(null);
+            emailWrapper.setErrorEnabled(false);
+            //baseActivity.Log("email ok");
+          }
+          boolean passValid = !isEmpty(pass);
+          if (!passValid) {
+            assert passwordWrapper != null;
+            passwordWrapper.setErrorEnabled(true);
+            passwordWrapper.setError(getString(R.string.err_pass));
+          } else {
+            assert passwordWrapper != null;
+            passwordWrapper.setError(null);
+            passwordWrapper.setErrorEnabled(false);
+            //baseActivity.Log("passok ok");
+          }
+          boolean firstValid = !isEmpty(first) && validateName(first);
+          if (!firstValid) {
+            assert nombreWrapper != null;
+            nombreWrapper.setErrorEnabled(true);
+            nombreWrapper.setError(getString(R.string.name_err));
+          } else {
+            assert nombreWrapper != null;
+            nombreWrapper.setError(null);
+            nombreWrapper.setErrorEnabled(false);
+          }
+
+          boolean lastValid = !isEmpty(last) && validateName(last);
+          if (!lastValid) {
+            assert apellidoWrapper != null;
+            apellidoWrapper.setErrorEnabled(true);
+            apellidoWrapper.setError(getString(R.string.lastName_err));
+          } else {
+            assert apellidoWrapper != null;
+            apellidoWrapper.setError(null);
+            apellidoWrapper.setErrorEnabled(false);
+          }
+
+          return emailValid && passValid && firstValid && lastValid;
+        }).subscribe();
   }
 
   @Override public void onDestroyView() {

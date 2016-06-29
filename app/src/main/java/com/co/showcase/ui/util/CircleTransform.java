@@ -10,13 +10,14 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
+import android.support.annotation.NonNull;
 import com.squareup.picasso.Transformation;
 
 public class CircleTransform implements Transformation {
   private final int BORDER_COLOR = Color.WHITE;
   private final int BORDER_RADIUS = 10;
 
-  @Override public Bitmap transform(Bitmap source) {
+  @Override public Bitmap transform(@NonNull Bitmap source) {
     int size = Math.min(source.getWidth(), source.getHeight());
 
     int x = (source.getWidth() - size) / 2;
@@ -54,7 +55,7 @@ public class CircleTransform implements Transformation {
     return bitmap;
   }
 
-  @Override public String key() {
+  @NonNull @Override public String key() {
     return "circle";
   }
 }

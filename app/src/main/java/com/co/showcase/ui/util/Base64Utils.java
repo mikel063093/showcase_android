@@ -1,6 +1,7 @@
 package com.co.showcase.ui.util;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,7 +16,7 @@ import static com.google.common.io.ByteStreams.copy;
  */
 
 public class Base64Utils {
-  private static byte[] readFileToByteArray(File file) throws IOException {
+  private static byte[] readFileToByteArray(@NonNull File file) throws IOException {
     InputStream in = null;
     try {
       in = new FileInputStream(file);
@@ -25,14 +26,14 @@ public class Base64Utils {
     }
   }
 
-  private static byte[] toByteArray(InputStream input) throws IOException {
+  private static byte[] toByteArray(@NonNull InputStream input) throws IOException {
 
     ByteArrayOutputStream output = new ByteArrayOutputStream();
     copy(input, output);
     return output.toByteArray();
   }
 
-  private static void closeQuietly(InputStream input) {
+  private static void closeQuietly(@Nullable InputStream input) {
     try {
       if (input != null) {
         input.close();

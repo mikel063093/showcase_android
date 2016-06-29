@@ -26,6 +26,8 @@ public class BaseFragment extends RxFragment {
   private static final String EMAIL_PATTERN =
       "^[a-zA-Z0-9#_~!$&'()*+,;=:.\"(),:;<>@\\[\\]\\\\]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*$";
   private Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+  private static final String NAME_PATTERN = "^[\\\\p{L} .'-]+$";
+  private Pattern patternName = Pattern.compile(NAME_PATTERN);
   private Matcher matcher;
 
   @Override public void onStart() {
@@ -64,5 +66,14 @@ public class BaseFragment extends RxFragment {
       res = true;
     }
     return res;
+  }
+  public boolean validateName(@NonNull CharSequence name) {
+    Matcher matcher = patternName.matcher(name);
+    return matcher.matches();
+  }
+
+  public boolean validateName(@NonNull String name) {
+    Matcher matcher = patternName.matcher(name);
+    return matcher.matches();
   }
 }

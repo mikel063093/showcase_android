@@ -1,6 +1,5 @@
 package com.co.showcase.api;
 
-
 import android.support.annotation.NonNull;
 
 import com.google.gson.JsonDeserializationContext;
