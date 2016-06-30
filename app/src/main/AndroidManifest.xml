@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.co.showcase">
 
-
   <uses-permission android:name="android.permission.CAMERA"/>
   <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
   <uses-permission android:name="android.permission.INTERNET"/>
@@ -46,6 +45,8 @@
     <activity android:name=".ui.singin.singin"/>
     <activity android:name=".ui.recuperar.recuperar"/>
     <activity android:name=".ui.perfil.perfil">
+    </activity>
+    <activity android:name=".ui.home.home">
     </activity>
   </application>
 

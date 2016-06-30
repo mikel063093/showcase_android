@@ -35,5 +35,6 @@
   <string name="check_email">Revisa tu correo electronico para mirar las instrucciones</string>
   <string name="name_err">nombre incorrecto</string>
   <string name="lastName_err">apellido invalido</string>
+  <string name="Almacenes_de_ropa">Almacenes de ropa</string>
 </resources>
 

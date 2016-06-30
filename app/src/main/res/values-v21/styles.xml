@@ -47,6 +47,14 @@
     <item name="android:background">@drawable/shape_singin_card</item>
   </style>
 
+  <style name="card_orange" parent="CardView">
+    <item name="cardCornerRadius">1dp</item>
+    <item name="cardBackgroundColor">@color/portland_orange</item>
+    <item name="android:hardwareAccelerated">true</item>
+    <item name="cardUseCompatPadding">true</item>
+    <item name="cardElevation">1dp</item>
+  </style>
+
   <style name="card_singin_small" parent="CardView">
     <item name="cardCornerRadius">5dp</item>
     <item name="cardElevation">1dp</item>

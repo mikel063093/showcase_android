@@ -15,7 +15,6 @@ import butterknife.OnClick;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func4;
 import rx.schedulers.Schedulers;
 
 import com.co.showcase.R;
@@ -158,6 +157,9 @@ public class registro extends BaseFragment {
   }
 
   private void onSuccesRegistro(@NonNull Usuario usuario) {
-    usuario.save();
+    if (usuario.getEstado().equalsIgnoreCase("exito")) {
+      usuario.save();
+    } else {
+    }
   }
 }
