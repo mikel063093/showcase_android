@@ -1,16 +1,29 @@
 package com.co.showcase.model;
 
-import java.util.ArrayList;
+
 
 /**
  * Created by home on 30/06/16.
  */
 
 public class Slides extends BaseModel {
-  ArrayList<String> imagenes;
+  String urlImagen;
+  String id;
 
-  public ArrayList<String> getImagenes() {
-    return imagenes;
+  public String getUrlImagen() {
+    return urlImagen;
+  }
+
+  public void setUrlImagen(String urlImagen) {
+    this.urlImagen = urlImagen;
+  }
+
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
   }
 
   @Override public String getTag() {

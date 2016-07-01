@@ -52,7 +52,7 @@
     <item name="cardBackgroundColor">@color/portland_orange</item>
     <item name="android:hardwareAccelerated">true</item>
     <item name="cardUseCompatPadding">true</item>
-    <item name="cardElevation">1dp</item>
+    <item name="cardElevation">2dp</item>
   </style>
 
   <style name="card_singin_small" parent="CardView">
@@ -61,6 +61,15 @@
     <item name="android:hardwareAccelerated">true</item>
     <item name="cardUseCompatPadding">true</item>
     <item name="android:background">@drawable/shape_singin_card</item>
+  </style>
+
+  <style name="card_white" parent="CardView">
+    <item name="cardCornerRadius">1dp</item>
+    <item name="cardElevation">1dp</item>
+    <item name="cardBackgroundColor">@color/white</item>
+    <item name="android:hardwareAccelerated">true</item>
+    <item name="cardUseCompatPadding">true</item>
+
   </style>
 
   <style name="card_organe_small" parent="CardView">
@@ -134,7 +143,7 @@
   <style name="MyToolbarElevation" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
     <item name="theme">@style/ThemeOverlay.AppCompat.Dark</item>
     <item name="android:background">?colorPrimary</item>
-    <item name="android:elevation">2dp</item>
+    <item name="android:elevation">3dp</item>
   </style>
 
   <style name="elevation1dp" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
@@ -152,6 +161,14 @@
     <item name="android:textSize">@dimen/texto_botones_size</item>
     <item name="android:textStyle">normal</item>
     <item name="fontPath">fonts/Circular-Std-Bold.otf</item>
+
+  </style>
+
+  <style name="txt_black_style" parent="android:Widget.TextView">
+    <item name="android:textColor">@color/taupe</item>
+    <item name="android:textSize">@dimen/texto_botones_size</item>
+    <item name="android:textStyle">normal</item>
+    <item name="fontPath">fonts/Circular-Std-Book.otf</item>
 
   </style>
 

@@ -11,25 +11,27 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.co.showcase.R;
+import com.co.showcase.model.Slides;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import java.util.List;
 
 /**
  * Created by home on 30/06/16.
  */
 
 public class SlideAdapter extends PagerAdapter {
-  Context context;
-  ArrayList<String> imgaesUrl;
+  private Context context;
+  private List<Slides> imagesUrl;
   private ViewHolder holder;
 
-  public SlideAdapter(Context context, ArrayList<String> imgaesUrl) {
+  public SlideAdapter(Context context, List<Slides> imagesUrl) {
     this.context = context;
-    this.imgaesUrl = imgaesUrl;
+    this.imagesUrl = imagesUrl;
   }
 
   @Override public void destroyItem(@NonNull ViewGroup container, int position, Object object) {
@@ -41,20 +43,18 @@ public class SlideAdapter extends PagerAdapter {
   }
 
   @Override public int getCount() {
-    return imgaesUrl.size();
+    return imagesUrl.size();
   }
 
-  View view;
-  LayoutInflater inflater;
-
   @Override public View instantiateItem(@NonNull ViewGroup container, final int position) {
-    inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-    view = inflater.inflate(R.layout.item_slide, container, false);
+    LayoutInflater inflater =
+        (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+    View view = inflater.inflate(R.layout.item_slide, container, false);
     holder = new ViewHolder(view);
     view.setTag(holder);
-    Log.e("HOLDER", imgaesUrl.get(position));
+    Log.e("HOLDER", imagesUrl.get(position).getUrlImagen());
     Picasso.with(context).setLoggingEnabled(true);
-    Picasso.with(context).load(imgaesUrl.get(position)).into(holder.image_display);
+    Picasso.with(context).load(imagesUrl.get(position).getUrlImagen()).into(holder.image_display);
     container.addView(view);
     return view;
   }

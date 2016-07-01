@@ -36,5 +36,6 @@
   <string name="name_err">nombre incorrecto</string>
   <string name="lastName_err">apellido invalido</string>
   <string name="Almacenes_de_ropa">Almacenes de ropa</string>
+  <string name="Ver_todos">Ver todos</string>
 </resources>
 
