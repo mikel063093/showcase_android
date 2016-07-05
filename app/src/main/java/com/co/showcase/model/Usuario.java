@@ -20,6 +20,19 @@ public class Usuario extends BaseModel {
   String token;
   String clave;
   String telefono;
+  String foto;
+
+  public void setTelefono(String telefono) {
+    this.telefono = telefono;
+  }
+
+  public String getFoto() {
+    return foto;
+  }
+
+  public void setFoto(String foto) {
+    this.foto = foto;
+  }
 
   public String getClave() {
     return clave;

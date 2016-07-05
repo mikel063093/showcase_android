@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.text.TextUtilsCompat;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -13,6 +15,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.co.showcase.R;
+import com.co.showcase.api.REST;
 import com.co.showcase.model.Usuario;
 import com.co.showcase.ui.BaseActivity;
 import com.co.showcase.ui.util.Base64Utils;
@@ -20,6 +23,8 @@ import com.co.showcase.ui.util.CircleTransform;
 import com.fuck_boilerplate.rx_paparazzo.RxPaparazzo;
 import com.fuck_boilerplate.rx_paparazzo.entities.Size;
 import com.squareup.picasso.Picasso;
+import java.util.HashMap;
+import java.util.Map;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -60,6 +65,12 @@ public class perfil extends BaseActivity {
     edtEmail.setText(usuario.getCorreo() != null ? usuario.getCorreo() : "");
     assert edtPassword != null;
     edtPassword.setText(usuario.getTelefono() != null ? usuario.getTelefono() : "");
+    if (usuario.getFoto() != null && usuario.getFoto().length() > 4) {
+      Picasso.with(getApplicationContext())
+          .load(usuario.getFoto())
+          .transform(new CircleTransform())
+          .into(perfil);
+    }
   }
 
   @OnClick({ R.id.img_perfil, R.id.btn_guardar }) public void onClick(@NonNull View view) {
@@ -82,14 +93,107 @@ public class perfil extends BaseActivity {
           //.doOnCompleted(this::dismissDialog)
           .observeOn(AndroidSchedulers.mainThread())
           .onErrorResumeNext(Observable.error(new Throwable("Custom error")))
-          .subscribe(this::guardar, this::errControl);
+          .subscribe(s -> {
+            guardar(s, Base64Utils.getExtension(filePath));
+          }, this::errControl);
     } else {
       Log("noFilePath");
+      Usuario.getItem()
+          .compose(bindToLifecycle())
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(usuario -> {
+            Map<String, Object> param = new HashMap<>();
+            param.put("id", usuario.getId());
+            assert edtNombre != null;
+            if (validateFirstName(edtNombre.getText().toString())) {
+              param.put("nombre", edtNombre.getText().toString());
+            } else {
+              log("validateNameFail");
+            }
+            if (validateLastName(edtApellido.getText().toString())) {
+              param.put("apellido", edtApellido.getText().toString());
+            } else {
+              log("validateLastNameFail");
+            }
+            if (validateEmail(edtEmail.getText().toString())) {
+              param.put("correo", edtEmail.getText().toString());
+            } else {
+              log("validateEmailFail");
+            }
+            if (!TextUtils.isEmpty(edtPassword.getText().toString())) {
+              param.put("telefono", edtPassword.getText().toString());
+            } else {
+              log("validatePhoneFail");
+            }
+            REST.getRest()
+                .subirFoto(param)
+                .compose(bindToLifecycle())
+                .doOnSubscribe(() -> showDialog(getString(R.string.loading)))
+                .subscribeOn(Schedulers.io())
+                .doOnCompleted(this::dismissDialog)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::succesUpPerfil, this::errControl);
+          });
     }
   }
 
-  private void guardar(String base64Img) {
-    Log("base64Image " + base64Img);
+  private void guardar(String base64Img, String extencion) {
+    Log("base64Image " + extencion);
+    Usuario.getItem()
+        .compose(bindToLifecycle())
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(usuario -> {
+          Map<String, Object> param = new HashMap<>();
+          param.put("contenido", base64Img);
+          param.put("tipo", extencion);
+          param.put("id", usuario.getId());
+          param.put("id", usuario.getId());
+          assert edtNombre != null;
+          if (validateFirstName(edtNombre.getText().toString())) {
+            param.put("nombre", edtNombre.getText().toString());
+          } else {
+            log("validateNameFail");
+          }
+          assert edtApellido != null;
+          if (validateLastName(edtApellido.getText().toString())) {
+            param.put("apellido", edtApellido.getText().toString());
+          } else {
+            log("validateLastNameFail");
+          }
+          assert edtEmail != null;
+          if (validateEmail(edtEmail.getText().toString())) {
+            param.put("correo", edtEmail.getText().toString());
+          } else {
+            log("validateEmailFail");
+          }
+          assert edtPassword != null;
+          if (!TextUtils.isEmpty(edtPassword.getText().toString())) {
+            param.put("telefono", edtPassword.getText().toString());
+          } else {
+            log("validatePhoneFail");
+          }
+          REST.getRest()
+              .subirFoto(param)
+              .compose(bindToLifecycle())
+              .doOnSubscribe(() -> showDialog(getString(R.string.loading)))
+              .subscribeOn(Schedulers.io())
+              .doOnCompleted(this::dismissDialog)
+              .observeOn(AndroidSchedulers.mainThread())
+              .subscribe(this::succesUpPerfil, this::errControl);
+        });
+  }
+
+  private void succesUpPerfil(Usuario usuario) {
+    dismissDialog();
+    if (usuario.getEstado().equalsIgnoreCase("exito")) {
+      usuario.save();
+      updateUi(usuario);
+      log("succesUpPerfil");
+    } else {
+      showErr(usuario.getMensaje());
+    }
   }
 
   private void requestImage() {

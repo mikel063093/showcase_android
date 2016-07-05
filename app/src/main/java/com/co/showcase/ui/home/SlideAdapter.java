@@ -59,7 +59,7 @@ public class SlideAdapter extends PagerAdapter {
     return view;
   }
 
-  private static class ViewHolder {
+  public static class ViewHolder {
     @Bind(R.id.image_display) ImageView image_display;
 
     ViewHolder(View view) {

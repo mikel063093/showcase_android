@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import butterknife.ButterKnife;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.co.showcase.AppMain;
 import com.co.showcase.BuildConfig;
@@ -234,6 +235,15 @@ public class BaseActivity extends RxAppCompatActivity {
     return matcher.matches();
   }
 
+  public boolean validateFirstName(String firstName) {
+    return firstName.matches("[a-zA-z]+([ '-][a-zA-Z]+)*");
+  } // end method validateFirstName
+
+  // validate last name
+  public boolean validateLastName(String lastName) {
+    return lastName.matches("[a-zA-z]+([ '-][a-zA-Z]+)*");
+  }
+
   public boolean validatePassword(@NonNull String password) {
     return password.length() > 4;
   }
@@ -377,5 +387,10 @@ public class BaseActivity extends RxAppCompatActivity {
 
   private String getClassName() {
     return this.getClass().getName();
+  }
+
+  @Override protected void onDestroy() {
+    super.onDestroy();
+    ButterKnife.unbind(this);
   }
 }
