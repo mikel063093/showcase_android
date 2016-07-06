@@ -37,5 +37,8 @@
   <string name="lastName_err">apellido invalido</string>
   <string name="Almacenes_de_ropa">Almacenes de ropa</string>
   <string name="Ver_todos">Ver todos</string>
+  <string name="action_sub_menu">Menu</string>
+  <string name="search">Buscar</string>
+  <string name="action_payment">Carrito de compras</string>
 </resources>
 

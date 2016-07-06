@@ -60,6 +60,7 @@
     <item name="cardUseCompatPadding">true</item>
 
   </style>
+
   <style name="card_white" parent="CardView">
     <item name="cardCornerRadius">1dp</item>
     <item name="cardBackgroundColor">@color/white</item>
@@ -162,6 +163,29 @@
   </style>
 
   <style name="MyToolbar">
+    <item name="theme">@style/ThemeOverlay.AppCompat.Dark</item>
+    <item name="android:background">?colorPrimary</item>
+  </style>
+
+
+  <style name="ToolbarTextAppearance">
+    <item name="android:fontFamily">sans-serif-condensed</item>
+    <item name="android:textColor">@android:color/white</item>
+    <item name="android:shadowDx">1</item>
+    <item name="android:shadowDy">1</item>
+    <item name="android:shadowRadius">2</item>
+    <item name="android:shadowColor">?colorAccent</item>
+  </style>
+
+  <style name="ToolbarTextAppearance.Title">
+    <item name="android:textSize">@dimen/_16sdp</item>
+  </style>
+
+  <style name="ToolbarTextAppearance.Subtitle">
+    <item name="android:textSize">@dimen/_12sdp</item>
+  </style>
+
+  <style name="MyToolbarStyle">
     <item name="theme">@style/ThemeOverlay.AppCompat.Dark</item>
     <item name="android:background">?colorPrimary</item>
   </style>

@@ -1,5 +1,6 @@
 package com.co.showcase.ui.registro;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.co.showcase.ui.perfil.perfil;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -159,7 +161,10 @@ public class registro extends BaseFragment {
   private void onSuccesRegistro(@NonNull Usuario usuario) {
     if (usuario.getEstado().equalsIgnoreCase("exito")) {
       usuario.save();
+      Intent intent = new Intent(getContext(), perfil.class);
+      baseActivity.goActv(intent, true);
     } else {
+      baseActivity.showErr(usuario.getMensaje());
     }
   }
 }

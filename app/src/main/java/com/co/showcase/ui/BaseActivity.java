@@ -180,7 +180,7 @@ public class BaseActivity extends RxAppCompatActivity {
     overridePendingTransition(R.anim.move_right_in_activity, R.anim.move_left_out_activity);
   }
 
-  protected void goActv(@NonNull Intent intent, boolean clear) {
+  public void goActv(@NonNull Intent intent, boolean clear) {
     if (clear) intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
     startActivity(intent);
     overridePendingTransition(R.anim.move_right_in_activity, R.anim.move_left_out_activity);

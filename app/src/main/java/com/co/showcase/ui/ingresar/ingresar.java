@@ -1,5 +1,6 @@
 package com.co.showcase.ui.ingresar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,7 +13,10 @@ import android.view.ViewGroup;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.co.showcase.ui.perfil.perfil;
 import com.jakewharton.rxbinding.widget.RxTextView;
+import java.util.HashMap;
+import java.util.Map;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func2;
@@ -55,7 +59,8 @@ public class ingresar extends BaseFragment {
   private void rxValidationLogin() {
     Observable.combineLatest(emailChangeObservable, passwordChangeObservable,
         new Func2<CharSequence, CharSequence, Boolean>() {
-          @NonNull @Override public Boolean call(@NonNull CharSequence newEmail, CharSequence newPassword) {
+          @NonNull @Override
+          public Boolean call(@NonNull CharSequence newEmail, CharSequence newPassword) {
             boolean emailValid = !isEmpty(newEmail) && baseActivity.validateEmail(newEmail);
 
             if (!emailValid) {
@@ -78,13 +83,11 @@ public class ingresar extends BaseFragment {
 
             return emailValid && passValid;
           }
-        })
-        .compose(bindToLifecycle())
-        .subscribe(aBoolean -> {
-          if (aBoolean) {
-            // baseActivity.Log("validacion email && pass ok");
-          }
-        });
+        }).compose(bindToLifecycle()).subscribe(aBoolean -> {
+      if (aBoolean) {
+        // baseActivity.Log("validacion email && pass ok");
+      }
+    });
   }
 
   @OnClick({ R.id.btn_ingresar, R.id.txt_no_cuenta }) public void onClick(@NonNull View view) {
@@ -104,11 +107,11 @@ public class ingresar extends BaseFragment {
         edtEmail.getText().toString())) {
       assert edtPassword != null;
       if (edtPassword.getText().length() > 0) {
-        Usuario usuario = new Usuario();
-        usuario.setCorreo(edtEmail.getText().toString());
-        usuario.setClave(edtPassword.getText().toString());
+        Map<String, Object> param = new HashMap<>();
+        param.put("login", edtEmail.getText().toString());
+        param.put("pass", edtPassword.getText().toString());
         REST.getRest()
-            .validar(usuario.jsonToMap())
+            .validar(param)
             .compose(bindToLifecycle())
             .doOnSubscribe(() -> baseActivity.showDialog(getString(R.string.loading)))
             .subscribeOn(Schedulers.io())
@@ -150,6 +153,8 @@ public class ingresar extends BaseFragment {
   private void onSuccesValidar(@NonNull Usuario usuario) {
     if (usuario.getEstado().equalsIgnoreCase("exito")) {
       usuario.save();
+      Intent intent = new Intent(getContext(), perfil.class);
+      baseActivity.goActv(intent, true);
     } else {
       baseActivity.showErr(usuario.getMensaje());
     }

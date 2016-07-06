@@ -4,10 +4,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.text.TextUtilsCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -29,7 +30,7 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class perfil extends BaseActivity {
+public class perfil extends BaseActivity implements Toolbar.OnMenuItemClickListener {
 
   @Nullable @Bind(R.id.toolbar_perfil) Toolbar toolbar;
   @Nullable @Bind(R.id.img_perfil) ImageView perfil;
@@ -48,12 +49,40 @@ public class perfil extends BaseActivity {
     setContentView(R.layout.perfil);
     ButterKnife.bind(this);
     assert toolbar != null;
-    configToolbarChild(toolbar, R.string.perfil);
+    //configToolbarChild(toolbar, R.string.perfil);
+    setupToolbar();
     Usuario.getItem()
         .compose(bindToLifecycle())
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(this::updateUi);
+  }
+
+  private void setupToolbar() {
+   // setSupportActionBar(toolbar);
+    toolbar.setTitle(R.string.app_name);
+    //toolbar.setNavigationIcon(R.drawable.btn_menu_principal);
+    toolbar.inflateMenu(R.menu.menu_main);
+    toolbar.setOnMenuItemClickListener(this);
+    //final ActionBar ab = getSupportActionBar();
+    ////ab.setHomeAsUpIndicator(R.drawable.btn_menu_principal);
+    //ab.setDisplayHomeAsUpEnabled(true);
+  }
+
+  @Override public boolean onMenuItemClick(MenuItem item) {
+    switch (item.getItemId()) {
+      case R.id.action_buy:
+        log("action buy");
+        //Toast.makeText(this, "Favorite", Toast.LENGTH_SHORT).show();
+        return true;
+
+      case R.id.action_search:
+        log("action search");
+        //Toast.makeText(this, "Search", Toast.LENGTH_SHORT).show();
+        return true;
+    }
+
+    return true;
   }
 
   private void updateUi(@NonNull Usuario usuario) {
@@ -147,7 +176,7 @@ public class perfil extends BaseActivity {
         .subscribe(usuario -> {
           Map<String, Object> param = new HashMap<>();
           param.put("contenido", base64Img);
-          param.put("tipo", extencion);
+          param.put("tipo", "." + extencion);
           param.put("id", usuario.getId());
           param.put("id", usuario.getId());
           assert edtNombre != null;
@@ -188,9 +217,32 @@ public class perfil extends BaseActivity {
   private void succesUpPerfil(Usuario usuario) {
     dismissDialog();
     if (usuario.getEstado().equalsIgnoreCase("exito")) {
-      usuario.save();
-      updateUi(usuario);
-      log("succesUpPerfil");
+
+      Usuario.getItem()
+          .compose(bindToLifecycle())
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(usuario1 -> {
+            if (usuario.getFoto() != null) {
+              usuario1.setFoto(usuario.getFoto());
+            }
+            if (usuario.getNombre() != null) {
+              usuario1.setNombre(usuario.getNombre());
+            }
+            if (usuario.getApellido() != null) {
+              usuario1.setApellido(usuario.getApellido());
+            }
+            if (usuario.getCorreo() != null) {
+              usuario1.setCorreo(usuario.getCorreo());
+            }
+            if (usuario.getTelefono() != null) {
+              usuario1.setTelefono(usuario.getTelefono());
+            }
+
+            usuario1.save();
+            updateUi(usuario1);
+            log("succesUpPerfil");
+          });
     } else {
       showErr(usuario.getMensaje());
     }

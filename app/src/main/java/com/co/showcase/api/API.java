@@ -30,7 +30,7 @@ public interface API {
 
   @NonNull @FormUrlEncoded @POST("recuperar") Observable<Usuario> recuperar(@FieldMap Map<String, String> param);
 
-  @NonNull @FormUrlEncoded @POST("subirFoto") Observable<Usuario> subirFoto(@FieldMap Map<String, Object> param);
+  @NonNull @FormUrlEncoded @POST("editarPerfil") Observable<Usuario> subirFoto(@FieldMap Map<String, Object> param);
 
   @NonNull @FormUrlEncoded @POST("establecimientos") Observable<ResponseHome> establecimientos(@FieldMap Map<String, String> param);
 

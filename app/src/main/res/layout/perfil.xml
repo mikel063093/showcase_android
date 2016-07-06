@@ -6,10 +6,22 @@
     android:background="@color/kelly_green"
     android:orientation="vertical"
     >
-  <include
-      layout="@layout/toolbar"
+  <!--<include-->
+  <!--layout="@layout/toolbar"-->
+  <!--android:id="@+id/toolbar_perfil"-->
+  <!--/>-->
+  <android.support.v7.widget.Toolbar
+      xmlns:android="http://schemas.android.com/apk/res/android"
       android:id="@+id/toolbar_perfil"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/kelly_green"
+      android:fitsSystemWindows="true"
+      android:minHeight="?attr/actionBarSize"
+      style="@style/MyToolbarStyle"
+      app:navigationIcon="@drawable/btn_menu_principal"
       />
+
   <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="@dimen/_43sdp"

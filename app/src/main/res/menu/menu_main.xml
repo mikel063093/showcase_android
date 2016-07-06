@@ -1,0 +1,23 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+  <item
+      android:id="@+id/action_search"
+      android:icon="@drawable/btn_buscar"
+      android:title="@string/search"
+      app:showAsAction="always"/>
+
+  <item
+      android:id="@+id/action_buy"
+      android:icon="@drawable/btn_carrito"
+      android:title="@string/action_payment"
+      app:showAsAction="always"
+      />
+
+  <item
+      android:id="@+id/action_settings"
+      android:orderInCategory="100"
+      android:title="@string/action_sub_menu"
+      app:showAsAction="never"/>
+</menu>
