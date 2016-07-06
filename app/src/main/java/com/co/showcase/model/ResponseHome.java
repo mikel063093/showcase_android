@@ -9,11 +9,19 @@ import java.util.List;
 public class ResponseHome extends BaseModel {
   String estado;
   String mensaje;
+  List<Categoria> categorias;
   List<Slides> promociones;
-  List<Establecimiento> establecimientos;
 
   public String getEstado() {
     return estado;
+  }
+
+  public List<Categoria> getCategorias() {
+    return categorias;
+  }
+
+  public void setCategorias(List<Categoria> categorias) {
+    this.categorias = categorias;
   }
 
   public void setEstado(String estado) {
@@ -34,14 +42,6 @@ public class ResponseHome extends BaseModel {
 
   public void setPromociones(List<Slides> promociones) {
     this.promociones = promociones;
-  }
-
-  public List<Establecimiento> getEstablecimientos() {
-    return establecimientos;
-  }
-
-  public void setEstablecimientos(List<Establecimiento> establecimientos) {
-    this.establecimientos = establecimientos;
   }
 
   @Override public String getTag() {

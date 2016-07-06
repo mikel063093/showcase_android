@@ -72,6 +72,8 @@ dependencies {
   compile('com.github.afollestad.material-dialogs:core:0.8.5.6@aar') {
     transitive = true
   }
+  compile 'io.github.luizgrp.sectionedrecyclerviewadapter:sectionedrecyclerviewadapter:1.0.4'
+
   //facebook
   compile 'com.facebook.android:facebook-android-sdk:4.0.0'
 

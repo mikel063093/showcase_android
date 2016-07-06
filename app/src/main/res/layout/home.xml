@@ -1,17 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/kelly_green"
     android:orientation="vertical"
     >
-  <include
-      layout="@layout/toolbar"
+  <!--<include-->
+  <!--layout="@layout/toolbar"-->
+  <!--android:id="@+id/toolbar_home"-->
+  <!--/>-->
+  <android.support.v7.widget.Toolbar
+      xmlns:android="http://schemas.android.com/apk/res/android"
       android:id="@+id/toolbar_home"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/kelly_green"
+      android:fitsSystemWindows="true"
+      android:minHeight="?attr/actionBarSize"
+      app:navigationIcon="@drawable/btn_menu_principal"
+      style="@style/MyToolbarStyle"
       />
   <RelativeLayout
       android:layout_width="match_parent"
-      android:layout_height="@dimen/_150sdp"
+      android:layout_height="@dimen/_130sdp"
       android:layout_gravity="center"
       android:background="@color/white"
       android:gravity="center"
@@ -33,7 +45,7 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager_home"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_180sdp"
+        android:layout_height="@dimen/_130sdp"
         android:layout_alignBottom="@+id/indicator_home"
         android:layout_alignParentStart="true"
         />
@@ -42,8 +54,7 @@
       android:id="@+id/rv_home"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:layout_marginLeft="@dimen/_12sdp"
-      android:layout_marginRight="@dimen/_12sdp"
-      android:layout_marginTop="@dimen/_10sdp"
+      android:layout_marginLeft="@dimen/_4sdp"
+      android:layout_marginRight="@dimen/_4sdp"
       />
 </LinearLayout>

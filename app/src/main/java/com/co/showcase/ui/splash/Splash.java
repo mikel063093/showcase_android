@@ -9,6 +9,7 @@ import com.co.showcase.AppMain;
 import com.co.showcase.R;
 import com.co.showcase.model.Usuario;
 
+import com.co.showcase.ui.home.home;
 import com.co.showcase.ui.login_main.login;
 import com.co.showcase.ui.perfil.perfil;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
@@ -22,7 +23,7 @@ public class Splash extends RxAppCompatActivity {
     handler.postDelayed(() -> {
       Usuario usuario = Usuario.GetItem();
       if (usuario != null) {
-        Intent intent = new Intent(getApplicationContext(), perfil.class);
+        Intent intent = new Intent(getApplicationContext(), home.class);
         goActv(intent, true);
       } else {
         Intent intent = new Intent(getApplicationContext(), login.class);
