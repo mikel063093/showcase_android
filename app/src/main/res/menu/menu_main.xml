@@ -1,7 +1,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-
+  <item
+      android:id="@+id/action_map"
+      android:icon="@drawable/btn_zonas"
+      android:title="@string/search"
+      app:showAsAction="always"/>
   <item
       android:id="@+id/action_search"
       android:icon="@drawable/btn_buscar"
@@ -17,7 +21,36 @@
 
   <item
       android:id="@+id/action_settings"
-      android:orderInCategory="100"
+      android:icon="@drawable/btn_menu_secundario"
       android:title="@string/action_sub_menu"
-      app:showAsAction="never"/>
+      app:showAsAction="always">
+    <menu>
+      <item
+          android:id="@+id/pedidos"
+          android:icon="@drawable/ico_pedidosenproceso"
+          android:title="Pedidos en proceso"
+          />
+      <item
+          android:id="@+id/historial"
+          android:icon="@drawable/ico_historialdeordenes"
+          android:title="Historial de ordenes"
+          />
+      <item
+          android:id="@+id/perfil"
+          android:icon="@drawable/ico_miperfil"
+          android:title="Mi perfil"
+          />
+      <item
+          android:id="@+id/direcciones"
+          android:icon="@drawable/ico_direccionesdeenvio"
+          android:title="Direcciones de envio"
+          />
+      <item
+          android:id="@+id/salir"
+          android:icon="@drawable/ico_cerrarsesion"
+          android:title="Cerrar session"
+          />
+    </menu>
+
+  </item>
 </menu>

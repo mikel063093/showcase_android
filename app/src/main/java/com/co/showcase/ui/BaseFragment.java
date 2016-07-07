@@ -7,9 +7,11 @@ import android.widget.EditText;
 
 import com.co.showcase.BuildConfig;
 import com.co.showcase.R;
+import com.co.showcase.model.Categoria;
 import com.orhanobut.logger.Logger;
 import com.trello.rxlifecycle.components.support.RxFragment;
 
+import java.util.List;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.regex.Matcher;
@@ -38,7 +40,9 @@ public class BaseFragment extends RxFragment {
   @Subscribe public void onEvent(Object obj) {
 
   }
+  @Subscribe public void onEvent(List<Categoria> categorias) {
 
+  }
   @Override public void onStop() {
     EventBus.getDefault().unregister(this);
     super.onStop();

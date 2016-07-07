@@ -40,5 +40,6 @@
   <string name="action_sub_menu">Menu</string>
   <string name="search">Buscar</string>
   <string name="action_payment">Carrito de compras</string>
+  <string name="open">Abrir</string>
 </resources>
 

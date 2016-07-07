@@ -23,6 +23,7 @@ import com.co.showcase.AppMain;
 import com.co.showcase.BuildConfig;
 import com.co.showcase.R;
 import com.co.showcase.api.REST;
+import com.co.showcase.model.Categoria;
 import com.co.showcase.model.EntryResponse;
 import com.co.showcase.model.TabPosition;
 import com.co.showcase.model.Usuario;
@@ -33,6 +34,7 @@ import com.orhanobut.logger.Logger;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -356,6 +358,10 @@ public class BaseActivity extends RxAppCompatActivity {
   }
 
   @Subscribe public void onEvent(TabPosition tabPosition) {
+  }
+
+  @Subscribe public void onEvent(List<Categoria> categorias) {
+    log("onEvent categorias");
   }
 
   public void errControl(@NonNull Throwable throwable) {
