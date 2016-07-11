@@ -3,6 +3,7 @@ package com.co.showcase.ui.home;
 import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -60,7 +61,7 @@ public class SlideAdapter extends PagerAdapter {
   }
 
   public static class ViewHolder {
-    @Bind(R.id.image_display) ImageView image_display;
+    @Nullable @Bind(R.id.image_display) ImageView image_display;
 
     ViewHolder(View view) {
       ButterKnife.bind(this, view);

@@ -3,6 +3,7 @@ package com.co.showcase.ui.home;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.GravityCompat;
@@ -28,6 +29,7 @@ import com.co.showcase.model.Slides;
 import com.co.showcase.model.Usuario;
 import com.co.showcase.ui.BaseActivity;
 import com.co.showcase.ui.CustomView.CirclePageIndicator;
+import com.co.showcase.ui.perfil.perfil;
 import com.co.showcase.ui.slide.slide;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 import java.util.ArrayList;
@@ -40,13 +42,12 @@ import rx.schedulers.Schedulers;
 
 public class home extends BaseActivity {
 
-  @Bind(R.id.toolbar_home) Toolbar toolbar;
-  @Bind(R.id.view_pager_home) ViewPager viewPagerSlide;
-  @Bind(R.id.indicator_home) CirclePageIndicator indicatorSlides;
-  @Bind(R.id.rv_home) RecyclerView mRecyclerView;
-  @Bind(R.id.drawer) RelativeLayout drawer;
-  @Bind(R.id.drawer_layout) DrawerLayout drawerLayout;
-  private SlideAdapter adapter;
+  @Nullable @Bind(R.id.toolbar_home) Toolbar toolbar;
+  @Nullable @Bind(R.id.view_pager_home) ViewPager viewPagerSlide;
+  @Nullable @Bind(R.id.indicator_home) CirclePageIndicator indicatorSlides;
+  @Nullable @Bind(R.id.rv_home) RecyclerView mRecyclerView;
+  @Nullable @Bind(R.id.drawer) RelativeLayout drawer;
+  @Nullable @Bind(R.id.drawer_layout) DrawerLayout drawerLayout;
   //private EstablecimientoAdapter mAdapter;
   private SectionedRecyclerViewAdapter sectionAdapter;
   // private SectionAdapter sectionAdapter;
@@ -111,7 +112,7 @@ public class home extends BaseActivity {
     return true;
   }
 
-  @Override public boolean onOptionsItemSelected(MenuItem item) {
+  @Override public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
     switch (item.getItemId()) {
       case R.id.action_buy:
@@ -123,6 +124,25 @@ public class home extends BaseActivity {
         log("action search");
         //Toast.makeText(this, "Search", Toast.LENGTH_SHORT).show();
         return true;
+      case R.id.action_perfil:
+        goActv(perfil.class, false);
+        break;
+      case R.id.action_salir:
+
+        showMaterialDialog(getString(R.string.salir), new onClickCallback() {
+          @Override public void onPositive(boolean result) {
+
+          }
+
+          @Override public void onDissmis() {
+
+          }
+
+          @Override public void onNegative(boolean result) {
+
+          }
+        });
+        break;
     }
     return super.onOptionsItemSelected(item);
   }
@@ -167,7 +187,7 @@ public class home extends BaseActivity {
     //mRecyclerView.setAdapter(sectionAdapter);
   }
 
-  private List<Establecimiento> getDemoData() {
+  @NonNull private List<Establecimiento> getDemoData() {
     List<Establecimiento> establecimientos = new ArrayList<>();
     Establecimiento establecimiento;
     for (int i = 0; i < 4; i++) {
@@ -196,7 +216,7 @@ public class home extends BaseActivity {
         .subscribe(this::succesEstablecimiento, this::errControl);
   }
 
-  private void succesEstablecimiento(ResponseHome responseHome) {
+  private void succesEstablecimiento(@NonNull ResponseHome responseHome) {
     dismissDialog();
     if (responseHome.getEstado().equalsIgnoreCase("exito")) {
       renderSlideImages(responseHome.getPromociones());
@@ -206,8 +226,10 @@ public class home extends BaseActivity {
   }
 
   private void renderSlideImages(List<Slides> imgs) {
-    adapter = new SlideAdapter(this, imgs);
+    SlideAdapter adapter = new SlideAdapter(this, imgs);
+    assert viewPagerSlide != null;
     viewPagerSlide.setAdapter(adapter);
+    assert indicatorSlides != null;
     indicatorSlides.setViewPager(viewPagerSlide);
   }
 }

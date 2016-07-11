@@ -1,6 +1,8 @@
 package com.co.showcase.ui.home;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.CardView;
@@ -42,7 +44,7 @@ class HomeSection extends StatelessSection {
     return list.size();
   }
 
-  @Override public RecyclerView.ViewHolder getItemViewHolder(View view) {
+  @NonNull @Override public RecyclerView.ViewHolder getItemViewHolder(@NonNull View view) {
     return new ViewHolder(view);
   }
 
@@ -62,7 +64,7 @@ class HomeSection extends StatelessSection {
     }
   }
 
-  @Override public RecyclerView.ViewHolder getHeaderViewHolder(View view) {
+  @NonNull @Override public RecyclerView.ViewHolder getHeaderViewHolder(@NonNull View view) {
     return new SectionViewHolder(view);
   }
 
@@ -78,22 +80,22 @@ class HomeSection extends StatelessSection {
 
   public static class SectionViewHolder extends RecyclerView.ViewHolder {
 
-    @Bind(R.id.txt_section) AppCompatTextView txtSection;
-    @Bind(R.id.btn_section) AppCompatButton btnSection;
-    @Bind(R.id.root_section) CardView rootSection;
+    @Nullable @Bind(R.id.txt_section) AppCompatTextView txtSection;
+    @Nullable @Bind(R.id.btn_section) AppCompatButton btnSection;
+    @Nullable @Bind(R.id.root_section) CardView rootSection;
 
-    SectionViewHolder(View view) {
+    SectionViewHolder(@NonNull View view) {
       super(view);
       ButterKnife.bind(this, view);
     }
   }
 
   static class ViewHolder extends RecyclerView.ViewHolder {
-    @Bind(R.id.imageView5) ImageView imageView5;
-    @Bind(R.id.txt_item_general) AppCompatTextView txtItemGeneral;
-    @Bind(R.id.root_section) CardView rootSection;
+    @Nullable @Bind(R.id.imageView5) ImageView imageView5;
+    @Nullable @Bind(R.id.txt_item_general) AppCompatTextView txtItemGeneral;
+    @Nullable @Bind(R.id.root_section) CardView rootSection;
 
-    ViewHolder(View view) {
+    ViewHolder(@NonNull View view) {
       super(view);
       ButterKnife.bind(this, view);
     }

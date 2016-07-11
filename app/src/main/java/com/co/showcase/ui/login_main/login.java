@@ -9,7 +9,8 @@ import android.view.View;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import com.co.showcase.ui.perfil.perfil;
+import com.co.showcase.ui.home.home;
+
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -101,7 +102,7 @@ public class login extends BaseActivity {
   private void onSuccesLogin(@NonNull Usuario usuario) {
     if (usuario.getEstado().equalsIgnoreCase("exito")) {
       usuario.save();
-      goActv(perfil.class, true);
+      goActv(home.class, true);
     } else {
       showErr(getString(R.string.general_err));
     }

@@ -73,7 +73,7 @@ public class Base64Utils {
     });
   }
 
-  public static String getExtension(final String filename) {
+  @Nullable public static String getExtension(@Nullable final String filename) {
     if (filename == null) {
       return null;
     }
@@ -85,7 +85,7 @@ public class Base64Utils {
     }
   }
 
-  public static int indexOfExtension(final String filename) {
+  public static int indexOfExtension(@Nullable final String filename) {
     if (filename == null) {
       return NOT_FOUND;
     }
@@ -94,7 +94,7 @@ public class Base64Utils {
     return lastSeparator > extensionPos ? NOT_FOUND : extensionPos;
   }
 
-  private static int indexOfLastSeparator(String filename) {
+  private static int indexOfLastSeparator(@Nullable String filename) {
     if (filename == null) {
       return NOT_FOUND;
     }

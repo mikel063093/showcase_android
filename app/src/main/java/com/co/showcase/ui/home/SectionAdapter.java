@@ -1,6 +1,8 @@
 package com.co.showcase.ui.home;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.CardView;
@@ -23,16 +25,16 @@ import java.util.Comparator;
 
 public class SectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-  private final Context mContext;
+  @NonNull private final Context mContext;
   private static final int SECTION_TYPE = 0;
 
   private boolean mValid = true;
 
   private LayoutInflater mLayoutInflater;
   private RecyclerView.Adapter mBaseAdapter;
-  private SparseArray<Categoria> mSections = new SparseArray<>();
+  @NonNull private SparseArray<Categoria> mSections = new SparseArray<>();
 
-  public SectionAdapter(Context context, RecyclerView.Adapter baseAdapter) {
+  public SectionAdapter(@NonNull Context context, RecyclerView.Adapter baseAdapter) {
 
     mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -64,11 +66,11 @@ public class SectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
   public static class SectionViewHolder extends RecyclerView.ViewHolder {
 
-    @Bind(R.id.txt_section) AppCompatTextView txtSection;
-    @Bind(R.id.btn_section) AppCompatButton btnSection;
-    @Bind(R.id.root_section) CardView rootSection;
+    @Nullable @Bind(R.id.txt_section) AppCompatTextView txtSection;
+    @Nullable @Bind(R.id.btn_section) AppCompatButton btnSection;
+    @Nullable @Bind(R.id.root_section) CardView rootSection;
 
-    SectionViewHolder(View view) {
+    SectionViewHolder(@NonNull View view) {
       super(view);
       ButterKnife.bind(this, view);
     }
@@ -83,7 +85,7 @@ public class SectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
   }
 
-  @Override public void onBindViewHolder(RecyclerView.ViewHolder sectionViewHolder, int position) {
+  @Override public void onBindViewHolder(@NonNull RecyclerView.ViewHolder sectionViewHolder, int position) {
     if (isSectionHeaderPosition(position)) {
       ((SectionViewHolder) sectionViewHolder).txtSection.setText(
           mSections.get(position).getNombre());
@@ -97,11 +99,11 @@ public class SectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         : mBaseAdapter.getItemViewType(sectionedPositionToPosition(position)) + 1;
   }
 
-  public void setSections(Categoria[] sections) {
+  public void setSections(@NonNull Categoria[] sections) {
     mSections.clear();
 
     Arrays.sort(sections, new Comparator<Categoria>() {
-      @Override public int compare(Categoria o, Categoria o1) {
+      @Override public int compare(@NonNull Categoria o, @NonNull Categoria o1) {
         return (o.firstPosition == o1.firstPosition) ? 0
             : ((o.firstPosition < o1.firstPosition) ? -1 : 1);
       }

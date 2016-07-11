@@ -18,8 +18,8 @@
       android:background="@color/kelly_green"
       android:fitsSystemWindows="true"
       android:minHeight="?attr/actionBarSize"
-      style="@style/MyToolbarStyle"
       app:navigationIcon="@drawable/btn_menu_principal"
+      style="@style/MyToolbarStyle"
       />
 
   <LinearLayout
@@ -58,6 +58,7 @@
           android:layout_width="@dimen/_78sdp"
           android:layout_height="@dimen/_78sdp"
           android:layout_gravity="center_vertical|center_horizontal"
+          android:background="@drawable/circulo_icocamara"
           android:scaleType="fitXY"
           />
 

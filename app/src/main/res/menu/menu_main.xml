@@ -26,27 +26,27 @@
       app:showAsAction="always">
     <menu>
       <item
-          android:id="@+id/pedidos"
+          android:id="@+id/action_pedidos"
           android:icon="@drawable/ico_pedidosenproceso"
           android:title="Pedidos en proceso"
           />
       <item
-          android:id="@+id/historial"
+          android:id="@+id/action_historial"
           android:icon="@drawable/ico_historialdeordenes"
           android:title="Historial de ordenes"
           />
       <item
-          android:id="@+id/perfil"
+          android:id="@+id/action_perfil"
           android:icon="@drawable/ico_miperfil"
           android:title="Mi perfil"
           />
       <item
-          android:id="@+id/direcciones"
+          android:id="@+id/action_direcciones"
           android:icon="@drawable/ico_direccionesdeenvio"
           android:title="Direcciones de envio"
           />
       <item
-          android:id="@+id/salir"
+          android:id="@+id/action_salir"
           android:icon="@drawable/ico_cerrarsesion"
           android:title="Cerrar session"
           />

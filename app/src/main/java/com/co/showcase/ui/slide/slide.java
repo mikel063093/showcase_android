@@ -1,6 +1,7 @@
 package com.co.showcase.ui.slide;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
@@ -11,14 +12,19 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.co.showcase.BuildConfig;
 import com.co.showcase.R;
+import com.co.showcase.api.REST;
 import com.co.showcase.model.Categoria;
+import com.co.showcase.model.ResponseCategorias;
 import com.co.showcase.model.Usuario;
 import com.co.showcase.ui.BaseFragment;
 import com.co.showcase.ui.util.CircleTransform;
 import com.pkmmte.view.CircularImageView;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
+
+import java.util.HashMap;
 import java.util.List;
+
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -27,13 +33,13 @@ import rx.schedulers.Schedulers;
  */
 
 public class slide extends BaseFragment {
-  @Bind(R.id.img_slider_photo) CircularImageView imgSliderPhoto;
-  @Bind(R.id.txt_name_person) AppCompatTextView txtNamePerson;
-  @Bind(R.id.menu) ListView menu;
+  @Nullable @Bind(R.id.img_slider_photo) CircularImageView imgSliderPhoto;
+  @Nullable @Bind(R.id.txt_name_person) AppCompatTextView txtNamePerson;
+  @Nullable @Bind(R.id.menu) ListView menu;
   private SlideAdapter adapter;
 
   @Nullable @Override
-  public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+  public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.slide_menu, container, false);
     ButterKnife.bind(this, view);
@@ -45,21 +51,38 @@ public class slide extends BaseFragment {
     return view;
   }
 
-  private void updateUi(Usuario usuario) {
+  private void updateUi(@NonNull Usuario usuario) {
     if (usuario.getFoto() != null && usuario.getFoto().length() > 4) {
       Picasso.with(getContext())
           .load(usuario.getFoto())
           .transform(new CircleTransform())
           .into(imgSliderPhoto);
     }
-    if (usuario.getFullName() != null) {
-      txtNamePerson.setText(usuario.getFullName());
-    }
+    assert txtNamePerson != null;
+    txtNamePerson.setText(usuario.getFullName());
     if (BuildConfig.DEBUG) {
       List<Categoria> sections = new ArrayList<>();
       sections.add(new Categoria(0, "Almacenes de ropa"));
       sections.add(new Categoria(2, "Almacenes de ropa"));
       setupList(sections);
+    } else {
+      getCategorias();
+    }
+  }
+
+  private void getCategorias() {
+    REST.getRest()
+        .categorias(new HashMap<>())
+        .compose(bindToLifecycle())
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(this::succesCategoria);
+  }
+
+  private void succesCategoria(@NonNull ResponseCategorias responseCategorias) {
+    if (responseCategorias.getEstado().equalsIgnoreCase("exito")
+        && responseCategorias.getCategorias().size() > 1) {
+      setupList(responseCategorias.getCategorias());
     }
   }
 
@@ -71,6 +94,7 @@ public class slide extends BaseFragment {
 
   private void setupList(List<Categoria> categorias) {
     adapter = new SlideAdapter(categorias, getActivity());
+    assert menu != null;
     menu.setAdapter(adapter);
   }
 

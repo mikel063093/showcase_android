@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.co.showcase.ui.home.home;
 import com.co.showcase.ui.perfil.perfil;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import rx.Observable;
@@ -161,7 +162,7 @@ public class registro extends BaseFragment {
   private void onSuccesRegistro(@NonNull Usuario usuario) {
     if (usuario.getEstado().equalsIgnoreCase("exito")) {
       usuario.save();
-      Intent intent = new Intent(getContext(), perfil.class);
+      Intent intent = new Intent(getContext(), home.class);
       baseActivity.goActv(intent, true);
     } else {
       baseActivity.showErr(usuario.getMensaje());

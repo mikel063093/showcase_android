@@ -3,6 +3,7 @@ package com.co.showcase.api;
 import android.support.annotation.NonNull;
 
 import com.co.showcase.model.EntryResponse;
+import com.co.showcase.model.ResponseCategorias;
 import com.co.showcase.model.ResponseHome;
 import com.co.showcase.model.Usuario;
 
@@ -28,10 +29,14 @@ public interface API {
 
   @NonNull @FormUrlEncoded @POST("registroNotificacion") Observable<Usuario> gcm(@FieldMap Map<String, String> param);
 
-  @NonNull @FormUrlEncoded @POST("recuperar") Observable<Usuario> recuperar(@FieldMap Map<String, String> param);
+  @NonNull @FormUrlEncoded @POST("recuperarContrasena") Observable<Usuario> recuperar(@FieldMap Map<String, String> param);
 
   @NonNull @FormUrlEncoded @POST("editarPerfil") Observable<Usuario> subirFoto(@FieldMap Map<String, Object> param);
 
   @NonNull @FormUrlEncoded @POST("establecimientos") Observable<ResponseHome> establecimientos(@FieldMap Map<String, String> param);
+
+  @NonNull @FormUrlEncoded @POST("establecimiento") Observable<ResponseHome> establecimiento(@FieldMap Map<String, String> param);
+
+  @NonNull @FormUrlEncoded @POST("categorias") Observable<ResponseCategorias> categorias(@FieldMap Map<String, Object> param);
 
 }

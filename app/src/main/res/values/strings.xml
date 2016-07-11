@@ -41,5 +41,6 @@
   <string name="search">Buscar</string>
   <string name="action_payment">Carrito de compras</string>
   <string name="open">Abrir</string>
+  <string name="salir">Deseas salir</string>
 </resources>
 

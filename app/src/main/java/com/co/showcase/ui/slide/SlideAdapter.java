@@ -21,7 +21,7 @@ import java.util.List;
 public class SlideAdapter extends BaseAdapter {
   List<Categoria> categorias;
   Context context;
-  private ViewHolder holder;
+  @Nullable private ViewHolder holder;
 
   public SlideAdapter(List<Categoria> categorias, Context context) {
     this.categorias = categorias;
@@ -40,7 +40,7 @@ public class SlideAdapter extends BaseAdapter {
     return i;
   }
 
-  @Override public View getView(int position, @Nullable View convertView, ViewGroup parent) {
+  @Nullable @Override public View getView(int position, @Nullable View convertView, ViewGroup parent) {
     if (convertView == null) {
       LayoutInflater mInflater =
           (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
@@ -56,7 +56,7 @@ public class SlideAdapter extends BaseAdapter {
   }
 
   static class ViewHolder {
-    @Bind(R.id.txt_item_slide) AppCompatTextView txtItemSlide;
+    @Nullable @Bind(R.id.txt_item_slide) AppCompatTextView txtItemSlide;
 
     ViewHolder(View view) {
       ButterKnife.bind(this, view);

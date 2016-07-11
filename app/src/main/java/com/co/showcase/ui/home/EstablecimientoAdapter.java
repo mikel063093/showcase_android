@@ -1,6 +1,8 @@
 package com.co.showcase.ui.home;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -27,7 +29,7 @@ public class EstablecimientoAdapter
     extends RecyclerView.Adapter<EstablecimientoAdapter.ViewHolder> {
 
   private final Context mContext;
-  private List<Establecimiento> mData;
+  @Nullable private List<Establecimiento> mData;
 
   public void add(Establecimiento s, int position) {
     position = position == -1 ? getItemCount() : position;
@@ -42,7 +44,7 @@ public class EstablecimientoAdapter
     }
   }
 
-  public EstablecimientoAdapter(Context context, List<Establecimiento> data) {
+  public EstablecimientoAdapter(Context context, @Nullable List<Establecimiento> data) {
     mContext = context;
     if (data != null) {
       mData = data;
@@ -51,12 +53,12 @@ public class EstablecimientoAdapter
     }
   }
 
-  public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+  @NonNull public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     final View view = LayoutInflater.from(mContext).inflate(R.layout.item_general, parent, false);
     return new ViewHolder(view);
   }
 
-  @Override public void onBindViewHolder(ViewHolder holder, final int position) {
+  @Override public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
     Establecimiento establecimiento = mData.get(position);
     if (establecimiento != null) {
       holder.txtItemGeneral.setText(establecimiento.getNombre());
@@ -76,11 +78,11 @@ public class EstablecimientoAdapter
   }
 
   static class ViewHolder extends RecyclerView.ViewHolder {
-    @Bind(R.id.imageView5) ImageView imageView5;
-    @Bind(R.id.txt_item_general) AppCompatTextView txtItemGeneral;
-    @Bind(R.id.root_section) CardView rootSection;
+    @Nullable @Bind(R.id.imageView5) ImageView imageView5;
+    @Nullable @Bind(R.id.txt_item_general) AppCompatTextView txtItemGeneral;
+    @Nullable @Bind(R.id.root_section) CardView rootSection;
 
-    ViewHolder(View view) {
+    ViewHolder(@NonNull View view) {
       super(view);
       ButterKnife.bind(this, view);
     }

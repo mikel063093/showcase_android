@@ -237,12 +237,12 @@ public class BaseActivity extends RxAppCompatActivity {
     return matcher.matches();
   }
 
-  public boolean validateFirstName(String firstName) {
+  public boolean validateFirstName(@NonNull String firstName) {
     return firstName.matches("[a-zA-z]+([ '-][a-zA-Z]+)*");
   } // end method validateFirstName
 
   // validate last name
-  public boolean validateLastName(String lastName) {
+  public boolean validateLastName(@NonNull String lastName) {
     return lastName.matches("[a-zA-z]+([ '-][a-zA-Z]+)*");
   }
 

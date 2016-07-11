@@ -69,7 +69,7 @@ public class perfil extends BaseActivity implements Toolbar.OnMenuItemClickListe
     //ab.setDisplayHomeAsUpEnabled(true);
   }
 
-  @Override public boolean onMenuItemClick(MenuItem item) {
+  @Override public boolean onMenuItemClick(@NonNull MenuItem item) {
     switch (item.getItemId()) {
       case R.id.action_buy:
         log("action buy");
@@ -214,7 +214,7 @@ public class perfil extends BaseActivity implements Toolbar.OnMenuItemClickListe
         });
   }
 
-  private void succesUpPerfil(Usuario usuario) {
+  private void succesUpPerfil(@NonNull Usuario usuario) {
     dismissDialog();
     if (usuario.getEstado().equalsIgnoreCase("exito")) {
 

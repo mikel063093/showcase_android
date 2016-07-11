@@ -34,7 +34,7 @@ public class Usuario extends BaseModel {
     this.foto = foto;
   }
 
-  public String getFullName() {
+  @NonNull public String getFullName() {
     return (nombre != null ? nombre : "") + " " + (apellido != null ? apellido : "");
   }
 
