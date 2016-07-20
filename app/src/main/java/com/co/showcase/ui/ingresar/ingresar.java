@@ -9,28 +9,25 @@ import android.support.v7.widget.AppCompatEditText;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import com.co.showcase.ui.home.home;
-import com.co.showcase.ui.perfil.perfil;
-import com.jakewharton.rxbinding.widget.RxTextView;
-import java.util.HashMap;
-import java.util.Map;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func2;
-import rx.schedulers.Schedulers;
-
 import com.co.showcase.R;
 import com.co.showcase.api.REST;
 import com.co.showcase.model.TabPosition;
 import com.co.showcase.model.Usuario;
 import com.co.showcase.ui.BaseActivity;
 import com.co.showcase.ui.BaseFragment;
-
+import com.co.showcase.ui.home.home;
+import com.co.showcase.ui.recuperar.recuperar;
+import com.jakewharton.rxbinding.widget.RxTextView;
+import java.util.HashMap;
+import java.util.Map;
 import org.greenrobot.eventbus.EventBus;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func2;
+import rx.schedulers.Schedulers;
 
 import static android.text.TextUtils.isEmpty;
 
@@ -159,5 +156,14 @@ public class ingresar extends BaseFragment {
     } else {
       baseActivity.showErr(usuario.getMensaje());
     }
+  }
+
+  @Override public void onDestroyView() {
+    super.onDestroyView();
+    ButterKnife.unbind(this);
+  }
+
+  @OnClick(R.id.txt_no_cuenta) public void onClick() {
+    baseActivity.goActv(recuperar.class, false);
   }
 }

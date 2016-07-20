@@ -20,6 +20,7 @@
   <string name="facebook_app_id" translatable="false">1545741209066315</string>
   <string name="Enviar">Enviar</string>
   <string name="recuperar_password">¿No recuerdas tu\ncontraseña?</string>
+  <string name="recuperar_password2">¿No recuerdas tu contraseña?</string>
   <string name="escribe_tu_correo">Escríbe tu correo electrónico y te harémos\nllegar la forma para recuperarla.</string>
   <string name="acept">Aceptar</string>
   <string name="cancel">Cancelar</string>

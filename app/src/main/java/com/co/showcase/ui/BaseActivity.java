@@ -13,6 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -175,7 +177,7 @@ public class BaseActivity extends RxAppCompatActivity {
     });
   }
 
-  protected void goActv(Class<?> cls, boolean clear) {
+  public void goActv(Class<?> cls, boolean clear) {
     Intent intent = new Intent(getApplicationContext(), cls);
     if (clear) intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
     startActivity(intent);
@@ -398,5 +400,11 @@ public class BaseActivity extends RxAppCompatActivity {
   @Override protected void onDestroy() {
     super.onDestroy();
     ButterKnife.unbind(this);
+  }
+  public void setItemsVisibility(Menu menu, MenuItem exception, boolean visible) {
+    for (int i=0; i<menu.size(); ++i) {
+      MenuItem item = menu.getItem(i);
+      if (item != exception) item.setVisible(visible);
+    }
   }
 }

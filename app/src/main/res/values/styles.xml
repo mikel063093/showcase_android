@@ -9,6 +9,8 @@
     <item name="android:textColorSecondary">@color/secondary_text</item>
     <item name="android:dropDownListViewStyle">@style/MyDropDownListView</item>
     <item name="android:spinnerDropDownItemStyle">@style/MySpinnerDropDownItem</item>
+    <item name="autoCompleteTextViewStyle">@style/SearchViewThemeText</item>
+    <item name="searchViewStyle">@style/SearchViewTheme</item>
   </style>
 
   <style name="MyDropDownListView" parent="android:style/Widget.Holo.ListView.DropDown">
@@ -90,6 +92,14 @@
 
   <style name="txt_white_style" parent="android:Widget.TextView">
     <item name="android:textColor">@color/white</item>
+    <item name="android:textSize">@dimen/texto_botones_size</item>
+    <item name="android:textStyle">normal</item>
+    <item name="fontPath">fonts/Circular-Std-Book.otf</item>
+
+  </style>
+
+  <style name="txt_green_style" parent="android:Widget.TextView">
+    <item name="android:textColor">@color/kelly_green</item>
     <item name="android:textSize">@dimen/texto_botones_size</item>
     <item name="android:textStyle">normal</item>
     <item name="fontPath">fonts/Circular-Std-Book.otf</item>
@@ -196,9 +206,22 @@
     <item name="android:textSize">@dimen/_12sdp</item>
   </style>
 
-  <style name="MyToolbarStyle">
-    <item name="theme">@style/ThemeOverlay.AppCompat.Light</item>
+  <style name="MyToolbarStyle" parent="Theme.AppCompat.Light.DarkActionBar">
+    <!--<item name="theme">@style/ThemeOverlay.AppCompat.Light</item>-->
     <item name="android:background">?colorPrimary</item>
 
+  </style>
+
+  <style name="SearchViewTheme" parent="Widget.AppCompat.SearchView">
+    <!--<item name="colorControlActivated">@color/amber500</item>-->
+    <!--<item name="colorControlNormal">@color/green500</item>-->
+    <item name="searchIcon">@drawable/btn_buscar</item>
+    <!--<item name="iconifiedByDefault">false</item>-->
+    <item name="goIcon">@drawable/btn_flechaizquierda</item>
+  </style>
+
+  <style name="SearchViewThemeText" parent="Widget.AppCompat.AutoCompleteTextView">
+    <item name="android:textColor">@color/white</item>
+    <item name="android:textColorHint">@color/white</item>
   </style>
 </resources>

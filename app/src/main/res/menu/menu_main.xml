@@ -6,17 +6,19 @@
       android:icon="@drawable/btn_zonas"
       android:title="@string/search"
       app:showAsAction="always"/>
-  <item
-      android:id="@+id/action_search"
-      android:icon="@drawable/btn_buscar"
-      android:title="@string/search"
-      app:showAsAction="always"/>
 
   <item
       android:id="@+id/action_buy"
       android:icon="@drawable/btn_carrito"
       android:title="@string/action_payment"
       app:showAsAction="always"
+      />
+  <item
+      android:id="@+id/action_search"
+      android:icon="@drawable/btn_buscar"
+      android:title="@string/search"
+      app:actionViewClass="android.support.v7.widget.SearchView"
+      app:showAsAction="always|collapseActionView"
       />
 
   <item

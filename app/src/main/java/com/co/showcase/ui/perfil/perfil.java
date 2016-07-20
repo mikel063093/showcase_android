@@ -71,10 +71,10 @@ public class perfil extends BaseActivity implements Toolbar.OnMenuItemClickListe
 
   @Override public boolean onMenuItemClick(@NonNull MenuItem item) {
     switch (item.getItemId()) {
-      case R.id.action_buy:
-        log("action buy");
-        //Toast.makeText(this, "Favorite", Toast.LENGTH_SHORT).show();
-        return true;
+      //case R.id.action_buy:
+      //  log("action buy");
+      //  //Toast.makeText(this, "Favorite", Toast.LENGTH_SHORT).show();
+      //  return true;
 
       case R.id.action_search:
         log("action search");
