@@ -3,28 +3,60 @@
 buildscript {
   repositories {
     jcenter()
+    mavenCentral()
   }
   dependencies {
+    classpath 'com.google.gms:google-services:3.0.0'
     classpath 'com.android.tools.build:gradle:2.2.0-alpha6'
-
-    // NOTE: Do not place your application dependencies here; they belong
-    // in the individual module build.gradle files
-    // Backport of some Java 8 language features such as Lambdas and method references.
     classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-
-    classpath 'me.tatarka:gradle-retrolambda:3.2.4'
-
-    // Workaround for Lint + Retrolambda.
     classpath 'me.tatarka.retrolambda.projectlombok:lombok.ast:0.2.3.a2'
+
   }
 }
+def executingOnCI() {
+  def ciServer = 'CI'
+  return 'true'.equals(System.getenv(ciServer))
+}
+
+def gitSha() {
+  if (!executingOnCI()) {
+    return 'not-CI'
+  }
+
+  return 'git rev-parse --short HEAD'.execute([], project.projectDir).text.trim()
+}
+
+def buildTime() {
+  if (!executingOnCI()) {
+    return 'not-CI';
+  }
+
+  return new Date().format("yyyy-MM-dd'T'HH:mm'Z'", TimeZone.getTimeZone("UTC"))
+}
+
 
 allprojects {
   repositories {
     jcenter()
+    mavenCentral()
   }
 }
+ext {
 
+  heapSize = '4g'
+
+  // App dependencies
+  multidex = '1.0.1'
+  realm = '0.88.2'
+  rxJava = '1.1.5'
+  rxAndroid = '1.2.0'
+  rxBinding = '0.4.0'
+  // Test dependencies
+  junit = '4.12'
+
+  retrolambda = '2.3.0'
+  retrolambdaPlugin = '3.2.5'
+}
 task clean(type: Delete) {
   delete rootProject.buildDir
 }

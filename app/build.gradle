@@ -1,6 +1,20 @@
+buildscript {
+  repositories {
+    maven { url 'https://maven.fabric.io/public' }
+    jcenter()
+  }
+
+  dependencies {
+    classpath 'io.fabric.tools:gradle:1.+'
+    classpath 'me.tatarka:gradle-retrolambda:3.2.5'
+    classpath "io.realm:realm-gradle-plugin:$rootProject.ext.realm"
+  }
+}
+
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'realm-android'
 
 android {
   compileSdkVersion 23
@@ -13,9 +27,16 @@ android {
     versionCode 1
     versionName "1.0"
     multiDexEnabled true
-    manifestPlaceholders = [manifestApplicationId: "${applicationId}",
-                            onesignal_app_id: "159e39de-2bc7-41ea-bb84-627091bb7a0e",
+    manifestPlaceholders = [manifestApplicationId          : "${applicationId}",
+                            onesignal_app_id               : "159e39de-2bc7-41ea-bb84-627091bb7a0e",
                             onesignal_google_project_number: "865111362091"]
+    buildConfigField "String", "GIT_SHA", "\"${gitSha()}\""
+    buildConfigField "String", "BUILD_TIME", "\"${buildTime()}\""
+    multiDexEnabled true
+    resValue "string", "API_KEY", "AIzaSyA96NoTdiN7FM9ohgSiiQlyJuvIRhXYKZQ"
+  }
+  dexOptions {
+    javaMaxHeapSize rootProject.ext.heapSize
   }
   compileOptions {
 
@@ -30,6 +51,15 @@ android {
       keyPassword 'showcase'
     }
   }
+  productFlavors {
+    dev {
+      minSdkVersion 19
+    }
+    prod {
+      // The actual minSdkVersion for the application.
+      minSdkVersion 17
+    }
+  }
   buildTypes {
     release {
       minifyEnabled false
@@ -40,6 +70,13 @@ android {
       signingConfig signingConfigs.release
     }
   }
+  lintOptions {
+    checkReleaseBuilds false
+    abortOnError false
+  }
+  aaptOptions {
+    cruncherEnabled = false
+  }
 }
 
 repositories {
@@ -47,6 +84,7 @@ repositories {
   maven { url 'https://maven.fabric.io/public' }
   maven { url "https://jitpack.io" }
   maven { url "http://dl.bintray.com/tbruyelle/tbruyelle" }
+  jcenter()
 }
 retrolambda {
   jvmArgs '-noverify'
@@ -54,7 +92,7 @@ retrolambda {
 
 dependencies {
   final RETROFIT_VERSION = '2.0.0-beta3'
-  compile 'com.android.support:multidex:1.0.1' //MultiDex Support
+  compile "com.android.support:multidex:$rootProject.ext.multidex" //MultiDex Support
 
   //UI
   compile 'com.android.support:support-annotations:23.2.0'
@@ -90,10 +128,11 @@ dependencies {
   compile 'com.google.code.gson:gson:2.6.1'
 
   //rxAndroid
-  compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
-  compile 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.4.0'
-  compile('io.reactivex:rxandroid:1.1.0') {}
-  compile 'io.reactivex:rxjava:1.1.0'
+
+  compile "io.reactivex:rxjava:$rootProject.ext.rxJava"
+  compile "io.reactivex:rxandroid:$rootProject.ext.rxAndroid"
+  compile "com.jakewharton.rxbinding:rxbinding:$rootProject.ext.rxBinding" //rxAndroid
+  compile "com.jakewharton.rxbinding:rxbinding-appcompat-v7:$rootProject.ext.rxBinding"
 
   //dbNonSql
   compile 'io.supercharge:rxsnappy:0.4.0'
@@ -115,9 +154,14 @@ dependencies {
 
   //notify
   compile 'com.onesignal:OneSignal:2.+@aar'
-  compile 'com.google.android.gms:play-services-gcm:+'
-  compile 'com.google.android.gms:play-services-analytics:+'
-  compile "com.google.android.gms:play-services-location:+"
+  compile 'com.google.android.gms:play-services-gcm:9.2.0'
+  compile 'com.google.android.gms:play-services-analytics:9.2.0'
+  compile "com.google.android.gms:play-services-location:9.2.0"
+  compile 'pl.charmas.android:android-reactive-location:0.8@aar' //rxLocation
+  compile 'com.github.akashandroid90.googlesupport:google-support-location:1.0' // geocoderInverse
 
   compile "com.github.FuckBoilerplate:RxPaparazzo:0.1.4"
+
+  retrolambdaConfig "net.orfjackal.retrolambda:retrolambda:$rootProject.ext.retrolambda"
 }
+apply plugin: 'com.google.gms.google-services'

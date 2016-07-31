@@ -88,13 +88,17 @@ public class ingresar extends BaseFragment {
     });
   }
 
-  @OnClick({ R.id.btn_ingresar, R.id.txt_no_cuenta }) public void onClick(@NonNull View view) {
+  @OnClick({ R.id.btn_ingresar, R.id.txt_no_cuenta, R.id.txt_recover })
+  public void onClick(@NonNull View view) {
     switch (view.getId()) {
       case R.id.btn_ingresar:
         validar();
         break;
       case R.id.txt_no_cuenta:
         EventBus.getDefault().post(new TabPosition(1));
+        break;
+      case R.id.txt_recover:
+        baseActivity.goActv(recuperar.class, false);
         break;
     }
   }
@@ -150,7 +154,11 @@ public class ingresar extends BaseFragment {
 
   private void onSuccesValidar(@NonNull Usuario usuario) {
     if (usuario.getEstado().equalsIgnoreCase("exito")) {
-      usuario.save();
+      usuario.save()
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .compose(this.bindToLifecycle())
+          .subscribe();
       Intent intent = new Intent(getContext(), home.class);
       baseActivity.goActv(intent, true);
     } else {
@@ -161,9 +169,5 @@ public class ingresar extends BaseFragment {
   @Override public void onDestroyView() {
     super.onDestroyView();
     ButterKnife.unbind(this);
-  }
-
-  @OnClick(R.id.txt_no_cuenta) public void onClick() {
-    baseActivity.goActv(recuperar.class, false);
   }
 }

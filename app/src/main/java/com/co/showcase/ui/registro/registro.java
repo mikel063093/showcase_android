@@ -161,7 +161,11 @@ public class registro extends BaseFragment {
 
   private void onSuccesRegistro(@NonNull Usuario usuario) {
     if (usuario.getEstado().equalsIgnoreCase("exito")) {
-      usuario.save();
+      usuario.save()
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .compose(this.bindToLifecycle())
+          .subscribe();
       Intent intent = new Intent(getContext(), home.class);
       baseActivity.goActv(intent, true);
     } else {

@@ -6,13 +6,16 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 
 import com.co.showcase.AppMain;
+import com.co.showcase.BuildConfig;
 import com.co.showcase.R;
 import com.co.showcase.model.Usuario;
 
 import com.co.showcase.ui.home.home;
 import com.co.showcase.ui.login_main.login;
-import com.co.showcase.ui.perfil.perfil;
+
+import com.orhanobut.logger.Logger;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+import rx.android.schedulers.AndroidSchedulers;
 
 public class Splash extends RxAppCompatActivity {
   private final Handler handler = new Handler();
@@ -20,17 +23,29 @@ public class Splash extends RxAppCompatActivity {
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     initDB();
-    handler.postDelayed(() -> {
-      Usuario usuario = Usuario.GetItem();
-      if (usuario != null) {
-        Intent intent = new Intent(getApplicationContext(), home.class);
-        goActv(intent, true);
-      } else {
-        Intent intent = new Intent(getApplicationContext(), login.class);
-        goActv(intent, true);
-      }
-    }, 1200);
     setContentView(R.layout.splash);
+
+
+    Usuario.getItem()
+        .compose(this.bindToLifecycle())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(this::onSuccesUser, this::onFailUser);
+  }
+
+  private void onSuccesUser(Usuario usuario) {
+    if (usuario != null && usuario.getToken().length() > 2) {
+      log("userOnDB " + usuario.getNombre());
+      Intent intent = new Intent(getApplicationContext(), home.class);
+      goActv(intent, true);
+    } else {
+      onFailUser(new Throwable("user null"));
+    }
+  }
+
+  private void onFailUser(Throwable throwable) {
+    log("onFailUser " + throwable.getMessage());
+    Intent intent = new Intent(getApplicationContext(), login.class);
+    goActv(intent, true);
   }
 
   private void initDB() {
@@ -43,9 +58,23 @@ public class Splash extends RxAppCompatActivity {
     initDB();
   }
 
+  private void log(String msg) {
+    if (BuildConfig.DEBUG) {
+      Logger.e(msg);
+    }
+  }
+
   private void goActv(@NonNull Intent intent, boolean clear) {
-    if (clear) intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-    startActivity(intent);
-    overridePendingTransition(R.anim.move_right_in_activity, R.anim.move_left_out_activity);
+    log("goActv");
+    runOnUiThread(() -> {
+      log("handler");
+      handler.postDelayed(() -> {
+        log("handler ok");
+        if (clear) intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+      }, 3000);
+
+      //overridePendingTransition(R.anim.move_right_in_activity, R.anim.move_left_out_activity);
+    });
   }
 }

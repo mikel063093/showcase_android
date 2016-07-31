@@ -35,6 +35,7 @@ import com.onesignal.OneSignal;
 import com.orhanobut.logger.Logger;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
+import io.realm.Realm;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,6 +67,7 @@ public class BaseActivity extends RxAppCompatActivity {
   private Pattern patternName = Pattern.compile(NAME_PATTERN);
   private boolean isOnpause;
   private MaterialDialog loading;
+  private Realm realm;
   @Nullable private MaterialDialog materialDialog;
 
   private void showMessageOnSnakeBar(@NonNull View view, @NonNull String msg) {
@@ -75,25 +77,34 @@ public class BaseActivity extends RxAppCompatActivity {
   @Override protected void onPause() {
     super.onPause();
     isOnpause = true;
+    log("onPause");
   }
 
   @Override protected void onResume() {
     super.onResume();
+    log("onResume");
     initDB();
     isOnpause = false;
-    Usuario usuario = Usuario.GetItem();
-    if (usuario != null) {
-      updateGcm(usuario);
-    }
+    Usuario.getItem()
+        .compose(this.bindToLifecycle())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(this::updateGcm);
+    //Usuario usuario =  Usuario.getItem().toBlocking().first();
+    //if (usuario != null && usuario.getToken().length()>2) {
+    //  updateGcm(usuario);
+    //}
   }
 
   @Override protected void onStop() {
     EventBus.getDefault().unregister(this);
+    log("onStop");
+
     super.onStop();
   }
 
   @Override protected void onStart() {
     super.onStart();
+    log("onStart");
     EventBus.getDefault().register(this);
   }
 
@@ -104,6 +115,8 @@ public class BaseActivity extends RxAppCompatActivity {
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    log("onCreate");
+    realm = Realm.getDefaultInstance();
     initDB();
     new ReactiveNetwork().observeConnectivity(this)
         .subscribeOn(Schedulers.io())
@@ -122,18 +135,20 @@ public class BaseActivity extends RxAppCompatActivity {
   }
 
   private void updateGcm(@NonNull Usuario usuario) {
-    OneSignal.idsAvailable((userId, registrationId) -> {
-      Map<String, String> param = new HashMap<>();
-      param.put("id", usuario.getId());
-      param.put("gcmid", userId);
-      REST.getRest()
-          .gcm(param)
-          .compose(bindToLifecycle())
-          .subscribeOn(Schedulers.io())
-          .observeOn(AndroidSchedulers.mainThread())
-          .onErrorResumeNext(Observable.empty())
-          .subscribe();
-    });
+    if (usuario.getToken().length() > 2) {
+      OneSignal.idsAvailable((userId, registrationId) -> {
+        Map<String, String> param = new HashMap<>();
+        param.put("id", usuario.getId());
+        param.put("gcmid", userId);
+        REST.getRest()
+            .gcm(usuario.getToken(), param)
+            .compose(bindToLifecycle())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .onErrorResumeNext(Observable.empty())
+            .subscribe();
+      });
+    }
   }
 
   public void Log(String msg) {
@@ -301,7 +316,7 @@ public class BaseActivity extends RxAppCompatActivity {
       @NonNull final onClickCallback onClickCallback) {
     if (!isOnpause) {
       clearMdialog();
-      materialDialog = new MaterialDialog.Builder(this).title(getAppLable(AppMain.getContex()))
+      materialDialog = new MaterialDialog.Builder(this).title(getAppLable(this))
           .content(body)
           .positiveText(getString(R.string.acept))
           .negativeText(getString(R.string.cancel))
@@ -368,7 +383,7 @@ public class BaseActivity extends RxAppCompatActivity {
 
   public void errControl(@NonNull Throwable throwable) {
     dismissDialog();
-    //log(throwable.getMessage());
+    log(throwable.getMessage());
     if (throwable instanceof HttpException) {
       HttpException err = (HttpException) throwable;
       // log("Status err " + err.code() + err.message());
@@ -390,7 +405,7 @@ public class BaseActivity extends RxAppCompatActivity {
   }
 
   protected void log(String log) {
-    Log.e(getClassName(), log);
+    Logger.e(log);
   }
 
   private String getClassName() {
@@ -400,9 +415,42 @@ public class BaseActivity extends RxAppCompatActivity {
   @Override protected void onDestroy() {
     super.onDestroy();
     ButterKnife.unbind(this);
+    realm.close();
+  }
+
+  public Realm getRealm() {
+    return realm;
+  }
+
+  public Usuario getUserSync(){
+    return getRealm().where(Usuario.class).findFirst();
+  }
+  public void updateRealmUser(Usuario usuario) {
+    log("upDateRealmUser");
+    final Realm realm = Realm.getDefaultInstance();
+    realm.executeTransaction(realm1 -> {
+      Usuario u = realm1.where(Usuario.class).findFirst();
+
+      if (usuario.getFoto() != null) {
+        u.setFoto(usuario.getFoto());
+      }
+      if (usuario.getNombre() != null) {
+        u.setNombre(usuario.getNombre());
+      }
+      if (usuario.getApellido() != null) {
+        u.setApellido(usuario.getApellido());
+      }
+      if (usuario.getCorreo() != null) {
+        u.setCorreo(usuario.getCorreo());
+      }
+      if (usuario.getTelefono() != null) {
+        u.setTelefono(usuario.getTelefono());
+      }
+    });
+    realm.close();
   }
   public void setItemsVisibility(Menu menu, MenuItem exception, boolean visible) {
-    for (int i=0; i<menu.size(); ++i) {
+    for (int i = 0; i < menu.size(); ++i) {
       MenuItem item = menu.getItem(i);
       if (item != exception) item.setVisible(visible);
     }

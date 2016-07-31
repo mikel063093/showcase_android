@@ -85,6 +85,7 @@ public class login extends BaseActivity {
   }
 
   private void socialSingin(@NonNull String token) {
+    log("socialSingin " + token);
     Map<String, String> param = new HashMap<>();
     param.put("access_token", token);
 
@@ -95,13 +96,19 @@ public class login extends BaseActivity {
         .subscribeOn(Schedulers.io())
         .doOnCompleted(this::dismissDialog)
         .observeOn(AndroidSchedulers.mainThread())
-        .onErrorResumeNext(Observable.error(new Throwable("Custom error")))
+        //.onErrorResumeNext(Observable.error(new Throwable("Custom error")))
         .subscribe(this::onSuccesLogin, this::errControl);
   }
 
-  private void onSuccesLogin(@NonNull Usuario usuario) {
-    if (usuario.getEstado().equalsIgnoreCase("exito")) {
-      usuario.save();
+  private void onSuccesLogin(@NonNull Usuario u) {
+    //log("onSucceslogin " + u.getEstado());
+    if (u != null && u.getEstado().equalsIgnoreCase("exito")) {
+      // log("onSuccesOK");
+      u.save()
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .compose(this.bindToLifecycle())
+          .subscribe();
       goActv(home.class, true);
     } else {
       showErr(getString(R.string.general_err));

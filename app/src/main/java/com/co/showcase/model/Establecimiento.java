@@ -1,13 +1,16 @@
 package com.co.showcase.model;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by home on 30/06/16.
  */
 
 public class Establecimiento extends BaseModel {
+
+  @SerializedName("logo") String urlImagen;
   String nombre;
   String id;
-  String urlImagen;
 
   public String getNombre() {
     return nombre;

@@ -1,5 +1,6 @@
 package com.co.showcase.model;
 
+import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 /**
@@ -7,47 +8,26 @@ import java.util.List;
  */
 
 public class Categoria extends BaseModel {
-  public int firstPosition;
-  public int sectionedPosition;
 
-  public Categoria(int firstPosition, String nombre) {
-    this.firstPosition = firstPosition;
-    this.nombre = nombre;
+  public int id;
+  public String nombre;
+
+  @SerializedName("0")
+  public List<Establecimiento> establecimientos;
+
+  public List<Establecimiento> getEstablecimientos() {
+    return establecimientos;
   }
 
-  public Categoria() {
+  public void setEstablecimientos(List<Establecimiento> establecimientos) {
+    this.establecimientos = establecimientos;
   }
 
-  public Categoria(String nombre) {
-    this.nombre = nombre;
-  }
-
-  String id;
-  String nombre;
-
-  List<Establecimiento> establecimientos;
-
-  public String getId() {
+  public int getId() {
     return id;
   }
 
-  public int getFirstPosition() {
-    return firstPosition;
-  }
-
-  public void setFirstPosition(int firstPosition) {
-    this.firstPosition = firstPosition;
-  }
-
-  public int getSectionedPosition() {
-    return sectionedPosition;
-  }
-
-  public void setSectionedPosition(int sectionedPosition) {
-    this.sectionedPosition = sectionedPosition;
-  }
-
-  public void setId(String id) {
+  public void setId(int id) {
     this.id = id;
   }
 
@@ -57,14 +37,6 @@ public class Categoria extends BaseModel {
 
   public void setNombre(String nombre) {
     this.nombre = nombre;
-  }
-
-  public List<Establecimiento> getEstablecimientos() {
-    return establecimientos;
-  }
-
-  public void setEstablecimientos(List<Establecimiento> establecimientos) {
-    this.establecimientos = establecimientos;
   }
 
   @Override public String getTag() {

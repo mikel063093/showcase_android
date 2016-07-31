@@ -45,7 +45,6 @@ public class slide extends BaseFragment {
     ButterKnife.bind(this, view);
     Usuario.getItem()
         .compose(bindToLifecycle())
-        .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(this::updateUi);
     return view;
@@ -60,27 +59,23 @@ public class slide extends BaseFragment {
     }
     assert txtNamePerson != null;
     txtNamePerson.setText(usuario.getFullName());
-    if (BuildConfig.DEBUG) {
-      List<Categoria> sections = new ArrayList<>();
-      sections.add(new Categoria(0, "Almacenes de ropa"));
-      sections.add(new Categoria(2, "Almacenes de ropa"));
-      setupList(sections);
-    } else {
-      getCategorias();
-    }
+    getCategorias(usuario);
   }
 
-  private void getCategorias() {
+  private void getCategorias(@NonNull Usuario usuario) {
     REST.getRest()
-        .categorias(new HashMap<>())
+        .categorias(usuario.getToken(), new HashMap<>())
         .compose(bindToLifecycle())
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(this::succesCategoria);
+        .subscribe(this::succesCategoria, throwable -> {
+          log(throwable.getMessage());
+        });
   }
 
   private void succesCategoria(@NonNull ResponseCategorias responseCategorias) {
-    if (responseCategorias.getEstado().equalsIgnoreCase("exito")
+    log(responseCategorias.toJson());
+    if (responseCategorias.getEstado().equalsIgnoreCase("1")
         && responseCategorias.getCategorias().size() > 1) {
       setupList(responseCategorias.getCategorias());
     }

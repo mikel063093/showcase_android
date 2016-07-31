@@ -28,7 +28,7 @@ public abstract class BaseModel {
   protected static RxSnappyClient rxSnappy;
 
   static {
-    rxSnappy = AppMain.getApp().getRxSnappyClient();
+    rxSnappy = AppMain.getRxSnappyClient();
   }
 
   public static RxSnappyClient getRxSnappy() {

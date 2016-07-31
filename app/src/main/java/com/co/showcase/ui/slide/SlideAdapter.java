@@ -19,8 +19,8 @@ import java.util.List;
  */
 
 public class SlideAdapter extends BaseAdapter {
-  List<Categoria> categorias;
-  Context context;
+  private List<Categoria> categorias;
+  private Context context;
   @Nullable private ViewHolder holder;
 
   public SlideAdapter(List<Categoria> categorias, Context context) {
@@ -49,6 +49,7 @@ public class SlideAdapter extends BaseAdapter {
     holder = new ViewHolder(convertView);
     Categoria categoria = categorias.get(position);
     if (categoria != null) {
+      assert holder.txtItemSlide != null;
       holder.txtItemSlide.setText(categoria.getNombre());
     }
 

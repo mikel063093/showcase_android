@@ -47,6 +47,8 @@ public class recuperar extends BaseActivity {
   @OnClick(R.id.btn_ingresar) public void onClick() {
     assert edtEmail != null;
     if (validateEmail(edtEmail.getText().toString())) {
+      assert emailWrapper != null;
+      emailWrapper.setError(null);
       Map<String, String> param = new HashMap<>();
       param.put("correo", edtEmail.getText().toString());
       REST.getRest()

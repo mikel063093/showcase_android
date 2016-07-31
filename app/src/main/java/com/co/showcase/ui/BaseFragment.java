@@ -30,7 +30,6 @@ public class BaseFragment extends RxFragment {
   private Pattern patternName = Pattern.compile(NAME_PATTERN);
   private Matcher matcher;
 
-
   @Override public void onResume() {
     super.onResume();
     EventBus.getDefault().register(this);

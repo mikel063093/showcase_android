@@ -11,7 +11,6 @@ import android.view.View;
 
 import android.widget.ImageView;
 
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.co.showcase.BuildConfig;
@@ -41,7 +40,7 @@ class HomeSection extends StatelessSection {
   }
 
   @Override public int getContentItemsTotal() {
-    return list.size();
+    return list != null ? list.size() : 0;
   }
 
   @NonNull @Override public RecyclerView.ViewHolder getItemViewHolder(@NonNull View view) {

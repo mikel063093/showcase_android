@@ -60,13 +60,13 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
     super.onCreate(savedInstanceState);
     setContentView(R.layout.home);
     ButterKnife.bind(this);
-    Usuario usuario = Usuario.GetItem();
-    if (usuario != null) {
-      // getEstblecimientos(usuario);
-    }
+    Usuario.getItem()
+        .compose(this.bindToLifecycle())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(this::getEstblecimientos);
+
     setupToolbar();
     setupSlider();
-    setTupRecyclerView();
   }
 
   private void setupSlider() {
@@ -185,18 +185,19 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
     return super.onOptionsItemSelected(item);
   }
 
-  private void setTupRecyclerView() {
+  private void setTupRecyclerView(ResponseHome response) {
+    log(response.toJson());
     sectionAdapter = new SectionedRecyclerViewAdapter();
-    Categoria categoria = new Categoria("Almacenes de ropa");
+    if (response.getCategorias() != null
+        && response.getCategorias().get(0) != null
+        && response.getCategorias().get(0).getEstablecimientos() != null
+        && response.getCategorias().get(0).getEstablecimientos().size() > 0) {
 
-    List<Categoria> sections = new ArrayList<>();
-    sections.add(new Categoria(0, "Almacenes de ropa"));
-    sections.add(new Categoria(2, "Almacenes de ropa"));
-    EventBus.getDefault().post(sections);
-
-    sectionAdapter.addSection(new HomeSection(this, categoria, getDemoData()));
-    sectionAdapter.addSection(new HomeSection(this, categoria, getDemoData()));
-    sectionAdapter.addSection(new HomeSection(this, categoria, getDemoData()));
+      for (Categoria categoria : response.getCategorias()) {
+        sectionAdapter.addSection(
+            new HomeSection(this, categoria, categoria.getEstablecimientos()));
+      }
+    }
 
     GridLayoutManager glm = new GridLayoutManager(this, 2);
     glm.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -225,50 +226,57 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
     //mRecyclerView.setAdapter(sectionAdapter);
   }
 
-  @NonNull private List<Establecimiento> getDemoData() {
-    List<Establecimiento> establecimientos = new ArrayList<>();
-    Establecimiento establecimiento;
-    for (int i = 0; i < 4; i++) {
-      establecimiento = new Establecimiento();
-      establecimiento.setNombre(i % 2 == 0 ? "Levis" : "Addidas");
-      establecimiento.setId("" + i);
-      establecimiento.setUrlImagen(i % 2 == 0
-          ? "https://img.grouponcdn.com/coupons/dc6ZM97sA2uzsQoKxRbroC/levi-highres-500x500"
-          : "https://media.base.net/manufacturers/adidas.png");
-      establecimientos.add(establecimiento);
-    }
-
-    return establecimientos;
-  }
+  //@NonNull private List<Establecimiento> getDemoData() {
+  //  List<Establecimiento> establecimientos = new ArrayList<>();
+  //  Establecimiento establecimiento;
+  //  for (int i = 0; i < 4; i++) {
+  //    establecimiento = new Establecimiento();
+  //    establecimiento.setNombre(i % 2 == 0 ? "Levis" : "Addidas");
+  //    establecimiento.setId("" + i);
+  //    establecimiento.setUrlImagen(i % 2 == 0
+  //        ? "https://img.grouponcdn.com/coupons/dc6ZM97sA2uzsQoKxRbroC/levi-highres-500x500"
+  //        : "https://media.base.net/manufacturers/adidas.png");
+  //    establecimientos.add(establecimiento);
+  //  }
+  //
+  //  return establecimientos;
+  //}
 
   private void getEstblecimientos(@NonNull Usuario usuario) {
-    Map<String, String> param = new HashMap<>();
-    param.put("id", usuario.getId());
-    REST.getRest()
-        .establecimientos(param)
-        .compose(bindToLifecycle())
-        .doOnSubscribe(() -> showDialog(getString(R.string.loading)))
-        .subscribeOn(Schedulers.io())
-        .doOnCompleted(this::dismissDialog)
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(this::succesEstablecimiento, this::errControl);
+    if (usuario.getToken().length() > 2) {
+      Map<String, String> param = new HashMap<>();
+      param.put("id", usuario.getId());
+      REST.getRest()
+          .establecimientos(usuario.getToken(), param)
+          .compose(bindToLifecycle())
+          .doOnSubscribe(() -> showDialog(getString(R.string.loading)))
+          .subscribeOn(Schedulers.io())
+          .doOnCompleted(this::dismissDialog)
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(this::succesEstablecimiento, this::errControl);
+    }
   }
 
   private void succesEstablecimiento(@NonNull ResponseHome responseHome) {
     dismissDialog();
     if (responseHome.getEstado().equalsIgnoreCase("exito")) {
-      renderSlideImages(responseHome.getPromociones());
+
+      if (responseHome.getPromociones() != null) renderSlideImages(responseHome.getPromociones());
+
+      setTupRecyclerView(responseHome);
     } else {
       showErr(responseHome.getMensaje());
     }
   }
 
-  private void renderSlideImages(List<Slides> imgs) {
-    SlideAdapter adapter = new SlideAdapter(this, imgs);
-    assert viewPagerSlide != null;
-    viewPagerSlide.setAdapter(adapter);
-    assert indicatorSlides != null;
-    indicatorSlides.setViewPager(viewPagerSlide);
+  private void renderSlideImages(@NonNull List<Slides> imgs) {
+    if (imgs != null && imgs.size() > 1) {
+      SlideAdapter adapter = new SlideAdapter(this, imgs);
+      assert viewPagerSlide != null;
+      viewPagerSlide.setAdapter(adapter);
+      assert indicatorSlides != null;
+      indicatorSlides.setViewPager(viewPagerSlide);
+    }
   }
 
   @Override public boolean onQueryTextSubmit(String query) {
