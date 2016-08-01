@@ -36,9 +36,7 @@
     <activity android:name=".ui.detail.DetailActivity"/>
     <activity
         android:name=".ui.splash.Splash"
-        android:screenOrientation="portrait"
-
-        >
+        android:screenOrientation="portrait">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
 
@@ -47,29 +45,22 @@
     </activity>
     <activity
         android:name=".ui.login_main.login"
-        android:screenOrientation="portrait"
-        />
+        android:screenOrientation="portrait"/>
     <activity
         android:name=".ui.singin.singin"
-        android:screenOrientation="portrait"
-
-        />
+        android:screenOrientation="portrait"/>
     <activity
         android:name=".ui.recuperar.recuperar"
-        android:screenOrientation="portrait"
-
-        />
+        android:screenOrientation="portrait"/>
     <activity
         android:name=".ui.perfil.perfil"
-        android:screenOrientation="portrait"
-
-        >
+        android:screenOrientation="portrait">
     </activity>
     <activity
         android:name=".ui.home.home"
-        android:screenOrientation="portrait"
-
-        >
+        android:screenOrientation="portrait">
+    </activity>
+    <activity android:name=".ui.establecimiento.establecimiento">
     </activity>
   </application>
 

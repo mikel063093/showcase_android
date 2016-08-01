@@ -17,6 +17,8 @@ import com.co.showcase.BuildConfig;
 import com.co.showcase.R;
 import com.co.showcase.model.Categoria;
 import com.co.showcase.model.Establecimiento;
+import com.co.showcase.ui.BaseActivity;
+import com.co.showcase.ui.establecimiento.establecimiento;
 import com.orhanobut.logger.Logger;
 import com.squareup.picasso.Picasso;
 import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection;
@@ -28,11 +30,11 @@ import java.util.List;
 
 class HomeSection extends StatelessSection {
 
-  Categoria categoria;
-  List<Establecimiento> list;
-  Context context;
+  private Categoria categoria;
+  private List<Establecimiento> list;
+  private Context context;
 
-  public HomeSection(Context context, Categoria categoria, List<Establecimiento> list) {
+  HomeSection(Context context, Categoria categoria, List<Establecimiento> list) {
     super(R.layout.section_item, R.layout.item_general);
     this.categoria = categoria;
     this.list = list;
@@ -69,15 +71,24 @@ class HomeSection extends StatelessSection {
 
   @Override public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder_) {
     SectionViewHolder holder = (SectionViewHolder) holder_;
+    assert holder.txtSection != null;
     holder.txtSection.setText(categoria.getNombre());
-    holder.rootSection.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View view) {
-        log(categoria.toJson());
-      }
+    assert holder.rootSection != null;
+    holder.rootSection.setOnClickListener(view -> {
+      log(categoria.toJson());
+      goEstablicimientoDetail(categoria);
+    });
+    assert holder.btnSection != null;
+    holder.btnSection.setOnClickListener(view -> {
+      goEstablicimientoDetail(categoria);
     });
   }
 
-  public static class SectionViewHolder extends RecyclerView.ViewHolder {
+  private void goEstablicimientoDetail(Categoria categoria) {
+    ((BaseActivity) context).goActv(establecimiento.class, false);
+  }
+
+  static class SectionViewHolder extends RecyclerView.ViewHolder {
 
     @Nullable @Bind(R.id.txt_section) AppCompatTextView txtSection;
     @Nullable @Bind(R.id.btn_section) AppCompatButton btnSection;

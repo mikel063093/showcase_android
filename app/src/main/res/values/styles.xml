@@ -98,6 +98,28 @@
 
   </style>
 
+  <style name="txt_taupe1" parent="android:Widget.TextView">
+    <item name="android:textColor">@color/taupe1</item>
+    <item name="android:textSize">@dimen/texto_botones_size</item>
+    <item name="android:textStyle">normal</item>
+    <item name="fontPath">fonts/Circular-Std-Book.otf</item>
+  </style>
+
+
+  <style name="txt_medium_turquoise" parent="android:Widget.TextView">
+    <item name="android:textColor">@color/medium_turquoise</item>
+    <item name="android:textSize">@dimen/texto_botones_size</item>
+    <item name="android:textStyle">normal</item>
+    <item name="fontPath">fonts/Circular-Std-Bold.otf</item>
+  </style>
+
+  <style name="RatingBarCompany" parent="Theme.AppCompat">
+    <item name="colorControlNormal">@color/usc_gold</item>
+    <item name="colorControlActivated">@color/usc_gold</item>
+    <item name="android:minHeight">@dimen/_16sdp</item>
+    <item name="android:maxHeight">@dimen/_18sdp</item>
+  </style>
+
   <style name="txt_green_style" parent="android:Widget.TextView">
     <item name="android:textColor">@color/kelly_green</item>
     <item name="android:textSize">@dimen/texto_botones_size</item>
