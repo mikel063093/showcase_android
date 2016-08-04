@@ -12,7 +12,7 @@ public class Categoria extends BaseModel {
   public int id;
   public String nombre;
 
-  @SerializedName("0")
+  @SerializedName("establecimientos")
   public List<Establecimiento> establecimientos;
 
   public List<Establecimiento> getEstablecimientos() {

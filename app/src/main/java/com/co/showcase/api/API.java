@@ -3,6 +3,7 @@ package com.co.showcase.api;
 import android.support.annotation.NonNull;
 
 import com.co.showcase.model.EntryResponse;
+import com.co.showcase.model.Establecimiento;
 import com.co.showcase.model.ResponseCategorias;
 import com.co.showcase.model.ResponseHome;
 import com.co.showcase.model.Usuario;
@@ -43,7 +44,7 @@ public interface API {
   @NonNull @FormUrlEncoded @POST("establecimientos") Observable<ResponseHome> establecimientos(
       @Header("Authorization") String authorization, @FieldMap Map<String, String> param);
 
-  @NonNull @FormUrlEncoded @POST("establecimiento") Observable<ResponseHome> establecimiento(
+  @NonNull @FormUrlEncoded @POST("establecimiento") Observable<Establecimiento> establecimiento(
       @Header("Authorization") String authorization, @FieldMap Map<String, String> param);
 
   @NonNull @FormUrlEncoded @POST("categorias") Observable<ResponseCategorias> categorias(

@@ -34,8 +34,8 @@ public class userIteractorImpl implements userInterator {
     return getManagedRealm().concatMap(realm -> realm.where(Usuario.class)
         .findAllAsync()
         .asObservable()
-        .compose(new NullIfNoRealmObject<Usuario>())
-        .map(usuario -> realm.copyFromRealm(usuario)));
+        .compose(new NullIfNoRealmObject<Usuario>()));
+        //.map(usuario -> realm.copyFromRealm(usuario)));
   }
 
   @Override public Observable<Usuario> getLiveUser() {

@@ -11,7 +11,6 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -25,7 +24,6 @@ import butterknife.ButterKnife;
 import com.co.showcase.R;
 import com.co.showcase.api.REST;
 import com.co.showcase.model.Categoria;
-import com.co.showcase.model.Establecimiento;
 import com.co.showcase.model.ResponseHome;
 import com.co.showcase.model.Slides;
 import com.co.showcase.model.Usuario;
@@ -34,11 +32,9 @@ import com.co.showcase.ui.CustomView.CirclePageIndicator;
 import com.co.showcase.ui.perfil.perfil;
 import com.co.showcase.ui.slide.slide;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.greenrobot.eventbus.EventBus;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -50,11 +46,10 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
   @Nullable @Bind(R.id.rv_home) RecyclerView mRecyclerView;
   @Nullable @Bind(R.id.drawer) RelativeLayout drawer;
   @Nullable @Bind(R.id.drawer_layout) DrawerLayout drawerLayout;
-  //private EstablecimientoAdapter mAdapter;
+
   private SectionedRecyclerViewAdapter sectionAdapter;
   private SearchView searchView;
   private MenuItem searchItem;
-  // private SectionAdapter sectionAdapter;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -64,7 +59,6 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
         .compose(this.bindToLifecycle())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(this::getEstblecimientos);
-
     setupToolbar();
     setupSlider();
   }
@@ -111,7 +105,6 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
   }
 
   @Override public boolean onCreateOptionsMenu(Menu menu) {
-    // Inflate the menu; this adds items to the action bar if it is present.
     getMenuInflater().inflate(R.menu.menu_main, menu);
     searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
     searchItem = menu.findItem(R.id.action_search);
@@ -120,26 +113,22 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
           @Override public boolean onMenuItemActionCollapse(MenuItem item) {
             Log("closeMenuSearch");
             setItemsVisibility(menu, searchItem, true);
-            return true;  // Return true to collapse action view
+            return true;
           }
 
           @Override public boolean onMenuItemActionExpand(MenuItem item) {
-            // Do something when expanded
-            return true;  // Return true to expand action view
+            return true;
           }
         });
-
     searchView.setOnQueryTextListener(this);
     searchView.setIconifiedByDefault(true);
     searchView.setSubmitButtonEnabled(false);
-
     searchView.setOnSearchClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         Log("openSearch");
         setItemsVisibility(menu, searchItem, false);
       }
     });
-    // Detect SearchView close
     searchView.setOnCloseListener(new SearchView.OnCloseListener() {
       @Override public boolean onClose() {
         Log("closeSearch");
@@ -212,35 +201,7 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
     });
     mRecyclerView.setLayoutManager(glm);
     mRecyclerView.setAdapter(sectionAdapter);
-    //mRecyclerView.setHasFixedSize(false);
-    //
-    //mRecyclerView.setLayoutManager(new GridLayoutManager(this, 4));
-    //mAdapter = new EstablecimientoAdapter(this, getDemoData());
-    //
-
-    //
-    //sectionAdapter = new SectionAdapter(this, mAdapter);
-    //Categoria[] dummy = new Categoria[sections.size()];
-    //sectionAdapter.setSections(sections.toArray(dummy));
-    //
-    //mRecyclerView.setAdapter(sectionAdapter);
   }
-
-  //@NonNull private List<Establecimiento> getDemoData() {
-  //  List<Establecimiento> establecimientos = new ArrayList<>();
-  //  Establecimiento establecimiento;
-  //  for (int i = 0; i < 4; i++) {
-  //    establecimiento = new Establecimiento();
-  //    establecimiento.setNombre(i % 2 == 0 ? "Levis" : "Addidas");
-  //    establecimiento.setId("" + i);
-  //    establecimiento.setUrlImagen(i % 2 == 0
-  //        ? "https://img.grouponcdn.com/coupons/dc6ZM97sA2uzsQoKxRbroC/levi-highres-500x500"
-  //        : "https://media.base.net/manufacturers/adidas.png");
-  //    establecimientos.add(establecimiento);
-  //  }
-  //
-  //  return establecimientos;
-  //}
 
   private void getEstblecimientos(@NonNull Usuario usuario) {
     if (usuario.getToken().length() > 2) {
@@ -260,9 +221,7 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
   private void succesEstablecimiento(@NonNull ResponseHome responseHome) {
     dismissDialog();
     if (responseHome.getEstado().equalsIgnoreCase("exito")) {
-
       if (responseHome.getPromociones() != null) renderSlideImages(responseHome.getPromociones());
-
       setTupRecyclerView(responseHome);
     } else {
       showErr(responseHome.getMensaje());
@@ -271,7 +230,7 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
 
   private void renderSlideImages(@NonNull List<Slides> imgs) {
     if (imgs != null && imgs.size() > 1) {
-      SlideAdapter adapter = new SlideAdapter(this, imgs);
+      SlideAdapter adapter = new SlideAdapter( this, imgs);
       assert viewPagerSlide != null;
       viewPagerSlide.setAdapter(adapter);
       assert indicatorSlides != null;

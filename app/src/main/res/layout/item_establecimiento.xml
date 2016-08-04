@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_item_establecimiento"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_170sdp"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    card_view:cardCornerRadius="3dp"
+    card_view:cardElevation="4dp"
+    card_view:cardPreventCornerOverlap="true"
+    card_view:cardUseCompatPadding="true"
+    style="@style/card_white"
+    >
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      >
+    <ImageView
+        android:id="@+id/img_item"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_80sdp"
+        android:src="@drawable/foto_articulo_1"
+        />
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/txt_description_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:layout_marginRight="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:gravity="center"
+        android:maxLines="1"
+        android:text="Chaqueta de Jean"
+        android:textSize="@dimen/_18sdp"
+        fontPath="fonts/Circular-Std-Bold.otf"
+        style="@style/txt_taupe"
+        />
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/txt_price_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:layout_marginRight="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:gravity="center"
+        android:maxLines="1"
+        android:text="$66.500"
+        android:textSize="@dimen/_16sdp"
+        fontPath="fonts/Circular-Std-Bold.otf"
+        style="@style/txt_dark_tangerine"
+        />
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/txt_units_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:layout_marginRight="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:gravity="center"
+        android:maxLines="1"
+        android:text="2 unidades"
+        android:textSize="@dimen/_14sdp"
+        fontPath="fonts/Circular-Std-Bold.otf"
+        style="@style/txt_manatee"
+        />
+  </LinearLayout>
+
+</android.support.v7.widget.CardView>

@@ -206,6 +206,28 @@
 
   </style>
 
+  <style name="txt_taupe" parent="android:Widget.TextView">
+    <item name="android:textColor">@color/taupe</item>
+    <item name="android:textSize">@dimen/texto_botones_size</item>
+    <item name="android:textStyle">normal</item>
+    <item name="fontPath">fonts/Circular-Std-Bold.otf</item>
+
+  </style>
+
+  <style name="txt_dark_tangerine" parent="android:Widget.TextView">
+    <item name="android:textColor">@color/dark_tangerine</item>
+    <item name="android:textSize">@dimen/texto_botones_size</item>
+    <item name="android:textStyle">normal</item>
+    <item name="fontPath">fonts/Circular-Std-Book.otf</item>
+
+  </style>
+  <style name="txt_manatee" parent="android:Widget.TextView">
+    <item name="android:textColor">@color/manatee</item>
+    <item name="android:textSize">@dimen/texto_botones_size</item>
+    <item name="android:textStyle">normal</item>
+    <item name="fontPath">fonts/Circular-Std-Book.otf</item>
+
+  </style>
 
   <style name="ToolbarTextAppearance">
     <item name="fontPath">fonts/Circular-Std-Book.otf</item>

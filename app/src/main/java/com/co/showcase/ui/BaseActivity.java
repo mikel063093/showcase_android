@@ -134,8 +134,8 @@ public class BaseActivity extends RxAppCompatActivity {
     //
   }
 
-  private void updateGcm(@NonNull Usuario usuario) {
-    if (usuario.getToken().length() > 2) {
+  private void updateGcm(Usuario usuario) {
+    if (usuario != null && usuario.getToken().length() > 2) {
       OneSignal.idsAvailable((userId, registrationId) -> {
         Map<String, String> param = new HashMap<>();
         param.put("id", usuario.getId());
@@ -422,9 +422,10 @@ public class BaseActivity extends RxAppCompatActivity {
     return realm;
   }
 
-  public Usuario getUserSync(){
+  public Usuario getUserSync() {
     return getRealm().where(Usuario.class).findFirst();
   }
+
   public void updateRealmUser(Usuario usuario) {
     log("upDateRealmUser");
     final Realm realm = Realm.getDefaultInstance();
@@ -449,6 +450,7 @@ public class BaseActivity extends RxAppCompatActivity {
     });
     realm.close();
   }
+
   public void setItemsVisibility(Menu menu, MenuItem exception, boolean visible) {
     for (int i = 0; i < menu.size(); ++i) {
       MenuItem item = menu.getItem(i);

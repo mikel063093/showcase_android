@@ -240,12 +240,12 @@ public class perfil extends BaseActivity implements SearchView.OnQueryTextListen
         param.put("id", usuario.getId());
         assert edtNombre != null;
         if (validateFirstName(edtNombre.getText().toString())) {
-          param.put("nombre", edtNombre.getText().toString());
+          param.put("nombres", edtNombre.getText().toString());
         } else {
           log("validateNameFail");
         }
         if (validateLastName(edtApellido.getText().toString())) {
-          param.put("apellido", edtApellido.getText().toString());
+          param.put("apellidos", edtApellido.getText().toString());
         } else {
           log("validateLastNameFail");
         }

@@ -26,6 +26,7 @@ import java.util.List;
  */
 
 public class SlideAdapter extends PagerAdapter {
+  private List<String> images;
   private Context context;
   private List<Slides> imagesUrl;
   private ViewHolder holder;
@@ -33,6 +34,11 @@ public class SlideAdapter extends PagerAdapter {
   public SlideAdapter(Context context, List<Slides> imagesUrl) {
     this.context = context;
     this.imagesUrl = imagesUrl;
+  }
+
+  public SlideAdapter(Context context, List<String> imagesUrl, boolean f) {
+    this.context = context;
+    this.images = imagesUrl;
   }
 
   @Override public void destroyItem(@NonNull ViewGroup container, int position, Object object) {
@@ -44,7 +50,7 @@ public class SlideAdapter extends PagerAdapter {
   }
 
   @Override public int getCount() {
-    return imagesUrl.size();
+    return imagesUrl != null ? imagesUrl.size() : images.size();
   }
 
   @Override public View instantiateItem(@NonNull ViewGroup container, final int position) {
@@ -53,9 +59,12 @@ public class SlideAdapter extends PagerAdapter {
     View view = inflater.inflate(R.layout.item_slide, container, false);
     holder = new ViewHolder(view);
     view.setTag(holder);
-    Log.e("HOLDER", imagesUrl.get(position).getUrlImagen());
+
     Picasso.with(context).setLoggingEnabled(true);
-    Picasso.with(context).load(imagesUrl.get(position).getUrlImagen()).into(holder.image_display);
+    String url = imagesUrl != null && images.size() > 0 ? imagesUrl.get(position).getUrlImagen()
+        : images.get(position);
+    Log.e("HOLDER", url);
+    Picasso.with(context).load(url).into(holder.image_display);
     container.addView(view);
     return view;
   }
