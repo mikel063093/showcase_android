@@ -1,4 +1,4 @@
-package com.co.showcase.ui.establecimiento;
+package com.co.showcase.ui.categoria;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -7,7 +7,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.AppCompatTextView;
@@ -18,67 +17,78 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.RatingBar;
-import android.widget.RelativeLayout;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import com.co.showcase.AppMain;
 import com.co.showcase.R;
 import com.co.showcase.api.REST;
-import com.co.showcase.model.Establecimiento;
-import com.co.showcase.model.ResponsePuntuacion;
-import com.co.showcase.model.Slides;
+import com.co.showcase.model.Categoria;
 import com.co.showcase.model.Usuario;
+import com.co.showcase.model.usuario.ResponseCategoriaDetalle;
 import com.co.showcase.ui.BaseActivity;
-import com.co.showcase.ui.CustomView.CirclePageIndicator;
-import com.co.showcase.ui.home.SlideAdapter;
+import com.co.showcase.ui.establecimiento.establecimientoAdapter;
 import com.co.showcase.ui.perfil.perfil;
 import com.co.showcase.ui.slide.slide;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class establecimiento extends BaseActivity implements SearchView.OnQueryTextListener {
+public class categoria extends BaseActivity implements SearchView.OnQueryTextListener {
 
   @Bind(R.id.toolbar_home) Toolbar toolbar;
-  @Bind(R.id.indicator_home) CirclePageIndicator indicatorHome;
-  @Bind(R.id.view_pager_home) ViewPager viewPagerHome;
-  @Bind(R.id.txt_name_company) AppCompatTextView txtNameCompany;
-  @Bind(R.id.txt_description) AppCompatTextView txtDescription;
-  @Bind(R.id.txt_addres) AppCompatTextView txtAddres;
-  @Bind(R.id.txt_phone) AppCompatTextView txtPhone;
-  @Bind(R.id.txt_celphone) AppCompatTextView txtCelphone;
-  @Bind(R.id.txt_email) AppCompatTextView txtEmail;
-  @Bind(R.id.txt_website) AppCompatTextView txtWebsite;
-  @Bind(R.id.btn_sahre_fb) ImageView btnSahreFb;
-  @Bind(R.id.btn_sahre_tw) ImageView btnSahreTw;
-  @Bind(R.id.ratingBar) RatingBar ratingBar;
   @Bind(R.id.rv_home) RecyclerView rvHome;
-  @Bind(R.id.drawer) RelativeLayout drawer;
+
   @Bind(R.id.drawer_layout) DrawerLayout drawerLayout;
-  @Bind(R.id.share_general) ImageView shareGeneral;
-  private SearchView searchView;
+  @Bind(R.id.txt_section) AppCompatTextView txtSection;
   private MenuItem searchItem;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.establecimiento);
+    setContentView(R.layout.categoria_layout);
     ButterKnife.bind(this);
     setupToolbar();
     setupSlider();
     if (getIntent() != null
         && getIntent().getStringExtra(this.getClass().getSimpleName()) != null) {
       String json = getIntent().getStringExtra(this.getClass().getSimpleName());
-      Establecimiento establecimiento = AppMain.getGson().fromJson(json, Establecimiento.class);
-      if (establecimiento != null) {
-        updateUI(establecimiento);
-      }
+      Categoria categoria = AppMain.getGson().fromJson(json, Categoria.class);
+      Usuario user = getUserSync();
+      getDetalleCategoria(user, categoria);
     }
+  }
+
+  private void getDetalleCategoria(Usuario usuario, Categoria categoria) {
+    if (usuario.getToken().length() > 2) {
+      Map<String, Object> param = new HashMap<>();
+      param.put("id", categoria.getId() + "");
+      REST.getRest()
+          .categoria(usuario.getToken(), param)
+          .compose(bindToLifecycle())
+          .doOnSubscribe(() -> showDialog(getString(R.string.loading)))
+          .subscribeOn(Schedulers.io())
+          .doOnCompleted(this::dismissDialog)
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(this::updateUi, this::errControl);
+    }
+  }
+
+  private void updateUi(ResponseCategoriaDetalle categoria) {
+    if (categoria.getEstado() == 1) {
+      setTupRecyclerView(categoria.getCategorias());
+      txtSection.setText(categoria.getCategorias().getNombre());
+    } else {
+      showErr(getString(R.string.general_err));
+    }
+  }
+
+  private void setTupRecyclerView(Categoria categoria) {
+    log(categoria.getJson());
+    establecimientoAdapter adapter =
+        new establecimientoAdapter(this, categoria.getEstablecimientos());
+    GridLayoutManager glm = new GridLayoutManager(this, 2);
+    rvHome.setLayoutManager(glm);
+    rvHome.setAdapter(adapter);
   }
 
   private void setupSlider() {
@@ -124,7 +134,8 @@ public class establecimiento extends BaseActivity implements SearchView.OnQueryT
 
   @Override public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.menu_main, menu);
-    searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+    SearchView searchView =
+        (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
     searchItem = menu.findItem(R.id.action_search);
     MenuItemCompat.setOnActionExpandListener(searchItem,
         new MenuItemCompat.OnActionExpandListener() {
@@ -186,89 +197,6 @@ public class establecimiento extends BaseActivity implements SearchView.OnQueryT
         break;
     }
     return super.onOptionsItemSelected(item);
-  }
-
-  private void renderSlideImages(@NonNull List<String> imgs) {
-    if (imgs.size() >= 1) {
-      log("list logos" + imgs.size());
-      SlideAdapter adapter = new SlideAdapter(this, imgs, true);
-      assert viewPagerHome != null;
-      viewPagerHome.setAdapter(adapter);
-      assert indicatorHome != null;
-      indicatorHome.setViewPager(viewPagerHome);
-    }
-  }
-
-  private void updateUI(Establecimiento establecimiento) {
-    txtNameCompany.setText(establecimiento.getNombre());
-    txtDescription.setText(establecimiento.getDescripcion());
-    txtAddres.setText(establecimiento.getDireccion());
-    txtCelphone.setText(establecimiento.getTelefono());
-    txtPhone.setText(establecimiento.getTelefono());
-    txtEmail.setText("");
-    txtWebsite.setText(establecimiento.getSitioWeb());
-    ratingBar.setRating(Float.parseFloat(establecimiento.getPuntuacion() + ""));
-    List<String> imgs = new ArrayList<>();
-    imgs.add(establecimiento.getUrlImagen());
-    renderSlideImages(imgs);
-    establecimientoItemsAdapter adapter =
-        new establecimientoItemsAdapter(this, establecimiento.getArticulos());
-    GridLayoutManager glm = new GridLayoutManager(this, 2);
-    rvHome.setLayoutManager(glm);
-    rvHome.setAdapter(adapter);
-    ratingBar.setOnRatingBarChangeListener(
-        (ratingBar1, v, b) -> onRatingChange(v, establecimiento));
-    //txtDescription.setText();
-  }
-
-  private void onRatingChange(float value, Establecimiento establecimiento) {
-    Usuario usuario = getUserSync();
-    if (usuario.getToken().length() > 2) {
-      Map<String, Object> param = new HashMap<>();
-      param.put("valor", value);
-      param.put("id", establecimiento.getId());
-      REST.getRest()
-          .puntuarEstablecimiento(usuario.getToken(), param)
-          .compose(bindToLifecycle())
-          .doOnSubscribe(() -> showDialog(getString(R.string.loading)))
-          .subscribeOn(Schedulers.io())
-          .doOnCompleted(this::dismissDialog)
-          .observeOn(AndroidSchedulers.mainThread())
-          .subscribe(this::onSuccesPuntuacion, this::errControl);
-    }
-  }
-
-  private void onSuccesPuntuacion(ResponsePuntuacion responsePuntuacion) {
-    dismissDialog();
-    if (responsePuntuacion.getEstado() == 1) {
-      showMaterialDialog(getString(R.string.puntuacion_ok), new onClickCallback() {
-        @Override public void onPositive(boolean result) {
-
-        }
-
-        @Override public void onDissmis() {
-
-        }
-
-        @Override public void onNegative(boolean result) {
-
-        }
-      });
-    } else {
-      showErr(getString(R.string.general_err));
-    }
-  }
-
-  @OnClick({ R.id.btn_sahre_fb, R.id.btn_sahre_tw, R.id.share_general })
-  public void onClick(View view) {
-    switch (view.getId()) {
-      case R.id.btn_sahre_fb:
-        break;
-      case R.id.btn_sahre_tw:
-        break;
-      case R.id.share_general:
-        break;
-    }
   }
 
   @Override public boolean onQueryTextSubmit(String query) {

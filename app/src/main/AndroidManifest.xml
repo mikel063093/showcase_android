@@ -62,6 +62,10 @@
     </activity>
     <activity android:name=".ui.establecimiento.establecimiento">
     </activity>
+    <activity android:name=".ui.categoria.categoria">
+    </activity>
+    <activity android:name=".ui.producto.producto">
+    </activity>
   </application>
 
 </manifest>

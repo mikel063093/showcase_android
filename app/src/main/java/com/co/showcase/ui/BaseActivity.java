@@ -29,6 +29,7 @@ import com.co.showcase.model.Categoria;
 import com.co.showcase.model.EntryResponse;
 import com.co.showcase.model.TabPosition;
 import com.co.showcase.model.Usuario;
+import com.co.showcase.ui.categoria.categoria;
 import com.github.pwittchen.reactivenetwork.library.ReactiveNetwork;
 import com.google.gson.Gson;
 import com.onesignal.OneSignal;
@@ -456,5 +457,11 @@ public class BaseActivity extends RxAppCompatActivity {
       MenuItem item = menu.getItem(i);
       if (item != exception) item.setVisible(visible);
     }
+  }
+
+  public void goCategoria(Categoria c) {
+    Intent i = new Intent(this, categoria.class);
+    i.putExtra(categoria.class.getSimpleName(), AppMain.getGson().toJson(c));
+    goActv(i, false);
   }
 }

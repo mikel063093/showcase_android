@@ -12,6 +12,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.co.showcase.R;
 import com.co.showcase.model.Categoria;
+import com.co.showcase.ui.BaseActivity;
 import java.util.List;
 
 /**
@@ -40,7 +41,8 @@ public class SlideAdapter extends BaseAdapter {
     return i;
   }
 
-  @Nullable @Override public View getView(int position, @Nullable View convertView, ViewGroup parent) {
+  @Nullable @Override
+  public View getView(int position, @Nullable View convertView, ViewGroup parent) {
     if (convertView == null) {
       LayoutInflater mInflater =
           (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
@@ -51,6 +53,8 @@ public class SlideAdapter extends BaseAdapter {
     if (categoria != null) {
       assert holder.txtItemSlide != null;
       holder.txtItemSlide.setText(categoria.getNombre());
+      holder.txtItemSlide.setOnClickListener(
+          view -> ((BaseActivity) context).goCategoria(categoria));
     }
 
     return convertView;

@@ -39,7 +39,7 @@ public class Establecimiento extends BaseModel {
   String youtube;
   String instagram;
   String puntuacionUsuario;
-  int puntuacion;
+  Double puntuacion;
   ArrayList<Articulo> articulos;
 
   public String getNombre() {
@@ -166,11 +166,11 @@ public class Establecimiento extends BaseModel {
     this.puntuacionUsuario = puntuacionUsuario;
   }
 
-  public int getPuntuacion() {
+  public Double getPuntuacion() {
     return puntuacion;
   }
 
-  public void setPuntuacion(int puntuacion) {
+  public void setPuntuacion(Double puntuacion) {
     this.puntuacion = puntuacion;
   }
 

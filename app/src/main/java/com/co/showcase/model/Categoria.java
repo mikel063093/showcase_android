@@ -1,5 +1,6 @@
 package com.co.showcase.model;
 
+import com.co.showcase.AppMain;
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
@@ -12,8 +13,7 @@ public class Categoria extends BaseModel {
   public int id;
   public String nombre;
 
-  @SerializedName("establecimientos")
-  public List<Establecimiento> establecimientos;
+  @SerializedName("establecimientos") public List<Establecimiento> establecimientos;
 
   public List<Establecimiento> getEstablecimientos() {
     return establecimientos;
@@ -41,5 +41,9 @@ public class Categoria extends BaseModel {
 
   @Override public String getTag() {
     return getClassName();
+  }
+
+  public String getJson() {
+    return AppMain.getGson().toJson(this);
   }
 }

@@ -44,5 +44,9 @@
   <string name="open">Abrir</string>
   <string name="salir">Deseas salir</string>
   <string name="offer">Este establecimiento ofrece</string>
+  <string name="puntuacion_ok">gracias por calificarnos</string>
+  <string name="reservar">Reservar</string>
+  <string name="item_count_err">Debes seleccionar al menos un elemento</string>
+  <string name="max_item">Cantidad maxima de productos</string>
 </resources>
 

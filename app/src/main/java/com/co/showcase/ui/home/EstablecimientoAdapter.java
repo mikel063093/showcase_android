@@ -59,10 +59,13 @@ public class EstablecimientoAdapter
   }
 
   @Override public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+    assert mData != null;
     Establecimiento establecimiento = mData.get(position);
     if (establecimiento != null) {
+      assert holder.txtItemGeneral != null;
       holder.txtItemGeneral.setText(establecimiento.getNombre());
       Picasso.with(mContext).load(establecimiento.getUrlImagen()).fit().into(holder.imageView5);
+      assert holder.rootSection != null;
       holder.rootSection.setOnClickListener(view -> log(establecimiento.toJson()));
     }
   }

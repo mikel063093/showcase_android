@@ -113,18 +113,9 @@ class HomeSection extends StatelessSection {
     assert holder.txtSection != null;
     holder.txtSection.setText(categoria.getNombre());
     assert holder.rootSection != null;
-    holder.rootSection.setOnClickListener(view -> {
-      log(categoria.toJson());
-      goEstablicimientoDetail(categoria);
-    });
+    holder.rootSection.setOnClickListener(view -> ((BaseActivity) context).goCategoria(categoria));
     assert holder.btnSection != null;
-    holder.btnSection.setOnClickListener(view -> {
-      goEstablicimientoDetail(categoria);
-    });
-  }
-
-  private void goEstablicimientoDetail(Categoria categoria) {
-    ((BaseActivity) context).goActv(establecimiento.class, false);
+    holder.btnSection.setOnClickListener(view -> ((BaseActivity) context).goCategoria(categoria));
   }
 
   static class SectionViewHolder extends RecyclerView.ViewHolder {

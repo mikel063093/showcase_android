@@ -55,6 +55,7 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
     super.onCreate(savedInstanceState);
     setContentView(R.layout.home);
     ButterKnife.bind(this);
+
     Usuario.getItem()
         .compose(this.bindToLifecycle())
         .observeOn(AndroidSchedulers.mainThread())

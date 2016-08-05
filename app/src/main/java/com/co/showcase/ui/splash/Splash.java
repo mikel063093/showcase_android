@@ -72,7 +72,7 @@ public class Splash extends RxAppCompatActivity {
         log("handler ok");
         if (clear) intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-      }, 3000);
+      }, 1500);
 
       //overridePendingTransition(R.anim.move_right_in_activity, R.anim.move_left_out_activity);
     });

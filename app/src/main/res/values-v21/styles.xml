@@ -214,6 +214,14 @@
 
   </style>
 
+  <style name="txt_outer_space" parent="android:Widget.TextView">
+    <item name="android:textColor">@color/outer_space</item>
+    <item name="android:textSize">@dimen/texto_botones_size</item>
+    <item name="android:textStyle">normal</item>
+    <item name="fontPath">fonts/Circular-Std-Book.otf</item>
+
+  </style>
+
   <style name="txt_dark_tangerine" parent="android:Widget.TextView">
     <item name="android:textColor">@color/dark_tangerine</item>
     <item name="android:textSize">@dimen/texto_botones_size</item>
@@ -229,6 +237,13 @@
 
   </style>
 
+  <style name="txt_pearl_aqua" parent="android:Widget.TextView">
+    <item name="android:textColor">@color/pearl_aqua</item>
+    <item name="android:textSize">@dimen/texto_botones_size</item>
+    <item name="android:textStyle">normal</item>
+    <item name="fontPath">fonts/Circular-Std-Book.otf</item>
+
+  </style>
   <style name="ToolbarTextAppearance">
     <item name="fontPath">fonts/Circular-Std-Book.otf</item>
     <item name="android:textColor">@color/white</item>
