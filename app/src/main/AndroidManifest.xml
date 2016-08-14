@@ -15,6 +15,10 @@
   <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
   <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER"/>
 
+  <meta-data
+      android:name="com.google.android.geo.API_KEY"
+      android:value="@string/google_maps_key"/>
+
   <application
       android:name=".AppMain"
       android:allowBackup="true"
@@ -25,6 +29,9 @@
     <meta-data
         android:name="com.facebook.sdk.ApplicationId"
         android:value="@string/facebook_app_id"/>
+    <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="@string/API_KEY"/>
 
     <activity
         android:name="com.facebook.FacebookActivity"
@@ -65,6 +72,8 @@
     <activity android:name=".ui.categoria.categoria">
     </activity>
     <activity android:name=".ui.producto.producto">
+    </activity>
+    <activity android:name=".ui.map.map">
     </activity>
   </application>
 

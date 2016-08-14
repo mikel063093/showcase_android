@@ -29,6 +29,7 @@ import com.co.showcase.model.Slides;
 import com.co.showcase.model.Usuario;
 import com.co.showcase.ui.BaseActivity;
 import com.co.showcase.ui.CustomView.CirclePageIndicator;
+import com.co.showcase.ui.map.map;
 import com.co.showcase.ui.perfil.perfil;
 import com.co.showcase.ui.slide.slide;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
@@ -147,7 +148,9 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
       //  log("action buy");
       //  //Toast.makeText(this, "Favorite", Toast.LENGTH_SHORT).show();
       //  return true;
-
+      case R.id.action_map:
+        goActv(map.class, false);
+        break;
       case R.id.action_search:
         log("action search");
         //Toast.makeText(this, "Search", Toast.LENGTH_SHORT).show();
@@ -231,7 +234,7 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
 
   private void renderSlideImages(@NonNull List<Slides> imgs) {
     if (imgs != null && imgs.size() > 1) {
-      SlideAdapter adapter = new SlideAdapter( this, imgs);
+      SlideAdapter adapter = new SlideAdapter(this, imgs);
       assert viewPagerSlide != null;
       viewPagerSlide.setAdapter(adapter);
       assert indicatorSlides != null;

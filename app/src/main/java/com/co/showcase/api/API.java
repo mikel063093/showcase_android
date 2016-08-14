@@ -9,6 +9,7 @@ import com.co.showcase.model.ResponseHome;
 import com.co.showcase.model.ResponsePuntuacion;
 import com.co.showcase.model.Usuario;
 import com.co.showcase.model.usuario.ResponseCategoriaDetalle;
+import com.co.showcase.model.zonaDetalle;
 import java.util.Map;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
@@ -57,8 +58,11 @@ public interface API {
   Observable<ResponsePuntuacion> puntuarEstablecimiento(
       @Header("Authorization") String authorization, @FieldMap Map<String, Object> param);
 
-
   @NonNull @FormUrlEncoded @POST("detalleProducto")
-  Observable<ResponseDetalleArticulo> detalleProducto(
-      @Header("Authorization") String authorization, @FieldMap Map<String, Object> param);
+  Observable<ResponseDetalleArticulo> detalleProducto(@Header("Authorization") String authorization,
+      @FieldMap Map<String, Object> param);
+
+  @NonNull @FormUrlEncoded @POST("categoriasLocalizacion")
+  Observable<zonaDetalle> categoriasLocalizacion(@Header("Authorization") String authorization,
+      @FieldMap Map<String, Object> param);
 }

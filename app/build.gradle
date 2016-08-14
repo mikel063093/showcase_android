@@ -61,13 +61,16 @@ android {
     }
   }
   buildTypes {
+    def apiKey = "AIzaSyA96NoTdiN7FM9ohgSiiQlyJuvIRhXYKZQ"
     release {
       minifyEnabled false
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
       signingConfig signingConfigs.release
+      resValue "string", "google_maps_key", apiKey
     }
     debug {
       signingConfig signingConfigs.release
+      resValue "string", "google_maps_key", apiKey
     }
   }
   lintOptions {
@@ -151,12 +154,16 @@ dependencies {
   //lifecycle
   compile('com.trello:rxlifecycle-components:0.5.0')
   compile 'org.greenrobot:eventbus:3.0.0'
+  //rxMaps
+  compile 'com.sdoward:rxgooglemaps:1.0@aar'
+  compile group: 'com.google.maps.android', name: 'android-maps-utils', version: '0.4.3'
 
   //notify
   compile 'com.onesignal:OneSignal:2.+@aar'
   compile 'com.google.android.gms:play-services-gcm:9.2.0'
   compile 'com.google.android.gms:play-services-analytics:9.2.0'
   compile "com.google.android.gms:play-services-location:9.2.0"
+  compile 'com.google.android.gms:play-services-maps:9.2.0'
   compile 'pl.charmas.android:android-reactive-location:0.8@aar' //rxLocation
   compile 'com.github.akashandroid90.googlesupport:google-support-location:1.0' // geocoderInverse
 

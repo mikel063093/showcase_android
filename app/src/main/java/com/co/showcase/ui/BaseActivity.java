@@ -464,4 +464,8 @@ public class BaseActivity extends RxAppCompatActivity {
     i.putExtra(categoria.class.getSimpleName(), AppMain.getGson().toJson(c));
     goActv(i, false);
   }
+
+  public Gson getGson() {
+    return AppMain.getGson();
+  }
 }
