@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
@@ -170,6 +171,17 @@ public class BaseActivity extends RxAppCompatActivity {
     toolbarText.setText(getString(idRes));
     final Drawable upArrow = getResources().getDrawable(R.drawable.btn_flechaizquierda);
     toolbar.setNavigationIcon(upArrow);
+    toolbar.setNavigationOnClickListener(v -> {
+      finish();
+      overridePendingTransition(R.anim.move_left_in_activity, R.anim.move_right_out_activity);
+    });
+  }
+
+  protected void configBackToolbar(@NonNull Toolbar toolbar) {
+    final Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.btn_flechaizquierda);
+    toolbar.setNavigationIcon(upArrow);
+    toolbar.setTitle(R.string.app_name);
+    toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
     toolbar.setNavigationOnClickListener(v -> {
       finish();
       overridePendingTransition(R.anim.move_left_in_activity, R.anim.move_right_out_activity);

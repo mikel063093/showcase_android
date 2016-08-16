@@ -36,13 +36,13 @@ import rx.schedulers.Schedulers;
  * Created by home on 6/07/16.
  */
 
-class HomeSection extends StatelessSection {
+public class HomeSection extends StatelessSection {
 
   private Categoria categoria;
   private List<Establecimiento> list;
   private Context context;
 
-  HomeSection(Context context, Categoria categoria, List<Establecimiento> list) {
+  public HomeSection(Context context, Categoria categoria, List<Establecimiento> list) {
     super(R.layout.section_item, R.layout.item_general);
     this.categoria = categoria;
     this.list = list;
@@ -63,6 +63,7 @@ class HomeSection extends StatelessSection {
     if (establecimiento != null) {
       assert holder.txtItemGeneral != null;
       holder.txtItemGeneral.setText(establecimiento.getNombre());
+
       Picasso.with(context).load(establecimiento.getUrlImagen()).fit().into(holder.imageView5);
       assert holder.rootSection != null;
       holder.rootSection.setOnClickListener(view -> {

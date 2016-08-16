@@ -2,6 +2,7 @@ package com.co.showcase.ui.map;
 
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.RelativeLayout;
@@ -9,15 +10,18 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.co.showcase.R;
 import com.co.showcase.api.REST;
+import com.co.showcase.model.Categoria;
 import com.co.showcase.model.Usuario;
 import com.co.showcase.model.zonaDetalle;
 import com.co.showcase.ui.BaseActivity;
+import com.co.showcase.ui.home.HomeSection;
 import com.co.showcase.ui.util.MapUtils;
-import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.maps.android.geojson.GeoJsonLayer;
 import com.sdoward.rxgooglemap.MapObservableProvider;
+import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,13 +38,16 @@ public class map extends BaseActivity {
   @Bind(R.id.drawer_layout) DrawerLayout drawerLayout;
   private CompositeSubscription subscriptions = Subscriptions.from();
   private GeoJsonLayer geoJsonLayer;
-  private GoogleMap googleMap;
+
+  MapObservableProvider mapObservableProvider;
+  private SectionedRecyclerViewAdapter sectionAdapter;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.home_map);
     ButterKnife.bind(this);
     initMap();
+    configBackToolbar(toolbarHome);
   }
 
   private String getZona() {
@@ -55,14 +62,46 @@ public class map extends BaseActivity {
 
     SupportMapFragment mapFragment =
         (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-    MapObservableProvider mapObservableProvider = new MapObservableProvider(mapFragment);
+
+    mapObservableProvider = new MapObservableProvider(mapFragment);
     subscriptions.add(mapObservableProvider.getMapReadyObservable()
         .compose(bindToLifecycle())
         .subscribe(googleMap -> {
-          this.googleMap = googleMap;
+          googleMap.getUiSettings().setScrollGesturesEnabled(true);
+          googleMap.getUiSettings().setTiltGesturesEnabled(false);
+          googleMap.getUiSettings().setZoomGesturesEnabled(true);
+          googleMap.getUiSettings().setRotateGesturesEnabled(false);
           log("onMapReady");
           getGeoJson(getUserSync(), getZona());
         }));
+  }
+
+  private void setUpRV(List<Categoria> categorias) {
+    sectionAdapter = new SectionedRecyclerViewAdapter();
+    if (categorias != null
+        && categorias.get(0) != null
+        && categorias.get(0).getEstablecimientos() != null
+        && categorias.get(0).getEstablecimientos().size() > 0) {
+
+      for (Categoria categoria : categorias) {
+        sectionAdapter.addSection(
+            new HomeSection(this, categoria, categoria.getEstablecimientos()));
+      }
+    }
+
+    GridLayoutManager glm = new GridLayoutManager(this, 2);
+    glm.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+      @Override public int getSpanSize(int position) {
+        switch (sectionAdapter.getSectionItemViewType(position)) {
+          case SectionedRecyclerViewAdapter.VIEW_TYPE_HEADER:
+            return 2;
+          default:
+            return 1;
+        }
+      }
+    });
+    rvHome.setLayoutManager(glm);
+    rvHome.setAdapter(sectionAdapter);
   }
 
   private void updateMap(JSONObject jsonObject) {
@@ -70,10 +109,15 @@ public class map extends BaseActivity {
     if (geoJsonLayer != null && geoJsonLayer.isLayerOnMap()) {
       geoJsonLayer.removeLayerFromMap();
     }
-    log("updateMap");
-    geoJsonLayer = MapUtils.initLayer(googleMap, jsonObject);
-    MapUtils.setLayerStyle(geoJsonLayer);
-    MapUtils.addLayerToMap(geoJsonLayer);
+
+    mapObservableProvider.getMapReadyObservable()
+        .compose(bindToLifecycle())
+        .subscribe(googleMap1 -> {
+          log("updateMap");
+          geoJsonLayer = MapUtils.initLayer(googleMap1, jsonObject);
+          MapUtils.setLayerStyle(geoJsonLayer);
+          MapUtils.addLayerToMap(geoJsonLayer);
+        });
   }
 
   private void getGeoJson(Usuario usuario, String idZona) {
@@ -97,6 +141,7 @@ public class map extends BaseActivity {
         log(json);
         JSONObject jsonObj = new JSONObject(json);
         updateMap(jsonObj);
+        setUpRV(zonaDetalle.categorias);
       } catch (JSONException e) {
         e.printStackTrace();
       }

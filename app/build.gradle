@@ -170,5 +170,6 @@ dependencies {
   compile "com.github.FuckBoilerplate:RxPaparazzo:0.1.4"
 
   retrolambdaConfig "net.orfjackal.retrolambda:retrolambda:$rootProject.ext.retrolambda"
+  compile 'com.google.android.gms:play-services-appindexing:9.2.0'
 }
 apply plugin: 'com.google.gms.google-services'

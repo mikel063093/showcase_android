@@ -2,6 +2,7 @@ package com.co.showcase.model;
 
 import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by home on 30/06/16.
@@ -24,9 +25,13 @@ public class Establecimiento extends BaseModel {
    * puntuacionUsuario : null
    * puntuacion : 3
    */
+
+  //@SerializedName("logo") List<String> urlImagen;
+  //@SerializedName("logo") String logo;
   @SerializedName("logo") String urlImagen;
   String nombre;
   String id;
+  String marcador;
   String estado;
   String mensaje;
   String descripcion;
@@ -180,5 +185,13 @@ public class Establecimiento extends BaseModel {
 
   public void setArticulos(ArrayList<Articulo> articulos) {
     this.articulos = articulos;
+  }
+
+  public String getMarcador() {
+    return marcador;
+  }
+
+  public void setMarcador(String marcador) {
+    this.marcador = marcador;
   }
 }

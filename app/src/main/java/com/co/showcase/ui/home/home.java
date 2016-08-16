@@ -1,6 +1,7 @@
 package com.co.showcase.ui.home;
 
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -32,6 +33,10 @@ import com.co.showcase.ui.CustomView.CirclePageIndicator;
 import com.co.showcase.ui.map.map;
 import com.co.showcase.ui.perfil.perfil;
 import com.co.showcase.ui.slide.slide;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 import java.util.HashMap;
 import java.util.List;
@@ -51,6 +56,11 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
   private SectionedRecyclerViewAdapter sectionAdapter;
   private SearchView searchView;
   private MenuItem searchItem;
+  /**
+   * ATTENTION: This was auto-generated to implement the App Indexing API.
+   * See https://g.co/AppIndexing/AndroidStudio for more information.
+   */
+  private GoogleApiClient client;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -63,6 +73,9 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
         .subscribe(this::getEstblecimientos);
     setupToolbar();
     setupSlider();
+    // ATTENTION: This was auto-generated to implement the App Indexing API.
+    // See https://g.co/AppIndexing/AndroidStudio for more information.
+    client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
   }
 
   private void setupSlider() {
@@ -259,5 +272,28 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
     } else {
       super.onBackPressed();
     }
+  }
+
+
+  public Action getIndexApiAction() {
+    Thing object =
+        new Thing.Builder().setName("home Page") // TODO: Define a title for the content shown.
+            // TODO: Make sure this auto-generated URL is correct.
+            .setUrl(Uri.parse("https://showcase.com.co")).build();
+    return new Action.Builder(Action.TYPE_VIEW).setObject(object)
+        .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+        .build();
+  }
+
+  @Override public void onStart() {
+    super.onStart();
+    client.connect();
+    AppIndex.AppIndexApi.start(client, getIndexApiAction());
+  }
+
+  @Override public void onStop() {
+    super.onStop();
+    AppIndex.AppIndexApi.end(client, getIndexApiAction());
+    client.disconnect();
   }
 }

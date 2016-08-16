@@ -31,26 +31,6 @@ public class zonaDetalle {
    * establecimientos : [{"id":1,"nombre":"ESTABLECIMIENTO 1","logo":"https://test.showcase.com.co/imagenes/logos/cc1b91f532c1b888d9056792a282fa8dc7e28f4f.png","marcador":1}]
    */
 
-  public List<CategoriasBean> categorias;
+  public List<Categoria> categorias;
   public geoJson localizacion;
-
-  public static class CategoriasBean {
-    public int id;
-    public String nombre;
-    /**
-     * id : 1
-     * nombre : ESTABLECIMIENTO 1
-     * logo : https://test.showcase.com.co/imagenes/logos/cc1b91f532c1b888d9056792a282fa8dc7e28f4f.png
-     * marcador : 1
-     */
-
-    public List<EstablecimientosBean> establecimientos;
-
-    public static class EstablecimientosBean {
-      public int id;
-      public String nombre;
-      public String logo;
-      public int marcador;
-    }
-  }
 }
