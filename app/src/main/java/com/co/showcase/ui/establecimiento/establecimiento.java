@@ -69,8 +69,7 @@ public class establecimiento extends BaseActivity implements SearchView.OnQueryT
     super.onCreate(savedInstanceState);
     setContentView(R.layout.establecimiento);
     ButterKnife.bind(this);
-    setupToolbar();
-    setupSlider();
+    configBackToolbar(toolbar);
     if (getIntent() != null
         && getIntent().getStringExtra(this.getClass().getSimpleName()) != null) {
       String json = getIntent().getStringExtra(this.getClass().getSimpleName());
@@ -208,9 +207,9 @@ public class establecimiento extends BaseActivity implements SearchView.OnQueryT
     txtEmail.setText("");
     txtWebsite.setText(establecimiento.getSitioWeb());
     ratingBar.setRating(Float.parseFloat(establecimiento.getPuntuacion() + ""));
-    List<String> imgs = new ArrayList<>();
-    imgs.add(establecimiento.getUrlImagen());
-    renderSlideImages(imgs);
+    //List<String> imgs = new ArrayList<>();
+    //imgs.add(establecimiento.getUrlImagen());
+    renderSlideImages(establecimiento.getUrlImagen());
     establecimientoItemsAdapter adapter =
         new establecimientoItemsAdapter(this, establecimiento.getArticulos());
     GridLayoutManager glm = new GridLayoutManager(this, 2);

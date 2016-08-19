@@ -26,9 +26,9 @@ public class Establecimiento extends BaseModel {
    * puntuacion : 3
    */
 
-  //@SerializedName("logo") List<String> urlImagen;
+  @SerializedName("logo") List<String> urlImagen;
   //@SerializedName("logo") String logo;
-  @SerializedName("logo") String urlImagen;
+  //@SerializedName("logo") String urlImagen;
   String nombre;
   String id;
   String marcador;
@@ -63,11 +63,11 @@ public class Establecimiento extends BaseModel {
     this.id = id;
   }
 
-  public String getUrlImagen() {
+  public List<String> getUrlImagen() {
     return urlImagen;
   }
 
-  public void setUrlImagen(String urlImagen) {
+  public void setUrlImagen(List<String> urlImagen) {
     this.urlImagen = urlImagen;
   }
 

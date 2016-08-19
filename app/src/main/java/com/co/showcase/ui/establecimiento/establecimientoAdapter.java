@@ -101,7 +101,7 @@ public class establecimientoAdapter
     if (item != null) {
       //assert holder.txtItemGeneral != null;
       holder.txt.setText(item.getNombre());
-      Picasso.with(mContext).load(item.getUrlImagen()).fit().into(holder.img);
+      Picasso.with(mContext).load(item.getUrlImagen().get(0)).fit().into(holder.img);
       //assert holder.rootSection != null;
       holder.rootSection.setOnClickListener(view -> goEstablicimientoDetail(item));
     }

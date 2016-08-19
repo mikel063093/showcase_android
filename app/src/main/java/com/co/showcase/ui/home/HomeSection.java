@@ -64,7 +64,7 @@ public class HomeSection extends StatelessSection {
       assert holder.txtItemGeneral != null;
       holder.txtItemGeneral.setText(establecimiento.getNombre());
 
-      Picasso.with(context).load(establecimiento.getUrlImagen()).fit().into(holder.imageView5);
+      Picasso.with(context).load(establecimiento.getUrlImagen().get(0)).fit().into(holder.imageView5);
       assert holder.rootSection != null;
       holder.rootSection.setOnClickListener(view -> {
         log(establecimiento.toJson());
