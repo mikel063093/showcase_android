@@ -10,6 +10,11 @@ public class Slides extends BaseModel {
   String urlImagen;
   String id;
 
+  public Slides(String urlImagen, String id) {
+    this.urlImagen = urlImagen;
+    this.id = id;
+  }
+
   public String getUrlImagen() {
     return urlImagen;
   }

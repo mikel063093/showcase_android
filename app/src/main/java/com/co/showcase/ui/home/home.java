@@ -38,6 +38,7 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -238,7 +239,17 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
   private void succesEstablecimiento(@NonNull ResponseHome responseHome) {
     dismissDialog();
     if (responseHome.getEstado().equalsIgnoreCase("exito")) {
-      if (responseHome.getPromociones() != null) renderSlideImages(responseHome.getPromociones());
+      if (responseHome.getPromociones() != null) {
+        renderSlideImages(responseHome.getPromociones());
+      } else {
+
+        List<Slides> img = new ArrayList<>();
+        img.add(new Slides("http://afindemes.republica.com/files/2012/03/Imagen-2.png", "1"));
+        img.add(new Slides("http://media.cuponofertas.com.mx/2014/04/levis-rebajas-abril-2014.jpg",
+            "2"));
+
+        renderSlideImages(img);
+      }
       setTupRecyclerView(responseHome);
     } else {
       showErr(responseHome.getMensaje());
@@ -246,7 +257,8 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
   }
 
   private void renderSlideImages(@NonNull List<Slides> imgs) {
-    if (imgs != null && imgs.size() > 1) {
+    if (imgs != null && imgs.size() >= 1) {
+      log("renderSlides");
       SlideAdapter adapter = new SlideAdapter(this, imgs);
       assert viewPagerSlide != null;
       viewPagerSlide.setAdapter(adapter);
@@ -273,7 +285,6 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
       super.onBackPressed();
     }
   }
-
 
   public Action getIndexApiAction() {
     Thing object =

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.co.showcase.R;
@@ -49,6 +50,13 @@ public class SlideAdapter extends BaseAdapter {
       convertView = mInflater.inflate(R.layout.item_list_slide, null);
     }
     holder = new ViewHolder(convertView);
+    assert holder.txtItemSlide != null;
+    //holder.txtItemSlide.setOnClickListener(view -> {
+    //  assert holder.root != null;
+    //  holder.root.performClick();
+    //});
+    //assert holder.root != null;
+    //holder.root.setOnClickListener(view -> holder.txtItemSlide.performClick());
     Categoria categoria = categorias.get(position);
     if (categoria != null) {
       assert holder.txtItemSlide != null;
@@ -62,6 +70,7 @@ public class SlideAdapter extends BaseAdapter {
 
   static class ViewHolder {
     @Nullable @Bind(R.id.txt_item_slide) AppCompatTextView txtItemSlide;
+    @Nullable @Bind(R.id.root) LinearLayout root;
 
     ViewHolder(View view) {
       ButterKnife.bind(this, view);

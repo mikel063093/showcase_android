@@ -25,6 +25,9 @@ import com.co.showcase.ui.BaseActivity;
 import com.co.showcase.ui.establecimiento.establecimiento;
 import com.orhanobut.logger.Logger;
 import com.squareup.picasso.Picasso;
+import com.wangjie.androidbucket.utils.ABTextUtil;
+import com.wangjie.shadowviewhelper.ShadowProperty;
+import com.wangjie.shadowviewhelper.ShadowViewHelper;
 import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection;
 import java.util.HashMap;
 import java.util.List;
@@ -59,12 +62,16 @@ public class HomeSection extends StatelessSection {
 
   @Override public void onBindItemViewHolder(RecyclerView.ViewHolder holder_, int position) {
     final ViewHolder holder = (ViewHolder) holder_;
+
     Establecimiento establecimiento = list.get(position);
     if (establecimiento != null) {
       assert holder.txtItemGeneral != null;
       holder.txtItemGeneral.setText(establecimiento.getNombre());
 
-      Picasso.with(context).load(establecimiento.getUrlImagen().get(0)).fit().into(holder.imageView5);
+      Picasso.with(context)
+          .load(establecimiento.getUrlImagen().get(0))
+          .fit()
+          .into(holder.imageView5);
       assert holder.rootSection != null;
       holder.rootSection.setOnClickListener(view -> {
         log(establecimiento.toJson());
@@ -111,6 +118,7 @@ public class HomeSection extends StatelessSection {
 
   @Override public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder_) {
     SectionViewHolder holder = (SectionViewHolder) holder_;
+
     assert holder.txtSection != null;
     holder.txtSection.setText(categoria.getNombre());
     assert holder.rootSection != null;

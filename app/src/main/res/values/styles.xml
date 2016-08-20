@@ -59,7 +59,7 @@
   </style>
 
   <style name="card_orange" parent="CardView">
-    <item name="cardCornerRadius">1dp</item>
+    <item name="cardCornerRadius">2dp</item>
     <item name="cardBackgroundColor">@color/portland_orange</item>
     <item name="android:hardwareAccelerated">true</item>
     <item name="cardUseCompatPadding">true</item>

@@ -98,6 +98,8 @@ dependencies {
   compile "com.android.support:multidex:$rootProject.ext.multidex" //MultiDex Support
 
   //UI
+  compile 'com.github.wangjiegulu:AndroidBucket:1.0.2'
+  compile 'com.github.wangjiegulu:ShadowViewHelper:1.0.1'
   compile 'com.android.support:support-annotations:23.2.0'
   compile 'com.android.support:design:23.2.0'
   compile 'com.android.support:appcompat-v7:23.2.0'

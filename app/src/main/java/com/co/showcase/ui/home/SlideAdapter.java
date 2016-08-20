@@ -50,7 +50,7 @@ public class SlideAdapter extends PagerAdapter {
   }
 
   @Override public int getCount() {
-    return imagesUrl != null ? imagesUrl.size() : images.size();
+    return imagesUrl != null ? imagesUrl.size() : images != null ? images.size() : 0;
   }
 
   @Override public View instantiateItem(@NonNull ViewGroup container, final int position) {
@@ -61,10 +61,11 @@ public class SlideAdapter extends PagerAdapter {
     view.setTag(holder);
 
     Picasso.with(context).setLoggingEnabled(true);
-    String url = imagesUrl != null && images.size() > 0 ? imagesUrl.get(position).getUrlImagen()
+    String url = imagesUrl != null && imagesUrl.size() > 0 ? imagesUrl.get(position).getUrlImagen()
         : images.get(position);
+
     Log.e("HOLDER", url);
-    Picasso.with(context).load(url).into(holder.image_display);
+    Picasso.with(context).load(url).fit().into(holder.image_display);
     container.addView(view);
     return view;
   }
