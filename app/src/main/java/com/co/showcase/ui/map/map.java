@@ -1,10 +1,15 @@
 package com.co.showcase.ui.map;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MotionEvent;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -12,14 +17,21 @@ import com.co.showcase.R;
 import com.co.showcase.api.REST;
 import com.co.showcase.model.Categoria;
 import com.co.showcase.model.Usuario;
+import com.co.showcase.model.geoJson.feature;
 import com.co.showcase.model.zonaDetalle;
 import com.co.showcase.ui.BaseActivity;
 import com.co.showcase.ui.home.HomeSection;
+import com.co.showcase.ui.home.home;
 import com.co.showcase.ui.util.MapUtils;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.maps.android.geojson.GeoJsonLayer;
 import com.sdoward.rxgooglemap.MapObservableProvider;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,10 +44,12 @@ import rx.subscriptions.Subscriptions;
 
 public class map extends BaseActivity {
 
-  @Bind(R.id.toolbar_home) Toolbar toolbarHome;
+  @Bind(R.id.toolbar_home) Toolbar toolbar;
   @Bind(R.id.rv_home) RecyclerView rvHome;
   @Bind(R.id.drawer) RelativeLayout drawer;
   @Bind(R.id.drawer_layout) DrawerLayout drawerLayout;
+  @Bind(R.id.imgmaptransparent) ImageView imgmaptransparent;
+  @Bind(R.id.scroll) NestedScrollView scroll;
   private CompositeSubscription subscriptions = Subscriptions.from();
   private GeoJsonLayer geoJsonLayer;
 
@@ -46,8 +60,34 @@ public class map extends BaseActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.home_map);
     ButterKnife.bind(this);
+    imgmaptransparent.setOnTouchListener((view, event) -> {
+      int action = event.getAction();
+      switch (action) {
+        case MotionEvent.ACTION_DOWN:
+
+          scroll.requestDisallowInterceptTouchEvent(true);
+          return false;
+
+        case MotionEvent.ACTION_UP:
+          scroll.requestDisallowInterceptTouchEvent(false);
+          return true;
+
+        case MotionEvent.ACTION_MOVE:
+          scroll.requestDisallowInterceptTouchEvent(true);
+          return false;
+        default:
+          return true;
+      }
+    });
     initMap();
-    configBackToolbar(toolbarHome);
+    final Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.btn_flechaizquierda);
+    toolbar.setNavigationIcon(upArrow);
+    toolbar.setTitle(R.string.app_name);
+    toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
+    toolbar.setNavigationOnClickListener(v -> {
+      goActv(home.class, true);
+      overridePendingTransition(R.anim.move_left_in_activity, R.anim.move_right_out_activity);
+    });
   }
 
   private String getZona() {
@@ -67,10 +107,6 @@ public class map extends BaseActivity {
     subscriptions.add(mapObservableProvider.getMapReadyObservable()
         .compose(bindToLifecycle())
         .subscribe(googleMap -> {
-          googleMap.getUiSettings().setScrollGesturesEnabled(true);
-          googleMap.getUiSettings().setTiltGesturesEnabled(false);
-          googleMap.getUiSettings().setZoomGesturesEnabled(true);
-          googleMap.getUiSettings().setRotateGesturesEnabled(false);
           log("onMapReady");
           getGeoJson(getUserSync(), getZona());
         }));
@@ -134,8 +170,37 @@ public class map extends BaseActivity {
         .subscribe(this::succesCategoriasLocalizacion, this::errControl);
   }
 
+  private void centerMap(LatLngBounds latLngBounds) {
+    mapObservableProvider.getMapReadyObservable()
+        .compose(bindToLifecycle())
+        .subscribe(googleMap -> {
+
+          //latLngBounds.getCenter();
+          // CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(latLngBounds, 50);
+          // googleMap.moveCamera(cameraUpdate);
+          // googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 30));
+          CameraPosition cameraPosition = new CameraPosition.Builder().target(
+              latLngBounds.getCenter())      // Sets the center of the map to Mountain View
+              .zoom(15)                   // Sets the zoom
+              .build();
+          googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        });
+  }
+
   private void succesCategoriasLocalizacion(zonaDetalle zonaDetalle) {
+
     if (zonaDetalle.estado.equalsIgnoreCase("exito")) {
+      ArrayList<LatLng> latLngs = new ArrayList<>();
+      for (feature item : zonaDetalle.localizacion.features) {
+        Double lat = item.geometry.coordinates.get(1);
+        Double lng = item.geometry.coordinates.get(0);
+        LatLng latLng = new LatLng(lat, lng);
+        latLngs.add(latLng);
+      }
+      LatLngBounds.Builder builder = new LatLngBounds.Builder();
+      builder.include(latLngs.get(0));
+      builder.include(latLngs.get(1));
+      centerMap(builder.build());
       try {
         String json = getGson().toJson(zonaDetalle.localizacion);
         log(json);
@@ -151,5 +216,10 @@ public class map extends BaseActivity {
   @Override protected void onStop() {
     super.onStop();
     subscriptions.unsubscribe();
+  }
+
+  @Override public void onBackPressed() {
+    super.onBackPressed();
+    goActv(home.class, true);
   }
 }

@@ -5,7 +5,11 @@
       android:id="@+id/action_map"
       android:icon="@drawable/btn_zonas"
       android:title="@string/search"
-      app:showAsAction="always"/>
+      app:showAsAction="always">
+    <menu>
+
+    </menu>
+  </item>
 
   <item
       android:id="@+id/action_buy"

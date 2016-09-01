@@ -90,6 +90,9 @@
     <meta-data
         android:name="com.google.android.gms.version"
         android:value="@integer/google_play_services_version"/>
-  </application>
+      <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="fbc15f7101b2132958a197170ef1ea00162d96f7" />
+    </application>
 
 </manifest>

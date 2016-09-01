@@ -8,6 +8,7 @@ import com.co.showcase.model.ResponseDetalleArticulo;
 import com.co.showcase.model.ResponseHome;
 import com.co.showcase.model.ResponsePuntuacion;
 import com.co.showcase.model.Usuario;
+import com.co.showcase.model.Zonas;
 import com.co.showcase.model.usuario.ResponseCategoriaDetalle;
 import com.co.showcase.model.zonaDetalle;
 import java.util.Map;
@@ -65,4 +66,7 @@ public interface API {
   @NonNull @FormUrlEncoded @POST("categoriasLocalizacion")
   Observable<zonaDetalle> categoriasLocalizacion(@Header("Authorization") String authorization,
       @FieldMap Map<String, Object> param);
+
+  @NonNull @FormUrlEncoded @POST("zonas") Observable<Zonas> zonas(
+      @Header("Authorization") String authorization, @FieldMap Map<String, Object> param);
 }

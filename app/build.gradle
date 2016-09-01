@@ -12,6 +12,7 @@ buildscript {
 }
 
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'realm-android'
@@ -173,5 +174,8 @@ dependencies {
 
   retrolambdaConfig "net.orfjackal.retrolambda:retrolambda:$rootProject.ext.retrolambda"
   compile 'com.google.android.gms:play-services-appindexing:9.2.0'
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.2@aar') {
+        transitive = true;
+    }
 }
 apply plugin: 'com.google.gms.google-services'

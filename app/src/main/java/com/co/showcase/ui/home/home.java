@@ -1,5 +1,6 @@
 package com.co.showcase.ui.home;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.widget.RelativeLayout;
 import butterknife.Bind;
@@ -28,6 +30,7 @@ import com.co.showcase.model.Categoria;
 import com.co.showcase.model.ResponseHome;
 import com.co.showcase.model.Slides;
 import com.co.showcase.model.Usuario;
+import com.co.showcase.model.Zonas;
 import com.co.showcase.ui.BaseActivity;
 import com.co.showcase.ui.CustomView.CirclePageIndicator;
 import com.co.showcase.ui.map.map;
@@ -57,26 +60,55 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
   private SectionedRecyclerViewAdapter sectionAdapter;
   private SearchView searchView;
   private MenuItem searchItem;
-  /**
-   * ATTENTION: This was auto-generated to implement the App Indexing API.
-   * See https://g.co/AppIndexing/AndroidStudio for more information.
-   */
   private GoogleApiClient client;
+  private SubMenu subMenuMap;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.home);
     ButterKnife.bind(this);
-
-    Usuario.getItem()
-        .compose(this.bindToLifecycle())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(this::getEstblecimientos);
+    init(getUserSync());
     setupToolbar();
     setupSlider();
-    // ATTENTION: This was auto-generated to implement the App Indexing API.
-    // See https://g.co/AppIndexing/AndroidStudio for more information.
     client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+  }
+
+  private void init(Usuario userSync) {
+    getZonas(userSync);
+    getEstblecimientos(userSync);
+  }
+
+  private void getZonas(Usuario usuario) {
+    if (usuario.getToken().length() > 2) {
+      Map<String, Object> param = new HashMap<>();
+      param.put("id", usuario.getId());
+      REST.getRest()
+          .zonas(usuario.getToken(), param)
+          .compose(bindToLifecycle())
+          //.doOnSubscribe(() -> showDialog(getString(R.string.loading)))
+          .subscribeOn(Schedulers.io())
+          //.doOnCompleted(this::dismissDialog)
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(this::renderZonasMenu, this::errControl);
+    }
+  }
+
+  private void renderZonasMenu(Zonas zonas) {
+    dismissDialog();
+    if (zonas.getEstado() == 1 && subMenuMap != null) {
+      for (Zonas.ZonasBean zonasBean : zonas.getZonas()) {
+        switch (zonasBean.nombre) {
+          case "Norte":
+            MenuItem menu = subMenuMap.add(0, R.id.itemZona1, Menu.NONE, zonasBean.nombre);
+            Intent i = new Intent(this, map.class);
+            i.putExtra(map.class.getSimpleName(), zonasBean.id);
+            menu.setIntent(i);
+            break;
+        }
+      }
+    } else {
+      showErr(zonas.getMensaje());
+    }
   }
 
   private void setupSlider() {
@@ -122,6 +154,8 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
 
   @Override public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.menu_main, menu);
+    MenuItem map = menu.findItem(R.id.action_map);
+    subMenuMap = map.getSubMenu();
     searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
     searchItem = menu.findItem(R.id.action_search);
     MenuItemCompat.setOnActionExpandListener(searchItem,
@@ -163,7 +197,8 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
       //  //Toast.makeText(this, "Favorite", Toast.LENGTH_SHORT).show();
       //  return true;
       case R.id.action_map:
-        goActv(map.class, false);
+        log("action map");
+        //goActv(map.class, false);
         break;
       case R.id.action_search:
         log("action search");
@@ -187,6 +222,10 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
 
           }
         });
+        break;
+      case R.id.itemZona1:
+        log("itemZona1");
+        goActv(new Intent(this, map.class).putExtras(item.getIntent().getExtras()), false);
         break;
     }
     return super.onOptionsItemSelected(item);
@@ -287,10 +326,9 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
   }
 
   public Action getIndexApiAction() {
-    Thing object =
-        new Thing.Builder().setName("home Page") // TODO: Define a title for the content shown.
-            // TODO: Make sure this auto-generated URL is correct.
-            .setUrl(Uri.parse("https://showcase.com.co")).build();
+    Thing object = new Thing.Builder().setName("home Page")
+        .setUrl(Uri.parse("https://showcase.com.co"))
+        .build();
     return new Action.Builder(Action.TYPE_VIEW).setObject(object)
         .setActionStatus(Action.STATUS_TYPE_COMPLETED)
         .build();

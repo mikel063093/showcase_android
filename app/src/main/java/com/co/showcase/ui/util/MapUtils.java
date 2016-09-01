@@ -1,11 +1,14 @@
 package com.co.showcase.ui.util;
 
 import android.support.annotation.NonNull;
+import com.co.showcase.BuildConfig;
 import com.co.showcase.R;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.maps.android.geojson.GeoJsonFeature;
 import com.google.maps.android.geojson.GeoJsonLayer;
 import com.google.maps.android.geojson.GeoJsonPointStyle;
+import com.orhanobut.logger.Logger;
 import org.json.JSONObject;
 
 /**
@@ -15,9 +18,16 @@ import org.json.JSONObject;
 public class MapUtils {
 
   public static void setLayerStyle(@NonNull GeoJsonLayer layer) {
+
     GeoJsonPointStyle pointStyle = layer.getDefaultPointStyle();
     pointStyle.setDraggable(false);
+    pointStyle.setTitle("test");
     pointStyle.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker));
+    for (GeoJsonFeature feature : layer.getFeatures()) {
+      feature.getPointStyle().setTitle(feature.getProperty("marker-symbol"));
+      feature.getPointStyle().setSnippet(feature.getProperty("marker-symbol"));
+      //if (BuildConfig.DEBUG) Logger.e(feature.toString());
+    }
   }
 
   public synchronized static GeoJsonLayer initLayer(@NonNull GoogleMap map,

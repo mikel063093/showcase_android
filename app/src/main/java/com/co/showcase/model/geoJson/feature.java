@@ -7,6 +7,6 @@ package com.co.showcase.model.geoJson;
 public class feature {
   String type;
   propertie properties;
-  geometry geometry;
+  public geometry geometry;
 
 }

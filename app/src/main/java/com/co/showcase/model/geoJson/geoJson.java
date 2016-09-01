@@ -8,6 +8,6 @@ import java.util.ArrayList;
 
 public class geoJson {
   String type;
-  ArrayList<feature> features;
+  public ArrayList<feature> features;
 
 }

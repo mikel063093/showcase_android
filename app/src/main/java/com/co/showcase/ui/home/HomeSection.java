@@ -12,6 +12,8 @@ import android.view.View;
 
 import android.widget.ImageView;
 
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.co.showcase.AppMain;
@@ -67,7 +69,12 @@ public class HomeSection extends StatelessSection {
     if (establecimiento != null) {
       assert holder.txtItemGeneral != null;
       holder.txtItemGeneral.setText(establecimiento.getNombre());
-
+      assert holder.rootBookmark != null;
+      holder.rootBookmark.setVisibility(
+          establecimiento.getMarcador() != null ? View.VISIBLE : View.GONE);
+      assert holder.txtItemMap != null;
+      holder.txtItemMap.setText(
+          establecimiento.getMarcador() != null ? establecimiento.getMarcador() : "");
       Picasso.with(context)
           .load(establecimiento.getUrlImagen().get(0))
           .fit()
@@ -143,6 +150,8 @@ public class HomeSection extends StatelessSection {
     @Nullable @Bind(R.id.imageView5) ImageView imageView5;
     @Nullable @Bind(R.id.txt_item_general) AppCompatTextView txtItemGeneral;
     @Nullable @Bind(R.id.root_section) CardView rootSection;
+    @Nullable @Bind(R.id.root_bookmark) RelativeLayout rootBookmark;
+    @Nullable @Bind(R.id.txt_item_map) TextView txtItemMap;
 
     ViewHolder(@NonNull View view) {
       super(view);

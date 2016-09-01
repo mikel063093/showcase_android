@@ -480,4 +480,13 @@ public class BaseActivity extends RxAppCompatActivity {
   public Gson getGson() {
     return AppMain.getGson();
   }
+
+  public int getResourceId(String pVariableName, String pResourcename) {
+    try {
+      return getResources().getIdentifier(pVariableName, pResourcename, getPackageName());
+    } catch (Exception e) {
+      e.printStackTrace();
+      return -1;
+    }
+  }
 }
