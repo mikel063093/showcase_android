@@ -9,9 +9,7 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-
 import android.widget.ImageView;
-
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.Bind;
@@ -27,9 +25,6 @@ import com.co.showcase.ui.BaseActivity;
 import com.co.showcase.ui.establecimiento.establecimiento;
 import com.orhanobut.logger.Logger;
 import com.squareup.picasso.Picasso;
-import com.wangjie.androidbucket.utils.ABTextUtil;
-import com.wangjie.shadowviewhelper.ShadowProperty;
-import com.wangjie.shadowviewhelper.ShadowViewHelper;
 import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection;
 import java.util.HashMap;
 import java.util.List;
@@ -38,7 +33,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by home on 6/07/16.
+ * Created by miguel alegria on 6/07/16.
  */
 
 public class HomeSection extends StatelessSection {

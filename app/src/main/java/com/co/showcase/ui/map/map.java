@@ -50,10 +50,10 @@ public class map extends BaseActivity {
   @Bind(R.id.drawer_layout) DrawerLayout drawerLayout;
   @Bind(R.id.imgmaptransparent) ImageView imgmaptransparent;
   @Bind(R.id.scroll) NestedScrollView scroll;
+
   private CompositeSubscription subscriptions = Subscriptions.from();
   private GeoJsonLayer geoJsonLayer;
-
-  MapObservableProvider mapObservableProvider;
+  private MapObservableProvider mapObservableProvider;
   private SectionedRecyclerViewAdapter sectionAdapter;
 
   @Override public void onCreate(Bundle savedInstanceState) {
@@ -174,11 +174,6 @@ public class map extends BaseActivity {
     mapObservableProvider.getMapReadyObservable()
         .compose(bindToLifecycle())
         .subscribe(googleMap -> {
-
-          //latLngBounds.getCenter();
-          // CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(latLngBounds, 50);
-          // googleMap.moveCamera(cameraUpdate);
-          // googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 30));
           CameraPosition cameraPosition = new CameraPosition.Builder().target(
               latLngBounds.getCenter())      // Sets the center of the map to Mountain View
               .zoom(15)                   // Sets the zoom
