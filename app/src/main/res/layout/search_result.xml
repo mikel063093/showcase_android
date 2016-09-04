@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white_smoke"
+    android:background="@color/kelly_green"
     android:orientation="vertical"
     >
 
@@ -44,25 +44,34 @@
             android:layout_marginTop="@dimen/_6sdp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            style="@style/card_orange"
+            style="@style/card_orange_peel"
             >
 
           <LinearLayout
               android:layout_width="match_parent"
               android:layout_height="@dimen/_48sdp"
               android:layout_gravity="center"
-              android:orientation="horizontal"
+              android:gravity="center"
+              android:orientation="vertical"
               >
-
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/resultados_para"
+                android:textColor="@color/dandelion"
+                android:textSize="@dimen/_10sdp"
+                style="@style/txt_white_style"
+                />
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/txt_section"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/_14sdp"
                 android:gravity="center"
-                android:text="@string/Almacenes_de_ropa"
-                android:textSize="@dimen/_15sdp"
+                android:text="Camisetas LaCoste"
+                android:textSize="@dimen/_12sdp"
                 fontPath="fonts/Circular-Std-Bold.otf"
                 style="@style/txt_white_style"
                 />
@@ -72,12 +81,12 @@
 
         </android.support.v7.widget.CardView>
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_home"
+            android:id="@+id/rv_result"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/_4sdp"
             android:layout_marginRight="@dimen/_4sdp"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_12sdp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             />
       </LinearLayout>

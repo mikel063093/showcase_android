@@ -48,6 +48,7 @@
   <string name="reservar">Reservar</string>
   <string name="item_count_err">Debes seleccionar al menos un elemento</string>
   <string name="max_item">Cantidad maxima de productos</string>
+  <string name="resultados_para">Resultados para</string>
 
 </resources>
 

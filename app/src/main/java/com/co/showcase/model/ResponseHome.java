@@ -10,7 +10,7 @@ public class ResponseHome extends BaseModel {
   String estado;
   String mensaje;
   List<Categoria> categorias;
-  List<Slides> promociones;
+  List<String> promociones;
 
   public String getEstado() {
     return estado;
@@ -36,11 +36,11 @@ public class ResponseHome extends BaseModel {
     this.mensaje = mensaje;
   }
 
-  public List<Slides> getPromociones() {
+  public List<String> getPromociones() {
     return promociones;
   }
 
-  public void setPromociones(List<Slides> promociones) {
+  public void setPromociones(List<String> promociones) {
     this.promociones = promociones;
   }
 

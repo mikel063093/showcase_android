@@ -19,7 +19,6 @@
       android:textColor="@drawable/bg_text_slide"
       android:textSize="@dimen/_14sdp"
       fontPath="fonts/Circular-Std-Book.otf"
-
       />
 
 </LinearLayout>

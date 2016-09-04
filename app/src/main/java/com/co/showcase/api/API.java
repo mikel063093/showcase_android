@@ -3,10 +3,12 @@ package com.co.showcase.api;
 import android.support.annotation.NonNull;
 import com.co.showcase.model.EntryResponse;
 import com.co.showcase.model.Establecimiento;
+import com.co.showcase.model.ResponseAutoComplete;
 import com.co.showcase.model.ResponseCategorias;
 import com.co.showcase.model.ResponseDetalleArticulo;
 import com.co.showcase.model.ResponseHome;
 import com.co.showcase.model.ResponsePuntuacion;
+import com.co.showcase.model.ResponseResultSearch;
 import com.co.showcase.model.Usuario;
 import com.co.showcase.model.Zonas;
 import com.co.showcase.model.usuario.ResponseCategoriaDetalle;
@@ -69,4 +71,12 @@ public interface API {
 
   @NonNull @FormUrlEncoded @POST("zonas") Observable<Zonas> zonas(
       @Header("Authorization") String authorization, @FieldMap Map<String, Object> param);
+
+  @NonNull @FormUrlEncoded @POST("autoCompletarBusqueda")
+  Observable<ResponseAutoComplete> autoCompletarBusqueda(
+      @Header("Authorization") String authorization, @FieldMap Map<String, Object> param);
+
+  @NonNull @FormUrlEncoded @POST("realizarBusqueda")
+  Observable<ResponseResultSearch> realizarBusqueda(@Header("Authorization") String authorization,
+      @FieldMap Map<String, Object> param);
 }

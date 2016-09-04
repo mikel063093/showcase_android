@@ -17,47 +17,51 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       >
-    <RelativeLayout
-        android:id="@+id/root_bookmark"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|end"
-        android:layout_marginEnd="8dp"
-        android:visibility="gone"
-        >
-      <ImageView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_centerHorizontal="true"
-          android:layout_centerInParent="true"
-          android:layout_marginTop="-5dp"
-          android:src="@drawable/ic_bookmark_48_orange"
-          />
-      <TextView
-          android:id="@+id/txt_item_map"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_centerHorizontal="true"
-          android:layout_centerInParent="true"
-          android:maxLength="2"
-          android:maxLines="1"
-          android:text="10"
-          android:textSize="@dimen/_9sdp"
-          fontPath="fonts/Circular-Std-Bold.otf"
-          style="@style/txt_white_style"
-          />
-    </RelativeLayout>
     <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:orientation="vertical"
         >
+      <RelativeLayout
+          android:id="@+id/root_bookmark"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="top|end"
+          android:layout_marginEnd="8dp"
+          android:visibility="gone"
+          >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="-5dp"
+            android:src="@drawable/ic_bookmark_48_orange"
+            />
+        <TextView
+            android:id="@+id/txt_item_map"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:maxLength="2"
+            android:maxLines="1"
+            android:text="10"
+            android:textSize="@dimen/_9sdp"
+            fontPath="fonts/Circular-Std-Bold.otf"
+            style="@style/txt_white_style"
+            />
+      </RelativeLayout>
       <ImageView
           android:id="@+id/imageView5"
           android:layout_width="match_parent"
           android:layout_height="@dimen/_90sdp"
           android:layout_margin="@dimen/_2sdp"
+          android:layout_marginLeft="@dimen/_3sdp"
+          android:layout_marginRight="@dimen/_3sdp"
+          android:scaleType="fitCenter"
           android:src="@drawable/foto_establecimiento_1"
           />
       <android.support.v7.widget.AppCompatTextView

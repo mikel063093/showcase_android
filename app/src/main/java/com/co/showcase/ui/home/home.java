@@ -27,6 +27,7 @@ import butterknife.ButterKnife;
 import com.co.showcase.R;
 import com.co.showcase.api.REST;
 import com.co.showcase.model.Categoria;
+import com.co.showcase.model.ResponseAutoComplete;
 import com.co.showcase.model.ResponseHome;
 import com.co.showcase.model.Slides;
 import com.co.showcase.model.Usuario;
@@ -35,6 +36,7 @@ import com.co.showcase.ui.BaseActivity;
 import com.co.showcase.ui.CustomView.CirclePageIndicator;
 import com.co.showcase.ui.map.map;
 import com.co.showcase.ui.perfil.perfil;
+import com.co.showcase.ui.search_result.result;
 import com.co.showcase.ui.slide.slide;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -47,6 +49,8 @@ import java.util.List;
 import java.util.Map;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 public class home extends BaseActivity implements SearchView.OnQueryTextListener {
 
@@ -62,6 +66,7 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
   private MenuItem searchItem;
   private GoogleApiClient client;
   private SubMenu subMenuMap;
+  private SearchView.SearchAutoComplete searchSrcTextView;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -157,6 +162,9 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
     MenuItem map = menu.findItem(R.id.action_map);
     subMenuMap = map.getSubMenu();
     searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+    searchSrcTextView = (SearchView.SearchAutoComplete) searchView.findViewById(
+        android.support.v7.appcompat.R.id.search_src_text);
+    searchSrcTextView.setThreshold(1);
     searchItem = menu.findItem(R.id.action_search);
     MenuItemCompat.setOnActionExpandListener(searchItem,
         new MenuItemCompat.OnActionExpandListener() {
@@ -287,7 +295,7 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
         img.add(new Slides("http://media.cuponofertas.com.mx/2014/04/levis-rebajas-abril-2014.jpg",
             "2"));
 
-        renderSlideImages(img);
+        renderSlideImagesSlide(img);
       }
       setTupRecyclerView(responseHome);
     } else {
@@ -295,7 +303,7 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
     }
   }
 
-  private void renderSlideImages(@NonNull List<Slides> imgs) {
+  private void renderSlideImagesSlide(@NonNull List<Slides> imgs) {
     if (imgs != null && imgs.size() >= 1) {
       log("renderSlides");
       SlideAdapter adapter = new SlideAdapter(this, imgs);
@@ -306,13 +314,58 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
     }
   }
 
+  private void renderSlideImages(@NonNull List<String> imgs) {
+    if (imgs != null && imgs.size() >= 1) {
+      log("renderSlides");
+      SlideAdapter adapter = new SlideAdapter(this, imgs, false);
+      assert viewPagerSlide != null;
+      viewPagerSlide.setAdapter(adapter);
+      assert indicatorSlides != null;
+      indicatorSlides.setViewPager(viewPagerSlide);
+    }
+  }
+
   @Override public boolean onQueryTextSubmit(String query) {
     Log(query);
+    if (query.length() > 2) autocompleteSearch(query);
     return false;
+  }
+
+  private void autocompleteSearch(String query) {
+    if (query.length() >= 1) {
+      Map<String, Object> param = new HashMap<>();
+      param.put("palabra", query);
+      REST.getRest()
+          .autoCompletarBusqueda(getUserSync().getToken(), param)
+          .debounce(150, MILLISECONDS)
+          .compose(bindToLifecycle())
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(this::succesAutoComplete, this::errControl);
+    }
+  }
+
+  private void succesAutoComplete(ResponseAutoComplete responseAutoComplete) {
+    dismissDialog();
+    if (responseAutoComplete.estado == 1) {
+      searchSrcTextView.setAdapter(
+          new SuggestionAdapter<String>(this, R.layout.item_search_auto_complete,
+              responseAutoComplete.palabras));
+      searchSrcTextView.setOnItemClickListener((adapterView, view, i, l) -> {
+        log("autocomplete position: " + i + " data : " + searchSrcTextView.getAdapter()
+            .getItem(i)
+            .toString());
+        Intent goResult = new Intent(this, result.class);
+        goResult.putExtra(result.class.getSimpleName(),
+            searchSrcTextView.getAdapter().getItem(i).toString());
+        goActv(goResult, false);
+      });
+    }
   }
 
   @Override public boolean onQueryTextChange(String newText) {
     Log(newText);
+    autocompleteSearch(newText);
     return false;
   }
 
