@@ -417,7 +417,7 @@ public class BaseActivity extends RxAppCompatActivity {
     return res;
   }
 
-  protected void log(String log) {
+  public void log(String log) {
     Logger.e(log);
   }
 

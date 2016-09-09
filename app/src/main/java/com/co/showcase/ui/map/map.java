@@ -151,7 +151,7 @@ public class map extends BaseActivity {
         .subscribe(googleMap1 -> {
           log("updateMap");
           geoJsonLayer = MapUtils.initLayer(googleMap1, jsonObject);
-          MapUtils.setLayerStyle(geoJsonLayer);
+          MapUtils.setLayerStyle(geoJsonLayer, map.this);
           MapUtils.addLayerToMap(geoJsonLayer);
         });
   }

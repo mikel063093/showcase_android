@@ -3,6 +3,7 @@ package com.co.showcase.ui.util;
 import android.support.annotation.NonNull;
 import com.co.showcase.BuildConfig;
 import com.co.showcase.R;
+import com.co.showcase.ui.BaseActivity;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.maps.android.geojson.GeoJsonFeature;
@@ -17,16 +18,18 @@ import org.json.JSONObject;
 
 public class MapUtils {
 
-  public static void setLayerStyle(@NonNull GeoJsonLayer layer) {
+  public static void setLayerStyle(@NonNull GeoJsonLayer layer, BaseActivity baseActivity) {
 
-    GeoJsonPointStyle pointStyle = layer.getDefaultPointStyle();
-    pointStyle.setDraggable(false);
-    pointStyle.setTitle("test");
-    pointStyle.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker));
+
     for (GeoJsonFeature feature : layer.getFeatures()) {
-      feature.getPointStyle().setTitle(feature.getProperty("marker-symbol"));
-      feature.getPointStyle().setSnippet(feature.getProperty("marker-symbol"));
-      //if (BuildConfig.DEBUG) Logger.e(feature.toString());
+      String baseRes = "ic_pin_";
+      int drawable =
+          baseActivity.getResourceId(baseRes + feature.getProperty("marker-symbol"), "drawable");
+      baseActivity.log(baseRes + feature.getProperty("marker-symbol"));
+      GeoJsonPointStyle style = feature.getPointStyle();
+      style.setDraggable(false);
+      style.setTitle(feature.getProperty("marker-symbol"));
+      style.setIcon(BitmapDescriptorFactory.fromResource(drawable));
     }
   }
 
