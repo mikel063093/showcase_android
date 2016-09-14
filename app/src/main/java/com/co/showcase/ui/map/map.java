@@ -2,15 +2,14 @@ package com.co.showcase.ui.map;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MotionEvent;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.co.showcase.R;
@@ -25,10 +24,13 @@ import com.co.showcase.ui.home.home;
 import com.co.showcase.ui.util.MapUtils;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.maps.android.geojson.GeoJsonFeature;
 import com.google.maps.android.geojson.GeoJsonLayer;
+import com.google.maps.android.geojson.GeoJsonPointStyle;
 import com.sdoward.rxgooglemap.MapObservableProvider;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 import java.util.ArrayList;
@@ -46,8 +48,6 @@ public class map extends BaseActivity {
 
   @Bind(R.id.toolbar_home) Toolbar toolbar;
   @Bind(R.id.rv_home) RecyclerView rvHome;
-  @Bind(R.id.drawer) RelativeLayout drawer;
-  @Bind(R.id.drawer_layout) DrawerLayout drawerLayout;
   @Bind(R.id.imgmaptransparent) ImageView imgmaptransparent;
   @Bind(R.id.scroll) NestedScrollView scroll;
 
@@ -151,9 +151,25 @@ public class map extends BaseActivity {
         .subscribe(googleMap1 -> {
           log("updateMap");
           geoJsonLayer = MapUtils.initLayer(googleMap1, jsonObject);
-          MapUtils.setLayerStyle(geoJsonLayer, map.this);
-          MapUtils.addLayerToMap(geoJsonLayer);
+          setLayerStyle(geoJsonLayer, this);
+          geoJsonLayer.addLayerToMap();
         });
+  }
+
+  private void setLayerStyle(@NonNull GeoJsonLayer layer, BaseActivity baseActivity) {
+    for (GeoJsonFeature feature : layer.getFeatures()) {
+      drawMarker(baseActivity, feature);
+    }
+  }
+
+  private void drawMarker(BaseActivity baseActivity, GeoJsonFeature feature) {
+    GeoJsonPointStyle pointStyle = new GeoJsonPointStyle();
+    String baseRes = "ic_pin_";
+    int drawable =
+        baseActivity.getResourceId(baseRes + feature.getProperty("marker-symbol"), "drawable");
+    pointStyle.setIcon(BitmapDescriptorFactory.fromResource(drawable));
+    pointStyle.setTitle(feature.getProperty("marker-symbol"));
+    feature.setPointStyle(pointStyle);
   }
 
   private void getGeoJson(Usuario usuario, String idZona) {

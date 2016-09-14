@@ -128,6 +128,7 @@ public class BaseActivity extends RxAppCompatActivity {
             case WIFI_CONNECTED_HAS_NO_INTERNET:
             case OFFLINE:
             case UNKNOWN:
+
               showMessageOnSnakeBar(findViewById(R.id.container_root), getString(R.string.offile));
               break;
           }
