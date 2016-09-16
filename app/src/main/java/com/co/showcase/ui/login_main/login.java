@@ -108,8 +108,10 @@ public class login extends BaseActivity {
           .subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
           .compose(this.bindToLifecycle())
-          .subscribe();
-      goActv(home.class, true);
+          .subscribe(aVoid -> {
+            LoginManager.getInstance().logOut();
+            goActv(home.class, true);
+          });
     } else {
       showErr(getString(R.string.general_err));
     }

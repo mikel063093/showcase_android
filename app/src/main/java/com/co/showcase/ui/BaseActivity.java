@@ -31,6 +31,7 @@ import com.co.showcase.model.EntryResponse;
 import com.co.showcase.model.TabPosition;
 import com.co.showcase.model.Usuario;
 import com.co.showcase.ui.categoria.categoria;
+import com.co.showcase.ui.splash.Splash;
 import com.github.pwittchen.reactivenetwork.library.ReactiveNetwork;
 import com.google.gson.Gson;
 import com.onesignal.OneSignal;
@@ -87,20 +88,12 @@ public class BaseActivity extends RxAppCompatActivity {
     log("onResume");
     initDB();
     isOnpause = false;
-    Usuario.getItem()
-        .compose(this.bindToLifecycle())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(this::updateGcm);
-    //Usuario usuario =  Usuario.getItem().toBlocking().first();
-    //if (usuario != null && usuario.getToken().length()>2) {
-    //  updateGcm(usuario);
-    //}
+    updateGcm(getUserSync());
   }
 
   @Override protected void onStop() {
     EventBus.getDefault().unregister(this);
     log("onStop");
-
     super.onStop();
   }
 
@@ -138,7 +131,7 @@ public class BaseActivity extends RxAppCompatActivity {
   }
 
   private void updateGcm(Usuario usuario) {
-    if (usuario != null && usuario.getToken().length() > 2) {
+    if (usuario != null && usuario.getToken() != null && usuario.getToken().length() > 2) {
       OneSignal.idsAvailable((userId, registrationId) -> {
         Map<String, String> param = new HashMap<>();
         param.put("id", usuario.getId());
@@ -433,7 +426,7 @@ public class BaseActivity extends RxAppCompatActivity {
   }
 
   public Realm getRealm() {
-    return realm;
+    return realm.isClosed() ? realm = Realm.getDefaultInstance() : realm;
   }
 
   public Usuario getUserSync() {
@@ -489,5 +482,15 @@ public class BaseActivity extends RxAppCompatActivity {
       e.printStackTrace();
       return -1;
     }
+  }
+
+  public void clearDB() {
+    final Realm realm = Realm.getDefaultInstance();
+    realm.executeTransaction(realm1 -> {
+      realm1.where(Usuario.class).findFirst().removeFromRealm();
+      realm1.close();
+      runOnUiThread(() -> goActv(Splash.class, true));
+    });
+    realm.close();
   }
 }

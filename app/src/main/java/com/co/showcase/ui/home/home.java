@@ -34,6 +34,7 @@ import com.co.showcase.model.Usuario;
 import com.co.showcase.model.Zonas;
 import com.co.showcase.ui.BaseActivity;
 import com.co.showcase.ui.CustomView.CirclePageIndicator;
+import com.co.showcase.ui.direccion.direcciones;
 import com.co.showcase.ui.map.map;
 import com.co.showcase.ui.perfil.perfil;
 import com.co.showcase.ui.search_result.result;
@@ -83,8 +84,8 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
     getEstblecimientos(userSync);
   }
 
-  private void getZonas(Usuario usuario) {
-    if (usuario.getToken().length() > 2) {
+  private void getZonas(@NonNull Usuario usuario) {
+    if (usuario != null && usuario.getToken().length() > 2) {
       Map<String, Object> param = new HashMap<>();
       param.put("id", usuario.getId());
       REST.getRest()
@@ -215,11 +216,14 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
       case R.id.action_perfil:
         goActv(perfil.class, false);
         break;
+      case R.id.action_direcciones:
+        goActv(direcciones.class, false);
+        break;
       case R.id.action_salir:
 
         showMaterialDialog(getString(R.string.salir), new onClickCallback() {
           @Override public void onPositive(boolean result) {
-
+            clearDB();
           }
 
           @Override public void onDissmis() {
@@ -269,7 +273,7 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
   }
 
   private void getEstblecimientos(@NonNull Usuario usuario) {
-    if (usuario.getToken().length() > 2) {
+    if (usuario != null && usuario.getToken() != null && usuario.getToken().length() > 2) {
       Map<String, String> param = new HashMap<>();
       param.put("id", usuario.getId());
       REST.getRest()

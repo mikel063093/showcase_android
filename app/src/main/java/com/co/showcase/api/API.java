@@ -6,6 +6,7 @@ import com.co.showcase.model.Establecimiento;
 import com.co.showcase.model.ResponseAutoComplete;
 import com.co.showcase.model.ResponseCategorias;
 import com.co.showcase.model.ResponseDetalleArticulo;
+import com.co.showcase.model.ResponseDirecciones;
 import com.co.showcase.model.ResponseHome;
 import com.co.showcase.model.ResponsePuntuacion;
 import com.co.showcase.model.ResponseResultSearch;
@@ -79,4 +80,7 @@ public interface API {
   @NonNull @FormUrlEncoded @POST("realizarBusqueda")
   Observable<ResponseResultSearch> realizarBusqueda(@Header("Authorization") String authorization,
       @FieldMap Map<String, Object> param);
+
+  @NonNull @FormUrlEncoded @POST("direcciones") Observable<ResponseDirecciones> direcciones(
+      @Header("Authorization") String authorization, @FieldMap Map<String, Object> param);
 }

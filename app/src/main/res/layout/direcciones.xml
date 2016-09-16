@@ -61,7 +61,7 @@
 
 
       <android.support.v7.widget.AppCompatButton
-          android:id="@+id/btn.guardar"
+          android:id="@+id/btn_guardar_direccion"
           android:layout_width="wrap_content"
           android:layout_height="@dimen/_40sdp"
           android:layout_gravity="center"

@@ -2,11 +2,7 @@ package com.co.showcase;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-
 import android.support.multidex.MultiDexApplication;
-import android.util.Log;
-import com.co.showcase.model.Usuario;
-import com.co.showcase.model.GsonAdaptersModel;
 import com.crashlytics.android.Crashlytics;
 import com.facebook.FacebookSdk;
 import com.fuck_boilerplate.rx_paparazzo.RxPaparazzo;
@@ -14,7 +10,6 @@ import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.TypeAdapterFactory;
 import com.onesignal.OneSignal;
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
@@ -22,9 +17,7 @@ import io.fabric.sdk.android.Fabric;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmObject;
-import io.supercharge.rxsnappy.RxSnappy;
 import io.supercharge.rxsnappy.RxSnappyClient;
-import java.util.ServiceLoader;
 import org.json.JSONObject;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 

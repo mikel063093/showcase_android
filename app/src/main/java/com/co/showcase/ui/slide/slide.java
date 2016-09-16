@@ -16,6 +16,7 @@ import com.co.showcase.api.REST;
 import com.co.showcase.model.Categoria;
 import com.co.showcase.model.ResponseCategorias;
 import com.co.showcase.model.Usuario;
+import com.co.showcase.ui.BaseActivity;
 import com.co.showcase.ui.BaseFragment;
 import com.co.showcase.ui.util.CircleTransform;
 import com.pkmmte.view.CircularImageView;
@@ -43,10 +44,8 @@ public class slide extends BaseFragment {
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.slide_menu, container, false);
     ButterKnife.bind(this, view);
-    Usuario.getItem()
-        .compose(bindToLifecycle())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(this::updateUi);
+    BaseActivity base = (BaseActivity) getActivity();
+    updateUi(base.getUserSync());
     return view;
   }
 

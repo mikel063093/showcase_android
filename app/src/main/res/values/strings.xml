@@ -51,6 +51,8 @@
   <string name="resultados_para">Resultados para</string>
   <string name="direeciones_envio">Direcciones de envío</string>
   <string name="agregar_direccion">Agregar dirección</string>
+  <string name="descriptiongeneral">descripcion</string>
+  <string name="nueva_direccion">Nueva dirección</string>
 
 </resources>
 

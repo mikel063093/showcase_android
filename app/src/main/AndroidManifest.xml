@@ -94,6 +94,10 @@
 
     <activity android:name=".ui.search_result.result">
     </activity>
+    <activity android:name=".ui.direccion.direcciones">
+    </activity>
+    <activity android:name=".ui.direccion.nuevaDireccion">
+    </activity>
   </application>
 
 </manifest>
