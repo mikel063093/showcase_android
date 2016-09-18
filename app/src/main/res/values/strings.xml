@@ -53,6 +53,10 @@
   <string name="agregar_direccion">Agregar dirección</string>
   <string name="descriptiongeneral">descripcion</string>
   <string name="nueva_direccion">Nueva dirección</string>
-
+  <string name="ingresar_direccion">Ingresa tu dirección</string>
+  <string name="informacion_adicional">Información adicional</string>
+  <string name="barrio">Barrio</string>
+  <string name="ciudad">Ciudad</string>
+  <string name="nombre_direccion">Nombre para esta dirección</string>
 </resources>
 

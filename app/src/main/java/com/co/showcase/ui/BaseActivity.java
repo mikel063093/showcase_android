@@ -32,6 +32,7 @@ import com.co.showcase.model.TabPosition;
 import com.co.showcase.model.Usuario;
 import com.co.showcase.ui.categoria.categoria;
 import com.co.showcase.ui.splash.Splash;
+import com.facebook.login.LoginManager;
 import com.github.pwittchen.reactivenetwork.library.ReactiveNetwork;
 import com.google.gson.Gson;
 import com.onesignal.OneSignal;
@@ -489,6 +490,7 @@ public class BaseActivity extends RxAppCompatActivity {
     realm.executeTransaction(realm1 -> {
       realm1.where(Usuario.class).findFirst().removeFromRealm();
       realm1.close();
+      LoginManager.getInstance().logOut();
       runOnUiThread(() -> goActv(Splash.class, true));
     });
     realm.close();

@@ -85,6 +85,7 @@ public class login extends BaseActivity {
   }
 
   private void socialSingin(@NonNull String token) {
+
     log("socialSingin " + token);
     Map<String, String> param = new HashMap<>();
     param.put("access_token", token);

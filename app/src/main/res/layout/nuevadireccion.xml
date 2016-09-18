@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/root"
+    android:id="@+id/container_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/kelly_green"
@@ -65,69 +65,177 @@
               android:layout_height="wrap_content"
               android:layout_gravity="center"
               android:orientation="vertical"
-
               >
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/nombreWrapper"
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_16sdp"
                 android:layout_marginRight="@dimen/_16sdp"
-                android:hint="@string/nombre"
-                android:textColorHint="@color/yellow_green"
+                android:orientation="horizontal"
+                >
+              <android.support.design.widget.TextInputLayout
+                  android:id="@+id/addAddresWrapper"
+                  android:layout_width="@dimen/_120sdp"
+                  android:layout_height="wrap_content"
+                  android:layout_marginRight="@dimen/_1sdp"
+                  android:hint="@string/ingresar_direccion"
+                  android:textColorHint="@color/manatee"
+                  >
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edt_direccion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/_8sdp"
+                    android:inputType="textPostalAddress"
+                    android:maxLines="1"
+                    android:textColor="@color/outer_space"
+                    android:theme="@style/edt_singin"
+                    />
+              </android.support.design.widget.TextInputLayout>
+
+              <android.support.design.widget.TextInputLayout
+                  android:id="@+id/numerWrapper"
+                  android:layout_width="@dimen/_30sdp"
+                  android:layout_height="wrap_content"
+                  android:layout_marginLeft="@dimen/_1sdp"
+                  android:layout_marginRight="@dimen/_6sdp"
+                  android:textColorHint="@color/manatee"
+
+                  >
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edt_numero"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/_8sdp"
+                    android:inputType="textPostalAddress"
+                    android:maxLines="1"
+                    android:textColor="@color/outer_space"
+                    android:theme="@style/edt_singin"
+                    />
+              </android.support.design.widget.TextInputLayout>
+
+              <android.support.v7.widget.AppCompatTextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_gravity="center"
+                  android:layout_marginLeft="@dimen/_6sdp"
+                  android:layout_marginRight="@dimen/_6sdp"
+                  android:text="#"
+                  android:textColor="@color/outer_space"
+                  android:theme="@style/edt_singin"
+                  />
+              <android.support.design.widget.TextInputLayout
+                  android:id="@+id/numer2Wrapper"
+                  android:layout_width="@dimen/_30sdp"
+                  android:layout_height="wrap_content"
+                  android:layout_marginLeft="@dimen/_1sdp"
+                  android:layout_marginRight="@dimen/_1sdp"
+                  android:textColorHint="@color/manatee"
+
+                  >
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edt_numero2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/_8sdp"
+                    android:inputType="textPostalAddress"
+                    android:maxLength="4"
+                    android:maxLines="1"
+                    android:textColor="@color/outer_space"
+                    android:theme="@style/edt_singin"
+                    />
+              </android.support.design.widget.TextInputLayout>
+
+              <android.support.v7.widget.AppCompatTextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_gravity="center"
+                  android:layout_marginLeft="@dimen/_6sdp"
+                  android:layout_marginRight="@dimen/_6sdp"
+                  android:text="-"
+                  android:textColor="@color/outer_space"
+                  android:theme="@style/edt_singin"
+                  />
+              <android.support.design.widget.TextInputLayout
+                  android:id="@+id/numer3Wrapper"
+                  android:layout_width="@dimen/_30sdp"
+                  android:layout_height="wrap_content"
+                  android:layout_marginLeft="@dimen/_1sdp"
+                  android:textColorHint="@color/manatee"
+
+                  >
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edt_numero3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/_8sdp"
+                    android:inputType="textPostalAddress"
+                    android:maxLength="4"
+                    android:maxLines="1"
+                    android:textColor="@color/outer_space"
+                    android:theme="@style/edt_singin"
+                    />
+              </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/informacionAdicionalWrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_16sdp"
+                android:layout_marginRight="@dimen/_16sdp"
+                android:hint="@string/informacion_adicional"
+                android:textColorHint="@color/manatee"
 
                 >
               <android.support.v7.widget.AppCompatEditText
-                  android:id="@+id/edt_nombre"
+                  android:id="@+id/edt_info_adicional"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:drawableLeft="@drawable/ico_nombreusuario"
                   android:drawablePadding="@dimen/_8sdp"
                   android:inputType="text"
-                  android:textColor="@color/napier_green"
+                  android:textColor="@color/outer_space"
                   android:theme="@style/edt_singin"
                   />
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/apellidoWrapper"
+                android:id="@+id/barrioWrapper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_16sdp"
                 android:layout_marginRight="@dimen/_16sdp"
-                android:hint="@string/apellido"
-                android:textColorHint="@color/yellow_green"
+                android:hint="@string/barrio"
+                android:textColorHint="@color/manatee"
 
                 >
               <android.support.v7.widget.AppCompatEditText
-                  android:id="@+id/edt_apellido"
+                  android:id="@+id/edt_barrio"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:drawableLeft="@drawable/ico_apellidousuario"
                   android:drawablePadding="@dimen/_8sdp"
                   android:inputType="text"
-                  android:textColor="@color/napier_green"
+                  android:textColor="@color/outer_space"
                   android:theme="@style/edt_singin"
 
                   />
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/passwordWrapper"
+                android:id="@+id/ciuadadWrapper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_16sdp"
                 android:layout_marginRight="@dimen/_16sdp"
-                android:hint="@string/password"
-                android:textColorHint="@color/yellow_green"
+                android:hint="@string/ciudad"
+                android:textColorHint="@color/manatee"
 
                 >
               <android.support.v7.widget.AppCompatEditText
-                  android:id="@+id/edt_password"
+                  android:id="@+id/edt_ciudad"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:drawableLeft="@drawable/ico_contrasena"
                   android:drawablePadding="@dimen/_8sdp"
-                  android:inputType="textPassword"
-                  android:textColor="@color/napier_green"
+                  android:inputType="text"
+                  android:textColor="@color/outer_space"
                   android:theme="@style/edt_singin"
 
                   />
@@ -138,18 +246,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_16sdp"
                 android:layout_marginRight="@dimen/_16sdp"
-                android:hint="@string/correo"
-                android:textColorHint="@color/yellow_green"
+                android:hint="@string/nombre_direccion"
+                android:textColorHint="@color/manatee"
 
                 >
               <android.support.v7.widget.AppCompatEditText
                   android:id="@+id/edt_email"
                   android:layout_width="340dp"
                   android:layout_height="wrap_content"
-                  android:drawableLeft="@drawable/ico_correo"
                   android:drawablePadding="@dimen/_8sdp"
-                  android:inputType="textEmailAddress"
-                  android:textColor="@color/napier_green"
+                  android:inputType="text"
+                  android:textColor="@color/outer_space"
                   android:theme="@style/edt_singin"
 
                   />
