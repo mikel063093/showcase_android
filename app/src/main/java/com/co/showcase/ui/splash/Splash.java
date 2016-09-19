@@ -25,7 +25,6 @@ public class Splash extends RxAppCompatActivity {
     initDB();
     setContentView(R.layout.splash);
 
-
     Usuario.getItem()
         .compose(this.bindToLifecycle())
         .observeOn(AndroidSchedulers.mainThread())
@@ -33,7 +32,7 @@ public class Splash extends RxAppCompatActivity {
   }
 
   private void onSuccesUser(Usuario usuario) {
-    if (usuario != null && usuario.getToken().length() > 2) {
+    if (usuario != null && usuario.getToken() != null && usuario.getToken().length() > 2) {
       log("userOnDB " + usuario.getNombre());
       Intent intent = new Intent(getApplicationContext(), home.class);
       goActv(intent, true);

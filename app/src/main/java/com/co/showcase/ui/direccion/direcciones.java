@@ -53,12 +53,17 @@ public class direcciones extends BaseActivity {
   private void succesDirecciones(ResponseDirecciones responseDirecciones) {
     dismissDialog();
     if (responseDirecciones.getEstado() == 1 && responseDirecciones.direcciones.size() >= 1) {
+      log("size " + responseDirecciones.getDirecciones().size());
       adapter = new adapterDireccion(this, responseDirecciones.getDirecciones());
+
       mLinearLayoutManager = new LinearLayoutManager(this);
       rvDirecciones.setLayoutManager(mLinearLayoutManager);
-      rvDirecciones.addItemDecoration(new DividerItemDecoration(this),
-          R.drawable.item_decoratio_address);
+
+      //rvDirecciones.addItemDecoration(new DividerItemDecoration(this),
+      //    R.drawable.item_decoratio_address);
+
       rvDirecciones.setAdapter(adapter);
+
       adapter.getPositionClicks().compose(bindToLifecycle()).subscribe(position -> {
         log("click position ->" + position);
       });

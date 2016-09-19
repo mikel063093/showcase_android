@@ -12,6 +12,7 @@ import com.co.showcase.model.ResponsePuntuacion;
 import com.co.showcase.model.ResponseResultSearch;
 import com.co.showcase.model.Usuario;
 import com.co.showcase.model.Zonas;
+import com.co.showcase.model.responseAgregarDireccion;
 import com.co.showcase.model.usuario.ResponseCategoriaDetalle;
 import com.co.showcase.model.zonaDetalle;
 import java.util.Map;
@@ -82,5 +83,9 @@ public interface API {
       @FieldMap Map<String, Object> param);
 
   @NonNull @FormUrlEncoded @POST("direcciones") Observable<ResponseDirecciones> direcciones(
+      @Header("Authorization") String authorization, @FieldMap Map<String, Object> param);
+
+  @NonNull @FormUrlEncoded @POST("agregarDireccion")
+  Observable<responseAgregarDireccion> agregarDireccion(
       @Header("Authorization") String authorization, @FieldMap Map<String, Object> param);
 }

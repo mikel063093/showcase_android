@@ -10,16 +10,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-
 import butterknife.ButterKnife;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.co.showcase.AppMain;
@@ -38,18 +35,15 @@ import com.google.gson.Gson;
 import com.onesignal.OneSignal;
 import com.orhanobut.logger.Logger;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
-
 import io.realm.Realm;
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-
-import java.lang.reflect.Type;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import retrofit2.HttpException;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -71,7 +65,7 @@ public class BaseActivity extends RxAppCompatActivity {
   private Pattern patternName = Pattern.compile(NAME_PATTERN);
   private boolean isOnpause;
   private MaterialDialog loading;
-  private Realm realm;
+  private  Realm realm;
   @Nullable private MaterialDialog materialDialog;
 
   private void showMessageOnSnakeBar(@NonNull View view, @NonNull String msg) {
@@ -427,7 +421,13 @@ public class BaseActivity extends RxAppCompatActivity {
   }
 
   public Realm getRealm() {
-    return realm.isClosed() ? realm = Realm.getDefaultInstance() : realm;
+
+    realm = !realm.isClosed() ? realm = Realm.getDefaultInstance() : realm;
+    String status = realm.isClosed() +"";
+    String transacction = realm.isInTransaction() +"";
+
+    log("getRealm status  isClosed: " + status + " isInTransaction: " + transacction);
+    return realm;
   }
 
   public Usuario getUserSync() {
@@ -436,8 +436,8 @@ public class BaseActivity extends RxAppCompatActivity {
 
   public void updateRealmUser(Usuario usuario) {
     log("upDateRealmUser");
-    final Realm realm = Realm.getDefaultInstance();
-    realm.executeTransaction(realm1 -> {
+
+    getRealm().executeTransaction(realm1 -> {
       Usuario u = realm1.where(Usuario.class).findFirst();
 
       if (usuario.getFoto() != null) {
@@ -455,8 +455,9 @@ public class BaseActivity extends RxAppCompatActivity {
       if (usuario.getTelefono() != null) {
         u.setTelefono(usuario.getTelefono());
       }
+      realm1.copyToRealmOrUpdate(u);
+      u.addChangeListener(() -> log("usuario ha cambiado " + AppMain.getGson().toJson(u)));
     });
-    realm.close();
   }
 
   public void setItemsVisibility(Menu menu, MenuItem exception, boolean visible) {
@@ -486,13 +487,12 @@ public class BaseActivity extends RxAppCompatActivity {
   }
 
   public void clearDB() {
-    final Realm realm = Realm.getDefaultInstance();
-    realm.executeTransaction(realm1 -> {
+
+    getRealm().executeTransaction(realm1 -> {
       realm1.where(Usuario.class).findFirst().removeFromRealm();
       realm1.close();
       LoginManager.getInstance().logOut();
       runOnUiThread(() -> goActv(Splash.class, true));
     });
-    realm.close();
   }
 }

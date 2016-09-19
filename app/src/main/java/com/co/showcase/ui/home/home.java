@@ -85,7 +85,7 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
   }
 
   private void getZonas(@NonNull Usuario usuario) {
-    if (usuario != null && usuario.getToken().length() > 2) {
+    if (usuario != null && usuario.getToken() != null && usuario.getToken().length() > 2){
       Map<String, Object> param = new HashMap<>();
       param.put("id", usuario.getId());
       REST.getRest()

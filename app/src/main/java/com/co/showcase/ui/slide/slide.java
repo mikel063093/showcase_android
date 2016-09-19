@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import com.co.showcase.BuildConfig;
 import com.co.showcase.R;
 import com.co.showcase.api.REST;
 import com.co.showcase.model.Categoria;
@@ -21,11 +20,8 @@ import com.co.showcase.ui.BaseFragment;
 import com.co.showcase.ui.util.CircleTransform;
 import com.pkmmte.view.CircularImageView;
 import com.squareup.picasso.Picasso;
-import java.util.ArrayList;
-
 import java.util.HashMap;
 import java.util.List;
-
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -50,15 +46,15 @@ public class slide extends BaseFragment {
   }
 
   private void updateUi(@NonNull Usuario usuario) {
-    if (usuario.getFoto() != null && usuario.getFoto().length() > 4) {
+    if (usuario != null && usuario.getFoto() != null && usuario.getFoto().length() > 4) {
       Picasso.with(getContext())
           .load(usuario.getFoto())
           .transform(new CircleTransform())
           .into(imgSliderPhoto);
+      assert txtNamePerson != null;
+      txtNamePerson.setText(usuario.getFullName());
+      getCategorias(usuario);
     }
-    assert txtNamePerson != null;
-    txtNamePerson.setText(usuario.getFullName());
-    getCategorias(usuario);
   }
 
   private void getCategorias(@NonNull Usuario usuario) {

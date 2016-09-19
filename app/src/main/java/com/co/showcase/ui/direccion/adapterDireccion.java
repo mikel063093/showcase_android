@@ -13,6 +13,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.co.showcase.R;
 import com.co.showcase.model.Direccion;
+import com.orhanobut.logger.Logger;
+import java.util.ArrayList;
 import java.util.List;
 import rx.Observable;
 import rx.subjects.PublishSubject;
@@ -24,12 +26,17 @@ import rx.subjects.PublishSubject;
 public class adapterDireccion extends RecyclerView.Adapter<adapterDireccion.ViewHolder> {
 
   private Context mContext;
-  @Nullable private List<Direccion> mData;
+  private List<Direccion> mData;
   private final PublishSubject<Integer> onClickSubject = PublishSubject.create();
 
-  public adapterDireccion(Context mContext, @Nullable List<Direccion> mData) {
+  public adapterDireccion(Context mContext, List<Direccion> mData) {
+    Logger.e("size --> " + mData.size());
     this.mContext = mContext;
-    this.mData = mData;
+    if (mData != null) {
+      this.mData = mData;
+    } else {
+      this.mData = new ArrayList<>();
+    }
   }
 
   public Observable<Integer> getPositionClicks() {
@@ -42,7 +49,8 @@ public class adapterDireccion extends RecyclerView.Adapter<adapterDireccion.View
     return new ViewHolder(view);
   }
 
-  @Override public void onBindViewHolder(ViewHolder holder, int position) {
+  @Override public void onBindViewHolder(ViewHolder holder, final int position) {
+    Logger.e("postion " + position);
     assert mData != null;
     Direccion item = mData.get(position);
     if (item != null) {
@@ -57,7 +65,8 @@ public class adapterDireccion extends RecyclerView.Adapter<adapterDireccion.View
   }
 
   @Override public int getItemCount() {
-    return mData != null ? mData.size() : 0;
+    assert mData != null;
+    return mData.size();
   }
 
   static class ViewHolder extends RecyclerView.ViewHolder {

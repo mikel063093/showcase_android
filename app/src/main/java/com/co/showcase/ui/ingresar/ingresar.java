@@ -158,9 +158,10 @@ public class ingresar extends BaseFragment {
           .subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
           .compose(this.bindToLifecycle())
-          .subscribe();
-      Intent intent = new Intent(getContext(), home.class);
-      baseActivity.goActv(intent, true);
+          .subscribe(aVoid -> {
+            Intent intent = new Intent(getContext(), home.class);
+            baseActivity.goActv(intent, true);
+          });
     } else {
       baseActivity.showErr(usuario.getMensaje());
     }

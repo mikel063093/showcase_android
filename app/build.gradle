@@ -35,6 +35,7 @@ android {
     buildConfigField "String", "BUILD_TIME", "\"${buildTime()}\""
     multiDexEnabled true
     resValue "string", "API_KEY", "AIzaSyA96NoTdiN7FM9ohgSiiQlyJuvIRhXYKZQ"
+    vectorDrawables.useSupportLibrary = true
   }
   dexOptions {
     javaMaxHeapSize rootProject.ext.heapSize

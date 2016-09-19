@@ -49,4 +49,5 @@ public class ResponseDirecciones {
   public void setDirecciones(List<Direccion> direcciones) {
     this.direcciones = direcciones;
   }
+
 }

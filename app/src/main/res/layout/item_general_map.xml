@@ -31,7 +31,7 @@
           android:layout_centerHorizontal="true"
           android:layout_centerInParent="true"
           android:layout_marginTop="-5dp"
-          android:src="@drawable/ic_bookmark_48_orange"
+          card_view:srcCompat="@drawable/ic_bandera_pin"
           />
       <TextView
           android:id="@+id/txt_item_map"

@@ -109,8 +109,9 @@ import rx.schedulers.Schedulers;
     this.mensaje = mensaje;
   }
 
-  @NonNull public String getToken() {
-    return "Bearer " + token;
+  public String getToken() {
+
+    return token != null ? "Bearer " + token : null;
   }
 
   public void setToken(String token) {

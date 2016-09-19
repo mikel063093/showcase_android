@@ -58,5 +58,6 @@
   <string name="barrio">Barrio</string>
   <string name="ciudad">Ciudad</string>
   <string name="nombre_direccion">Nombre para esta dirección</string>
+  <string name="datos_invalidos">Datos incompletos o invalidos</string>
 </resources>
 
