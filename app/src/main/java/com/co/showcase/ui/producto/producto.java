@@ -10,10 +10,17 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.co.showcase.AppMain;
 import com.co.showcase.R;
+import com.co.showcase.api.REST;
 import com.co.showcase.model.Articulo;
+import com.co.showcase.model.ResponseAgregarCarrito;
+import com.co.showcase.model.Usuario;
 import com.co.showcase.ui.BaseActivity;
 import com.squareup.picasso.Picasso;
 import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.Map;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class producto extends BaseActivity {
 
@@ -26,11 +33,13 @@ public class producto extends BaseActivity {
   @Bind(R.id.txt_item_count) AppCompatTextView txtItemCount;
   private Articulo articulo;
   private DecimalFormat df = new DecimalFormat("###.#");
+  private Usuario usuario;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.item_reserva);
     ButterKnife.bind(this);
+    usuario = getUserSync();
     if (getIntent() != null
         && getIntent().getStringExtra(this.getClass().getSimpleName()) != null) {
       String json = getIntent().getStringExtra(this.getClass().getSimpleName());
@@ -61,12 +70,46 @@ public class producto extends BaseActivity {
         break;
       case R.id.btn_reservar:
         Double current_payment = Double.parseDouble(txtItemCount.getText().toString());
-        if (current_payment >= 1) {
 
+        if (current_payment >= 1 && usuario != null && usuario.getToken() != null) {
+          Map<String, Object> param = new HashMap<>();
+          param.put("idArticulo", articulo.getId());
+          param.put("cantidad", current_payment.intValue());
+
+          REST.getRest()
+              .agregarProductoCarrito(usuario.getToken(), param)
+              .compose(bindToLifecycle())
+              .doOnSubscribe(() -> showDialog(getString(R.string.loading)))
+              .subscribeOn(Schedulers.io())
+              .doOnCompleted(this::dismissDialog)
+              .observeOn(AndroidSchedulers.mainThread())
+              .subscribe(this::succesAgregarCarrito, this::errControl);
         } else {
           showErr(getString(R.string.item_count_err));
         }
         break;
+    }
+  }
+
+  private void succesAgregarCarrito(ResponseAgregarCarrito responseAgregarCarrito) {
+    dismissDialog();
+    if (responseAgregarCarrito.getEstado() == 1) {
+      showMaterialDialog(getString(R.string.reserva_ok, articulo.getNombre()),
+          new onClickCallback() {
+            @Override public void onPositive(boolean result) {
+              finish();
+            }
+
+            @Override public void onDissmis() {
+              finish();
+            }
+
+            @Override public void onNegative(boolean result) {
+              finish();
+            }
+          });
+    } else {
+      showErr(getString(R.string.general_err));
     }
   }
 
@@ -78,7 +121,7 @@ public class producto extends BaseActivity {
     if (add) {
       if (unidades >= current_payment + 1) {
         current_payment += 1;
-        txtPriceItem.setText("$" + articulo.getPrecio() * current_payment);
+        txtPriceItem.setText("$" + articulo.getPrecio() * current_payment.intValue());
       } else {
         showErr(getString(R.string.max_item));
       }
@@ -86,12 +129,12 @@ public class producto extends BaseActivity {
       if (current_payment > 0) {
         current_payment -= 1;
         String txt = current_payment == 0 ? "$" + articulo.getPrecio()
-            : "$" + articulo.getPrecio() * current_payment;
+            : "$" + articulo.getPrecio() * current_payment.intValue();
         txtPriceItem.setText(txt);
       } else {
         txtPriceItem.setText("$" + articulo.getPrecio());
       }
     }
-    txtItemCount.setText(df.format(current_payment));
+    txtItemCount.setText(df.format(current_payment.intValue()));
   }
 }

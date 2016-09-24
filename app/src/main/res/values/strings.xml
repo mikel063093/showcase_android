@@ -59,5 +59,21 @@
   <string name="ciudad">Ciudad</string>
   <string name="nombre_direccion">Nombre para esta dirección</string>
   <string name="datos_invalidos">Datos incompletos o invalidos</string>
+  <string name="reserva_ok">Tu pedido %1$s ha sido reservado!, continua con tu carrito de compras</string>
+  <string name="desc_pedidos">Estos son los artículos de tu pedido</string>
+  <string name="siguiente">Siguiente</string>
+  <string name="subtotal">Subtotal</string>
+  <string name="domicilio">Domicilio</string>
+  <string name="valor_total">Valor total</string>
+  <string name="no_tienes_elementos">no tienes elementos en tu carrito de compras</string>
+  <string name="cancelar_pedido">- Cancelar pedido -</string>
+  <string name="seguro_cancelar">Seguro que deseas cancelar?</string>
+  <string name="direccion_entraga">Dirección de entrega</string>
+  <string name="forma_pago">Forma de pago</string>
+  <string name="cupon_descuento">Cupón de descuento</string>
+  <string name="agregue_cupon">Agregué un cupón</string>
+  <string name="seleccione">Seleccione</string>
+  <string name="datos_comple_pedido">Ingresa los datos para entregar tu pedido</string>
+
 </resources>
 

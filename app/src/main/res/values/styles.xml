@@ -159,6 +159,12 @@
     <item name="fontPath">fonts/Circular-Std-Bold.otf</item>
 
   </style>
+  <style name="txt_gamboge" parent="android:Widget.TextView">
+    <item name="android:textColor">@color/gamboge</item>
+    <item name="android:textSize">@dimen/texto_botones_size</item>
+    <item name="android:textStyle">normal</item>
+    <item name="fontPath">fonts/Circular-Std-Bold.otf</item>
+  </style>
 
   <style name="txt_outer_space" parent="android:Widget.TextView">
     <item name="android:textColor">@color/outer_space</item>

@@ -98,6 +98,10 @@
     </activity>
     <activity android:name=".ui.direccion.nuevaDireccion">
     </activity>
+    <activity android:name=".ui.pedido.carritoPedidos">
+    </activity>
+    <activity android:name=".ui.pedido.checkout">
+    </activity>
   </application>
 
 </manifest>

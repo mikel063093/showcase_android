@@ -100,7 +100,19 @@ public class nuevaDireccion extends BaseActivity {
 
       addAddress(param, getUserSync());
     } else {
-      showDialog(getString(R.string.datos_invalidos));
+      showMaterialDialog(getString(R.string.datos_invalidos), new onClickCallback() {
+        @Override public void onPositive(boolean result) {
+
+        }
+
+        @Override public void onDissmis() {
+
+        }
+
+        @Override public void onNegative(boolean result) {
+
+        }
+      });
     }
   }
 

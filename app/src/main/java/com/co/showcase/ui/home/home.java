@@ -29,6 +29,7 @@ import com.co.showcase.api.REST;
 import com.co.showcase.model.Categoria;
 import com.co.showcase.model.ResponseAutoComplete;
 import com.co.showcase.model.ResponseHome;
+import com.co.showcase.model.ResponseVerCarrito;
 import com.co.showcase.model.Slides;
 import com.co.showcase.model.Usuario;
 import com.co.showcase.model.Zonas;
@@ -36,6 +37,7 @@ import com.co.showcase.ui.BaseActivity;
 import com.co.showcase.ui.CustomView.CirclePageIndicator;
 import com.co.showcase.ui.direccion.direcciones;
 import com.co.showcase.ui.map.map;
+import com.co.showcase.ui.pedido.carritoPedidos;
 import com.co.showcase.ui.perfil.perfil;
 import com.co.showcase.ui.search_result.result;
 import com.co.showcase.ui.slide.slide;
@@ -68,6 +70,7 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
   private GoogleApiClient client;
   private SubMenu subMenuMap;
   private SearchView.SearchAutoComplete searchSrcTextView;
+  private Menu menu;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -79,13 +82,45 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
     client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
   }
 
+  @Override protected void onResume() {
+    super.onResume();
+    verCarrito(getUserSync());
+  }
+
+  private void verCarrito(Usuario usuario) {
+    if (usuario != null && usuario.getToken() != null) {
+      REST.getRest()
+          .verCarrito(usuario.getToken(), new HashMap<>())
+          .compose(bindToLifecycle())
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(this::succesVerCarrito, this::errControl);
+    }
+  }
+
+  private void succesVerCarrito(ResponseVerCarrito responseVerCarrito) {
+    if (responseVerCarrito.getEstado() == 1
+        && responseVerCarrito.getCarrito() != null
+        && responseVerCarrito.getCarrito().getFechaCreacion() != null
+        && responseVerCarrito.getCarrito().getTotal() > 0) {
+      showMenuCarrito(true);
+    }
+  }
+
+  private void showMenuCarrito(boolean show) {
+    MenuItem carrito = menu.findItem(R.id.action_buy);
+    Drawable drawable =
+        show ? getDrawable(R.drawable.btn_carrito_bandera) : getDrawable(R.drawable.btn_carrito);
+    if (carrito != null) carrito.setIcon(drawable);
+  }
+
   private void init(Usuario userSync) {
     getZonas(userSync);
     getEstblecimientos(userSync);
   }
 
   private void getZonas(@NonNull Usuario usuario) {
-    if (usuario != null && usuario.getToken() != null && usuario.getToken().length() > 2){
+    if (usuario != null && usuario.getToken() != null && usuario.getToken().length() > 2) {
       Map<String, Object> param = new HashMap<>();
       param.put("id", usuario.getId());
       REST.getRest()
@@ -159,6 +194,7 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
   }
 
   @Override public boolean onCreateOptionsMenu(Menu menu) {
+    this.menu = menu;
     getMenuInflater().inflate(R.menu.menu_main, menu);
     MenuItem map = menu.findItem(R.id.action_map);
     subMenuMap = map.getSubMenu();
@@ -201,7 +237,9 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
   @Override public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
     switch (item.getItemId()) {
-      //case R.id.action_buy:
+      case R.id.action_buy:
+        goActv(carritoPedidos.class, false);
+        break;
       //  log("action buy");
       //  //Toast.makeText(this, "Favorite", Toast.LENGTH_SHORT).show();
       //  return true;
