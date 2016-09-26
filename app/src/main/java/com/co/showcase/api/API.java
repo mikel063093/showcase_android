@@ -16,7 +16,9 @@ import com.co.showcase.model.ResponseResultSearch;
 import com.co.showcase.model.ResponseVerCarrito;
 import com.co.showcase.model.Usuario;
 import com.co.showcase.model.Zonas;
+import com.co.showcase.model.detallePedidos;
 import com.co.showcase.model.responseAgregarDireccion;
+import com.co.showcase.model.responsePedidos;
 import com.co.showcase.model.usuario.ResponseCategoriaDetalle;
 import com.co.showcase.model.zonaDetalle;
 import java.util.Map;
@@ -114,6 +116,14 @@ public interface API {
   @NonNull @FormUrlEncoded @POST("redimirCupon") Observable<ResponseCupon> redimirCupon(
       @Header("Authorization") String authorization, @FieldMap Map<String, Object> param);
 
-  @NonNull @FormUrlEncoded @POST("realizarPedido") Observable<ResponseRealizarPedido> realizarPedido(
+  @NonNull @FormUrlEncoded @POST("realizarPedido")
+  Observable<ResponseRealizarPedido> realizarPedido(@Header("Authorization") String authorization,
+      @FieldMap Map<String, Object> param);
+
+  @NonNull @FormUrlEncoded @POST("pedidosActivos") Observable<responsePedidos> pedidosActivos(
+      @Header("Authorization") String authorization, @FieldMap Map<String, Object> param);
+
+  @NonNull @FormUrlEncoded @POST("detallePedido") Observable<detallePedidos> detallePedido(
       @Header("Authorization") String authorization, @FieldMap Map<String, Object> param);
 }
+

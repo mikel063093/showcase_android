@@ -36,6 +36,8 @@ import com.co.showcase.model.Zonas;
 import com.co.showcase.ui.BaseActivity;
 import com.co.showcase.ui.CustomView.CirclePageIndicator;
 import com.co.showcase.ui.direccion.direcciones;
+import com.co.showcase.ui.historial.historial;
+import com.co.showcase.ui.historial.pedidos_proceso;
 import com.co.showcase.ui.map.map;
 import com.co.showcase.ui.pedido.carritoPedidos;
 import com.co.showcase.ui.perfil.perfil;
@@ -52,7 +54,6 @@ import java.util.List;
 import java.util.Map;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
@@ -150,7 +151,7 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
         }
       }
     } else {
-      showErr(zonas.getMensaje());
+      if (zonas == null) showErr(zonas.getMensaje());
     }
   }
 
@@ -200,6 +201,7 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
     getMenuInflater().inflate(R.menu.menu_main, menu);
     MenuItem map = menu.findItem(R.id.action_map);
     subMenuMap = map.getSubMenu();
+    getZonas(getUserSync());
     searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
     searchSrcTextView = (SearchView.SearchAutoComplete) searchView.findViewById(
         android.support.v7.appcompat.R.id.search_src_text);
@@ -242,9 +244,7 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
       case R.id.action_buy:
         goActv(carritoPedidos.class, false);
         break;
-      //  log("action buy");
-      //  //Toast.makeText(this, "Favorite", Toast.LENGTH_SHORT).show();
-      //  return true;
+
       case R.id.action_map:
         log("action map");
         //goActv(map.class, false);
@@ -278,6 +278,12 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
       case R.id.itemZona1:
         log("itemZona1");
         goActv(new Intent(this, map.class).putExtras(item.getIntent().getExtras()), false);
+        break;
+      case R.id.action_pedidos:
+        goActv(pedidos_proceso.class, false);
+        break;
+      case R.id.action_historial:
+        goActv(historial.class, false);
         break;
     }
     return super.onOptionsItemSelected(item);

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/kelly_green"
+    android:orientation="vertical"
+    >
+  <android.support.v4.widget.NestedScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+      <android.support.v7.widget.Toolbar
+          xmlns:android="http://schemas.android.com/apk/res/android"
+          android:id="@+id/toolbar"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@color/kelly_green"
+          android:fitsSystemWindows="true"
+          android:minHeight="?attr/actionBarSize"
+          app:navigationIcon="@drawable/btn_menu_principal"
+          style="@style/MyToolbarStyle"
+          />
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/_43sdp"
+          android:layout_gravity="center"
+          android:background="@color/orange"
+          android:gravity="center"
+          style="@style/elevation1dp"
+          >
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txt_labl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pedidos_proceso"
+            android:textSize="@dimen/_17sdp"
+            style="@style/txt_white_style"
+            />
+
+      </LinearLayout>
+
+      <android.support.v7.widget.RecyclerView
+          android:id="@+id/rv_pedidos"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="@dimen/_13sdp"
+          android:layout_marginRight="@dimen/_13sdp"
+          android:layout_marginTop="@dimen/_13sdp"
+          app:layout_behavior="@string/appbar_scrolling_view_behavior"
+          >
+
+      </android.support.v7.widget.RecyclerView>
+
+
+    </LinearLayout>
+  </android.support.v4.widget.NestedScrollView>
+
+
+</LinearLayout>

@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.w3c.dom.Text;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx_activity_result.RxActivityResult;
@@ -116,21 +117,24 @@ public class checkout extends BaseActivity {
   private String getPedidoJson() {
     RequestPedido pedido = new RequestPedido();
     pedido.setDireccion(direccion != null ? direccion.getId() : -1);
-    pedido.setCupon(edtCupon.getText().toString());
+    if (!TextUtils.isEmpty(edtCupon.getText())) {
+      pedido.setCupon(edtCupon.getText().toString());
+    }
     pedido.setFormaPago(edtPago.getText().toString());
     pedido.setTelefono(edtTelefono.getText().toString());
     ResponseVerCarrito carrito = getPedido();
     if (carrito != null) {
       List<RequestPedido.ItemsBean> items = new ArrayList<>();
-
       for (Carrito.ItemsBean item : carrito.getCarrito().getItems()) {
         RequestPedido.ItemsBean i = new RequestPedido.ItemsBean();
-        i.setCantidad(i.getCantidad());
-        i.setId(i.getId());
+        i.setCantidad(item.getCantidad());
+        i.setId(item.getIdArticulo() + "");
         items.add(i);
       }
       pedido.setItems(items);
     }
+    log(AppMain.getGson().toJson(pedido));
+
     return AppMain.getGson().toJson(pedido);
   }
 
@@ -147,6 +151,7 @@ public class checkout extends BaseActivity {
     dismissDialog();
     if (responseDirecciones.getEstado() == 1 && responseDirecciones.direcciones.size() >= 1) {
       Direccion item = responseDirecciones.getDirecciones().get(0);
+      this.direccion = item;
       String txtDireccion =
           String.format("%s %s # %s ", item.getTipo(), item.getNomenclatura(), item.getNumero());
       edtDireccion.setText(txtDireccion);
@@ -245,9 +250,7 @@ public class checkout extends BaseActivity {
     if (TextUtils.isEmpty(edtPago.getText())) {
       result = false;
     }
-    if (TextUtils.isEmpty(edtCupon.getText())) {
-      result = false;
-    }
+
     return result;
   }
 

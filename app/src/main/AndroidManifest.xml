@@ -108,6 +108,12 @@
     </activity>
     <activity android:name=".ui.pedido.enviado">
     </activity>
+    <activity android:name=".ui.historial.pedidos_proceso">
+    </activity>
+    <activity android:name=".ui.historial.historial">
+    </activity>
+    <activity android:name=".ui.historial.detallePedido">
+    </activity>
   </application>
 
 </manifest>

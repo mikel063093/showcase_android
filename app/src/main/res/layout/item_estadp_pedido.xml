@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:fontPath="http://schemas.android.com/tools"
+    android:id="@+id/root_section"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_66sdp"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    card_view:cardCornerRadius="3dp"
+    card_view:cardElevation="2dp"
+    card_view:cardPreventCornerOverlap="true"
+    card_view:cardUseCompatPadding="true"
+    style="@style/card_white"
+    >
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+
+      >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+      <ImageView
+          android:id="@+id/flecha_izq"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentEnd="true"
+          android:layout_centerHorizontal="true"
+          android:layout_centerInParent="true"
+          android:layout_marginEnd="@dimen/_20sdp"
+          android:contentDescription="@string/descriptiongeneral"
+          android:foregroundGravity="right"
+          android:src="@drawable/btn_flechaderecha"
+          />
+    </RelativeLayout>
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        >
+
+
+      <android.support.v7.widget.AppCompatTextView
+          android:id="@+id/txt_numero_pedido"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/_20sdp"
+          android:text="Pedido #280"
+          android:textSize="@dimen/_15sdp"
+          fontPath="fonts/Circular-Std-Bold.otf"
+          style="@style/txt_taupe"
+          />
+
+      <android.support.v7.widget.AppCompatTextView
+          android:id="@+id/txt_fecha_pedido"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/_18sdp"
+          android:layout_marginLeft="@dimen/_20sdp"
+          android:maxLength="40"
+          android:maxLines="1"
+          android:text="Realizado el 06 de marzo de 2016"
+          android:textSize="@dimen/_11sdp"
+          style="@style/txt_manatee"
+          />
+      <TextView
+          android:id="@+id/txt_estado_pedido"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/_18sdp"
+          android:layout_marginLeft="@dimen/_20sdp"
+          android:maxLines="1"
+          android:text="Estado: En proceso de Entrega"
+          android:textSize="@dimen/_11sdp"
+          />
+    </LinearLayout>
+  </FrameLayout>
+</android.support.v7.widget.CardView>

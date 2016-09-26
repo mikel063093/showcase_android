@@ -83,6 +83,12 @@
   <string name="pedido_recivido">Hemos recibido tu pedido</string>
   <string name="desc_pedido_ok">En este momento nuestro personal organizará tu pedido y los recibirás en la dirección suministrada</string>
   <string name="pedido_enviado">Pedido enviado</string>
+  <string name="pedidos_proceso">Pedidos en proceso</string>
+  <string name="estado_color">Estado: </string>
+  <string name="pedido_contaodr">Pedido #%1$s</string>
+  <string name="pedido_fecha">Realizado el %1$s</string>
+  <string name="historial_pedidos">Historial de pedidos</string>
+  <string name="datos_pedido">Datos del pedido #%1$s</string>
   <string-array name="formas_pago">
     <item>efectivo</item>
     <item>tarjeta</item>
