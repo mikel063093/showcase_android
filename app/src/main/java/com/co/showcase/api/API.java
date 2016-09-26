@@ -6,10 +6,12 @@ import com.co.showcase.model.Establecimiento;
 import com.co.showcase.model.ResponseAgregarCarrito;
 import com.co.showcase.model.ResponseAutoComplete;
 import com.co.showcase.model.ResponseCategorias;
+import com.co.showcase.model.ResponseCupon;
 import com.co.showcase.model.ResponseDetalleArticulo;
 import com.co.showcase.model.ResponseDirecciones;
 import com.co.showcase.model.ResponseHome;
 import com.co.showcase.model.ResponsePuntuacion;
+import com.co.showcase.model.ResponseRealizarPedido;
 import com.co.showcase.model.ResponseResultSearch;
 import com.co.showcase.model.ResponseVerCarrito;
 import com.co.showcase.model.Usuario;
@@ -99,5 +101,19 @@ public interface API {
       @Header("Authorization") String authorization, @FieldMap Map<String, Object> param);
 
   @NonNull @FormUrlEncoded @POST("cancelarCarrito") Observable<ResponseVerCarrito> cancelarCarrito(
+      @Header("Authorization") String authorization, @FieldMap Map<String, Object> param);
+
+  @NonNull @FormUrlEncoded @POST("eliminarProductoCarrito")
+  Observable<ResponseVerCarrito> eliminarProductoCarrito(
+      @Header("Authorization") String authorization, @FieldMap Map<String, Object> param);
+
+  @NonNull @FormUrlEncoded @POST("editarProductoCarrito")
+  Observable<ResponseVerCarrito> editarProductoCarrito(
+      @Header("Authorization") String authorization, @FieldMap Map<String, Object> param);
+
+  @NonNull @FormUrlEncoded @POST("redimirCupon") Observable<ResponseCupon> redimirCupon(
+      @Header("Authorization") String authorization, @FieldMap Map<String, Object> param);
+
+  @NonNull @FormUrlEncoded @POST("realizarPedido") Observable<ResponseRealizarPedido> realizarPedido(
       @Header("Authorization") String authorization, @FieldMap Map<String, Object> param);
 }

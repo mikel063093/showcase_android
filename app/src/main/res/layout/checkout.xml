@@ -109,7 +109,8 @@
             </android.support.design.widget.TextInputLayout>
           </LinearLayout>
           <android.support.design.widget.TextInputLayout
-              android:id="@+id/nombreWrapper"
+
+              android:id="@+id/direccion_wrapper"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_marginLeft="@dimen/_16sdp"
@@ -127,7 +128,6 @@
                 android:inputType="none"
                 android:textColor="@color/outer_space"
                 android:theme="@style/edt_singin"
-                android:enabled="false"
                 />
           </android.support.design.widget.TextInputLayout>
           <android.support.design.widget.TextInputLayout
@@ -151,33 +151,18 @@
 
                 />
           </android.support.design.widget.TextInputLayout>
-          <android.support.design.widget.TextInputLayout
-
+          <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+              android:id="@+id/edt_pago"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_marginLeft="@dimen/_16sdp"
               android:layout_marginRight="@dimen/_16sdp"
-              android:hint="@string/forma_pago"
+              android:hint="@string/seleccione"
               android:textColorHint="@color/manatee"
-
-              >
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/edt_pago"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clickable="false"
-                android:enabled="false"
-                android:drawablePadding="@dimen/_8sdp"
-                android:drawableRight="@drawable/btn_seleccionar"
-                android:inputType="none"
-                android:text="@string/seleccione"
-                android:textColor="@color/outer_space"
-                android:theme="@style/edt_singin"
-
-                />
-          </android.support.design.widget.TextInputLayout>
+              app:met_floatingLabel="normal"
+              />
           <android.support.design.widget.TextInputLayout
-
+              android:id="@+id/cupon_wrapper"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_marginLeft="@dimen/_16sdp"
@@ -192,10 +177,9 @@
                 android:layout_height="wrap_content"
                 android:drawablePadding="@dimen/_8sdp"
                 android:drawableRight="@drawable/btn_seleccionar"
-                android:inputType="text"
+                android:inputType="none"
                 android:textColor="@color/outer_space"
                 android:theme="@style/edt_singin"
-                android:enabled="false"
 
                 />
           </android.support.design.widget.TextInputLayout>

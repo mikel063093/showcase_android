@@ -33,7 +33,7 @@
           android:foregroundGravity="right"
           android:maxLength="4"
           android:maxLines="1"
-          android:text="1"
+
           android:textSize="@dimen/_16sdp"
           fontPath="fonts/Circular-Std-Book.otf"
           style="@style/txt_manatee"
@@ -51,7 +51,6 @@
           android:layout_width="@dimen/_40sdp"
           android:layout_height="@dimen/_60sdp"
           android:layout_marginStart="@dimen/_12sdp"
-          android:background="@drawable/ropa_5"
           android:scaleType="centerCrop"
           />
       <LinearLayout
@@ -66,7 +65,7 @@
             android:id="@+id/txt_name_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Chaqueta azul"
+
             android:textSize="@dimen/_14sdp"
             fontPath="fonts/Circular-Std-Book.otf"
             style="@style/txt_taupe"
@@ -77,7 +76,7 @@
             android:layout_height="@dimen/_18sdp"
             android:layout_marginTop="@dimen/_6sdp"
             android:maxLines="1"
-            android:text="$150.000"
+
             android:textSize="@dimen/_12sdp"
             fontPath="fonts/Circular-Std-Book.otf"
             style="@style/txt_dark_tangerine"

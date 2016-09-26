@@ -172,7 +172,8 @@ dependencies {
   compile 'com.github.akashandroid90.googlesupport:google-support-location:1.0' // geocoderInverse
 
   compile "com.github.FuckBoilerplate:RxPaparazzo:0.1.4"
-
+  compile "com.github.VictorAlbertos:RxActivityResult:0.3.6"
+  compile 'com.weiwangcn.betterspinner:library-material:1.1.0'
   retrolambdaConfig "net.orfjackal.retrolambda:retrolambda:$rootProject.ext.retrolambda"
   compile 'com.google.android.gms:play-services-appindexing:9.2.0'
     compile('com.crashlytics.sdk.android:crashlytics:2.6.2@aar') {

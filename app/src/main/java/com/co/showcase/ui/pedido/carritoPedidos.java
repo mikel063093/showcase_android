@@ -1,5 +1,6 @@
 package com.co.showcase.ui.pedido;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,8 +10,10 @@ import android.view.View;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.co.showcase.AppMain;
 import com.co.showcase.R;
 import com.co.showcase.api.REST;
+import com.co.showcase.model.Carrito;
 import com.co.showcase.model.ResponseVerCarrito;
 import com.co.showcase.model.Usuario;
 import com.co.showcase.ui.BaseActivity;
@@ -28,6 +31,7 @@ public class carritoPedidos extends BaseActivity {
 
   private adapterPedidos adapter;
   private LinearLayoutManager mLinearLayoutManager;
+  private ResponseVerCarrito responseVerCarrito;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -93,6 +97,7 @@ public class carritoPedidos extends BaseActivity {
     txtSubtotal.setText(responseVerCarrito.carrito.getSubtotal() + "");
     txtDomicilio.setText(responseVerCarrito.carrito.getDomicilio() + "");
     txtTotalFinal.setText(responseVerCarrito.carrito.getTotal() + "");
+    this.responseVerCarrito = responseVerCarrito;
 
     adapter = new adapterPedidos(responseVerCarrito.getCarrito().getItems(), this);
     mLinearLayoutManager = new LinearLayoutManager(this);
@@ -101,13 +106,21 @@ public class carritoPedidos extends BaseActivity {
     adapter.getPositionClicks().subscribe(position -> {
       //modificar pedido
       log(responseVerCarrito.getCarrito().getItems().get(position).nombre);
+      Carrito.ItemsBean item = responseVerCarrito.getCarrito().getItems().get(position);
+      String json = AppMain.getGson().toJson(item);
+      Intent intent = new Intent(this, edtiarItem.class);
+      intent.putExtra(edtiarItem.class.getSimpleName(), json);
+      goActv(intent, false);
     });
   }
 
   @OnClick({ R.id.btn_siguiente, R.id.txt_cancelar_pedido }) public void onClick(View view) {
     switch (view.getId()) {
       case R.id.btn_siguiente:
-        goActv(checkout.class, false);
+        Intent intent = new Intent(this, checkout.class);
+        intent.putExtra(checkout.class.getSimpleName(),
+            AppMain.getGson().toJson(responseVerCarrito));
+        goActv(intent, false);
         break;
       case R.id.txt_cancelar_pedido:
         showMaterialDialog(getString(R.string.seguro_cancelar), new onClickCallback() {

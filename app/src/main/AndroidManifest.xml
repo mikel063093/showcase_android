@@ -102,6 +102,12 @@
     </activity>
     <activity android:name=".ui.pedido.checkout">
     </activity>
+    <activity android:name=".ui.pedido.edtiarItem">
+    </activity>
+    <activity android:name=".ui.pedido.cupon">
+    </activity>
+    <activity android:name=".ui.pedido.enviado">
+    </activity>
   </application>
 
 </manifest>

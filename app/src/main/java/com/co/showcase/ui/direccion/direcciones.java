@@ -1,5 +1,6 @@
 package com.co.showcase.ui.direccion;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -7,8 +8,10 @@ import android.support.v7.widget.Toolbar;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.co.showcase.AppMain;
 import com.co.showcase.R;
 import com.co.showcase.api.REST;
+import com.co.showcase.model.Direccion;
 import com.co.showcase.model.ResponseDirecciones;
 import com.co.showcase.model.Usuario;
 import com.co.showcase.ui.BaseActivity;
@@ -29,6 +32,18 @@ public class direcciones extends BaseActivity {
     setContentView(R.layout.direcciones);
     ButterKnife.bind(this);
     configBackToolbar(toolbarPerfil);
+    isForResult();
+  }
+
+  private boolean isForResult() {
+    boolean result = false;
+    if (getIntent() != null
+        && getIntent().getExtras() != null
+        && getIntent().getStringExtra(this.getClass().getSimpleName()) != null) {
+      result = true;
+      log("isForResult");
+    }
+    return result;
   }
 
   private void getDirecciones(Usuario usuario) {
@@ -66,6 +81,14 @@ public class direcciones extends BaseActivity {
 
       adapter.getPositionClicks().compose(bindToLifecycle()).subscribe(position -> {
         log("click position ->" + position);
+        if (isForResult()) {
+          Intent data = new Intent();
+          Direccion item = responseDirecciones.getDirecciones().get(position);
+
+          data.putExtra(direcciones.class.getSimpleName(), AppMain.getGson().toJson(item));
+          setResult(RESULT_OK, data);
+          finish();
+        }
       });
     }
   }

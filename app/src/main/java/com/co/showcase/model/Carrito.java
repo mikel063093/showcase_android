@@ -91,5 +91,53 @@ public class Carrito {
     public String imagen;
     public int precio;
     public int cantidad;
+
+    public int getId() {
+      return id;
+    }
+
+    public void setId(int id) {
+      this.id = id;
+    }
+
+    public int getIdArticulo() {
+      return idArticulo;
+    }
+
+    public void setIdArticulo(int idArticulo) {
+      this.idArticulo = idArticulo;
+    }
+
+    public String getNombre() {
+      return nombre;
+    }
+
+    public void setNombre(String nombre) {
+      this.nombre = nombre;
+    }
+
+    public String getImagen() {
+      return imagen;
+    }
+
+    public void setImagen(String imagen) {
+      this.imagen = imagen;
+    }
+
+    public int getPrecio() {
+      return precio;
+    }
+
+    public void setPrecio(int precio) {
+      this.precio = precio;
+    }
+
+    public int getCantidad() {
+      return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+      this.cantidad = cantidad;
+    }
   }
 }

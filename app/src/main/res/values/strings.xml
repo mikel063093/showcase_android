@@ -74,6 +74,18 @@
   <string name="agregue_cupon">Agregué un cupón</string>
   <string name="seleccione">Seleccione</string>
   <string name="datos_comple_pedido">Ingresa los datos para entregar tu pedido</string>
-
+  <string name="seguro_eliminar_producto">Seguro que deseas eliminar este elemento?</string>
+  <string name="redimir_cupon">Redimir código</string>
+  <string name="agrega_cupon">Agrega un cupón</string>
+  <string name="ingresa_codigo_promo">Ingresa un código promocional</string>
+  <string name="cupon_invalido">Código promocional inválido</string>
+  <string name="regresar_inicio">Regresar al inicio</string>
+  <string name="pedido_recivido">Hemos recibido tu pedido</string>
+  <string name="desc_pedido_ok">En este momento nuestro personal organizará tu pedido y los recibirás en la dirección suministrada</string>
+  <string name="pedido_enviado">Pedido enviado</string>
+  <string-array name="formas_pago">
+    <item>efectivo</item>
+    <item>tarjeta</item>
+  </string-array>
 </resources>
 

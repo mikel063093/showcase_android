@@ -19,6 +19,7 @@ import io.realm.RealmConfiguration;
 import io.realm.RealmObject;
 import io.supercharge.rxsnappy.RxSnappyClient;
 import org.json.JSONObject;
+import rx_activity_result.RxActivityResult;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
@@ -54,6 +55,7 @@ public class AppMain extends MultiDexApplication {
         .methodCount(4);
 
     Logger.e("onCreate App");
+    RxActivityResult.register(this);
 
     RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(this).build();
     Realm.setDefaultConfiguration(realmConfiguration);

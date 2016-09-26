@@ -53,6 +53,7 @@ import java.util.Map;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 public class home extends BaseActivity implements SearchView.OnQueryTextListener {
@@ -94,16 +95,17 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
           .compose(bindToLifecycle())
           .subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
-          .subscribe(this::succesVerCarrito, this::errControl);
+          .subscribe(this::succesVerCarrito);
     }
   }
 
   private void succesVerCarrito(ResponseVerCarrito responseVerCarrito) {
     if (responseVerCarrito.getEstado() == 1
         && responseVerCarrito.getCarrito() != null
-        && responseVerCarrito.getCarrito().getFechaCreacion() != null
-        && responseVerCarrito.getCarrito().getTotal() > 0) {
-      showMenuCarrito(true);
+        && responseVerCarrito.getCarrito().getFechaCreacion() != null) {
+      showMenuCarrito(responseVerCarrito.getCarrito().getTotal() > 0 ? true : false);
+    } else {
+      showMenuCarrito(false);
     }
   }
 
