@@ -73,6 +73,7 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
   private SubMenu subMenuMap;
   private SearchView.SearchAutoComplete searchSrcTextView;
   private Menu menu;
+  private MenuItem map;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -118,7 +119,7 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
   }
 
   private void init(Usuario userSync) {
-    getZonas(userSync);
+    //getZonas(userSync);
     getEstblecimientos(userSync);
   }
 
@@ -140,6 +141,7 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
   private void renderZonasMenu(Zonas zonas) {
     dismissDialog();
     if (zonas.getEstado() == 1 && subMenuMap != null) {
+
       for (Zonas.ZonasBean zonasBean : zonas.getZonas()) {
         switch (zonasBean.nombre) {
           case "Norte":
@@ -199,7 +201,7 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
   @Override public boolean onCreateOptionsMenu(Menu menu) {
     this.menu = menu;
     getMenuInflater().inflate(R.menu.menu_main, menu);
-    MenuItem map = menu.findItem(R.id.action_map);
+    map = menu.findItem(R.id.action_map);
     subMenuMap = map.getSubMenu();
     getZonas(getUserSync());
     searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
