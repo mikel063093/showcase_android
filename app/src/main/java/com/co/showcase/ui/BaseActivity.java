@@ -23,8 +23,10 @@ import com.co.showcase.AppMain;
 import com.co.showcase.BuildConfig;
 import com.co.showcase.R;
 import com.co.showcase.api.REST;
+import com.co.showcase.api.errorControl.RetrofitException;
 import com.co.showcase.model.Categoria;
 import com.co.showcase.model.EntryResponse;
+import com.co.showcase.model.ErrorControl;
 import com.co.showcase.model.TabPosition;
 import com.co.showcase.model.Usuario;
 import com.co.showcase.ui.categoria.categoria;
@@ -36,7 +38,9 @@ import com.onesignal.OneSignal;
 import com.orhanobut.logger.Logger;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import io.realm.Realm;
+import java.io.IOException;
 import java.lang.reflect.Type;
+import java.net.SocketTimeoutException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +53,8 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
+import static com.google.android.gms.analytics.internal.zzy.e;
 
 /**
  * Created by miguelalegria on 15/5/16 for DemoMike.
@@ -65,7 +71,7 @@ public class BaseActivity extends RxAppCompatActivity {
   private Pattern patternName = Pattern.compile(NAME_PATTERN);
   private boolean isOnpause;
   private MaterialDialog loading;
-  private  Realm realm;
+  private Realm realm;
   @Nullable private MaterialDialog materialDialog;
 
   private void showMessageOnSnakeBar(@NonNull View view, @NonNull String msg) {
@@ -316,6 +322,7 @@ public class BaseActivity extends RxAppCompatActivity {
 
   public void showMaterialDialog(@NonNull String body,
       @NonNull final onClickCallback onClickCallback) {
+    dismissDialog();
     if (!isOnpause) {
       clearMdialog();
       materialDialog = new MaterialDialog.Builder(this).title(getAppLable(this))
@@ -353,6 +360,7 @@ public class BaseActivity extends RxAppCompatActivity {
   }
 
   public void showErr(@NonNull String text) {
+    dismissDialog();
     runOnUiThread(() -> showMaterialDialog(text, new onClickCallback() {
       @Override public void onPositive(boolean result) {
 
@@ -385,13 +393,25 @@ public class BaseActivity extends RxAppCompatActivity {
 
   public void errControl(@NonNull Throwable throwable) {
     dismissDialog();
-    log(throwable.getMessage());
-    if (throwable instanceof HttpException) {
-      HttpException err = (HttpException) throwable;
-      // log("Status err " + err.code() + err.message());
-      showErr(err.getMessage() != null ? err.getMessage() : getString(R.string.internet_err));
+    if (throwable instanceof RetrofitException) {
+      try {
+        RetrofitException error = (RetrofitException) throwable;
+        if (error.getErrorBodyAs(ErrorControl.class) != null) {
+          ErrorControl errorControl = error.getErrorBodyAs(ErrorControl.class);
+          showErr(errorControl.getMensaje());
+        }
+      } catch (IOException e) {
+
+        log(e.getMessage());
+        dismissDialog();
+        String msg = getString(R.string.general_err);
+        showErr(msg);
+      }
     } else {
-      showErr(getString(R.string.general_err));
+      log("posible time out");
+      String msg = getString(R.string.general_err);
+      dismissDialog();
+      showErr(msg);
     }
   }
 
@@ -423,8 +443,8 @@ public class BaseActivity extends RxAppCompatActivity {
   public Realm getRealm() {
 
     realm = !realm.isClosed() ? realm = Realm.getDefaultInstance() : realm;
-    String status = realm.isClosed() +"";
-    String transacction = realm.isInTransaction() +"";
+    String status = realm.isClosed() + "";
+    String transacction = realm.isInTransaction() + "";
 
     log("getRealm status  isClosed: " + status + " isInTransaction: " + transacction);
     return realm;

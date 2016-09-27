@@ -119,7 +119,10 @@ public class ingresar extends BaseFragment {
             .subscribeOn(Schedulers.io())
             .doOnCompleted(() -> baseActivity.dismissDialog())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(this::onSuccesValidar, throwable -> baseActivity.errControl(throwable));
+            .subscribe(this::onSuccesValidar, throwable -> baseActivity.errControl(throwable),
+                () -> {
+                  baseActivity.dismissDialog();
+                });
       } else {
         baseActivity.showMaterialDialog(getString(R.string.err_pass),
             new BaseActivity.onClickCallback() {

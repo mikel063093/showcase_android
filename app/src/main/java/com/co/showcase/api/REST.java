@@ -5,6 +5,7 @@ import android.util.Log;
 import com.co.showcase.AppMain;
 import com.co.showcase.BuildConfig;
 
+import com.co.showcase.api.errorControl.RxErrorHandlingCallAdapterFactory;
 import okhttp3.OkHttpClient;
 
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -31,6 +32,7 @@ public class REST {
             .client(client)
             .addConverterFactory(GsonConverterFactory.create(AppMain.getGson()))
             .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+            .addCallAdapterFactory(RxErrorHandlingCallAdapterFactory.create())
             .validateEagerly(BuildConfig.DEBUG)
             .build();
     return retrofit.create(API.class);
