@@ -62,20 +62,20 @@ public class ingresar extends BaseFragment {
             boolean emailValid = !isEmpty(newEmail) && baseActivity.validateEmail(newEmail);
 
             if (!emailValid) {
-              emailWrapper.setErrorEnabled(true);
-              emailWrapper.setError(getString(R.string.err_email));
+              //emailWrapper.setErrorEnabled(true);
+              //emailWrapper.setError(getString(R.string.err_email));
             } else {
-              emailWrapper.setError(null);
-              emailWrapper.setErrorEnabled(false);
+              //emailWrapper.setError(null);
+              //emailWrapper.setErrorEnabled(false);
               //baseActivity.Log("email ok");
             }
             boolean passValid = !isEmpty(newPassword);
             if (!passValid) {
-              passwordWrapper.setErrorEnabled(true);
-              passwordWrapper.setError(getString(R.string.err_pass));
+              //passwordWrapper.setErrorEnabled(true);
+              //passwordWrapper.setError(getString(R.string.err_pass));
             } else {
-              passwordWrapper.setError(null);
-              passwordWrapper.setErrorEnabled(false);
+              //passwordWrapper.setError(null);
+              //passwordWrapper.setErrorEnabled(false);
               //baseActivity.Log("passok ok");
             }
 

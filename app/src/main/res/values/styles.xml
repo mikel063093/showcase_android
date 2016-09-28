@@ -60,7 +60,7 @@
 
   <style name="card_orange" parent="CardView">
     <item name="cardCornerRadius">2dp</item>
-    <item name="cardBackgroundColor">@color/portland_orange</item>
+    <item name="cardBackgroundColor">@color/kelly_green</item>
     <item name="android:hardwareAccelerated">true</item>
     <item name="cardUseCompatPadding">true</item>
 
@@ -93,6 +93,14 @@
   <style name="card_organe_small" parent="CardView">
     <item name="cardCornerRadius">5dp</item>
     <item name="android:background">@drawable/shape_card_orange</item>
+    <item name="android:hardwareAccelerated">true</item>
+    <item name="cardUseCompatPadding">true</item>
+
+  </style>
+
+  <style name="card_sea_green" parent="CardView">
+    <item name="cardCornerRadius">5dp</item>
+    <item name="android:background">@drawable/shape_card_sea_green</item>
     <item name="android:hardwareAccelerated">true</item>
     <item name="cardUseCompatPadding">true</item>
 
@@ -159,6 +167,7 @@
     <item name="fontPath">fonts/Circular-Std-Bold.otf</item>
 
   </style>
+
   <style name="txt_gamboge" parent="android:Widget.TextView">
     <item name="android:textColor">@color/gamboge</item>
     <item name="android:textSize">@dimen/texto_botones_size</item>

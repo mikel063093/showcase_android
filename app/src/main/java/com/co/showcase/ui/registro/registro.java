@@ -74,45 +74,45 @@ public class registro extends BaseFragment {
 
           if (!emailValid) {
             assert emailWrapper != null;
-            emailWrapper.setErrorEnabled(true);
-            emailWrapper.setError(getString(R.string.err_email));
+            //emailWrapper.setErrorEnabled(true);
+            //emailWrapper.setError(getString(R.string.err_email));
           } else {
             assert emailWrapper != null;
-            emailWrapper.setError(null);
-            emailWrapper.setErrorEnabled(false);
+            //emailWrapper.setError(null);
+            //emailWrapper.setErrorEnabled(false);
             //baseActivity.Log("email ok");
           }
           boolean passValid = !isEmpty(pass);
           if (!passValid) {
             assert passwordWrapper != null;
-            passwordWrapper.setErrorEnabled(true);
-            passwordWrapper.setError(getString(R.string.err_pass));
+            //passwordWrapper.setErrorEnabled(true);
+            //passwordWrapper.setError(getString(R.string.err_pass));
           } else {
             assert passwordWrapper != null;
-            passwordWrapper.setError(null);
-            passwordWrapper.setErrorEnabled(false);
+            //passwordWrapper.setError(null);
+            //passwordWrapper.setErrorEnabled(false);
             //baseActivity.Log("passok ok");
           }
           boolean firstValid = !isEmpty(first) && validateName(first);
           if (!firstValid) {
             assert nombreWrapper != null;
-            nombreWrapper.setErrorEnabled(true);
-            nombreWrapper.setError(getString(R.string.name_err));
+            //nombreWrapper.setErrorEnabled(true);
+            //nombreWrapper.setError(getString(R.string.name_err));
           } else {
             assert nombreWrapper != null;
-            nombreWrapper.setError(null);
-            nombreWrapper.setErrorEnabled(false);
+            //nombreWrapper.setError(null);
+            //nombreWrapper.setErrorEnabled(false);
           }
 
           boolean lastValid = !isEmpty(last) && validateName(last);
           if (!lastValid) {
             assert apellidoWrapper != null;
-            apellidoWrapper.setErrorEnabled(true);
-            apellidoWrapper.setError(getString(R.string.lastName_err));
+            //apellidoWrapper.setErrorEnabled(true);
+            //apellidoWrapper.setError(getString(R.string.lastName_err));
           } else {
             assert apellidoWrapper != null;
-            apellidoWrapper.setError(null);
-            apellidoWrapper.setErrorEnabled(false);
+            //apellidoWrapper.setError(null);
+            //apellidoWrapper.setErrorEnabled(false);
           }
 
           return emailValid && passValid && firstValid && lastValid;
@@ -156,6 +156,8 @@ public class registro extends BaseFragment {
           .doOnCompleted(() -> baseActivity.dismissDialog())
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(this::onSuccesRegistro, throwable -> baseActivity.errControl(throwable));
+    } else {
+      baseActivity.showErr(getString(R.string.datos_invalidos));
     }
   }
 

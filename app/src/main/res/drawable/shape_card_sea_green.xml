@@ -7,7 +7,7 @@
         android:topLeftRadius="5dp"
         android:topRightRadius="5dp" />
 
-    <solid android:color="@color/kelly_green" />
+    <solid android:color="#ff2e9e3d" />
     <padding
         android:bottom="0dp"
         android:left="0dp"

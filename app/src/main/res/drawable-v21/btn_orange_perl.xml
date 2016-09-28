@@ -5,7 +5,7 @@
       android:radius="5dp"
       />
   <solid
-      android:color="@color/orange_peel"
+      android:color="@color/portland_orange1"
       />
   <padding
       android:bottom="0dp"

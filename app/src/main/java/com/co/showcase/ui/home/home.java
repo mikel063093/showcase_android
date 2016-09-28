@@ -105,7 +105,8 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
     if (responseVerCarrito.getEstado() == 1
         && responseVerCarrito.getCarrito() != null
         && responseVerCarrito.getCarrito().getFechaCreacion() != null) {
-      showMenuCarrito(responseVerCarrito.getCarrito().getTotal() > 0 ? true : false);
+
+      showMenuCarrito(responseVerCarrito.getCarrito().getSubtotal() > 0 ? true : false);
     } else {
       showMenuCarrito(false);
     }

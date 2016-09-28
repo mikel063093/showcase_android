@@ -124,6 +124,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_27sdp"
                     android:text="Levi's"
+                    android:textColor="@color/napier_green"
                     android:textSize="@dimen/_19sdp"
                     style="@style/txt_medium_turquoise"
                     />
