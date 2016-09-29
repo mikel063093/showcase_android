@@ -45,12 +45,14 @@ public class slide extends BaseFragment {
     return view;
   }
 
-  private void updateUi(@NonNull Usuario usuario) {
-    if (usuario != null && usuario.getFoto() != null && usuario.getFoto().length() > 4) {
-      Picasso.with(getContext())
-          .load(usuario.getFoto())
-          .transform(new CircleTransform())
-          .into(imgSliderPhoto);
+  private void updateUi(Usuario usuario) {
+    if (usuario != null && usuario.getToken() != null) {
+      if (usuario.getFoto() != null && usuario.getFoto().length() > 0) {
+        Picasso.with(getContext())
+            .load(usuario.getFoto())
+            .transform(new CircleTransform())
+            .into(imgSliderPhoto);
+      }
       assert txtNamePerson != null;
       txtNamePerson.setText(usuario.getFullName());
       getCategorias(usuario);

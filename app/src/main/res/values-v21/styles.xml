@@ -11,6 +11,13 @@
     <item name="android:spinnerDropDownItemStyle">@style/MySpinnerDropDownItem</item>
     <item name="autoCompleteTextViewStyle">@style/SearchViewThemeText</item>
     <item name="searchViewStyle">@style/SearchViewTheme</item>
+    <item name="android:actionButtonStyle">@style/ActionButtonStyle</item>
+  </style>
+
+  <style name="ActionButtonStyle" parent="@android:style/Widget.Holo.Light.ActionButton">
+    <item name="android:minWidth">1dip</item>
+    <item name="android:paddingLeft">1dip</item>
+    <item name="android:paddingRight">1dip</item>
   </style>
 
   <style name="MyDropDownListView" parent="android:style/Widget.Holo.ListView.DropDown">
@@ -100,6 +107,7 @@
     <item name="cardElevation">1dp</item>
 
   </style>
+
   <style name="card_sea_green" parent="CardView">
     <item name="cardCornerRadius">5dp</item>
     <item name="android:background">@drawable/shape_card_sea_green</item>
@@ -107,6 +115,7 @@
     <item name="cardUseCompatPadding">true</item>
 
   </style>
+
   <style name="txt_search_style" parent="android:Widget.TextView">
     <item name="android:textColor">@color/outer_space</item>
     <item name="android:textSize">@dimen/texto_botones_size</item>

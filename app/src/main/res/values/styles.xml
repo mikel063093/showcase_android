@@ -11,6 +11,13 @@
     <item name="android:spinnerDropDownItemStyle">@style/MySpinnerDropDownItem</item>
     <item name="autoCompleteTextViewStyle">@style/SearchViewThemeText</item>
     <item name="searchViewStyle">@style/SearchViewTheme</item>
+    <item name="android:actionButtonStyle">@style/ActionButtonStyle</item>
+  </style>
+
+  <style name="ActionButtonStyle" parent="@android:style/Widget.Holo.Light.ActionButton">
+    <item name="android:minWidth">1dip</item>
+    <item name="android:paddingLeft">1dip</item>
+    <item name="android:paddingRight">1dip</item>
   </style>
 
   <style name="MyDropDownListView" parent="android:style/Widget.Holo.ListView.DropDown">

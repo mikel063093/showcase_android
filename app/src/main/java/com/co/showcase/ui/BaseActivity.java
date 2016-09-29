@@ -123,7 +123,7 @@ public class BaseActivity extends RxAppCompatActivity {
             case OFFLINE:
             case UNKNOWN:
 
-              showMessageOnSnakeBar(findViewById(R.id.container_root), getString(R.string.offile));
+              //showMessageOnSnakeBar(findViewById(R.id.container_root), getString(R.string.offile));
               break;
           }
         });
