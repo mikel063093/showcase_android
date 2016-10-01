@@ -105,21 +105,25 @@ public class perfil extends BaseActivity {
           param.put("nombres", edtNombre.getText().toString());
         } else {
           log("validateNameFail");
+          param.put("nombres", usuario.getNombre() != null ? usuario.getNombre() : "");
         }
         if (validateLastName(edtApellido.getText().toString())) {
           param.put("apellidos", edtApellido.getText().toString());
         } else {
           log("validateLastNameFail");
+          param.put("apellidos", usuario.getApellido() != null ? usuario.getApellido() : "");
         }
         if (validateEmail(edtEmail.getText().toString())) {
           param.put("correo", edtEmail.getText().toString());
         } else {
           log("validateEmailFail");
+          param.put("correo", usuario.getCorreo() != null ? usuario.getCorreo() : "");
         }
         if (!TextUtils.isEmpty(edtPassword.getText().toString())) {
           param.put("telefono", edtPassword.getText().toString());
         } else {
           log("validatePhoneFail");
+          param.put("telefono", usuario.getTelefono() != null ? usuario.getTelefono() : "");
         }
 
         REST.getRest()
@@ -142,29 +146,30 @@ public class perfil extends BaseActivity {
       param.put("tipo", "." + extencion);
       param.put("id", usuario.getId());
       param.put("id", usuario.getId());
-      assert edtNombre != null;
+
       if (validateFirstName(edtNombre.getText().toString())) {
-        param.put("nombre", edtNombre.getText().toString());
+        param.put("nombres", edtNombre.getText().toString());
       } else {
         log("validateNameFail");
+        param.put("nombres", usuario.getNombre() != null ? usuario.getNombre() : "");
       }
-      assert edtApellido != null;
       if (validateLastName(edtApellido.getText().toString())) {
-        param.put("apellido", edtApellido.getText().toString());
+        param.put("apellidos", edtApellido.getText().toString());
       } else {
         log("validateLastNameFail");
+        param.put("apellidos", usuario.getApellido() != null ? usuario.getApellido() : "");
       }
-      assert edtEmail != null;
       if (validateEmail(edtEmail.getText().toString())) {
         param.put("correo", edtEmail.getText().toString());
       } else {
         log("validateEmailFail");
+        param.put("correo", usuario.getCorreo() != null ? usuario.getCorreo() : "");
       }
-      assert edtPassword != null;
       if (!TextUtils.isEmpty(edtPassword.getText().toString())) {
         param.put("telefono", edtPassword.getText().toString());
       } else {
         log("validatePhoneFail");
+        param.put("telefono", usuario.getTelefono() != null ? usuario.getTelefono() : "");
       }
       REST.getRest()
           .subirFoto(usuario.getToken(), param)

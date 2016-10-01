@@ -155,20 +155,13 @@ public class establecimiento extends BaseActivity implements SearchView.OnQueryT
   @Override public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
     switch (item.getItemId()) {
-      //case R.id.action_buy:
-      //  log("action buy");
-      //  //Toast.makeText(this, "Favorite", Toast.LENGTH_SHORT).show();
-      //  return true;
-
       case R.id.action_search:
         log("action search");
-        //Toast.makeText(this, "Search", Toast.LENGTH_SHORT).show();
         return true;
       case R.id.action_perfil:
         goActv(perfil.class, false);
         break;
       case R.id.action_salir:
-
         showMaterialDialog(getString(R.string.salir), new onClickCallback() {
           @Override public void onPositive(boolean result) {
 
@@ -207,8 +200,12 @@ public class establecimiento extends BaseActivity implements SearchView.OnQueryT
     txtEmail.setText("");
     txtWebsite.setText(establecimiento.getSitioWeb());
     ratingBar.setRating(Float.parseFloat(establecimiento.getPuntuacion() + ""));
-    //List<String> imgs = new ArrayList<>();
-    //imgs.add(establecimiento.getUrlImagen());
+    btnSahreFb.setVisibility(establecimiento.getFacebook() != null ? View.VISIBLE : View.INVISIBLE);
+    btnSahreFb.setOnClickListener(view -> openUrl(
+        establecimiento.getFacebook() != null ? establecimiento.getFacebook() : ""));
+    btnSahreTw.setVisibility(establecimiento.getTwitter() != null ? View.VISIBLE : View.INVISIBLE);
+    btnSahreTw.setOnClickListener(
+        view -> openUrl(establecimiento.getTwitter() != null ? establecimiento.getTelefono() : ""));
     renderSlideImages(establecimiento.getUrlImagen());
     establecimientoItemsAdapter adapter =
         new establecimientoItemsAdapter(this, establecimiento.getArticulos());

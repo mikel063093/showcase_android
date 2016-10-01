@@ -2,7 +2,6 @@ package com.co.showcase.ui.producto;
 
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatTextView;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import butterknife.Bind;
@@ -58,8 +57,12 @@ public class producto extends BaseActivity {
     txtItemCount.setText("0");
   }
 
-  @OnClick({ R.id.btn_less, R.id.btm_more, R.id.btn_reservar }) public void onClick(View view) {
+  @OnClick({ R.id.btn_less, R.id.btm_more, R.id.btn_reservar, R.id.share_general })
+  public void onClick(View view) {
     switch (view.getId()) {
+      case R.id.share_general:
+        share(articulo.getDescripcion(), articulo.getImagen());
+        break;
       case R.id.btn_less:
         if (articulo != null) {
           onAddOrLess(false);

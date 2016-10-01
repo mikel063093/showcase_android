@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -37,6 +38,7 @@ import com.google.gson.Gson;
 import com.onesignal.OneSignal;
 import com.orhanobut.logger.Logger;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+import fr.tvbarthel.intentshare.IntentShare;
 import io.realm.Realm;
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -514,5 +516,22 @@ public class BaseActivity extends RxAppCompatActivity {
       LoginManager.getInstance().logOut();
       runOnUiThread(() -> goActv(Splash.class, true));
     });
+  }
+
+  public void share(String body, String urlImage) {
+    IntentShare.with(this)
+        .chooserTitle(getString(R.string.compartir))
+        .text(body)
+        .image(Uri.parse(urlImage))
+        .deliver();
+  }
+
+  public void openUrl(String url) {
+    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+    startActivity(intent);
+  }
+
+  public void share(String body) {
+    IntentShare.with(this).chooserTitle(getString(R.string.compartir)).text(body).deliver();
   }
 }

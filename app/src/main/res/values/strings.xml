@@ -58,7 +58,7 @@
   <string name="barrio">Barrio</string>
   <string name="ciudad">Ciudad</string>
   <string name="nombre_direccion">Nombre para esta dirección</string>
-  <string name="datos_invalidos">Datos incompletos o invalidos</string>
+  <string name="datos_invalidos">Los datos ingresados son inválidos</string>
   <string name="reserva_ok">Tu pedido %1$s ha sido reservado!, continua con tu carrito de compras</string>
   <string name="desc_pedidos">Estos son los artículos de tu pedido</string>
   <string name="siguiente">Siguiente</string>
@@ -89,6 +89,7 @@
   <string name="pedido_fecha">Realizado el %1$s</string>
   <string name="historial_pedidos">Historial de pedidos</string>
   <string name="datos_pedido">Datos del pedido #%1$s</string>
+  <string name="compartir">Selecciona cómo quieres compartir</string>
   <string-array name="formas_pago">
     <item>efectivo</item>
     <item>tarjeta</item>

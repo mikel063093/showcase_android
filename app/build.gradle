@@ -98,7 +98,7 @@ retrolambda {
 dependencies {
   final RETROFIT_VERSION = '2.0.0-beta3'
   compile "com.android.support:multidex:$rootProject.ext.multidex" //MultiDex Support
-
+  compile 'fr.tvbarthel.intentshare:library:0.0.2'
   //UI
   compile 'com.github.wangjiegulu:AndroidBucket:1.0.2'
   compile 'com.github.wangjiegulu:ShadowViewHelper:1.0.1'
@@ -179,5 +179,6 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.6.2@aar') {
         transitive = true;
     }
+  //compile 'fr.tvbarthel.intentshare:library:0.0.2'
 }
 apply plugin: 'com.google.gms.google-services'
