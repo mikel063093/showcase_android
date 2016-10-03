@@ -34,6 +34,7 @@ public class cupon extends BaseActivity {
   }
 
   private void enableErr(boolean visible) {
+    assert txtError != null;
     txtError.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
   }
 
@@ -66,8 +67,10 @@ public class cupon extends BaseActivity {
   private void succesCupon(@NonNull ResponseCupon responseCupon) {
     dismissDialog();
     if (responseCupon.getEstado() == 1) {
+      enableErr(false);
       if (isForResult()) {
         Intent data = new Intent();
+        assert edtCupon != null;
         data.putExtra(this.getClass().getSimpleName(), edtCupon.getText().toString());
         setResult(RESULT_OK, data);
         finish();
@@ -83,6 +86,7 @@ public class cupon extends BaseActivity {
         finish();
         break;
       case R.id.btn_cupon:
+        assert edtCupon != null;
         if (!TextUtils.isEmpty(edtCupon.getText())) {
           redimir(edtCupon.getText().toString(), getUserSync());
         } else {

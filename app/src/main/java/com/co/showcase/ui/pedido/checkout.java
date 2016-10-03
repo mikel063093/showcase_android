@@ -34,7 +34,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.w3c.dom.Text;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx_activity_result.RxActivityResult;
@@ -285,6 +284,7 @@ public class checkout extends BaseActivity {
       int resultCode = result.resultCode();
       if (resultCode == RESULT_OK) {
         String direccion = data.getStringExtra(cupon.class.getSimpleName());
+        assert edtCupon != null;
         edtCupon.setText(direccion != null ? direccion : "");
       }
     });

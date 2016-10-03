@@ -157,7 +157,7 @@
               android:layout_height="wrap_content"
               android:layout_marginLeft="@dimen/_16sdp"
               android:layout_marginRight="@dimen/_16sdp"
-              android:hint="@string/seleccione"
+              android:hint="@string/forma_pago"
               android:textColorHint="@color/manatee"
               app:met_floatingLabel="normal"
               />
