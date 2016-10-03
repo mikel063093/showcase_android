@@ -1,5 +1,6 @@
 package com.co.showcase.model.usuario;
 
+import android.support.annotation.NonNull;
 import com.co.showcase.BuildConfig;
 import com.co.showcase.model.NullIfNoRealmObject;
 import com.co.showcase.model.Usuario;
@@ -16,7 +17,7 @@ import rx.subscriptions.Subscriptions;
 
 public class userIteractorImpl implements userInterator {
 
-  @Override public Observable<Void> createOrUpdateUser(Usuario user) {
+  @NonNull @Override public Observable<Void> createOrUpdateUser(@NonNull Usuario user) {
     if (BuildConfig.DEBUG) Logger.e("onSavePre " + user.getCorreo());
     return Observable.just(user).map(user1 -> {
       if (BuildConfig.DEBUG) Logger.e("onSave " + user1.getCorreo());
@@ -45,7 +46,7 @@ public class userIteractorImpl implements userInterator {
         .compose(new NullIfNoRealmObject<Usuario>()));
   }
 
-  @Override public Observable<Void> deleteUser() {
+  @NonNull @Override public Observable<Void> deleteUser() {
 
     return getUser().map(registroResponse -> {
       if (registroResponse != null) {
@@ -59,7 +60,7 @@ public class userIteractorImpl implements userInterator {
 
   public static Observable<Realm> getManagedRealm() {
     return Observable.create(new Observable.OnSubscribe<Realm>() {
-      @Override public void call(final Subscriber<? super Realm> subscriber) {
+      @Override public void call(@NonNull final Subscriber<? super Realm> subscriber) {
         final Realm realm = Realm.getDefaultInstance();
         subscriber.add(Subscriptions.create(realm::close));
         subscriber.onNext(realm);

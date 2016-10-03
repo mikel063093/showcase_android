@@ -28,7 +28,7 @@ public class AdapterMaster extends ArrayAdapter<List<Entre>> {
   @Nullable
   private ViewHolder holder;
 
-  public AdapterMaster(Context context, int resource, @NonNull List<List<Entre>> objects) {
+  public AdapterMaster(@NonNull Context context, int resource, @NonNull List<List<Entre>> objects) {
     super(context, resource, objects);
   }
 

@@ -1,5 +1,6 @@
 package com.co.showcase.model;
 
+import android.support.annotation.NonNull;
 import java.util.List;
 
 /**
@@ -44,7 +45,7 @@ public class Carrito {
     this.subtotal = subtotal;
   }
 
-  public String getDomicilio() {
+  @NonNull public String getDomicilio() {
     return domicilio != null ? domicilio : "";
   }
 

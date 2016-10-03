@@ -2,6 +2,8 @@ package com.co.showcase.ui.historial;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,9 +23,9 @@ import rx.schedulers.Schedulers;
 
 public class historial extends BaseActivity {
 
-  @Bind(R.id.toolbar) Toolbar toolbar;
-  @Bind(R.id.rv_pedidos) RecyclerView rvPedidos;
-  @Bind(R.id.txt_labl) AppCompatTextView txtLabl;
+  @Nullable @Bind(R.id.toolbar) Toolbar toolbar;
+  @Nullable @Bind(R.id.rv_pedidos) RecyclerView rvPedidos;
+  @Nullable @Bind(R.id.txt_labl) AppCompatTextView txtLabl;
   private adapterProcesoPedidos adapter;
   private LinearLayoutManager mLinearLayoutManager;
 
@@ -36,12 +38,12 @@ public class historial extends BaseActivity {
     txtLabl.setText(getString(R.string.historial_pedidos));
   }
 
-  private void getPedidos(Usuario usuario) {
+  private void getPedidos(@Nullable Usuario usuario) {
     if (usuario != null && usuario.getToken() != null) {
       Map<String, Object> param = new HashMap<>();
 
       REST.getRest()
-          .pedidosActivos(usuario.getToken(), param)
+          .pedidos(usuario.getToken(), param)
           .compose(bindToLifecycle())
           .doOnSubscribe(() -> showDialog(getString(R.string.loading)))
           .subscribeOn(Schedulers.io())
@@ -51,7 +53,7 @@ public class historial extends BaseActivity {
     }
   }
 
-  private void succesPedidos(responsePedidos responsePedidos) {
+  private void succesPedidos(@NonNull responsePedidos responsePedidos) {
     dismissDialog();
     if (responsePedidos.getEstado() == 1) {
       if (responsePedidos.getPedidos() != null && responsePedidos.getPedidos().size() > 0) {
@@ -62,7 +64,7 @@ public class historial extends BaseActivity {
     }
   }
 
-  private void updateUi(responsePedidos responsePedidos) {
+  private void updateUi(@NonNull responsePedidos responsePedidos) {
     adapter = new adapterProcesoPedidos(this, responsePedidos.getPedidos());
     mLinearLayoutManager = new LinearLayoutManager(this);
     rvPedidos.setLayoutManager(mLinearLayoutManager);

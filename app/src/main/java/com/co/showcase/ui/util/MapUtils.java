@@ -15,7 +15,7 @@ import org.json.JSONObject;
 
 public class MapUtils {
 
-  public static void setLayerStyle(@NonNull GeoJsonLayer layer, BaseActivity baseActivity) {
+  public static void setLayerStyle(@NonNull GeoJsonLayer layer, @NonNull BaseActivity baseActivity) {
 
     for (GeoJsonFeature feature : layer.getFeatures()) {
 
@@ -88,7 +88,7 @@ public class MapUtils {
     }
   }
 
-  private static void drawMarker(BaseActivity baseActivity, GeoJsonFeature feature) {
+  private static void drawMarker(@NonNull BaseActivity baseActivity, @NonNull GeoJsonFeature feature) {
     String baseRes = "ic_pin_";
     int drawable =
         baseActivity.getResourceId(baseRes + feature.getProperty("marker-symbol"), "drawable");
@@ -99,7 +99,7 @@ public class MapUtils {
     style.setIcon(BitmapDescriptorFactory.fromResource(drawable));
   }
 
-  public synchronized static GeoJsonLayer initLayer(@NonNull GoogleMap map,
+  @NonNull public synchronized static GeoJsonLayer initLayer(@NonNull GoogleMap map,
       @NonNull JSONObject geoJson) {
     return new GeoJsonLayer(map, geoJson);
   }

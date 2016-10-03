@@ -2,6 +2,8 @@ package com.co.showcase.ui.direccion;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -22,8 +24,8 @@ import rx.schedulers.Schedulers;
 
 public class direcciones extends BaseActivity {
 
-  @Bind(R.id.toolbar_perfil) Toolbar toolbarPerfil;
-  @Bind(R.id.rv_direcciones) RecyclerView rvDirecciones;
+  @Nullable @Bind(R.id.toolbar_perfil) Toolbar toolbarPerfil;
+  @Nullable @Bind(R.id.rv_direcciones) RecyclerView rvDirecciones;
   private adapterDireccion adapter;
   private LinearLayoutManager mLinearLayoutManager;
 
@@ -46,7 +48,7 @@ public class direcciones extends BaseActivity {
     return result;
   }
 
-  private void getDirecciones(Usuario usuario) {
+  private void getDirecciones(@NonNull Usuario usuario) {
     Map<String, Object> param = new HashMap<>();
     param.put("id", usuario.getId());
 
@@ -65,7 +67,7 @@ public class direcciones extends BaseActivity {
     getDirecciones(getUserSync());
   }
 
-  private void succesDirecciones(ResponseDirecciones responseDirecciones) {
+  private void succesDirecciones(@NonNull ResponseDirecciones responseDirecciones) {
     dismissDialog();
     if (responseDirecciones.getEstado() == 1 && responseDirecciones.direcciones.size() >= 1) {
       log("size " + responseDirecciones.getDirecciones().size());

@@ -1,5 +1,7 @@
 package com.co.showcase.api.errorControl;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import java.io.IOException;
 
 import java.lang.annotation.Annotation;
@@ -13,16 +15,17 @@ import retrofit2.Retrofit;
  */
 
 public class RetrofitException extends RuntimeException {
-  public static RetrofitException httpError(String url, Response response, Retrofit retrofit) {
+  @Nullable
+  public static RetrofitException httpError(String url, @NonNull Response response, Retrofit retrofit) {
     String message = response.code() + " " + response.message();
     return new RetrofitException(message, url, response, Kind.HTTP, null, retrofit);
   }
 
-  public static RetrofitException networkError(IOException exception) {
+  @Nullable public static RetrofitException networkError(@NonNull IOException exception) {
     return new RetrofitException(exception.getMessage(), null, null, Kind.NETWORK, exception, null);
   }
 
-  public static RetrofitException unexpectedError(Throwable exception) {
+  @Nullable public static RetrofitException unexpectedError(@NonNull Throwable exception) {
     return new RetrofitException(exception.getMessage(), null, null, Kind.UNEXPECTED, exception,
         null);
   }
@@ -80,7 +83,7 @@ public class RetrofitException extends RuntimeException {
    *
    * @throws IOException if unable to convert the body to the specified {@code type}.
    */
-  public <T> T getErrorBodyAs(Class<T> type) throws IOException {
+  @Nullable public <T> T getErrorBodyAs(@NonNull Class<T> type) throws IOException {
     if (response == null || response.errorBody() == null) {
       return null;
     }

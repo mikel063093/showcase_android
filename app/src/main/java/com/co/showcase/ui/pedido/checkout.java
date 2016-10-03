@@ -2,6 +2,8 @@ package com.co.showcase.ui.pedido;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
@@ -39,17 +41,17 @@ import rx_activity_result.RxActivityResult;
 
 public class checkout extends BaseActivity {
 
-  @Bind(R.id.toolbar) Toolbar toolbar;
-  @Bind(R.id.edt_nombre) AppCompatEditText edtNombre;
-  @Bind(R.id.edt_apellido) AppCompatEditText edtApellido;
-  @Bind(R.id.edt_direccion) AppCompatEditText edtDireccion;
-  @Bind(R.id.edt_telefono) AppCompatEditText edtTelefono;
-  @Bind(R.id.edt_pago) MaterialBetterSpinner edtPago;
-  @Bind(R.id.edt_cupon) AppCompatEditText edtCupon;
-  @Bind(R.id.txt_subtotal) AppCompatTextView txtSubtotal;
-  @Bind(R.id.txt_domicilio) AppCompatTextView txtDomicilio;
-  @Bind(R.id.txt_total_final) AppCompatTextView txtTotalFinal;
-  @Bind(R.id.root) LinearLayout root;
+  @Nullable @Bind(R.id.toolbar) Toolbar toolbar;
+  @Nullable @Bind(R.id.edt_nombre) AppCompatEditText edtNombre;
+  @Nullable @Bind(R.id.edt_apellido) AppCompatEditText edtApellido;
+  @Nullable @Bind(R.id.edt_direccion) AppCompatEditText edtDireccion;
+  @Nullable @Bind(R.id.edt_telefono) AppCompatEditText edtTelefono;
+  @Nullable @Bind(R.id.edt_pago) MaterialBetterSpinner edtPago;
+  @Nullable @Bind(R.id.edt_cupon) AppCompatEditText edtCupon;
+  @Nullable @Bind(R.id.txt_subtotal) AppCompatTextView txtSubtotal;
+  @Nullable @Bind(R.id.txt_domicilio) AppCompatTextView txtDomicilio;
+  @Nullable @Bind(R.id.txt_total_final) AppCompatTextView txtTotalFinal;
+  @Nullable @Bind(R.id.root) LinearLayout root;
   private Direccion direccion;
 
   @Override public void onCreate(Bundle savedInstanceState) {
@@ -71,7 +73,7 @@ public class checkout extends BaseActivity {
     });
   }
 
-  private ResponseVerCarrito getPedido() {
+  @Nullable private ResponseVerCarrito getPedido() {
     ResponseVerCarrito result = null;
     if (getIntent() != null
         && getIntent().getExtras() != null
@@ -83,7 +85,7 @@ public class checkout extends BaseActivity {
     return result;
   }
 
-  private void getDirecciones(Usuario usuario) {
+  private void getDirecciones(@Nullable Usuario usuario) {
     if (usuario != null && usuario.getToken() != null) {
       Map<String, Object> param = new HashMap<>();
       param.put("id", usuario.getId());
@@ -99,7 +101,7 @@ public class checkout extends BaseActivity {
     }
   }
 
-  private void realizarPedido(Usuario usuario) {
+  private void realizarPedido(@Nullable Usuario usuario) {
     if (usuario != null && usuario.getToken() != null) {
       Map<String, Object> param = new HashMap<>();
       param.put("datosPedido", getPedidoJson());
@@ -138,7 +140,7 @@ public class checkout extends BaseActivity {
     return AppMain.getGson().toJson(pedido);
   }
 
-  private void succesPedido(ResponseRealizarPedido response) {
+  private void succesPedido(@NonNull ResponseRealizarPedido response) {
     dismissDialog();
     if (response.getEstado() == 1) {
       goActv(enviado.class, true);
@@ -147,7 +149,7 @@ public class checkout extends BaseActivity {
     }
   }
 
-  private void succesDirecciones(ResponseDirecciones responseDirecciones) {
+  private void succesDirecciones(@NonNull ResponseDirecciones responseDirecciones) {
     dismissDialog();
     if (responseDirecciones.getEstado() == 1 && responseDirecciones.direcciones.size() >= 1) {
       Direccion item = responseDirecciones.getDirecciones().get(0);
@@ -158,7 +160,7 @@ public class checkout extends BaseActivity {
     }
   }
 
-  private void init(Usuario usuario) {
+  private void init(@NonNull Usuario usuario) {
 
     getDirecciones(usuario);
     edtNombre.setText(usuario.getNombre() != null ? usuario.getNombre() : "");
@@ -187,7 +189,7 @@ public class checkout extends BaseActivity {
     });
   }
 
-  private void cancelearCarrito(Usuario usuario) {
+  private void cancelearCarrito(@Nullable Usuario usuario) {
     if (usuario != null && usuario.getToken() != null) {
       REST.getRest()
           .cancelarCarrito(usuario.getToken(), new HashMap<>())
@@ -204,7 +206,7 @@ public class checkout extends BaseActivity {
 
   @OnClick({
       R.id.btn_siguiente, R.id.txt_cancelar_pedido
-  }) public void onClick(View view) {
+  }) public void onClick(@NonNull View view) {
     switch (view.getId()) {
       case R.id.btn_siguiente:
         //goActv(enviado.class, true);

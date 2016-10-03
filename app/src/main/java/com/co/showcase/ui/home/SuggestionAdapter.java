@@ -18,7 +18,7 @@ public class SuggestionAdapter<T> extends ArrayAdapter<T> {
   private List<T> filteredItems;
   private ArrayFilter mFilter;
 
-  public SuggestionAdapter(Context context, @LayoutRes int resource, @NonNull List<T> objects) {
+  public SuggestionAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<T> objects) {
     super(context, resource, Lists.<T>newArrayList());
     this.items = objects;
   }
@@ -33,7 +33,7 @@ public class SuggestionAdapter<T> extends ArrayAdapter<T> {
     return items.get(position);
   }
 
-  @Override
+  @NonNull @Override
   public Filter getFilter() {
     if (mFilter == null) {
       mFilter = new ArrayFilter();
@@ -47,7 +47,7 @@ public class SuggestionAdapter<T> extends ArrayAdapter<T> {
   }
 
   private class ArrayFilter extends Filter {
-    @Override
+    @NonNull @Override
     protected FilterResults performFiltering(CharSequence prefix) {
       FilterResults results = new FilterResults();
 
@@ -59,7 +59,7 @@ public class SuggestionAdapter<T> extends ArrayAdapter<T> {
     }
 
     @Override
-    protected void publishResults(CharSequence constraint, FilterResults results) {
+    protected void publishResults(CharSequence constraint, @NonNull FilterResults results) {
       filteredItems = (List<T>) results.values;
       if (results.count > 0) {
         notifyDataSetChanged();

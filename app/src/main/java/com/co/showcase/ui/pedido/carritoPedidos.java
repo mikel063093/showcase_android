@@ -2,6 +2,8 @@ package com.co.showcase.ui.pedido;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,11 +25,11 @@ import rx.schedulers.Schedulers;
 
 public class carritoPedidos extends BaseActivity {
 
-  @Bind(R.id.toolbar) Toolbar toolbar;
-  @Bind(R.id.rv_direcciones) RecyclerView rv;
-  @Bind(R.id.txt_subtotal) AppCompatTextView txtSubtotal;
-  @Bind(R.id.txt_domicilio) AppCompatTextView txtDomicilio;
-  @Bind(R.id.txt_total_final) AppCompatTextView txtTotalFinal;
+  @Nullable @Bind(R.id.toolbar) Toolbar toolbar;
+  @Nullable @Bind(R.id.rv_direcciones) RecyclerView rv;
+  @Nullable @Bind(R.id.txt_subtotal) AppCompatTextView txtSubtotal;
+  @Nullable @Bind(R.id.txt_domicilio) AppCompatTextView txtDomicilio;
+  @Nullable @Bind(R.id.txt_total_final) AppCompatTextView txtTotalFinal;
 
   private adapterPedidos adapter;
   private LinearLayoutManager mLinearLayoutManager;
@@ -45,7 +47,7 @@ public class carritoPedidos extends BaseActivity {
     verCarrito(getUserSync());
   }
 
-  private void verCarrito(Usuario usuario) {
+  private void verCarrito(@Nullable Usuario usuario) {
     if (usuario != null && usuario.getToken() != null) {
       REST.getRest()
           .verCarrito(usuario.getToken(), new HashMap<>())
@@ -56,7 +58,7 @@ public class carritoPedidos extends BaseActivity {
     }
   }
 
-  private void cancelearCarrito(Usuario usuario) {
+  private void cancelearCarrito(@Nullable Usuario usuario) {
     if (usuario != null && usuario.getToken() != null) {
       REST.getRest()
           .cancelarCarrito(usuario.getToken(), new HashMap<>())
@@ -71,7 +73,7 @@ public class carritoPedidos extends BaseActivity {
     }
   }
 
-  private void succesVerCarrito(ResponseVerCarrito responseVerCarrito) {
+  private void succesVerCarrito(@NonNull ResponseVerCarrito responseVerCarrito) {
     if (responseVerCarrito.getEstado() == 1
         && responseVerCarrito.getCarrito() != null
         && responseVerCarrito.getCarrito().getFechaCreacion() != null) {
@@ -93,7 +95,7 @@ public class carritoPedidos extends BaseActivity {
     }
   }
 
-  private void updateUi(ResponseVerCarrito responseVerCarrito) {
+  private void updateUi(@NonNull ResponseVerCarrito responseVerCarrito) {
     txtSubtotal.setText(responseVerCarrito.carrito.getSubtotal() + "");
     txtDomicilio.setText(responseVerCarrito.carrito.getDomicilio() + "");
     txtTotalFinal.setText(responseVerCarrito.carrito.getTotal() + "");
@@ -114,7 +116,7 @@ public class carritoPedidos extends BaseActivity {
     });
   }
 
-  @OnClick({ R.id.btn_siguiente, R.id.txt_cancelar_pedido }) public void onClick(View view) {
+  @OnClick({ R.id.btn_siguiente, R.id.txt_cancelar_pedido }) public void onClick(@NonNull View view) {
     switch (view.getId()) {
       case R.id.btn_siguiente:
         Intent intent = new Intent(this, checkout.class);

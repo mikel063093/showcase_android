@@ -2,6 +2,8 @@ package com.co.showcase.ui.categoria;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.GridLayoutManager;
@@ -25,10 +27,10 @@ import rx.schedulers.Schedulers;
 
 public class categoria extends BaseActivity {
 
-  @Bind(R.id.toolbar_home) Toolbar toolbar;
-  @Bind(R.id.rv_home) RecyclerView rvHome;
+  @Nullable @Bind(R.id.toolbar_home) Toolbar toolbar;
+  @Nullable @Bind(R.id.rv_home) RecyclerView rvHome;
 
-  @Bind(R.id.txt_section) AppCompatTextView txtSection;
+  @Nullable @Bind(R.id.txt_section) AppCompatTextView txtSection;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -44,7 +46,7 @@ public class categoria extends BaseActivity {
     }
   }
 
-  private void getDetalleCategoria(Usuario usuario, Categoria categoria) {
+  private void getDetalleCategoria(@NonNull Usuario usuario, @NonNull Categoria categoria) {
     if (usuario.getToken().length() > 2) {
       Map<String, Object> param = new HashMap<>();
       param.put("id", categoria.getId() + "");
@@ -59,7 +61,7 @@ public class categoria extends BaseActivity {
     }
   }
 
-  private void updateUi(ResponseCategoriaDetalle categoria) {
+  private void updateUi(@NonNull ResponseCategoriaDetalle categoria) {
     if (categoria.getEstado() == 1) {
       setTupRecyclerView(categoria.getCategorias());
       txtSection.setText(categoria.getCategorias().getNombre());
@@ -68,7 +70,7 @@ public class categoria extends BaseActivity {
     }
   }
 
-  private void setTupRecyclerView(Categoria categoria) {
+  private void setTupRecyclerView(@NonNull Categoria categoria) {
     log(categoria.getJson());
     establecimientoAdapter adapter =
         new establecimientoAdapter(this, categoria.getEstablecimientos());

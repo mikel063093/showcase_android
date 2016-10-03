@@ -2,6 +2,8 @@ package com.co.showcase.ui.historial;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -20,8 +22,8 @@ import rx.schedulers.Schedulers;
 
 public class pedidos_proceso extends BaseActivity {
 
-  @Bind(R.id.toolbar) Toolbar toolbar;
-  @Bind(R.id.rv_pedidos) RecyclerView rvPedidos;
+  @Nullable @Bind(R.id.toolbar) Toolbar toolbar;
+  @Nullable @Bind(R.id.rv_pedidos) RecyclerView rvPedidos;
   private adapterProcesoPedidos adapter;
   private LinearLayoutManager mLinearLayoutManager;
 
@@ -33,7 +35,7 @@ public class pedidos_proceso extends BaseActivity {
     getPedidos(getUserSync());
   }
 
-  private void getPedidos(Usuario usuario) {
+  private void getPedidos(@Nullable Usuario usuario) {
     if (usuario != null && usuario.getToken() != null) {
       Map<String, Object> param = new HashMap<>();
 
@@ -48,7 +50,7 @@ public class pedidos_proceso extends BaseActivity {
     }
   }
 
-  private void succesPedidos(responsePedidos responsePedidos) {
+  private void succesPedidos(@NonNull responsePedidos responsePedidos) {
     dismissDialog();
     if (responsePedidos.getEstado() == 1) {
       if (responsePedidos.getPedidos() != null && responsePedidos.getPedidos().size() > 0) {
@@ -59,7 +61,7 @@ public class pedidos_proceso extends BaseActivity {
     }
   }
 
-  private void updateUi(responsePedidos responsePedidos) {
+  private void updateUi(@NonNull responsePedidos responsePedidos) {
     adapter = new adapterProcesoPedidos(this, responsePedidos.getPedidos());
     mLinearLayoutManager = new LinearLayoutManager(this);
     rvPedidos.setLayoutManager(mLinearLayoutManager);

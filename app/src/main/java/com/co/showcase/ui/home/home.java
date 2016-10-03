@@ -90,7 +90,7 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
     verCarrito(getUserSync());
   }
 
-  private void verCarrito(Usuario usuario) {
+  private void verCarrito(@Nullable Usuario usuario) {
     if (usuario != null && usuario.getToken() != null) {
       REST.getRest()
           .verCarrito(usuario.getToken(), new HashMap<>())
@@ -101,7 +101,7 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
     }
   }
 
-  private void succesVerCarrito(ResponseVerCarrito responseVerCarrito) {
+  private void succesVerCarrito(@NonNull ResponseVerCarrito responseVerCarrito) {
     if (responseVerCarrito.getEstado() == 1
         && responseVerCarrito.getCarrito() != null
         && responseVerCarrito.getCarrito().getFechaCreacion() != null) {
@@ -119,7 +119,7 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
     if (carrito != null) carrito.setIcon(drawable);
   }
 
-  private void init(Usuario userSync) {
+  private void init(@NonNull Usuario userSync) {
     //getZonas(userSync);
     getEstblecimientos(userSync);
   }
@@ -139,7 +139,7 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
     }
   }
 
-  private void renderZonasMenu(Zonas zonas) {
+  private void renderZonasMenu(@NonNull Zonas zonas) {
     dismissDialog();
     if (zonas.getEstado() == 1 && subMenuMap != null) {
 
@@ -199,7 +199,7 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
     toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
   }
 
-  @Override public boolean onCreateOptionsMenu(Menu menu) {
+  @Override public boolean onCreateOptionsMenu(@NonNull Menu menu) {
     this.menu = menu;
     getMenuInflater().inflate(R.menu.menu_main, menu);
     map = menu.findItem(R.id.action_map);
@@ -292,7 +292,7 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
     return super.onOptionsItemSelected(item);
   }
 
-  private void setTupRecyclerView(ResponseHome response) {
+  private void setTupRecyclerView(@NonNull ResponseHome response) {
     log(response.toJson());
     sectionAdapter = new SectionedRecyclerViewAdapter();
     if (response.getCategorias() != null
@@ -378,13 +378,13 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
     }
   }
 
-  @Override public boolean onQueryTextSubmit(String query) {
+  @Override public boolean onQueryTextSubmit(@NonNull String query) {
     Log(query);
     if (query.length() > 2) autocompleteSearch(query);
     return false;
   }
 
-  private void autocompleteSearch(String query) {
+  private void autocompleteSearch(@NonNull String query) {
     if (query.length() >= 1) {
       Map<String, Object> param = new HashMap<>();
       param.put("palabra", query);
@@ -398,7 +398,7 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
     }
   }
 
-  private void succesAutoComplete(ResponseAutoComplete responseAutoComplete) {
+  private void succesAutoComplete(@NonNull ResponseAutoComplete responseAutoComplete) {
     dismissDialog();
     if (responseAutoComplete.estado == 1) {
       searchSrcTextView.setAdapter(
@@ -416,7 +416,7 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
     }
   }
 
-  @Override public boolean onQueryTextChange(String newText) {
+  @Override public boolean onQueryTextChange(@NonNull String newText) {
     Log(newText);
     autocompleteSearch(newText);
     return false;
@@ -431,7 +431,7 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
     }
   }
 
-  public Action getIndexApiAction() {
+  @NonNull public Action getIndexApiAction() {
     Thing object = new Thing.Builder().setName("home Page")
         .setUrl(Uri.parse("https://showcase.com.co"))
         .build();

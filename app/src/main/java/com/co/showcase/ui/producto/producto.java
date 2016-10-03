@@ -1,6 +1,8 @@
 package com.co.showcase.ui.producto;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 import android.widget.ImageView;
@@ -23,15 +25,15 @@ import rx.schedulers.Schedulers;
 
 public class producto extends BaseActivity {
 
-  @Bind(R.id.share_general) ImageView shareGeneral;
-  @Bind(R.id.img_item) ImageView imgItem;
-  @Bind(R.id.txt_name_item) AppCompatTextView txtNameItem;
-  @Bind(R.id.txt_description_item) AppCompatTextView txtDescriptionItem;
-  @Bind(R.id.txt_price_item) AppCompatTextView txtPriceItem;
-  @Bind(R.id.txt_units_item) AppCompatTextView txtUnitsItem;
-  @Bind(R.id.txt_item_count) AppCompatTextView txtItemCount;
+  @Nullable @Bind(R.id.share_general) ImageView shareGeneral;
+  @Nullable @Bind(R.id.img_item) ImageView imgItem;
+  @Nullable @Bind(R.id.txt_name_item) AppCompatTextView txtNameItem;
+  @Nullable @Bind(R.id.txt_description_item) AppCompatTextView txtDescriptionItem;
+  @Nullable @Bind(R.id.txt_price_item) AppCompatTextView txtPriceItem;
+  @Nullable @Bind(R.id.txt_units_item) AppCompatTextView txtUnitsItem;
+  @Nullable @Bind(R.id.txt_item_count) AppCompatTextView txtItemCount;
   private Articulo articulo;
-  private DecimalFormat df = new DecimalFormat("###.#");
+  @NonNull private DecimalFormat df = new DecimalFormat("###.#");
   private Usuario usuario;
 
   @Override public void onCreate(Bundle savedInstanceState) {
@@ -47,7 +49,7 @@ public class producto extends BaseActivity {
     }
   }
 
-  private void updateUi(Articulo articulo) {
+  private void updateUi(@NonNull Articulo articulo) {
     this.articulo = articulo;
     Picasso.with(this).load(articulo.getImagen()).fit().into(imgItem);
     txtNameItem.setText(articulo.getNombre());
@@ -58,10 +60,10 @@ public class producto extends BaseActivity {
   }
 
   @OnClick({ R.id.btn_less, R.id.btm_more, R.id.btn_reservar, R.id.share_general })
-  public void onClick(View view) {
+  public void onClick(@NonNull View view) {
     switch (view.getId()) {
       case R.id.share_general:
-        share(articulo.getDescripcion(), articulo.getImagen());
+        share(getString(R.string.compartir_cont, articulo.getDescripcion()), articulo.getImagen());
         break;
       case R.id.btn_less:
         if (articulo != null) {
@@ -94,7 +96,7 @@ public class producto extends BaseActivity {
     }
   }
 
-  private void succesAgregarCarrito(ResponseAgregarCarrito responseAgregarCarrito) {
+  private void succesAgregarCarrito(@NonNull ResponseAgregarCarrito responseAgregarCarrito) {
     dismissDialog();
     if (responseAgregarCarrito.getEstado() == 1) {
       showMaterialDialog(getString(R.string.reserva_ok, articulo.getNombre()),

@@ -179,6 +179,7 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.6.2@aar') {
         transitive = true;
     }
+  compile 'com.github.pavlospt:rxfile:1.5'
   //compile 'fr.tvbarthel.intentshare:library:0.0.2'
 }
 apply plugin: 'com.google.gms.google-services'

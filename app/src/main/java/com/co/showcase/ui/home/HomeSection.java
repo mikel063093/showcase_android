@@ -82,13 +82,13 @@ public class HomeSection extends StatelessSection {
     }
   }
 
-  private void goEstablicimientoDetail(Establecimiento establecimiento) {
+  private void goEstablicimientoDetail(@NonNull Establecimiento establecimiento) {
     BaseActivity ac = (BaseActivity) context;
     Usuario user = ac.getUserSync();
     if (user != null) getEstablecimientoDetalle(user, establecimiento);
   }
 
-  private void getEstablecimientoDetalle(Usuario usuario, Establecimiento establecimiento) {
+  private void getEstablecimientoDetalle(@NonNull Usuario usuario, @NonNull Establecimiento establecimiento) {
     BaseActivity ac = (BaseActivity) context;
     if (usuario.getToken().length() > 2) {
       Map<String, String> param = new HashMap<>();

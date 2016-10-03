@@ -1,6 +1,8 @@
 package com.co.showcase.ui.historial;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
@@ -26,21 +28,21 @@ import rx.schedulers.Schedulers;
 
 public class detallePedido extends BaseActivity {
 
-  @Bind(R.id.toolbar) Toolbar toolbar;
-  @Bind(R.id.appCompatTextView) AppCompatTextView appCompatTextView;
-  @Bind(R.id.txt_estado) AppCompatTextView txtEstado;
-  @Bind(R.id.edt_nombre) AppCompatEditText edtNombre;
-  @Bind(R.id.edt_apellido) AppCompatEditText edtApellido;
-  @Bind(R.id.edt_direccion) AppCompatEditText edtDireccion;
-  @Bind(R.id.edt_telefono) AppCompatEditText edtTelefono;
-  @Bind(R.id.edt_forma_pago) AppCompatEditText edtFormaPago;
+  @Nullable @Bind(R.id.toolbar) Toolbar toolbar;
+  @Nullable @Bind(R.id.appCompatTextView) AppCompatTextView appCompatTextView;
+  @Nullable @Bind(R.id.txt_estado) AppCompatTextView txtEstado;
+  @Nullable @Bind(R.id.edt_nombre) AppCompatEditText edtNombre;
+  @Nullable @Bind(R.id.edt_apellido) AppCompatEditText edtApellido;
+  @Nullable @Bind(R.id.edt_direccion) AppCompatEditText edtDireccion;
+  @Nullable @Bind(R.id.edt_telefono) AppCompatEditText edtTelefono;
+  @Nullable @Bind(R.id.edt_forma_pago) AppCompatEditText edtFormaPago;
 
-  @Bind(R.id.rv_items) RecyclerView rvItems;
-  @Bind(R.id.txt_subtotal) AppCompatTextView txtSubtotal;
-  @Bind(R.id.txt_domicilio) AppCompatTextView txtDomicilio;
-  @Bind(R.id.txt_total_final) AppCompatTextView txtTotalFinal;
+  @Nullable @Bind(R.id.rv_items) RecyclerView rvItems;
+  @Nullable @Bind(R.id.txt_subtotal) AppCompatTextView txtSubtotal;
+  @Nullable @Bind(R.id.txt_domicilio) AppCompatTextView txtDomicilio;
+  @Nullable @Bind(R.id.txt_total_final) AppCompatTextView txtTotalFinal;
 
-  @Bind(R.id.edt_cupon) AppCompatEditText edtCupon;
+  @Nullable @Bind(R.id.edt_cupon) AppCompatEditText edtCupon;
   private adapterPedidos adapter;
   private LinearLayoutManager mLinearLayoutManager;
 
@@ -52,7 +54,7 @@ public class detallePedido extends BaseActivity {
     getPedidos(getIdPedido(), getUserSync());
   }
 
-  private void getPedidos(Pedido pedido, Usuario usuario) {
+  private void getPedidos(@Nullable Pedido pedido, @Nullable Usuario usuario) {
     if (usuario != null && usuario.getToken() != null && pedido != null) {
       Map<String, Object> param = new HashMap<>();
       param.put("id", pedido.getId());
@@ -67,7 +69,7 @@ public class detallePedido extends BaseActivity {
     }
   }
 
-  private void succesDetallePedido(detallePedidos response) {
+  private void succesDetallePedido(@NonNull detallePedidos response) {
     dismissDialog();
     if (response.getEstado() == 1) {
       updadeUi(response);
@@ -76,7 +78,7 @@ public class detallePedido extends BaseActivity {
     }
   }
 
-  private void updadeUi(detallePedidos response) {
+  private void updadeUi(@NonNull detallePedidos response) {
     detallePedidos.PedidoBean pedido = response.getPedido();
     String estado = "<font color=#4a4a4a>" + getString(R.string.estado_color) + "</font> " +
         "<font color=#f5a623>" + pedido.getEstado() + "</font> ";
@@ -99,7 +101,7 @@ public class detallePedido extends BaseActivity {
     txtTotalFinal.setText(pedido.getTotal()+"");
   }
 
-  private Pedido getIdPedido() {
+  @Nullable private Pedido getIdPedido() {
     Pedido pedido = null;
     String clssName = this.getClass().getSimpleName();
     if (getIntent() != null

@@ -123,6 +123,9 @@ public interface API {
   @NonNull @FormUrlEncoded @POST("pedidosActivos") Observable<responsePedidos> pedidosActivos(
       @Header("Authorization") String authorization, @FieldMap Map<String, Object> param);
 
+  @NonNull @FormUrlEncoded @POST("pedidos") Observable<responsePedidos> pedidos(
+      @Header("Authorization") String authorization, @FieldMap Map<String, Object> param);
+
   @NonNull @FormUrlEncoded @POST("detallePedido") Observable<detallePedidos> detallePedido(
       @Header("Authorization") String authorization, @FieldMap Map<String, Object> param);
 }

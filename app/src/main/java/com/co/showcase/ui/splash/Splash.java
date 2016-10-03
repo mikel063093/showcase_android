@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 
+import android.support.annotation.Nullable;
 import com.co.showcase.AppMain;
 import com.co.showcase.BuildConfig;
 import com.co.showcase.R;
@@ -31,7 +32,7 @@ public class Splash extends RxAppCompatActivity {
         .subscribe(this::onSuccesUser, this::onFailUser);
   }
 
-  private void onSuccesUser(Usuario usuario) {
+  private void onSuccesUser(@Nullable Usuario usuario) {
     if (usuario != null && usuario.getToken() != null && usuario.getToken().length() > 2) {
       log("userOnDB " + usuario.getNombre());
       Intent intent = new Intent(getApplicationContext(), home.class);
@@ -41,7 +42,7 @@ public class Splash extends RxAppCompatActivity {
     }
   }
 
-  private void onFailUser(Throwable throwable) {
+  private void onFailUser(@NonNull Throwable throwable) {
     log("onFailUser " + throwable.getMessage());
     Intent intent = new Intent(getApplicationContext(), login.class);
     goActv(intent, true);

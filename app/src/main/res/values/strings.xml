@@ -90,6 +90,7 @@
   <string name="historial_pedidos">Historial de pedidos</string>
   <string name="datos_pedido">Datos del pedido #%1$s</string>
   <string name="compartir">Selecciona cómo quieres compartir</string>
+  <string name="compartir_cont">%1$s, encuntralo en https://showcase.com.co/</string>
   <string-array name="formas_pago">
     <item>efectivo</item>
     <item>tarjeta</item>

@@ -5,20 +5,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import com.co.showcase.ui.home.home;
-
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-
 import com.co.showcase.R;
 import com.co.showcase.api.REST;
 import com.co.showcase.model.Usuario;
 import com.co.showcase.ui.BaseActivity;
+import com.co.showcase.ui.home.home;
 import com.co.showcase.ui.singin.singin;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -28,10 +22,11 @@ import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class login extends BaseActivity {
 
@@ -101,7 +96,7 @@ public class login extends BaseActivity {
         .subscribe(this::onSuccesLogin, this::errControl);
   }
 
-  private void onSuccesLogin(@NonNull Usuario u) {
+  private void onSuccesLogin(Usuario u) {
     //log("onSucceslogin " + u.getEstado());
     if (u != null && u.getEstado().equalsIgnoreCase("exito")) {
       // log("onSuccesOK");
@@ -114,7 +109,8 @@ public class login extends BaseActivity {
             goActv(home.class, true);
           });
     } else {
-      showErr(getString(R.string.general_err));
+      assert u != null;
+      showErr(u.getMensaje() != null ? u.getMensaje() : getString(R.string.general_err));
     }
   }
 

@@ -1,6 +1,7 @@
 package com.co.showcase.ui.direccion;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.CardView;
@@ -29,7 +30,7 @@ public class adapterDireccion extends RecyclerView.Adapter<adapterDireccion.View
   private List<Direccion> mData;
   private final PublishSubject<Integer> onClickSubject = PublishSubject.create();
 
-  public adapterDireccion(Context mContext, List<Direccion> mData) {
+  public adapterDireccion(Context mContext, @NonNull List<Direccion> mData) {
     Logger.e("size --> " + mData.size());
     this.mContext = mContext;
     if (mData != null) {
@@ -39,17 +40,17 @@ public class adapterDireccion extends RecyclerView.Adapter<adapterDireccion.View
     }
   }
 
-  public Observable<Integer> getPositionClicks() {
+  @NonNull public Observable<Integer> getPositionClicks() {
     return onClickSubject.asObservable();
   }
 
-  @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+  @NonNull @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     final View view =
         LayoutInflater.from(mContext).inflate(R.layout.item_direccion_min, parent, false);
     return new ViewHolder(view);
   }
 
-  @Override public void onBindViewHolder(ViewHolder holder, final int position) {
+  @Override public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
     Logger.e("postion " + position);
     assert mData != null;
     Direccion item = mData.get(position);
@@ -70,12 +71,12 @@ public class adapterDireccion extends RecyclerView.Adapter<adapterDireccion.View
   }
 
   static class ViewHolder extends RecyclerView.ViewHolder {
-    @Bind(R.id.flecha_izq) ImageView flechaIzq;
-    @Bind(R.id.txt_direccion) AppCompatTextView txtDireccion;
-    @Bind(R.id.txt_nombre_direccion) AppCompatTextView txtNombreDireccion;
-    @Bind(R.id.root_section) CardView rootSection;
+    @Nullable @Bind(R.id.flecha_izq) ImageView flechaIzq;
+    @Nullable @Bind(R.id.txt_direccion) AppCompatTextView txtDireccion;
+    @Nullable @Bind(R.id.txt_nombre_direccion) AppCompatTextView txtNombreDireccion;
+    @Nullable @Bind(R.id.root_section) CardView rootSection;
 
-    ViewHolder(View view) {
+    ViewHolder(@NonNull View view) {
       super(view);
       ButterKnife.bind(this, view);
     }

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -16,12 +18,12 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
 
   private static final int[] ATTRS = new int[] { android.R.attr.listDivider };
 
-  private Drawable mDivider;
+  @Nullable private Drawable mDivider;
 
   /**
    * Default divider will be used
    */
-  public DividerItemDecoration(Context context) {
+  public DividerItemDecoration(@NonNull Context context) {
     final TypedArray styledAttributes = context.obtainStyledAttributes(ATTRS);
     mDivider = styledAttributes.getDrawable(0);
     styledAttributes.recycle();
@@ -30,11 +32,11 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
   /**
    * Custom divider will be used
    */
-  public DividerItemDecoration(Context context, int resId) {
+  public DividerItemDecoration(@NonNull Context context, int resId) {
     mDivider = ContextCompat.getDrawable(context, resId);
   }
 
-  @Override public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+  @Override public void onDraw(@NonNull Canvas c, @NonNull RecyclerView parent, RecyclerView.State state) {
     int left = parent.getPaddingLeft();
     int right = parent.getWidth() - parent.getPaddingRight();
 

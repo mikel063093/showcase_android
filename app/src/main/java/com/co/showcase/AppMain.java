@@ -63,7 +63,7 @@ public class AppMain extends MultiDexApplication {
     GsonBuilder gsonBuilder = new GsonBuilder();
 
     gson = gsonBuilder.setExclusionStrategies(new ExclusionStrategy() {
-      @Override public boolean shouldSkipField(FieldAttributes f) {
+      @Override public boolean shouldSkipField(@NonNull FieldAttributes f) {
         //Logger.e("exclusion  RealObject " + f.getDeclaringClass().equals(RealmObject.class));
         return f.getDeclaringClass().equals(RealmObject.class);
       }

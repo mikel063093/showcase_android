@@ -15,7 +15,11 @@ import com.squareup.picasso.Transformation;
 
 public class CircleTransform implements Transformation {
   private final int BORDER_COLOR = Color.WHITE;
-  private final int BORDER_RADIUS = 10;
+  private int BORDER_RADIUS = 10;
+
+  public CircleTransform(float diemen) {
+    BORDER_RADIUS = Math.round(diemen);
+  }
 
   @Override public Bitmap transform(@NonNull Bitmap source) {
     int size = Math.min(source.getWidth(), source.getHeight());

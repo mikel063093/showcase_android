@@ -63,18 +63,18 @@ public class establecimientoAdapter
     }
   }
 
-  @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+  @NonNull @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     final View view = LayoutInflater.from(mContext).inflate(R.layout.item_general, parent, false);
     return new establecimientoAdapter.ViewHolder(view);
   }
 
-  private void goEstablicimientoDetail(Establecimiento establecimiento) {
+  private void goEstablicimientoDetail(@NonNull Establecimiento establecimiento) {
     BaseActivity ac = (BaseActivity) mContext;
     Usuario user = ac.getUserSync();
     if (user != null) getEstablecimientoDetalle(user, establecimiento);
   }
 
-  private void getEstablecimientoDetalle(Usuario usuario, Establecimiento establecimiento) {
+  private void getEstablecimientoDetalle(@NonNull Usuario usuario, @NonNull Establecimiento establecimiento) {
     BaseActivity ac = (BaseActivity) mContext;
     if (usuario.getToken().length() > 2) {
       Map<String, String> param = new HashMap<>();
@@ -118,11 +118,11 @@ public class establecimientoAdapter
   }
 
   static class ViewHolder extends RecyclerView.ViewHolder {
-    @Bind(R.id.imageView5) ImageView img;
-    @Bind(R.id.txt_item_general) AppCompatTextView txt;
-    @Bind(R.id.root_section) CardView rootSection;
+    @Nullable @Bind(R.id.imageView5) ImageView img;
+    @Nullable @Bind(R.id.txt_item_general) AppCompatTextView txt;
+    @Nullable @Bind(R.id.root_section) CardView rootSection;
 
-    ViewHolder(View view) {
+    ViewHolder(@NonNull View view) {
       super(view);
       ButterKnife.bind(this, view);
     }

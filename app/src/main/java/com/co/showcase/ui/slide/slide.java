@@ -45,12 +45,13 @@ public class slide extends BaseFragment {
     return view;
   }
 
-  private void updateUi(Usuario usuario) {
+  private void updateUi(@Nullable Usuario usuario) {
     if (usuario != null && usuario.getToken() != null) {
       if (usuario.getFoto() != null && usuario.getFoto().length() > 0) {
+        float diemen = getResources().getDimension(R.dimen._3sdp);
         Picasso.with(getContext())
             .load(usuario.getFoto())
-            .transform(new CircleTransform())
+            .transform(new CircleTransform(diemen))
             .into(imgSliderPhoto);
       }
       assert txtNamePerson != null;

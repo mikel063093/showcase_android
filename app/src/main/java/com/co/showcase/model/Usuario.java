@@ -31,7 +31,7 @@ import rx.schedulers.Schedulers;
   String clave;
   String telefono;
   String foto;
-  private static userInterator interactor = new userIteractorImpl();
+  @NonNull private static userInterator interactor = new userIteractorImpl();
 
   public Usuario() {
     interactor = new userIteractorImpl();
@@ -109,7 +109,7 @@ import rx.schedulers.Schedulers;
     this.mensaje = mensaje;
   }
 
-  public String getToken() {
+  @Nullable public String getToken() {
 
     return token != null ? "Bearer " + token : null;
   }
@@ -131,7 +131,7 @@ import rx.schedulers.Schedulers;
     // return usuario.getObject(Usuario.class).subscribeOn(Schedulers.io()).asObservable();
   }
 
-  public Observable<Void> save() {
+  @NonNull public Observable<Void> save() {
 
     return interactor.createOrUpdateUser(this).asObservable();
   }

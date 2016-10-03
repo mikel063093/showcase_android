@@ -3,6 +3,7 @@ package com.co.showcase.ui.establecimiento;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.GravityCompat;
@@ -45,23 +46,23 @@ import rx.schedulers.Schedulers;
 
 public class establecimiento extends BaseActivity implements SearchView.OnQueryTextListener {
 
-  @Bind(R.id.toolbar_home) Toolbar toolbar;
-  @Bind(R.id.indicator_home) CirclePageIndicator indicatorHome;
-  @Bind(R.id.view_pager_home) ViewPager viewPagerHome;
-  @Bind(R.id.txt_name_company) AppCompatTextView txtNameCompany;
-  @Bind(R.id.txt_description) AppCompatTextView txtDescription;
-  @Bind(R.id.txt_addres) AppCompatTextView txtAddres;
-  @Bind(R.id.txt_phone) AppCompatTextView txtPhone;
-  @Bind(R.id.txt_celphone) AppCompatTextView txtCelphone;
-  @Bind(R.id.txt_email) AppCompatTextView txtEmail;
-  @Bind(R.id.txt_website) AppCompatTextView txtWebsite;
-  @Bind(R.id.btn_sahre_fb) ImageView btnSahreFb;
-  @Bind(R.id.btn_sahre_tw) ImageView btnSahreTw;
-  @Bind(R.id.ratingBar) RatingBar ratingBar;
-  @Bind(R.id.rv_home) RecyclerView rvHome;
-  @Bind(R.id.drawer) RelativeLayout drawer;
-  @Bind(R.id.drawer_layout) DrawerLayout drawerLayout;
-  @Bind(R.id.share_general) ImageView shareGeneral;
+  @Nullable @Bind(R.id.toolbar_home) Toolbar toolbar;
+  @Nullable @Bind(R.id.indicator_home) CirclePageIndicator indicatorHome;
+  @Nullable @Bind(R.id.view_pager_home) ViewPager viewPagerHome;
+  @Nullable @Bind(R.id.txt_name_company) AppCompatTextView txtNameCompany;
+  @Nullable @Bind(R.id.txt_description) AppCompatTextView txtDescription;
+  @Nullable @Bind(R.id.txt_addres) AppCompatTextView txtAddres;
+  @Nullable @Bind(R.id.txt_phone) AppCompatTextView txtPhone;
+  @Nullable @Bind(R.id.txt_celphone) AppCompatTextView txtCelphone;
+  @Nullable @Bind(R.id.txt_email) AppCompatTextView txtEmail;
+  @Nullable @Bind(R.id.txt_website) AppCompatTextView txtWebsite;
+  @Nullable @Bind(R.id.btn_sahre_fb) ImageView btnSahreFb;
+  @Nullable @Bind(R.id.btn_sahre_tw) ImageView btnSahreTw;
+  @Nullable @Bind(R.id.ratingBar) RatingBar ratingBar;
+  @Nullable @Bind(R.id.rv_home) RecyclerView rvHome;
+  @Nullable @Bind(R.id.drawer) RelativeLayout drawer;
+  @Nullable @Bind(R.id.drawer_layout) DrawerLayout drawerLayout;
+  @Nullable @Bind(R.id.share_general) ImageView shareGeneral;
   private SearchView searchView;
   private MenuItem searchItem;
 
@@ -121,7 +122,7 @@ public class establecimiento extends BaseActivity implements SearchView.OnQueryT
     toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
   }
 
-  @Override public boolean onCreateOptionsMenu(Menu menu) {
+  @Override public boolean onCreateOptionsMenu(@NonNull Menu menu) {
     getMenuInflater().inflate(R.menu.menu_main, menu);
     searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
     searchItem = menu.findItem(R.id.action_search);
@@ -191,7 +192,7 @@ public class establecimiento extends BaseActivity implements SearchView.OnQueryT
     }
   }
 
-  private void updateUI(Establecimiento establecimiento) {
+  private void updateUI(@NonNull Establecimiento establecimiento) {
     txtNameCompany.setText(establecimiento.getNombre());
     txtDescription.setText(establecimiento.getDescripcion());
     txtAddres.setText(establecimiento.getDireccion());
@@ -207,6 +208,7 @@ public class establecimiento extends BaseActivity implements SearchView.OnQueryT
     btnSahreTw.setOnClickListener(
         view -> openUrl(establecimiento.getTwitter() != null ? establecimiento.getTelefono() : ""));
     renderSlideImages(establecimiento.getUrlImagen());
+    shareGeneral.setOnClickListener(view -> share(establecimiento.getDescripcion()));
     establecimientoItemsAdapter adapter =
         new establecimientoItemsAdapter(this, establecimiento.getArticulos());
     GridLayoutManager glm = new GridLayoutManager(this, 2);
@@ -217,7 +219,7 @@ public class establecimiento extends BaseActivity implements SearchView.OnQueryT
     //txtDescription.setText();
   }
 
-  private void onRatingChange(float value, Establecimiento establecimiento) {
+  private void onRatingChange(float value, @NonNull Establecimiento establecimiento) {
     Usuario usuario = getUserSync();
     if (usuario.getToken().length() > 2) {
       Map<String, Object> param = new HashMap<>();
@@ -234,7 +236,7 @@ public class establecimiento extends BaseActivity implements SearchView.OnQueryT
     }
   }
 
-  private void onSuccesPuntuacion(ResponsePuntuacion responsePuntuacion) {
+  private void onSuccesPuntuacion(@NonNull ResponsePuntuacion responsePuntuacion) {
     dismissDialog();
     if (responsePuntuacion.getEstado() == 1) {
       showMaterialDialog(getString(R.string.puntuacion_ok), new onClickCallback() {
@@ -256,13 +258,14 @@ public class establecimiento extends BaseActivity implements SearchView.OnQueryT
   }
 
   @OnClick({ R.id.btn_sahre_fb, R.id.btn_sahre_tw, R.id.share_general })
-  public void onClick(View view) {
+  public void onClick(@NonNull View view) {
     switch (view.getId()) {
       case R.id.btn_sahre_fb:
         break;
       case R.id.btn_sahre_tw:
         break;
       case R.id.share_general:
+
         break;
     }
   }

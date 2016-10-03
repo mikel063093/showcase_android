@@ -65,19 +65,19 @@ public class establecimientoItemsAdapter
     }
   }
 
-  @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+  @NonNull @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     final View view =
         LayoutInflater.from(mContext).inflate(R.layout.item_establecimiento, parent, false);
     return new ViewHolder(view);
   }
 
-  private void goArticuloDetalle(Articulo articulo) {
+  private void goArticuloDetalle(@NonNull Articulo articulo) {
     BaseActivity ac = (BaseActivity) mContext;
     Usuario user = ac.getUserSync();
     if (user != null) goArticuloDetalle(user, articulo);
   }
 
-  private void goArticuloDetalle(Usuario usuario, Articulo articulo) {
+  private void goArticuloDetalle(@NonNull Usuario usuario, @NonNull Articulo articulo) {
     BaseActivity ac = (BaseActivity) mContext;
     if (usuario.getToken().length() > 2) {
       Map<String, Object> param = new HashMap<>();
@@ -128,13 +128,13 @@ public class establecimientoItemsAdapter
   }
 
   static class ViewHolder extends RecyclerView.ViewHolder {
-    @Bind(R.id.img_item) ImageView imgItem;
-    @Bind(R.id.txt_description_item) AppCompatTextView txtDescriptionItem;
-    @Bind(R.id.txt_price_item) AppCompatTextView txtPriceItem;
-    @Bind(R.id.txt_units_item) AppCompatTextView txtUnitsItem;
-    @Bind(R.id.root_item_establecimiento) CardView rootItemEstablecimiento;
+    @Nullable @Bind(R.id.img_item) ImageView imgItem;
+    @Nullable @Bind(R.id.txt_description_item) AppCompatTextView txtDescriptionItem;
+    @Nullable @Bind(R.id.txt_price_item) AppCompatTextView txtPriceItem;
+    @Nullable @Bind(R.id.txt_units_item) AppCompatTextView txtUnitsItem;
+    @Nullable @Bind(R.id.root_item_establecimiento) CardView rootItemEstablecimiento;
 
-    ViewHolder(View view) {
+    ViewHolder(@NonNull View view) {
       super(view);
       ButterKnife.bind(this, view);
     }

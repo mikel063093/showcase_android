@@ -1,6 +1,8 @@
 package com.co.showcase.ui.historial;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -35,17 +37,17 @@ public class adapterProcesoPedidos extends RecyclerView.Adapter<adapterProcesoPe
     this.pedidos = pedidos;
   }
 
-  public Observable<Integer> getPositionClicks() {
+  @NonNull public Observable<Integer> getPositionClicks() {
     return onClickSubject.asObservable();
   }
 
-  @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+  @NonNull @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     final View view =
         LayoutInflater.from(context).inflate(R.layout.item_estadp_pedido, parent, false);
     return new ViewHolder(view);
   }
 
-  @Override public void onBindViewHolder(ViewHolder holder, int position) {
+  @Override public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
     Pedido item = pedidos.get(position);
     if (item != null) {
       holder.txtNumeroPedido.setText(
@@ -74,13 +76,13 @@ public class adapterProcesoPedidos extends RecyclerView.Adapter<adapterProcesoPe
   }
 
   public class ViewHolder extends RecyclerView.ViewHolder {
-    @Bind(R.id.flecha_izq) ImageView flechaIzq;
-    @Bind(R.id.txt_numero_pedido) AppCompatTextView txtNumeroPedido;
-    @Bind(R.id.txt_fecha_pedido) AppCompatTextView txtFechaPedido;
-    @Bind(R.id.txt_estado_pedido) TextView txtEstadoPedido;
-    @Bind(R.id.root_section) CardView rootSection;
+    @Nullable @Bind(R.id.flecha_izq) ImageView flechaIzq;
+    @Nullable @Bind(R.id.txt_numero_pedido) AppCompatTextView txtNumeroPedido;
+    @Nullable @Bind(R.id.txt_fecha_pedido) AppCompatTextView txtFechaPedido;
+    @Nullable @Bind(R.id.txt_estado_pedido) TextView txtEstadoPedido;
+    @Nullable @Bind(R.id.root_section) CardView rootSection;
 
-    public ViewHolder(View itemView) {
+    public ViewHolder(@NonNull View itemView) {
       super(itemView);
       ButterKnife.bind(this, itemView);
     }

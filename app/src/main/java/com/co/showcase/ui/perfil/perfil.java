@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.Toolbar;
@@ -65,9 +66,10 @@ public class perfil extends BaseActivity {
     assert edtPassword != null;
     edtPassword.setText(usuario.getTelefono() != null ? usuario.getTelefono() : "");
     if (usuario.getFoto() != null && usuario.getFoto().length() > 4) {
+      float diemen = getResources().getDimension(R.dimen._3sdp);
       Picasso.with(getApplicationContext())
           .load(usuario.getFoto())
-          .transform(new CircleTransform())
+          .transform(new CircleTransform(diemen))
           .into(perfil);
     }
   }
@@ -206,10 +208,10 @@ public class perfil extends BaseActivity {
     this.filePath = filePath;
     Picasso.with(getApplicationContext()).setLoggingEnabled(true);
     Picasso.with(getApplicationContext()).invalidate("file://" + filePath);
-
+    float diemen = getResources().getDimension(R.dimen._3sdp);
     Picasso.with(getApplicationContext())
         .load("file://" + filePath)
-        .transform(new CircleTransform())
+        .transform(new CircleTransform(diemen))
         .into(perfil);
   }
 

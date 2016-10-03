@@ -1,6 +1,8 @@
 package com.co.showcase.ui.pedido;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 import android.widget.ImageView;
@@ -25,13 +27,13 @@ import rx.schedulers.Schedulers;
 
 public class edtiarItem extends BaseActivity {
 
-  @Bind(R.id.img_item) ImageView imgItem;
-  @Bind(R.id.txt_name_item) AppCompatTextView txtNameItem;
-  @Bind(R.id.txt_price_item) AppCompatTextView txtPriceItem;
-  @Bind(R.id.txt_units_item) AppCompatTextView txtUnitsItem;
-  @Bind(R.id.txt_item_count) AppCompatTextView txtItemCount;
+  @Nullable @Bind(R.id.img_item) ImageView imgItem;
+  @Nullable @Bind(R.id.txt_name_item) AppCompatTextView txtNameItem;
+  @Nullable @Bind(R.id.txt_price_item) AppCompatTextView txtPriceItem;
+  @Nullable @Bind(R.id.txt_units_item) AppCompatTextView txtUnitsItem;
+  @Nullable @Bind(R.id.txt_item_count) AppCompatTextView txtItemCount;
   private Articulo articulo;
-  private DecimalFormat df = new DecimalFormat("###.#");
+  @NonNull private DecimalFormat df = new DecimalFormat("###.#");
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -40,7 +42,7 @@ public class edtiarItem extends BaseActivity {
     getArticulo(getItem(), getUserSync());
   }
 
-  private void getArticulo(Carrito.ItemsBean item, Usuario usuario) {
+  private void getArticulo(@Nullable Carrito.ItemsBean item, @Nullable Usuario usuario) {
     if (item != null && usuario != null && usuario.getToken() != null) {
       Map<String, Object> param = new HashMap<>();
       param.put("id", item.getIdArticulo());
@@ -55,7 +57,7 @@ public class edtiarItem extends BaseActivity {
     }
   }
 
-  private void eliminarItem(Carrito.ItemsBean item, Usuario usuario) {
+  private void eliminarItem(@Nullable Carrito.ItemsBean item, @Nullable Usuario usuario) {
     if (item != null && usuario != null && usuario.getToken() != null) {
       Map<String, Object> param = new HashMap<>();
       param.put("idItem", item.getId());
@@ -70,7 +72,7 @@ public class edtiarItem extends BaseActivity {
     }
   }
 
-  private void editarItem(Carrito.ItemsBean item, Usuario usuario) {
+  private void editarItem(@Nullable Carrito.ItemsBean item, @Nullable Usuario usuario) {
     if (item != null && usuario != null && usuario.getToken() != null) {
       Map<String, Object> param = new HashMap<>();
       Double current_payment = Double.parseDouble(txtItemCount.getText().toString());
@@ -87,7 +89,7 @@ public class edtiarItem extends BaseActivity {
     }
   }
 
-  private void succesEditarItem(ResponseVerCarrito responseVerCarrito) {
+  private void succesEditarItem(@NonNull ResponseVerCarrito responseVerCarrito) {
     dismissDialog();
     if (responseVerCarrito.getEstado() == 1) {
 
@@ -96,7 +98,7 @@ public class edtiarItem extends BaseActivity {
     }
   }
 
-  private void succesEliminarItem(ResponseVerCarrito responseVerCarrito) {
+  private void succesEliminarItem(@NonNull ResponseVerCarrito responseVerCarrito) {
     dismissDialog();
     if (responseVerCarrito.getEstado() == 1) {
       finish();
@@ -105,7 +107,7 @@ public class edtiarItem extends BaseActivity {
     }
   }
 
-  private void succesDetalleProducto(ResponseDetalleArticulo responseDetalleArticulo) {
+  private void succesDetalleProducto(@NonNull ResponseDetalleArticulo responseDetalleArticulo) {
     dismissDialog();
     if (responseDetalleArticulo.getEstado() == 1) {
       articulo = responseDetalleArticulo.getArticulo();
@@ -115,7 +117,7 @@ public class edtiarItem extends BaseActivity {
     }
   }
 
-  private Carrito.ItemsBean getItem() {
+  @Nullable private Carrito.ItemsBean getItem() {
     Carrito.ItemsBean item = null;
     String json;
     if (getIntent() != null
@@ -127,7 +129,7 @@ public class edtiarItem extends BaseActivity {
     return item;
   }
 
-  private void updateUi(Carrito.ItemsBean item) {
+  private void updateUi(@Nullable Carrito.ItemsBean item) {
     if (item != null && articulo != null) {
       Picasso.with(this).load(articulo.getImagen()).fit().into(imgItem);
       txtNameItem.setText(articulo.getNombre());
@@ -140,7 +142,7 @@ public class edtiarItem extends BaseActivity {
   }
 
   @OnClick({ R.id.btn_less, R.id.btm_more, R.id.btn_reservar, R.id.img_elimiar })
-  public void onClick(View view) {
+  public void onClick(@NonNull View view) {
     switch (view.getId()) {
       case R.id.btn_less:
         if (articulo != null) {

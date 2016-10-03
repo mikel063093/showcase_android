@@ -3,6 +3,7 @@ package com.co.showcase.ui.map;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
@@ -46,12 +47,12 @@ import rx.subscriptions.Subscriptions;
 
 public class map extends BaseActivity {
 
-  @Bind(R.id.toolbar_home) Toolbar toolbar;
-  @Bind(R.id.rv_home) RecyclerView rvHome;
-  @Bind(R.id.imgmaptransparent) ImageView imgmaptransparent;
-  @Bind(R.id.scroll) NestedScrollView scroll;
+  @Nullable @Bind(R.id.toolbar_home) Toolbar toolbar;
+  @Nullable @Bind(R.id.rv_home) RecyclerView rvHome;
+  @Nullable @Bind(R.id.imgmaptransparent) ImageView imgmaptransparent;
+  @Nullable @Bind(R.id.scroll) NestedScrollView scroll;
 
-  private CompositeSubscription subscriptions = Subscriptions.from();
+  @NonNull private CompositeSubscription subscriptions = Subscriptions.from();
   private GeoJsonLayer geoJsonLayer;
   private MapObservableProvider mapObservableProvider;
   private SectionedRecyclerViewAdapter sectionAdapter;
@@ -112,7 +113,7 @@ public class map extends BaseActivity {
         }));
   }
 
-  private void setUpRV(List<Categoria> categorias) {
+  private void setUpRV(@Nullable List<Categoria> categorias) {
     sectionAdapter = new SectionedRecyclerViewAdapter();
     if (categorias != null
         && categorias.get(0) != null
@@ -140,7 +141,7 @@ public class map extends BaseActivity {
     rvHome.setAdapter(sectionAdapter);
   }
 
-  private void updateMap(JSONObject jsonObject) {
+  private void updateMap(@NonNull JSONObject jsonObject) {
 
     if (geoJsonLayer != null && geoJsonLayer.isLayerOnMap()) {
       geoJsonLayer.removeLayerFromMap();
@@ -156,13 +157,13 @@ public class map extends BaseActivity {
         });
   }
 
-  private void setLayerStyle(@NonNull GeoJsonLayer layer, BaseActivity baseActivity) {
+  private void setLayerStyle(@NonNull GeoJsonLayer layer, @NonNull BaseActivity baseActivity) {
     for (GeoJsonFeature feature : layer.getFeatures()) {
       drawMarker(baseActivity, feature);
     }
   }
 
-  private void drawMarker(BaseActivity baseActivity, GeoJsonFeature feature) {
+  private void drawMarker(@NonNull BaseActivity baseActivity, @NonNull GeoJsonFeature feature) {
     GeoJsonPointStyle pointStyle = new GeoJsonPointStyle();
     String baseRes = "ic_pin_";
     int drawable =
@@ -172,7 +173,7 @@ public class map extends BaseActivity {
     feature.setPointStyle(pointStyle);
   }
 
-  private void getGeoJson(Usuario usuario, String idZona) {
+  private void getGeoJson(@NonNull Usuario usuario, String idZona) {
     Map<String, Object> param = new HashMap<>();
     param.put("filtro", idZona);
 
@@ -186,7 +187,7 @@ public class map extends BaseActivity {
         .subscribe(this::succesCategoriasLocalizacion, this::errControl);
   }
 
-  private void centerMap(LatLngBounds latLngBounds) {
+  private void centerMap(@NonNull LatLngBounds latLngBounds) {
     mapObservableProvider.getMapReadyObservable()
         .compose(bindToLifecycle())
         .subscribe(googleMap -> {
@@ -198,7 +199,7 @@ public class map extends BaseActivity {
         });
   }
 
-  private void succesCategoriasLocalizacion(zonaDetalle zonaDetalle) {
+  private void succesCategoriasLocalizacion(@NonNull zonaDetalle zonaDetalle) {
 
     if (zonaDetalle.estado.equalsIgnoreCase("exito")) {
       ArrayList<LatLng> latLngs = new ArrayList<>();

@@ -1,18 +1,26 @@
 package com.co.showcase.ui;
 
+import android.Manifest;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,17 +40,27 @@ import com.co.showcase.model.TabPosition;
 import com.co.showcase.model.Usuario;
 import com.co.showcase.ui.categoria.categoria;
 import com.co.showcase.ui.splash.Splash;
+import com.co.showcase.ui.util.RxDownloader;
 import com.facebook.login.LoginManager;
 import com.github.pwittchen.reactivenetwork.library.ReactiveNetwork;
 import com.google.gson.Gson;
 import com.onesignal.OneSignal;
 import com.orhanobut.logger.Logger;
+import com.pavlospt.rxfile.RxFile;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
+import com.tbruyelle.rxpermissions.RxPermissions;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import fr.tvbarthel.intentshare.IntentShare;
 import io.realm.Realm;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
-import java.net.SocketTimeoutException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,20 +68,21 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import retrofit2.HttpException;
 import rx.Observable;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-
-import static com.google.android.gms.analytics.internal.zzy.e;
 
 /**
  * Created by miguelalegria on 15/5/16 for DemoMike.
  */
 public class BaseActivity extends RxAppCompatActivity {
   protected static final String KEY_POSITION = "KEYPOSTION";
-
+  private static final int SHARED_IMAGE_QUALITY = 100;
+  private static final String SHARED_DIRECTORY = "sharing";
+  private static final String SHARED_IMAGE_FILE = "shared_img.png";
+  private static final String FILE_PROVIDER_AUTHORITY = "com.co.showcase.SharingFileProvider";
   @NonNull public Gson gson = new Gson();
   private static final String EMAIL_PATTERN =
       "^[a-zA-Z0-9#_~!$&'()*+,;=:.\"(),:;<>@\\[\\]\\\\]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*$";
@@ -133,7 +152,7 @@ public class BaseActivity extends RxAppCompatActivity {
     //
   }
 
-  private void updateGcm(Usuario usuario) {
+  private void updateGcm(@Nullable Usuario usuario) {
     if (usuario != null && usuario.getToken() != null && usuario.getToken().length() > 2) {
       OneSignal.idsAvailable((userId, registrationId) -> {
         Map<String, String> param = new HashMap<>();
@@ -456,7 +475,7 @@ public class BaseActivity extends RxAppCompatActivity {
     return getRealm().where(Usuario.class).findFirst();
   }
 
-  public void updateRealmUser(Usuario usuario) {
+  public void updateRealmUser(@NonNull Usuario usuario) {
     log("upDateRealmUser");
 
     getRealm().executeTransaction(realm1 -> {
@@ -482,7 +501,7 @@ public class BaseActivity extends RxAppCompatActivity {
     });
   }
 
-  public void setItemsVisibility(Menu menu, MenuItem exception, boolean visible) {
+  public void setItemsVisibility(@NonNull Menu menu, MenuItem exception, boolean visible) {
     for (int i = 0; i < menu.size(); ++i) {
       MenuItem item = menu.getItem(i);
       if (item != exception) item.setVisible(visible);
@@ -518,12 +537,108 @@ public class BaseActivity extends RxAppCompatActivity {
     });
   }
 
-  public void share(String body, String urlImage) {
-    IntentShare.with(this)
-        .chooserTitle(getString(R.string.compartir))
-        .text(body)
-        .image(Uri.parse(urlImage))
-        .deliver();
+  public void share(@NonNull String body, String urlImage) {
+    Picasso.with(this).load(urlImage).into(new Target() {
+      @Override public void onBitmapLoaded(@NonNull Bitmap bitmap, Picasso.LoadedFrom from) {
+        Uri uri = getShareableUri(BaseActivity.this, bitmap);
+        assert uri != null;
+        IntentShare.with(BaseActivity.this)
+            .chooserTitle(getString(R.string.compartir))
+            .text(body)
+            .mailBody(body)
+            .mailBody(getAppLable(getBaseContext()))
+            .image(uri)
+            .deliver();
+      }
+
+      @Override public void onBitmapFailed(Drawable errorDrawable) {
+        log("bitmapFailed");
+      }
+
+      @Override public void onPrepareLoad(Drawable placeHolderDrawable) {
+        log("onPrepareload");
+      }
+    });
+    //RxPermissions.getInstance(this)
+    //    .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    //    .compose(this.bindToLifecycle())
+    //    .subscribe(aBoolean -> {
+    //      if (aBoolean) {
+    //        String filenameArray[] = urlImage.split("\\.");
+    //        String extension = filenameArray[filenameArray.length - 1];
+    //        try {
+    //          String sha1 = SHA1(urlImage);
+    //          String fileName = sha1 + "." + extension;
+    //          log(fileName);
+    //
+    //          RxDownloader.getInstance(this)
+    //              .download(urlImage, fileName, "image/jpg")
+    //              .subscribe(s -> {
+    //                log(s);
+    //                try {
+    //
+    //                  Uri uri = convertFileToContentUri(getBaseContext(), new File(s));
+    //                  log(uri.toString());
+    //                  IntentShare.with(BaseActivity.this)
+    //                      .chooserTitle(getString(R.string.compartir))
+    //                      .text(body)
+    //                      .image(uri)
+    //                      .deliver();
+    //                } catch (Exception e) {
+    //                  e.printStackTrace();
+    //                }
+    //              });
+    //        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e1) {
+    //          e1.printStackTrace();
+    //        }
+    //      }
+    //    });
+  }
+
+  @Nullable protected Uri convertFileToContentUri(@NonNull Context context, @NonNull File imageFile) throws Exception {
+
+    String filePath = imageFile.getAbsolutePath();
+    Cursor cursor = context.getContentResolver()
+        .query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+            new String[] { MediaStore.Images.Media._ID }, MediaStore.Images.Media.DATA + "=? ",
+            new String[] { filePath }, null);
+
+    if (cursor != null && cursor.moveToFirst()) {
+      int id = cursor.getInt(cursor.getColumnIndex(MediaStore.MediaColumns._ID));
+      Uri baseUri = Uri.parse("content://media/external/images/media");
+      return Uri.withAppendedPath(baseUri, "" + id);
+    } else {
+      if (imageFile.exists()) {
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.DATA, filePath);
+        return context.getContentResolver()
+            .insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+      } else {
+        return null;
+      }
+    }
+  }
+
+  private static String convertToHex(@NonNull byte[] data) {
+    StringBuilder buf = new StringBuilder();
+    for (byte b : data) {
+      int halfbyte = (b >>> 4) & 0x0F;
+      int two_halfs = 0;
+      do {
+        buf.append((0 <= halfbyte) && (halfbyte <= 9) ? (char) ('0' + halfbyte)
+            : (char) ('a' + (halfbyte - 10)));
+        halfbyte = b & 0x0F;
+      } while (two_halfs++ < 1);
+    }
+    return buf.toString();
+  }
+
+  public static String SHA1(@NonNull String text)
+      throws NoSuchAlgorithmException, UnsupportedEncodingException {
+    MessageDigest md = MessageDigest.getInstance("SHA-1");
+    md.update(text.getBytes("iso-8859-1"), 0, text.length());
+    byte[] sha1hash = md.digest();
+    return convertToHex(sha1hash);
   }
 
   public void openUrl(String url) {
@@ -531,7 +646,74 @@ public class BaseActivity extends RxAppCompatActivity {
     startActivity(intent);
   }
 
-  public void share(String body) {
+  public void share(@NonNull String body) {
     IntentShare.with(this).chooserTitle(getString(R.string.compartir)).text(body).deliver();
+  }
+
+  @Nullable public Uri getImageContentUri(@NonNull Context context, @NonNull String absPath) {
+    log("getImageContentUri: " + absPath);
+
+    Cursor cursor = context.getContentResolver()
+        .query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+            new String[] { MediaStore.Images.Media._ID }, MediaStore.Images.Media.DATA + "=? ",
+            new String[] { absPath }, null);
+
+    if (cursor != null && cursor.moveToFirst()) {
+      int id = cursor.getInt(cursor.getColumnIndex(MediaStore.MediaColumns._ID));
+      return Uri.withAppendedPath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+          Integer.toString(id));
+    } else if (!absPath.isEmpty()) {
+      ContentValues values = new ContentValues();
+      values.put(MediaStore.Images.Media.DATA, absPath);
+      return context.getContentResolver()
+          .insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+    } else {
+      return null;
+    }
+  }
+
+  public void getFileFromUrl(String url) {
+    RxFile.createFileFromUri(this, Uri.parse(url))
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Subscriber<File>() {
+          @Override public void onCompleted() {
+            log("onCompleted() for File called");
+          }
+
+          @Override public void onError(@NonNull Throwable e) {
+            log("Error on file fetching:" + e.getMessage());
+          }
+
+          @Override public void onNext(@NonNull File file) {
+            log("onNext() file called:" + file.getAbsolutePath());
+          }
+        });
+  }
+
+  private Uri getShareableUri(@NonNull Context context, @NonNull Bitmap bitmap) {
+    // Compress the drawingCache before saving and sharing.
+    final ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    bitmap.compress(Bitmap.CompressFormat.PNG, SHARED_IMAGE_QUALITY, bytes);
+
+    // Write the compressed bytes to a files
+    final File outputDirectory = new File(context.getFilesDir(), SHARED_DIRECTORY);
+    if (outputDirectory.isDirectory() || outputDirectory.mkdirs()) {
+      final File shareColorFile = new File(outputDirectory, SHARED_IMAGE_FILE);
+      try {
+        final FileOutputStream fo = new FileOutputStream(shareColorFile);
+        fo.write(bytes.toByteArray());
+        fo.close();
+
+        // Get the content uri.
+        return FileProvider.getUriForFile(context, FILE_PROVIDER_AUTHORITY, shareColorFile);
+      } catch (IOException e) {
+        e.printStackTrace();
+        log("Fail to write bitmap inside the temp file.");
+      }
+    } else {
+      log("Fail to create temp file for bitmap sharing.");
+    }
+    return null;
   }
 }

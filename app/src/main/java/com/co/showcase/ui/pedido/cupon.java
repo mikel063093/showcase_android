@@ -2,6 +2,8 @@ package com.co.showcase.ui.pedido;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
@@ -21,8 +23,8 @@ import rx.schedulers.Schedulers;
 
 public class cupon extends BaseActivity {
 
-  @Bind(R.id.edt_cupon) AppCompatEditText edtCupon;
-  @Bind(R.id.txt_error) AppCompatTextView txtError;
+  @Nullable @Bind(R.id.edt_cupon) AppCompatEditText edtCupon;
+  @Nullable @Bind(R.id.txt_error) AppCompatTextView txtError;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -46,7 +48,7 @@ public class cupon extends BaseActivity {
     return result;
   }
 
-  private void redimir(String codigo, Usuario usuario) {
+  private void redimir(String codigo, @Nullable Usuario usuario) {
     if (usuario != null && usuario.getToken() != null) {
       Map<String, Object> param = new HashMap<>();
       param.put("codigo", codigo);
@@ -61,7 +63,7 @@ public class cupon extends BaseActivity {
     }
   }
 
-  private void succesCupon(ResponseCupon responseCupon) {
+  private void succesCupon(@NonNull ResponseCupon responseCupon) {
     dismissDialog();
     if (responseCupon.getEstado() == 1) {
       if (isForResult()) {
@@ -75,7 +77,7 @@ public class cupon extends BaseActivity {
     }
   }
 
-  @OnClick({ R.id.img_cancelar_cupon, R.id.btn_cupon }) public void onClick(View view) {
+  @OnClick({ R.id.img_cancelar_cupon, R.id.btn_cupon }) public void onClick(@NonNull View view) {
     switch (view.getId()) {
       case R.id.img_cancelar_cupon:
         finish();

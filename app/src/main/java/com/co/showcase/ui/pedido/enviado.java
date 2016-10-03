@@ -2,6 +2,7 @@ package com.co.showcase.ui.pedido;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import butterknife.Bind;
@@ -13,7 +14,7 @@ import com.co.showcase.ui.home.home;
 
 public class enviado extends BaseActivity {
 
-  @Bind(R.id.toolbar) Toolbar toolbar;
+  @Nullable @Bind(R.id.toolbar) Toolbar toolbar;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);

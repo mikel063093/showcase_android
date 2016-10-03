@@ -1,5 +1,7 @@
 package com.co.showcase.api.errorControl;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
@@ -17,18 +19,18 @@ import rx.functions.Func1;
  */
 
 public class RxErrorHandlingCallAdapterFactory implements CallAdapter.Factory {
-  private final RxJavaCallAdapterFactory original;
+  @NonNull private final RxJavaCallAdapterFactory original;
 
   private RxErrorHandlingCallAdapterFactory() {
     original = RxJavaCallAdapterFactory.create();
   }
 
-  public static CallAdapter.Factory create() {
+  @NonNull public static CallAdapter.Factory create() {
     return new RxErrorHandlingCallAdapterFactory();
   }
 
-  @Override
-  public CallAdapter<?> get(Type returnType, Annotation[] annotations, Retrofit retrofit) {
+  @NonNull @Override
+  public CallAdapter<?> get(@NonNull Type returnType, Annotation[] annotations, Retrofit retrofit) {
     return new RxCallAdapterWrapper(retrofit, original.get(returnType, annotations, retrofit));
   }
 
@@ -45,16 +47,16 @@ public class RxErrorHandlingCallAdapterFactory implements CallAdapter.Factory {
       return wrapped.responseType();
     }
 
-    @SuppressWarnings("unchecked") @Override public <R> Observable<?> adapt(Call<R> call) {
+    @NonNull @SuppressWarnings("unchecked") @Override public <R> Observable<?> adapt(Call<R> call) {
       return ((Observable) wrapped.adapt(call)).onErrorResumeNext(
           new Func1<Throwable, Observable>() {
-            @Override public Observable call(Throwable throwable) {
+            @NonNull @Override public Observable call(Throwable throwable) {
               return Observable.error(asRetrofitException(throwable));
             }
           });
     }
 
-    private RetrofitException asRetrofitException(Throwable throwable) {
+    @Nullable private RetrofitException asRetrofitException(Throwable throwable) {
       // We had non-200 http error
       if (throwable instanceof HttpException) {
         HttpException httpException = (HttpException) throwable;

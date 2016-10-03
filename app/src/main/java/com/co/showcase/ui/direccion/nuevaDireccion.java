@@ -6,6 +6,7 @@ import android.location.Address;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
@@ -37,26 +38,26 @@ import rx.schedulers.Schedulers;
 
 public class nuevaDireccion extends BaseActivity {
 
-  @Bind(R.id.toolbar_perfil) Toolbar toolbarPerfil;
-  @Bind(R.id.edt_direccion) AppCompatEditText edtDireccion;
-  @Bind(R.id.addAddresWrapper) TextInputLayout addAddresWrapper;
-  @Bind(R.id.edt_numero) AppCompatEditText edtNumero;
-  @Bind(R.id.numerWrapper) TextInputLayout numerWrapper;
-  @Bind(R.id.edt_numero2) AppCompatEditText edtNumero2;
-  @Bind(R.id.numer2Wrapper) TextInputLayout numer2Wrapper;
-  @Bind(R.id.edt_numero3) AppCompatEditText edtNumero3;
-  @Bind(R.id.numer3Wrapper) TextInputLayout numer3Wrapper;
-  @Bind(R.id.edt_info_adicional) AppCompatEditText edtInfoAdicional;
-  @Bind(R.id.informacionAdicionalWrapper) TextInputLayout informacionAdicionalWrapper;
-  @Bind(R.id.edt_barrio) AppCompatEditText edtBarrio;
-  @Bind(R.id.barrioWrapper) TextInputLayout barrioWrapper;
-  @Bind(R.id.edt_ciudad) AppCompatEditText edtCiudad;
-  @Bind(R.id.ciuadadWrapper) TextInputLayout ciuadadWrapper;
-  @Bind(R.id.edt_nombre_direccion) AppCompatEditText edtNombreDireccion;
-  @Bind(R.id.emailWrapper) TextInputLayout emailWrapper;
-  @Bind(R.id.btn_nueva_direccion) AppCompatButton btnNuevaDireccion;
+  @Nullable @Bind(R.id.toolbar_perfil) Toolbar toolbarPerfil;
+  @Nullable @Bind(R.id.edt_direccion) AppCompatEditText edtDireccion;
+  @Nullable @Bind(R.id.addAddresWrapper) TextInputLayout addAddresWrapper;
+  @Nullable @Bind(R.id.edt_numero) AppCompatEditText edtNumero;
+  @Nullable @Bind(R.id.numerWrapper) TextInputLayout numerWrapper;
+  @Nullable @Bind(R.id.edt_numero2) AppCompatEditText edtNumero2;
+  @Nullable @Bind(R.id.numer2Wrapper) TextInputLayout numer2Wrapper;
+  @Nullable @Bind(R.id.edt_numero3) AppCompatEditText edtNumero3;
+  @Nullable @Bind(R.id.numer3Wrapper) TextInputLayout numer3Wrapper;
+  @Nullable @Bind(R.id.edt_info_adicional) AppCompatEditText edtInfoAdicional;
+  @Nullable @Bind(R.id.informacionAdicionalWrapper) TextInputLayout informacionAdicionalWrapper;
+  @Nullable @Bind(R.id.edt_barrio) AppCompatEditText edtBarrio;
+  @Nullable @Bind(R.id.barrioWrapper) TextInputLayout barrioWrapper;
+  @Nullable @Bind(R.id.edt_ciudad) AppCompatEditText edtCiudad;
+  @Nullable @Bind(R.id.ciuadadWrapper) TextInputLayout ciuadadWrapper;
+  @Nullable @Bind(R.id.edt_nombre_direccion) AppCompatEditText edtNombreDireccion;
+  @Nullable @Bind(R.id.emailWrapper) TextInputLayout emailWrapper;
+  @Nullable @Bind(R.id.btn_nueva_direccion) AppCompatButton btnNuevaDireccion;
 
-  private LocationRequest request = LocationRequest.create()
+  @NonNull private LocationRequest request = LocationRequest.create()
       .setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY)
       .setInterval(5000);
   private static final int REQUEST_CHECK_SETTINGS = 0;
@@ -84,9 +85,11 @@ public class nuevaDireccion extends BaseActivity {
 
       param.put("nomenclatura", nomencaltura.length() >= 2 ? nomencaltura : null);
 
-      param.put("informacionAdicional",
-          !TextUtils.isEmpty(edtInfoAdicional.getText()) ? edtInfoAdicional.getText().toString()
-              : null);
+      if (!TextUtils.isEmpty(edtInfoAdicional.getText())) {
+        param.put("informacionAdicional",
+            !TextUtils.isEmpty(edtInfoAdicional.getText()) ? edtInfoAdicional.getText().toString()
+                : null);
+      }
 
       param.put("nombre",
           !TextUtils.isEmpty(edtNombreDireccion.getText()) ? edtNombreDireccion.getText().toString()
@@ -116,7 +119,7 @@ public class nuevaDireccion extends BaseActivity {
     }
   }
 
-  private void addAddress(Map<String, Object> param, Usuario usuario) {
+  private void addAddress(Map<String, Object> param, @NonNull Usuario usuario) {
     REST.getRest()
         .agregarDireccion(usuario.getToken(), param)
         .compose(bindToLifecycle())
@@ -152,9 +155,9 @@ public class nuevaDireccion extends BaseActivity {
     if (TextUtils.isEmpty(edtCiudad.getText())) {
       result = false;
     }
-    if (TextUtils.isEmpty(edtInfoAdicional.getText())) {
-      result = false;
-    }
+    //if (TextUtils.isEmpty(edtInfoAdicional.getText())) {
+    //  result = false;
+    //}
     if (TextUtils.isEmpty(edtNombreDireccion.getText())) {
       result = false;
     }
@@ -173,11 +176,11 @@ public class nuevaDireccion extends BaseActivity {
         .subscribe(this::onLocation);
   }
 
-  private void onLocation(Location location) {
+  private void onLocation(@NonNull Location location) {
     reverseLocation(location);
   }
 
-  private void resolveGplayErr(LocationSettingsResult locationSettingsResult) {
+  private void resolveGplayErr(@NonNull LocationSettingsResult locationSettingsResult) {
     Status status = locationSettingsResult.getStatus();
     if (status.getStatusCode() == LocationSettingsStatusCodes.RESOLUTION_REQUIRED) {
       try {

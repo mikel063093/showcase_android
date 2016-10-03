@@ -2,6 +2,8 @@ package com.co.showcase.ui.search_result;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.GridLayoutManager;
@@ -24,9 +26,9 @@ import rx.schedulers.Schedulers;
 
 public class result extends BaseActivity {
 
-  @Bind(R.id.toolbar_home) Toolbar toolbar;
-  @Bind(R.id.txt_section) AppCompatTextView txtSection;
-  @Bind(R.id.rv_result) RecyclerView rvResult;
+  @Nullable @Bind(R.id.toolbar_home) Toolbar toolbar;
+  @Nullable @Bind(R.id.txt_section) AppCompatTextView txtSection;
+  @Nullable @Bind(R.id.rv_result) RecyclerView rvResult;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -45,7 +47,7 @@ public class result extends BaseActivity {
     searchItem(getSearchItem(), getUserSync());
   }
 
-  private void searchItem(String searchItem, Usuario usuario) {
+  private void searchItem(@Nullable String searchItem, @Nullable Usuario usuario) {
     if (searchItem != null && usuario != null) {
       txtSection.setText(searchItem);
       if (usuario.getToken().length() > 2) {
@@ -63,7 +65,7 @@ public class result extends BaseActivity {
     }
   }
 
-  private void succes(ResponseResultSearch responseResultSearch) {
+  private void succes(@NonNull ResponseResultSearch responseResultSearch) {
     establecimientoItemsAdapter adapter =
         new establecimientoItemsAdapter(this, responseResultSearch.articulos);
     GridLayoutManager glm = new GridLayoutManager(this, 2);
@@ -71,7 +73,7 @@ public class result extends BaseActivity {
     rvResult.setAdapter(adapter);
   }
 
-  private String getSearchItem() {
+  @Nullable private String getSearchItem() {
     String result = null;
     if (getIntent() != null
         && getIntent().getStringExtra(this.getClass().getSimpleName()) != null) {
