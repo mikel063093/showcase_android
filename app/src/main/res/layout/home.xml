@@ -26,7 +26,8 @@
           android:fitsSystemWindows="true"
           android:minHeight="?attr/actionBarSize"
           app:navigationIcon="@drawable/btn_menu_principal"
-          style="@style/MyToolbarStyle"
+         style="@style/MyToolbarStyle"
+
           />
       <android.support.v4.widget.NestedScrollView
           xmlns:android="http://schemas.android.com/apk/res/android"

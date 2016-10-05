@@ -113,10 +113,12 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
   }
 
   private void showMenuCarrito(boolean show) {
-    MenuItem carrito = menu.findItem(R.id.action_buy);
-    Drawable drawable =
-        show ? getDrawable(R.drawable.btn_carrito_bandera) : getDrawable(R.drawable.btn_carrito);
-    if (carrito != null) carrito.setIcon(drawable);
+    if (menu != null) {
+      MenuItem carrito = menu.findItem(R.id.action_buy);
+      Drawable drawable =
+          show ? getDrawable(R.drawable.btn_carrito_bandera) : getDrawable(R.drawable.btn_carrito);
+      if (carrito != null) carrito.setIcon(drawable);
+    }
   }
 
   private void init(@NonNull Usuario userSync) {
@@ -204,7 +206,9 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
     getMenuInflater().inflate(R.menu.menu_main, menu);
     map = menu.findItem(R.id.action_map);
     subMenuMap = map.getSubMenu();
-    getZonas(getUserSync());
+    Usuario usuario = getUserSync();
+    verCarrito(usuario);
+    getZonas(usuario);
     searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
     searchSrcTextView = (SearchView.SearchAutoComplete) searchView.findViewById(
         android.support.v7.appcompat.R.id.search_src_text);

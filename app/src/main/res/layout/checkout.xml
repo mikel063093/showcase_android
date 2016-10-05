@@ -65,6 +65,7 @@
           <LinearLayout
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:baselineAligned="false"
               android:orientation="horizontal"
               >
             <android.support.design.widget.TextInputLayout
@@ -123,8 +124,8 @@
                 android:id="@+id/edt_direccion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/btn_editar"
                 android:drawablePadding="@dimen/_8sdp"
-                android:drawableRight="@drawable/btn_editar"
                 android:inputType="none"
                 android:textColor="@color/outer_space"
                 android:theme="@style/edt_singin"
@@ -143,8 +144,8 @@
                 android:id="@+id/edt_telefono"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/btn_editar"
                 android:drawablePadding="@dimen/_8sdp"
-                android:drawableRight="@drawable/btn_editar"
                 android:inputType="phone"
                 android:textColor="@color/napier_green"
                 android:theme="@style/edt_singin"
@@ -175,8 +176,8 @@
                 android:id="@+id/edt_cupon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/btn_seleccionar"
                 android:drawablePadding="@dimen/_8sdp"
-                android:drawableRight="@drawable/btn_seleccionar"
                 android:inputType="none"
                 android:textColor="@color/outer_space"
                 android:theme="@style/edt_singin"
@@ -214,6 +215,7 @@
           <LinearLayout
               android:layout_width="match_parent"
               android:layout_height="@dimen/_60sdp"
+              android:baselineAligned="false"
               android:orientation="horizontal"
               >
             <LinearLayout
@@ -227,8 +229,8 @@
               <android.support.v7.widget.AppCompatTextView
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:drawableLeft="@drawable/btn_subtotal"
                   android:drawablePadding="@dimen/_3sdp"
+                  android:drawableStart="@drawable/btn_subtotal"
                   android:text="@string/subtotal"
                   android:textSize="@dimen/_14sdp"
                   fontPath="fonts/Circular-Std-Book.otf"
@@ -238,8 +240,8 @@
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:layout_marginTop="@dimen/_14sdp"
-                  android:drawableLeft="@drawable/btn_domicilio"
                   android:drawablePadding="@dimen/_3sdp"
+                  android:drawableStart="@drawable/btn_domicilio"
                   android:text="@string/domicilio"
                   android:textSize="@dimen/_14sdp"
                   fontPath="fonts/Circular-Std-Book.otf"
@@ -282,6 +284,7 @@
           <LinearLayout
               android:layout_width="match_parent"
               android:layout_height="@dimen/_40sdp"
+              android:baselineAligned="false"
               android:orientation="vertical"
               >
             <View
@@ -292,6 +295,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:baselineAligned="false"
                 android:orientation="horizontal"
                 >
               <LinearLayout

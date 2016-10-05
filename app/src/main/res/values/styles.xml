@@ -5,6 +5,7 @@
     <item name="colorPrimary">@color/kelly_green</item>
     <item name="colorPrimaryDark">@color/napier_green</item>
     <item name="colorAccent">@color/napier_green</item>
+    <item name="colorControlNormal">@color/white</item>
     <item name="android:textColorPrimary">@color/primary_text</item>
     <item name="android:textColorSecondary">@color/secondary_text</item>
     <item name="android:dropDownListViewStyle">@style/MyDropDownListView</item>
@@ -278,6 +279,7 @@
   <style name="MyToolbarElevation" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
     <item name="theme">@style/ThemeOverlay.AppCompat.Dark</item>
     <item name="android:background">?colorPrimary</item>
+    <item name="android:textColorPrimary">@color/white</item>
   </style>
 
   <style name="elevation1dp" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
@@ -288,6 +290,7 @@
   <style name="MyToolbar">
     <item name="theme">@style/ThemeOverlay.AppCompat.Dark</item>
     <item name="android:background">?colorPrimary</item>
+    <item name="android:textColorPrimary">@color/white</item>
   </style>
 
 
@@ -311,6 +314,7 @@
   <style name="MyToolbarStyle" parent="Theme.AppCompat.Light.DarkActionBar">
     <!--<item name="theme">@style/ThemeOverlay.AppCompat.Light</item>-->
     <item name="android:background">?colorPrimary</item>
+    <item name="android:textColorPrimary">@color/white</item>
 
   </style>
 
