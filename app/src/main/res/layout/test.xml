@@ -1,154 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/_250sdp"
-    style="@style/card_singin"
+    android:layout_height="100dp"
+    android:orientation="vertical"
 
-    >
-  <LinearLayout
+>
+  <ImageView
+      android:id="@+id/imageView5"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="match_parent"
+     android:layout_weight="3"
+      android:scaleType="fitCenter"
+      android:src="@drawable/foto_establecimiento_1"
+  />
+  <android.support.v7.widget.AppCompatTextView
+      android:id="@+id/txt_item_general"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
       android:layout_gravity="center"
-      android:orientation="vertical"
-
-      >
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-      <android.support.design.widget.TextInputLayout
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:layout_marginLeft="@dimen/_16sdp"
-          android:layout_marginRight="@dimen/_16sdp"
-          android:layout_weight="1"
-          android:hint="@string/nombre"
-          android:textColorHint="@color/manatee"
-
-          >
-        <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/edt_nombre"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:textColor="@color/outer_space"
-            android:theme="@style/edt_singin"
-            />
-      </android.support.design.widget.TextInputLayout>
-      <android.support.design.widget.TextInputLayout
-
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:layout_marginLeft="@dimen/_16sdp"
-          android:layout_marginRight="@dimen/_16sdp"
-          android:layout_weight="1"
-          android:hint="@string/apellido"
-          android:textColorHint="@color/manatee"
-
-          >
-        <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/edt_apellido"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawablePadding="@dimen/_8sdp"
-            android:inputType="text"
-            android:textColor="@color/outer_space"
-            android:theme="@style/edt_singin"
-            />
-      </android.support.design.widget.TextInputLayout>
-    </LinearLayout>
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/nombreWrapper"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/_16sdp"
-        android:layout_marginRight="@dimen/_16sdp"
-        android:hint="@string/direccion_entraga"
-        android:textColorHint="@color/manatee"
-
-        >
-      <android.support.v7.widget.AppCompatEditText
-          android:id="@+id/edt_nombre"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:drawablePadding="@dimen/_8sdp"
-          android:drawableRight="@drawable/btn_editar"
-          android:inputType="text"
-          android:textColor="@color/outer_space"
-          android:theme="@style/edt_singin"
-          />
-    </android.support.design.widget.TextInputLayout>
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/_16sdp"
-        android:layout_marginRight="@dimen/_16sdp"
-        android:hint="@string/telefono_contacto"
-        android:textColorHint="@color/manatee"
-
-        >
-      <android.support.v7.widget.AppCompatEditText
-          android:id="@+id/edt_telefono"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:drawablePadding="@dimen/_8sdp"
-          android:drawableRight="@drawable/btn_editar"
-          android:inputType="phone"
-          android:textColor="@color/napier_green"
-          android:theme="@style/edt_singin"
-
-          />
-    </android.support.design.widget.TextInputLayout>
-    <android.support.design.widget.TextInputLayout
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/_16sdp"
-        android:layout_marginRight="@dimen/_16sdp"
-        android:hint="@string/forma_pago"
-        android:textColorHint="@color/manatee"
-
-        >
-      <android.support.v7.widget.AppCompatEditText
-          android:id="@+id/edt_pago"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:clickable="false"
-          android:drawablePadding="@dimen/_8sdp"
-          android:drawableRight="@drawable/btn_seleccionar"
-          android:inputType="none"
-          android:text="@string/seleccione"
-          android:textColor="@color/outer_space"
-          android:theme="@style/edt_singin"
-
-          />
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/_16sdp"
-        android:layout_marginRight="@dimen/_16sdp"
-        android:hint="@string/cupon_descuento"
-        android:textColorHint="@color/manatee"
-
-        >
-      <android.support.v7.widget.AppCompatEditText
-          android:id="@+id/edt_cupon"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:drawablePadding="@dimen/_8sdp"
-          android:drawableRight="@drawable/btn_seleccionar"
-          android:inputType="text"
-          android:textColor="@color/outer_space"
-          android:theme="@style/edt_singin"
-
-          />
-    </android.support.design.widget.TextInputLayout>
-    
-  </LinearLayout>
-
-</android.support.v7.widget.CardView>
+      android:layout_marginLeft="@dimen/_3sdp"
+      android:layout_marginRight="@dimen/_3sdp"
+      android:layout_weight="7"
+      android:gravity="center"
+      android:maxLines="1"
+      android:text="Levi’s"
+      android:textSize="@dimen/_16sdp"
+      fontPath="fonts/Circular-Std-Bold.otf"
+      style="@style/txt_black_style"
+  />
+</LinearLayout>

@@ -37,6 +37,7 @@ import com.co.showcase.ui.CustomView.CirclePageIndicator;
 import com.co.showcase.ui.home.SlideAdapter;
 import com.co.showcase.ui.perfil.perfil;
 import com.co.showcase.ui.slide.slide;
+import com.iarcuschin.simpleratingbar.SimpleRatingBar;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -58,7 +59,7 @@ public class establecimiento extends BaseActivity implements SearchView.OnQueryT
   @Nullable @Bind(R.id.txt_website) AppCompatTextView txtWebsite;
   @Nullable @Bind(R.id.btn_sahre_fb) ImageView btnSahreFb;
   @Nullable @Bind(R.id.btn_sahre_tw) ImageView btnSahreTw;
-  @Nullable @Bind(R.id.ratingBar) RatingBar ratingBar;
+  @Nullable @Bind(R.id.ratingBar) SimpleRatingBar ratingBar;
   @Nullable @Bind(R.id.rv_home) RecyclerView rvHome;
   @Nullable @Bind(R.id.drawer) RelativeLayout drawer;
   @Nullable @Bind(R.id.drawer_layout) DrawerLayout drawerLayout;
@@ -200,11 +201,12 @@ public class establecimiento extends BaseActivity implements SearchView.OnQueryT
     txtPhone.setText(establecimiento.getTelefono());
     txtEmail.setText("");
     txtWebsite.setText(establecimiento.getSitioWeb());
+
     ratingBar.setRating(Float.parseFloat(establecimiento.getPuntuacion() + ""));
-    btnSahreFb.setVisibility(establecimiento.getFacebook() != null ? View.VISIBLE : View.INVISIBLE);
-    btnSahreFb.setOnClickListener(view -> openUrl(
-        establecimiento.getFacebook() != null ? establecimiento.getFacebook() : ""));
-    btnSahreTw.setVisibility(establecimiento.getTwitter() != null ? View.VISIBLE : View.INVISIBLE);
+    //btnSahreFb.setVisibility(establecimiento.getFacebook() != null ? View.VISIBLE : View.INVISIBLE);
+    //btnSahreFb.setOnClickListener(view -> openUrl(
+    //    establecimiento.getFacebook() != null ? establecimiento.getFacebook() : ""));
+    //btnSahreTw.setVisibility(establecimiento.getTwitter() != null ? View.VISIBLE : View.INVISIBLE);
     btnSahreTw.setOnClickListener(
         view -> openUrl(establecimiento.getTwitter() != null ? establecimiento.getTelefono() : ""));
     renderSlideImages(establecimiento.getUrlImagen());
@@ -214,6 +216,7 @@ public class establecimiento extends BaseActivity implements SearchView.OnQueryT
     GridLayoutManager glm = new GridLayoutManager(this, 2);
     rvHome.setLayoutManager(glm);
     rvHome.setAdapter(adapter);
+
     ratingBar.setOnRatingBarChangeListener(
         (ratingBar1, v, b) -> onRatingChange(v, establecimiento));
     //txtDescription.setText();

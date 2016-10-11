@@ -26,7 +26,6 @@ import java.util.Map;
 import org.greenrobot.eventbus.EventBus;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 
 import static android.text.TextUtils.isEmpty;
@@ -48,7 +47,9 @@ public class ingresar extends BaseFragment {
     View view = inflater.inflate(R.layout.ingresar, container, false);
     ButterKnife.bind(this, view);
     baseActivity = (BaseActivity) getActivity();
+    assert edtEmail != null;
     emailChangeObservable = RxTextView.textChanges(edtEmail).skip(1);
+    assert edtPassword != null;
     passwordChangeObservable = RxTextView.textChanges(edtPassword).skip(1);
     rxValidationLogin();
     return view;
@@ -56,31 +57,28 @@ public class ingresar extends BaseFragment {
 
   private void rxValidationLogin() {
     Observable.combineLatest(emailChangeObservable, passwordChangeObservable,
-        new Func2<CharSequence, CharSequence, Boolean>() {
-          @NonNull @Override
-          public Boolean call(@NonNull CharSequence newEmail, CharSequence newPassword) {
-            boolean emailValid = !isEmpty(newEmail) && baseActivity.validateEmail(newEmail);
+        (newEmail, newPassword) -> {
+          boolean emailValid = !isEmpty(newEmail) && baseActivity.validateEmail(newEmail);
 
-            if (!emailValid) {
-              //emailWrapper.setErrorEnabled(true);
-              //emailWrapper.setError(getString(R.string.err_email));
-            } else {
-              //emailWrapper.setError(null);
-              //emailWrapper.setErrorEnabled(false);
-              //baseActivity.Log("email ok");
-            }
-            boolean passValid = !isEmpty(newPassword);
-            if (!passValid) {
-              //passwordWrapper.setErrorEnabled(true);
-              //passwordWrapper.setError(getString(R.string.err_pass));
-            } else {
-              //passwordWrapper.setError(null);
-              //passwordWrapper.setErrorEnabled(false);
-              //baseActivity.Log("passok ok");
-            }
-
-            return emailValid && passValid;
+          if (!emailValid) {
+            //emailWrapper.setErrorEnabled(true);
+            //emailWrapper.setError(getString(R.string.err_email));
+          } else {
+            //emailWrapper.setError(null);
+            //emailWrapper.setErrorEnabled(false);
+            //baseActivity.Log("email ok");
           }
+          boolean passValid = !isEmpty(newPassword);
+          if (!passValid) {
+            //passwordWrapper.setErrorEnabled(true);
+            //passwordWrapper.setError(getString(R.string.err_pass));
+          } else {
+            //passwordWrapper.setError(null);
+            //passwordWrapper.setErrorEnabled(false);
+            //baseActivity.Log("passok ok");
+          }
+
+          return emailValid && passValid;
         }).compose(bindToLifecycle()).subscribe(aBoolean -> {
       if (aBoolean) {
         // baseActivity.Log("validacion email && pass ok");
@@ -120,9 +118,7 @@ public class ingresar extends BaseFragment {
             .doOnCompleted(() -> baseActivity.dismissDialog())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(this::onSuccesValidar, throwable -> baseActivity.errControl(throwable),
-                () -> {
-                  baseActivity.dismissDialog();
-                });
+                () -> baseActivity.dismissDialog());
       } else {
         baseActivity.showMaterialDialog(getString(R.string.err_pass),
             new BaseActivity.onClickCallback() {

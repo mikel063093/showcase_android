@@ -65,7 +65,7 @@ public class SlideAdapter extends PagerAdapter {
         : images.get(position);
 
     Log.e("HOLDER", url);
-    Picasso.with(context).load(url).fit().into(holder.image_display);
+    Picasso.with(context).load(url).into(holder.image_display);
     container.addView(view);
     return view;
   }

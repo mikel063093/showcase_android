@@ -74,8 +74,8 @@
                 android:id="@+id/edt_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ico_correo"
                 android:drawablePadding="@dimen/_8sdp"
-                android:drawableStart="@drawable/ico_correo"
                 android:inputType="textEmailAddress"
                 android:theme="@style/edt_singin"
                 />
@@ -96,7 +96,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawablePadding="@dimen/_8sdp"
-                android:drawableStart="@drawable/ico_contrasena"
+                android:drawableLeft="@drawable/ico_contrasena"
                 android:inputType="textPassword"
                 android:theme="@style/edt_singin"
                 />

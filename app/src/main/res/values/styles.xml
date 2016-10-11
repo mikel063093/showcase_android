@@ -59,7 +59,7 @@
   </style>
 
   <style name="card_singin" parent="CardView">
-    <item name="cardCornerRadius">5dp</item>
+    <item name="cardCornerRadius">1dp</item>
     <item name="android:background">@drawable/shape_singin_card</item>
     <item name="android:hardwareAccelerated">true</item>
     <item name="cardUseCompatPadding">true</item>
@@ -83,8 +83,8 @@
   </style>
 
   <style name="card_singin_small" parent="CardView">
-    <item name="cardCornerRadius">5dp</item>
-    <item name="android:background">@drawable/shape_singin_card</item>
+    <item name="cardCornerRadius">1dp</item>
+    <item name="android:background">@drawable/shape_singin_card_small</item>
     <item name="android:hardwareAccelerated">true</item>
     <item name="cardUseCompatPadding">true</item>
 
@@ -137,6 +137,14 @@
     <item name="fontPath">fonts/Circular-Std-Book.otf</item>
   </style>
 
+  <style name="txt_taupe1_open_sans" parent="android:Widget.TextView">
+    <item name="android:textColor">@color/taupe1</item>
+    <item name="android:textSize">@dimen/texto_botones_size</item>
+    <item name="android:textStyle">normal</item>
+    <item name="fontPath">fonts/OpenSans-Regular.ttf</item>
+  </style>
+
+
 
   <style name="txt_medium_turquoise" parent="android:Widget.TextView">
     <item name="android:textColor">@color/medium_turquoise</item>
@@ -145,13 +153,12 @@
     <item name="fontPath">fonts/Circular-Std-Bold.otf</item>
   </style>
 
-  <style name="RatingBarCompany" parent="android:style/Widget.Material.RatingBar.Small">
+  <style name="RatingBarCompany" parent="Theme.AppCompat">
 
-    <item name="android:progressTint">@color/usc_gold</item>
-    <item name="android:progressBackgroundTint">@color/usc_gold</item>
-    <item name="android:secondaryProgressTint">@color/usc_gold</item>
-    <item name="android:minHeight">@dimen/_16sdp</item>
-    <item name="android:maxHeight">@dimen/_18sdp</item>
+    <item name="colorControlNormal">@color/usc_gold</item>
+    <item name="colorControlActivated">@color/usc_gold</item>
+    <!--<item name="android:minHeight">@dimen/_16sdp</item>-->
+    <!--<item name="android:maxHeight">@dimen/_18sdp</item>-->
   </style>
 
   <style name="txt_green_style" parent="android:Widget.TextView">
@@ -276,7 +283,8 @@
 
   </style>
 
-  <style name="MyToolbarElevation" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+  <style name="MyToolbarElevation"
+      parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
     <item name="theme">@style/ThemeOverlay.AppCompat.Dark</item>
     <item name="android:background">?colorPrimary</item>
     <item name="android:textColorPrimary">@color/white</item>
