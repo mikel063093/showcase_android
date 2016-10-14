@@ -203,10 +203,10 @@ public class establecimiento extends BaseActivity implements SearchView.OnQueryT
     txtWebsite.setText(establecimiento.getSitioWeb());
 
     ratingBar.setRating(Float.parseFloat(establecimiento.getPuntuacion() + ""));
-    //btnSahreFb.setVisibility(establecimiento.getFacebook() != null ? View.VISIBLE : View.INVISIBLE);
-    //btnSahreFb.setOnClickListener(view -> openUrl(
-    //    establecimiento.getFacebook() != null ? establecimiento.getFacebook() : ""));
-    //btnSahreTw.setVisibility(establecimiento.getTwitter() != null ? View.VISIBLE : View.INVISIBLE);
+    btnSahreFb.setVisibility(establecimiento.getFacebook() != null ? View.VISIBLE : View.INVISIBLE);
+    btnSahreFb.setOnClickListener(view -> openUrl(
+        establecimiento.getFacebook() != null ? establecimiento.getFacebook() : ""));
+    btnSahreTw.setVisibility(establecimiento.getTwitter() != null ? View.VISIBLE : View.INVISIBLE);
     btnSahreTw.setOnClickListener(
         view -> openUrl(establecimiento.getTwitter() != null ? establecimiento.getTelefono() : ""));
     renderSlideImages(establecimiento.getUrlImagen());
