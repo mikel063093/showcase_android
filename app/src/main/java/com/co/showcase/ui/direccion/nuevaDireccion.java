@@ -66,6 +66,7 @@ public class nuevaDireccion extends BaseActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.nuevadireccion);
     ButterKnife.bind(this);
+    assert toolbarPerfil != null;
     configBackToolbar(toolbarPerfil);
     rxCheckPermisionLocation().subscribe(aBoolean -> {
       if (aBoolean) getLastLocation();

@@ -22,6 +22,7 @@ import com.co.showcase.api.REST;
 import com.co.showcase.model.Carrito;
 import com.co.showcase.model.Direccion;
 import com.co.showcase.model.RequestPedido;
+import com.co.showcase.model.ResponseCupon;
 import com.co.showcase.model.ResponseDirecciones;
 import com.co.showcase.model.ResponseRealizarPedido;
 import com.co.showcase.model.ResponseVerCarrito;
@@ -51,6 +52,7 @@ public class checkout extends BaseActivity {
   @Nullable @Bind(R.id.txt_domicilio) AppCompatTextView txtDomicilio;
   @Nullable @Bind(R.id.txt_total_final) AppCompatTextView txtTotalFinal;
   @Nullable @Bind(R.id.root) LinearLayout root;
+  private ResponseCupon cupon;
   private Direccion direccion;
 
   @Override public void onCreate(Bundle savedInstanceState) {
@@ -118,8 +120,8 @@ public class checkout extends BaseActivity {
   private String getPedidoJson() {
     RequestPedido pedido = new RequestPedido();
     pedido.setDireccion(direccion != null ? direccion.getId() : -1);
-    if (!TextUtils.isEmpty(edtCupon.getText())) {
-      pedido.setCupon(edtCupon.getText().toString());
+    if (!TextUtils.isEmpty(edtCupon.getText()) && cupon != null) {
+      pedido.setCupon(cupon.getId() + "");
     }
     pedido.setFormaPago(edtPago.getText().toString());
     pedido.setTelefono(edtTelefono.getText().toString());
@@ -283,9 +285,15 @@ public class checkout extends BaseActivity {
       Intent data = result.data();
       int resultCode = result.resultCode();
       if (resultCode == RESULT_OK) {
-        String direccion = data.getStringExtra(cupon.class.getSimpleName());
-        assert edtCupon != null;
-        edtCupon.setText(direccion != null ? direccion : "");
+        String json = data.getStringExtra(cupon.class.getSimpleName());
+        cupon = AppMain.getGson().fromJson(json, ResponseCupon.class);
+        if (cupon != null && cupon.getEstado() == 1) {
+          assert edtCupon != null;
+          edtCupon.setText(cupon.getMensaje());
+          Double current_payment = Double.parseDouble(txtTotalFinal.getText().toString());
+          Double descuento = current_payment - Double.parseDouble(cupon.getValor() + "");
+          txtTotalFinal.setText(descuento.intValue() + "");
+        }
       }
     });
   }

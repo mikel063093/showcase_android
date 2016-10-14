@@ -11,6 +11,7 @@ import android.view.View;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.co.showcase.AppMain;
 import com.co.showcase.R;
 import com.co.showcase.api.REST;
 import com.co.showcase.model.ResponseCupon;
@@ -71,7 +72,7 @@ public class cupon extends BaseActivity {
       if (isForResult()) {
         Intent data = new Intent();
         assert edtCupon != null;
-        data.putExtra(this.getClass().getSimpleName(), edtCupon.getText().toString());
+        data.putExtra(this.getClass().getSimpleName(), AppMain.getGson().toJson(responseCupon));
         setResult(RESULT_OK, data);
         finish();
       }
