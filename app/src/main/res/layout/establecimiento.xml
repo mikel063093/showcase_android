@@ -69,7 +69,7 @@
           <RelativeLayout
 
               android:layout_width="match_parent"
-              android:layout_height="@dimen/_364sdp"
+              android:layout_height="@dimen/_384sdp"
               android:layout_marginLeft="@dimen/_12sdp"
               android:layout_marginRight="@dimen/_12sdp"
               android:layout_marginTop="@dimen/_11sdp"
@@ -78,7 +78,7 @@
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_364sdp"
+                android:layout_height="@dimen/_384sdp"
                 android:layout_marginLeft="@dimen/_13sdp"
                 android:layout_marginRight="@dimen/_13sdp"
                 android:layout_marginTop="@dimen/_7sdp"
@@ -105,11 +105,9 @@
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_331sdp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
+                android:layout_height="@dimen/_356sdp"
                 style="@style/card_singin"
-            >
+                android:layout_alignParentTop="true" android:layout_alignParentStart="true">
 
               <LinearLayout
                   android:layout_width="match_parent"
@@ -132,11 +130,11 @@
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/txt_description"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_120sdp"
+                    android:layout_height="@dimen/_126sdp"
                     android:gravity="start|center"
-                    android:maxLines="20"
+
                     android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla dui lorem, dictum at orci non, rutrum ullamcorper felis. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras pulvinar convallis quam, et pulvinar nisi. Duis consequat vulputate dapibus. Donec eu luctus mauris."
-                    android:textSize="16sp"
+                    android:textSize="@dimen/_10sdp"
                     style="@style/txt_taupe1_open_sans"
 
                 />
@@ -286,7 +284,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_6sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:gravity="center"
                     android:orientation="vertical"
                 >
@@ -298,7 +296,7 @@
                       app:srb_fillColor="@color/usc_gold"
                       app:srb_numberOfStars="5"
                       app:srb_rating="5"
-                      app:srb_starSize="22dp"
+                      app:srb_starSize="26dp"
                       app:srb_stepSize="0.5"
                   />
                   <!--<RatingBar-->
