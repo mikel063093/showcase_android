@@ -1,16 +1,11 @@
 package com.co.showcase.ui.establecimiento;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -30,15 +24,12 @@ import com.co.showcase.R;
 import com.co.showcase.api.REST;
 import com.co.showcase.model.Establecimiento;
 import com.co.showcase.model.ResponsePuntuacion;
-import com.co.showcase.model.Slides;
 import com.co.showcase.model.Usuario;
 import com.co.showcase.ui.BaseActivity;
 import com.co.showcase.ui.CustomView.CirclePageIndicator;
 import com.co.showcase.ui.home.SlideAdapter;
 import com.co.showcase.ui.perfil.perfil;
-import com.co.showcase.ui.slide.slide;
 import com.iarcuschin.simpleratingbar.SimpleRatingBar;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,13 +55,13 @@ public class establecimiento extends BaseActivity implements SearchView.OnQueryT
   @Nullable @Bind(R.id.drawer) RelativeLayout drawer;
   @Nullable @Bind(R.id.drawer_layout) DrawerLayout drawerLayout;
   @Nullable @Bind(R.id.share_general) ImageView shareGeneral;
-  private SearchView searchView;
   private MenuItem searchItem;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.establecimiento);
     ButterKnife.bind(this);
+    assert toolbar != null;
     configBackToolbar(toolbar);
     if (getIntent() != null
         && getIntent().getStringExtra(this.getClass().getSimpleName()) != null) {
@@ -82,50 +73,10 @@ public class establecimiento extends BaseActivity implements SearchView.OnQueryT
     }
   }
 
-  private void setupSlider() {
-    getSupportFragmentManager().beginTransaction().replace(R.id.drawer, new slide()).commit();
-
-    ActionBarDrawerToggle toggle =
-        new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.open) {
-
-          @Override public void onDrawerClosed(View drawerView) {
-            // Code here will be triggered once the drawer closes as we dont want anything to happen so we leave this blank
-            super.onDrawerClosed(drawerView);
-          }
-
-          @Override public void onDrawerOpened(View drawerView) {
-            // Code here will be triggered once the drawer open as we dont want anything to happen so we leave this blank
-
-            super.onDrawerOpened(drawerView);
-          }
-        };
-    toggle.setDrawerIndicatorEnabled(false);
-
-    Drawable drawable =
-        ResourcesCompat.getDrawable(getResources(), R.drawable.btn_menu_principal, getTheme());
-
-    toggle.setHomeAsUpIndicator(drawable);
-    toggle.setToolbarNavigationClickListener(v -> {
-      if (drawerLayout.isDrawerVisible(GravityCompat.START)) {
-        drawerLayout.closeDrawer(GravityCompat.START);
-      } else {
-        drawerLayout.openDrawer(GravityCompat.START);
-      }
-    });
-    assert drawerLayout != null;
-    drawerLayout.addDrawerListener(toggle);
-    toggle.syncState();
-  }
-
-  private void setupToolbar() {
-    setSupportActionBar(toolbar);
-    toolbar.setTitle(R.string.app_name);
-    toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
-  }
-
   @Override public boolean onCreateOptionsMenu(@NonNull Menu menu) {
     getMenuInflater().inflate(R.menu.menu_main, menu);
-    searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+    SearchView searchView =
+        (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
     searchItem = menu.findItem(R.id.action_search);
     MenuItemCompat.setOnActionExpandListener(searchItem,
         new MenuItemCompat.OnActionExpandListener() {
@@ -194,37 +145,49 @@ public class establecimiento extends BaseActivity implements SearchView.OnQueryT
   }
 
   private void updateUI(@NonNull Establecimiento establecimiento) {
+    assert txtNameCompany != null;
     txtNameCompany.setText(establecimiento.getNombre());
+    assert txtDescription != null;
     txtDescription.setText(establecimiento.getDescripcion());
+    assert txtAddres != null;
     txtAddres.setText(establecimiento.getDireccion());
-    txtCelphone.setText(establecimiento.getTelefono());
+    assert txtCelphone != null;
+    txtCelphone.setText(establecimiento.getCelular() != null ? establecimiento.getCelular() : "");
+    assert txtPhone != null;
     txtPhone.setText(establecimiento.getTelefono());
-    txtEmail.setText("");
+    assert txtEmail != null;
+    txtEmail.setText(establecimiento.getCorreo() != null ? establecimiento.getCorreo() : "");
+    assert txtWebsite != null;
     txtWebsite.setText(establecimiento.getSitioWeb());
 
+    assert ratingBar != null;
+
     ratingBar.setRating(Float.parseFloat(establecimiento.getPuntuacion() + ""));
+    assert btnSahreFb != null;
     btnSahreFb.setVisibility(establecimiento.getFacebook() != null ? View.VISIBLE : View.INVISIBLE);
     btnSahreFb.setOnClickListener(view -> openUrl(
         establecimiento.getFacebook() != null ? establecimiento.getFacebook() : ""));
+    assert btnSahreTw != null;
     btnSahreTw.setVisibility(establecimiento.getTwitter() != null ? View.VISIBLE : View.INVISIBLE);
     btnSahreTw.setOnClickListener(
         view -> openUrl(establecimiento.getTwitter() != null ? establecimiento.getTelefono() : ""));
     renderSlideImages(establecimiento.getUrlImagen());
+    assert shareGeneral != null;
     shareGeneral.setOnClickListener(view -> share(establecimiento.getDescripcion()));
     establecimientoItemsAdapter adapter =
         new establecimientoItemsAdapter(this, establecimiento.getArticulos());
     GridLayoutManager glm = new GridLayoutManager(this, 2);
+    assert rvHome != null;
     rvHome.setLayoutManager(glm);
     rvHome.setAdapter(adapter);
 
     ratingBar.setOnRatingBarChangeListener(
         (ratingBar1, v, b) -> onRatingChange(v, establecimiento));
-    //txtDescription.setText();
   }
 
   private void onRatingChange(float value, @NonNull Establecimiento establecimiento) {
     Usuario usuario = getUserSync();
-    if (usuario.getToken().length() > 2) {
+    if (usuario.getToken() != null && usuario.getToken().length() > 2) {
       Map<String, Object> param = new HashMap<>();
       param.put("valor", value);
       param.put("id", establecimiento.getId());

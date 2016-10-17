@@ -1,13 +1,9 @@
 package com.co.showcase.api;
 
-import android.support.annotation.NonNull;
-import android.util.Log;
 import com.co.showcase.AppMain;
 import com.co.showcase.BuildConfig;
-
 import com.co.showcase.api.errorControl.RxErrorHandlingCallAdapterFactory;
 import okhttp3.OkHttpClient;
-
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.GsonConverterFactory;
 import retrofit2.Retrofit;
@@ -36,9 +32,5 @@ public class REST {
             .validateEagerly(BuildConfig.DEBUG)
             .build();
     return retrofit.create(API.class);
-  }
-
-  private static void Log(@NonNull String txt) {
-    if (BuildConfig.DEBUG) Log.e(REST.class.getSimpleName(), txt);
   }
 }

@@ -44,7 +44,12 @@
               android:background="@color/white"
               android:gravity="center"
           >
-
+            <android.support.v4.view.ViewPager
+                android:id="@+id/view_pager_home"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_135sdp"
+                android:layout_alignBottom="@+id/indicator_home"
+                android:layout_alignParentStart="true"/>
             <com.co.showcase.ui.CustomView.CirclePageIndicator
                 android:id="@+id/indicator_home"
                 android:layout_width="fill_parent"
@@ -55,16 +60,7 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/_7sdp"
                 android:gravity="center"
-                android:padding="10dip"
-
-            />
-            <android.support.v4.view.ViewPager
-                android:id="@+id/view_pager_home"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_135sdp"
-                android:layout_alignBottom="@+id/indicator_home"
-                android:layout_alignParentStart="true"
-            />
+                android:padding="10dip"/>
           </RelativeLayout>
           <RelativeLayout
 
@@ -106,8 +102,8 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_356sdp"
-                style="@style/card_singin"
-                android:layout_alignParentTop="true" android:layout_alignParentStart="true">
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true" style="@style/card_singin">
 
               <LinearLayout
                   android:layout_width="match_parent"

@@ -414,10 +414,11 @@ public class BaseActivity extends RxAppCompatActivity {
         RetrofitException error = (RetrofitException) throwable;
         if (error.getErrorBodyAs(ErrorControl.class) != null) {
           ErrorControl errorControl = error.getErrorBodyAs(ErrorControl.class);
-          showErr(errorControl.getMensaje());
+          assert errorControl != null;
+          showErr(errorControl.getMensaje() != null ? errorControl.getMensaje()
+              : getString(R.string.general_err));
         }
       } catch (IOException e) {
-
         log(e.getMessage());
         dismissDialog();
         String msg = getString(R.string.general_err);
@@ -554,43 +555,11 @@ public class BaseActivity extends RxAppCompatActivity {
         log("onPrepareload");
       }
     });
-    //RxPermissions.getInstance(this)
-    //    .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-    //    .compose(this.bindToLifecycle())
-    //    .subscribe(aBoolean -> {
-    //      if (aBoolean) {
-    //        String filenameArray[] = urlImage.split("\\.");
-    //        String extension = filenameArray[filenameArray.length - 1];
-    //        try {
-    //          String sha1 = SHA1(urlImage);
-    //          String fileName = sha1 + "." + extension;
-    //          log(fileName);
-    //
-    //          RxDownloader.getInstance(this)
-    //              .download(urlImage, fileName, "image/jpg")
-    //              .subscribe(s -> {
-    //                log(s);
-    //                try {
-    //
-    //                  Uri uri = convertFileToContentUri(getBaseContext(), new File(s));
-    //                  log(uri.toString());
-    //                  IntentShare.with(BaseActivity.this)
-    //                      .chooserTitle(getString(R.string.compartir))
-    //                      .text(body)
-    //                      .image(uri)
-    //                      .deliver();
-    //                } catch (Exception e) {
-    //                  e.printStackTrace();
-    //                }
-    //              });
-    //        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e1) {
-    //          e1.printStackTrace();
-    //        }
-    //      }
-    //    });
+
   }
 
-  @Nullable protected Uri convertFileToContentUri(@NonNull Context context, @NonNull File imageFile) throws Exception {
+  @Nullable protected Uri convertFileToContentUri(@NonNull Context context, @NonNull File imageFile)
+      throws Exception {
 
     String filePath = imageFile.getAbsolutePath();
     Cursor cursor = context.getContentResolver()

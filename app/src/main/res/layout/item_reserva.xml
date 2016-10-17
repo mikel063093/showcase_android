@@ -55,6 +55,32 @@
           android:layout_gravity="center"
           android:orientation="vertical"
           >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_150sdp"
+            android:layout_gravity="center"
+            android:background="@color/white"
+            android:gravity="center"
+            android:visibility="gone"
+        >
+          <android.support.v4.view.ViewPager
+              android:id="@+id/view_pager_home"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/_155sdp"
+              android:layout_alignBottom="@+id/indicator_home"
+              android:layout_alignParentStart="true"/>
+          <com.co.showcase.ui.CustomView.CirclePageIndicator
+              android:id="@+id/indicator_home"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:layout_alignParentBottom="true"
+              android:layout_alignParentEnd="true"
+              android:layout_alignParentRight="true"
+              android:layout_gravity="center"
+              android:layout_marginBottom="@dimen/_7sdp"
+              android:gravity="center"
+              android:padding="10dip"/>
+        </RelativeLayout>
         <ImageView
             android:id="@+id/img_item"
             android:layout_width="match_parent"

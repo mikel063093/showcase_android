@@ -45,6 +45,17 @@ public class Establecimiento extends BaseModel {
   String instagram;
   String puntuacionUsuario;
   Double puntuacion;
+  String celular;
+  String correo;
+
+  public String getCorreo() {
+    return correo;
+  }
+
+  public void setCorreo(String correo) {
+    this.correo = correo;
+  }
+
   ArrayList<Articulo> articulos;
 
   public String getNombre() {
@@ -193,5 +204,13 @@ public class Establecimiento extends BaseModel {
 
   public void setMarcador(String marcador) {
     this.marcador = marcador;
+  }
+
+  public String getCelular() {
+    return celular;
+  }
+
+  public void setCelular(String celular) {
+    this.celular = celular;
   }
 }

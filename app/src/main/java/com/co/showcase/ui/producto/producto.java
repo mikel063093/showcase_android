@@ -3,6 +3,7 @@ package com.co.showcase.ui.producto;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,9 +17,12 @@ import com.co.showcase.model.Articulo;
 import com.co.showcase.model.ResponseAgregarCarrito;
 import com.co.showcase.model.Usuario;
 import com.co.showcase.ui.BaseActivity;
+import com.co.showcase.ui.CustomView.CirclePageIndicator;
+import com.co.showcase.ui.home.SlideAdapter;
 import com.squareup.picasso.Picasso;
 import java.text.DecimalFormat;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -32,6 +36,8 @@ public class producto extends BaseActivity {
   @Nullable @Bind(R.id.txt_price_item) AppCompatTextView txtPriceItem;
   @Nullable @Bind(R.id.txt_units_item) AppCompatTextView txtUnitsItem;
   @Nullable @Bind(R.id.txt_item_count) AppCompatTextView txtItemCount;
+  @Bind(R.id.view_pager_home) ViewPager viewPagerHome;
+  @Bind(R.id.indicator_home) CirclePageIndicator indicatorHome;
   private Articulo articulo;
   @NonNull private DecimalFormat df = new DecimalFormat("###.#");
   private Usuario usuario;
@@ -52,11 +58,27 @@ public class producto extends BaseActivity {
   private void updateUi(@NonNull Articulo articulo) {
     this.articulo = articulo;
     Picasso.with(this).load(articulo.getImagen()).fit().into(imgItem);
+    assert txtNameItem != null;
     txtNameItem.setText(articulo.getNombre());
+    assert txtDescriptionItem != null;
     txtDescriptionItem.setText(articulo.getDescripcion());
+    assert txtPriceItem != null;
     txtPriceItem.setText("$" + articulo.getPrecio());
+    assert txtUnitsItem != null;
     txtUnitsItem.setText(articulo.getUnidades() + " " + articulo.getValorUnidades());
+    assert txtItemCount != null;
     txtItemCount.setText("0");
+  }
+
+  private void renderSlideImages(@NonNull List<String> imgs) {
+    if (imgs.size() >= 1) {
+      log("list logos" + imgs.size());
+      SlideAdapter adapter = new SlideAdapter(this, imgs, true);
+      assert viewPagerHome != null;
+      viewPagerHome.setAdapter(adapter);
+      assert indicatorHome != null;
+      indicatorHome.setViewPager(viewPagerHome);
+    }
   }
 
   @OnClick({ R.id.btn_less, R.id.btm_more, R.id.btn_reservar, R.id.share_general })
@@ -126,6 +148,7 @@ public class producto extends BaseActivity {
     if (add) {
       if (unidades >= current_payment + 1) {
         current_payment += 1;
+        assert txtPriceItem != null;
         txtPriceItem.setText("$" + articulo.getPrecio() * current_payment.intValue());
       } else {
         showErr(getString(R.string.max_item));
@@ -135,8 +158,10 @@ public class producto extends BaseActivity {
         current_payment -= 1;
         String txt = current_payment == 0 ? "$" + articulo.getPrecio()
             : "$" + articulo.getPrecio() * current_payment.intValue();
+        assert txtPriceItem != null;
         txtPriceItem.setText(txt);
       } else {
+        assert txtPriceItem != null;
         txtPriceItem.setText("$" + articulo.getPrecio());
       }
     }
