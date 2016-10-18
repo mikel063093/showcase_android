@@ -19,7 +19,6 @@ import com.co.showcase.model.Usuario;
 import com.co.showcase.ui.BaseActivity;
 import com.co.showcase.ui.CustomView.CirclePageIndicator;
 import com.co.showcase.ui.home.SlideAdapter;
-import com.squareup.picasso.Picasso;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
@@ -57,7 +56,7 @@ public class producto extends BaseActivity {
 
   private void updateUi(@NonNull Articulo articulo) {
     this.articulo = articulo;
-    Picasso.with(this).load(articulo.getImagen()).fit().into(imgItem);
+    // Picasso.with(this).load(articulo.getImagen().get(0)).fit().into(imgItem);
     assert txtNameItem != null;
     txtNameItem.setText(articulo.getNombre());
     assert txtDescriptionItem != null;
@@ -68,6 +67,7 @@ public class producto extends BaseActivity {
     txtUnitsItem.setText(articulo.getUnidades() + " " + articulo.getValorUnidades());
     assert txtItemCount != null;
     txtItemCount.setText("0");
+    renderSlideImages(articulo.getImagen());
   }
 
   private void renderSlideImages(@NonNull List<String> imgs) {
@@ -85,7 +85,8 @@ public class producto extends BaseActivity {
   public void onClick(@NonNull View view) {
     switch (view.getId()) {
       case R.id.share_general:
-        share(getString(R.string.compartir_cont, articulo.getDescripcion()), articulo.getImagen());
+        share(getString(R.string.compartir_cont, articulo.getDescripcion()),
+            articulo.getImagen().get(0));
         break;
       case R.id.btn_less:
         if (articulo != null) {
@@ -96,6 +97,7 @@ public class producto extends BaseActivity {
         onAddOrLess(true);
         break;
       case R.id.btn_reservar:
+        assert txtItemCount != null;
         Double current_payment = Double.parseDouble(txtItemCount.getText().toString());
 
         if (current_payment >= 1 && usuario != null && usuario.getToken() != null) {
@@ -142,6 +144,7 @@ public class producto extends BaseActivity {
 
   private void onAddOrLess(boolean add) {
 
+    assert txtItemCount != null;
     Double current_payment = Double.parseDouble(txtItemCount.getText().toString());
     Double unidades = articulo.getCantidad();
     log("onAddorLess " + add + " " + current_payment + " " + unidades);

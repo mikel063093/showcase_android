@@ -425,7 +425,7 @@ public class BaseActivity extends RxAppCompatActivity {
         showErr(msg);
       }
     } else {
-      log("posible time out");
+      log("posible time out" + throwable.getMessage());
       String msg = getString(R.string.general_err);
       dismissDialog();
       showErr(msg);
@@ -555,7 +555,6 @@ public class BaseActivity extends RxAppCompatActivity {
         log("onPrepareload");
       }
     });
-
   }
 
   @Nullable protected Uri convertFileToContentUri(@NonNull Context context, @NonNull File imageFile)

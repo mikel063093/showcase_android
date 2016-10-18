@@ -174,6 +174,7 @@ public class establecimiento extends BaseActivity implements SearchView.OnQueryT
     renderSlideImages(establecimiento.getUrlImagen());
     assert shareGeneral != null;
     shareGeneral.setOnClickListener(view -> share(establecimiento.getDescripcion()));
+
     establecimientoItemsAdapter adapter =
         new establecimientoItemsAdapter(this, establecimiento.getArticulos());
     GridLayoutManager glm = new GridLayoutManager(this, 2);

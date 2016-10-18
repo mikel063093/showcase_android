@@ -1,5 +1,6 @@
 package com.co.showcase.model;
 
+import com.co.showcase.AppMain;
 import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +46,8 @@ public class Establecimiento extends BaseModel {
   String instagram;
   String puntuacionUsuario;
   Double puntuacion;
-  String celular;
+  ArrayList<BeanArticulo> articulos;
+  @SerializedName("whatsapp") String celular;
   String correo;
 
   public String getCorreo() {
@@ -55,8 +57,6 @@ public class Establecimiento extends BaseModel {
   public void setCorreo(String correo) {
     this.correo = correo;
   }
-
-  ArrayList<Articulo> articulos;
 
   public String getNombre() {
     return nombre;
@@ -191,10 +191,25 @@ public class Establecimiento extends BaseModel {
   }
 
   public ArrayList<Articulo> getArticulos() {
-    return articulos;
+    ArrayList<Articulo> arr = new ArrayList<>();
+    for (BeanArticulo beanArticulo : articulos) {
+      Articulo articulo = new Articulo();
+      articulo.setCantidad(beanArticulo.getCantidad());
+      articulo.setDescripcion(beanArticulo.getDescripcion());
+      articulo.setId(beanArticulo.getId());
+      List<String> imagenes = new ArrayList<>();
+      imagenes.add(beanArticulo.getImagen());
+      articulo.setImagen(imagenes);
+      articulo.setNombre(beanArticulo.getNombre());
+      articulo.setPrecio(beanArticulo.getPrecio());
+      articulo.setUnidades(beanArticulo.getUnidades());
+      articulo.setValorUnidades(beanArticulo.getValorUnidades());
+      arr.add(articulo);
+    }
+    return arr;
   }
 
-  public void setArticulos(ArrayList<Articulo> articulos) {
+  public void setArticulos(ArrayList<BeanArticulo> articulos) {
     this.articulos = articulos;
   }
 
@@ -212,5 +227,98 @@ public class Establecimiento extends BaseModel {
 
   public void setCelular(String celular) {
     this.celular = celular;
+  }
+
+  public class BeanArticulo {
+    /**
+     * descripcion : camisa lacoste
+     * cantidad : 10
+     */
+
+    public String descripcion;
+    public Double cantidad;
+    /**
+     * id : 1
+     * nombre : camisa lacoste
+     * precio : 1000
+     * unidades : talla
+     * valorUnidades : 10
+     * imagen : https://test.showcase.com.co//imagenes/articulos/cc1b91f532c1b888d9056792a282fa8dc7e28f4f.png
+     */
+
+    private int id;
+    private String nombre;
+    private int precio;
+    private String unidades;
+    private int valorUnidades;
+    String imagen;
+
+    public int getId() {
+      return id;
+    }
+
+    public void setId(int id) {
+      this.id = id;
+    }
+
+    public String getNombre() {
+      return nombre;
+    }
+
+    public void setNombre(String nombre) {
+      this.nombre = nombre;
+    }
+
+    public int getPrecio() {
+      return precio;
+    }
+
+    public void setPrecio(int precio) {
+      this.precio = precio;
+    }
+
+    public String getUnidades() {
+      return unidades;
+    }
+
+    public void setUnidades(String unidades) {
+      this.unidades = unidades;
+    }
+
+    public int getValorUnidades() {
+      return valorUnidades;
+    }
+
+    public void setValorUnidades(int valorUnidades) {
+      this.valorUnidades = valorUnidades;
+    }
+
+    public String getImagen() {
+      return imagen;
+    }
+
+    public void setImagen(String imagen) {
+      this.imagen = imagen;
+    }
+
+    public String getDescripcion() {
+      return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+      this.descripcion = descripcion;
+    }
+
+    public Double getCantidad() {
+      return cantidad;
+    }
+
+    public void setCantidad(Double cantidad) {
+      this.cantidad = cantidad;
+    }
+
+    @Override public String toString() {
+      return AppMain.getGson().toJson(this);
+    }
   }
 }

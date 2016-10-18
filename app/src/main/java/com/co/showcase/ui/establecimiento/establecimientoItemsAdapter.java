@@ -109,7 +109,7 @@ public class establecimientoItemsAdapter
     assert mData != null;
     Articulo item = mData.get(position);
     if (item != null) {
-      Picasso.with(mContext).load(item.getImagen()).fit().into(holder.imgItem);
+      Picasso.with(mContext).load(item.getImagen().get(position)).fit().into(holder.imgItem);
       holder.txtDescriptionItem.setText(item.getNombre());
       holder.txtPriceItem.setText("$" + item.getPrecio() + "");
       holder.txtUnitsItem.setText(item.getUnidades() + " " + item.getValorUnidades());

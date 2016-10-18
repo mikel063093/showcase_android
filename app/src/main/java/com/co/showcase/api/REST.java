@@ -28,7 +28,7 @@ public class REST {
             .client(client)
             .addConverterFactory(GsonConverterFactory.create(AppMain.getGson()))
             .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-            .addCallAdapterFactory(RxErrorHandlingCallAdapterFactory.create())
+            //.addCallAdapterFactory(RxErrorHandlingCallAdapterFactory.create())
             .validateEagerly(BuildConfig.DEBUG)
             .build();
     return retrofit.create(API.class);

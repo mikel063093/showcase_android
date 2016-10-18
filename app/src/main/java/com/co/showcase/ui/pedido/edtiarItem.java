@@ -131,7 +131,7 @@ public class edtiarItem extends BaseActivity {
 
   private void updateUi(@Nullable Carrito.ItemsBean item) {
     if (item != null && articulo != null) {
-      Picasso.with(this).load(articulo.getImagen()).fit().into(imgItem);
+      Picasso.with(this).load(articulo.getImagen().get(0)).fit().into(imgItem);
       txtNameItem.setText(articulo.getNombre());
       txtPriceItem.setText("$" + (articulo.getPrecio() * item.getCantidad()));
       String unitItem =

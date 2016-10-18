@@ -1,6 +1,8 @@
 package com.co.showcase.model;
 
 import com.co.showcase.AppMain;
+import com.google.gson.annotations.SerializedName;
+import java.util.List;
 
 /**
  * Created by home on 4/08/16.
@@ -29,7 +31,7 @@ public class Articulo {
   private int precio;
   private String unidades;
   private int valorUnidades;
-  private String imagen;
+  @SerializedName("imagen") List<String> imagen;
 
   public int getId() {
     return id;
@@ -71,11 +73,11 @@ public class Articulo {
     this.valorUnidades = valorUnidades;
   }
 
-  public String getImagen() {
+  public List<String> getImagen() {
     return imagen;
   }
 
-  public void setImagen(String imagen) {
+  public void setImagen(List<String> imagen) {
     this.imagen = imagen;
   }
 
