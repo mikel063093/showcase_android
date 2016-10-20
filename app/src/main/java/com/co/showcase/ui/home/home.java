@@ -97,7 +97,7 @@ public class home extends BaseActivity implements SearchView.OnQueryTextListener
           .compose(bindToLifecycle())
           .subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
-          .subscribe(this::succesVerCarrito);
+          .subscribe(this::succesVerCarrito,this::errControl);
     }
   }
 

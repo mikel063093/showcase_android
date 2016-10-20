@@ -2,7 +2,7 @@ package com.co.showcase.api;
 
 import com.co.showcase.AppMain;
 import com.co.showcase.BuildConfig;
-import com.co.showcase.api.errorControl.RxErrorHandlingCallAdapterFactory;
+import java.util.concurrent.TimeUnit;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.GsonConverterFactory;
@@ -21,14 +21,14 @@ public class REST {
     logging.setLevel(
         BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.BODY);
     httpClient.addInterceptor(logging);
-
+    httpClient.connectTimeout(5, TimeUnit.SECONDS);
     OkHttpClient client = httpClient.build();
+
     Retrofit retrofit =
         new Retrofit.Builder().baseUrl("https://test.showcase.com.co/app_dev.php/movil/")
             .client(client)
             .addConverterFactory(GsonConverterFactory.create(AppMain.getGson()))
             .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-            //.addCallAdapterFactory(RxErrorHandlingCallAdapterFactory.create())
             .validateEagerly(BuildConfig.DEBUG)
             .build();
     return retrofit.create(API.class);

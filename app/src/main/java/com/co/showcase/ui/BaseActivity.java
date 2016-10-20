@@ -63,6 +63,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import retrofit2.HttpException;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -409,27 +410,21 @@ public class BaseActivity extends RxAppCompatActivity {
 
   public void errControl(@NonNull Throwable throwable) {
     dismissDialog();
-    if (throwable instanceof RetrofitException) {
-      try {
-        RetrofitException error = (RetrofitException) throwable;
-        if (error.getErrorBodyAs(ErrorControl.class) != null) {
-          ErrorControl errorControl = error.getErrorBodyAs(ErrorControl.class);
-          assert errorControl != null;
-          showErr(errorControl.getMensaje() != null ? errorControl.getMensaje()
-              : getString(R.string.general_err));
-        }
-      } catch (IOException e) {
-        log(e.getMessage());
-        dismissDialog();
-        String msg = getString(R.string.general_err);
-        showErr(msg);
-      }
-    } else {
-      log("posible time out" + throwable.getMessage());
+    if (throwable instanceof HttpException) {
+      // We had non-2XX http error
+      log("F** error" + throwable.getMessage());
       String msg = getString(R.string.general_err);
       dismissDialog();
       showErr(msg);
     }
+    if (throwable instanceof IOException) {
+      // A network or conversion error happened
+      log("F** error" + throwable.getMessage());
+      String msg = getString(R.string.internet_err);
+      dismissDialog();
+      showErr(msg);
+    }
+
   }
 
   public boolean validate(@Nullable EditText autoCompleteTextView) {
