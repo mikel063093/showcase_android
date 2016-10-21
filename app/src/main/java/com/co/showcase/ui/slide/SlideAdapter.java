@@ -2,6 +2,8 @@ package com.co.showcase.ui.slide;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
@@ -61,8 +63,13 @@ public class SlideAdapter extends BaseAdapter {
     if (categoria != null) {
       assert holder.txtItemSlide != null;
       holder.txtItemSlide.setText(categoria.getNombre());
-      holder.txtItemSlide.setOnClickListener(
-          view -> ((BaseActivity) context).goCategoria(categoria));
+      holder.txtItemSlide.setOnClickListener(view -> {
+        if (categoria.getUrl() != null) {
+          ((BaseActivity) context).openUrl(categoria.getUrl());
+        } else {
+          ((BaseActivity) context).goCategoria(categoria);
+        }
+      });
     }
 
     return convertView;

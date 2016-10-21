@@ -1,25 +1,25 @@
 package com.co.showcase.ui;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -29,22 +29,32 @@ import com.co.showcase.AppMain;
 import com.co.showcase.BuildConfig;
 import com.co.showcase.R;
 import com.co.showcase.api.REST;
-import com.co.showcase.api.errorControl.RetrofitException;
 import com.co.showcase.model.Categoria;
 import com.co.showcase.model.EntryResponse;
-import com.co.showcase.model.ErrorControl;
+import com.co.showcase.model.ResponseAutoComplete;
+import com.co.showcase.model.ResponseVerCarrito;
 import com.co.showcase.model.TabPosition;
 import com.co.showcase.model.Usuario;
+import com.co.showcase.model.Zonas;
 import com.co.showcase.ui.categoria.categoria;
+import com.co.showcase.ui.direccion.direcciones;
+import com.co.showcase.ui.historial.historial;
+import com.co.showcase.ui.historial.pedidos_proceso;
+import com.co.showcase.ui.home.SuggestionAdapter;
+import com.co.showcase.ui.map.map;
+import com.co.showcase.ui.pedido.carritoPedidos;
+import com.co.showcase.ui.perfil.perfil;
+import com.co.showcase.ui.search_result.result;
 import com.co.showcase.ui.splash.Splash;
+import com.co.showcase.ui.terminos.terminos;
 import com.facebook.login.LoginManager;
 import com.github.pwittchen.reactivenetwork.library.ReactiveNetwork;
 import com.google.gson.Gson;
 import com.onesignal.OneSignal;
 import com.orhanobut.logger.Logger;
-import com.pavlospt.rxfile.RxFile;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
+
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import fr.tvbarthel.intentshare.IntentShare;
 import io.realm.Realm;
@@ -52,10 +62,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,15 +72,16 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import retrofit2.HttpException;
 import rx.Observable;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
+
 /**
  * Created by miguelalegria on 15/5/16 for DemoMike.
  */
-public class BaseActivity extends RxAppCompatActivity {
+public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQueryTextListener {
   protected static final String KEY_POSITION = "KEYPOSTION";
   private static final int SHARED_IMAGE_QUALITY = 100;
   private static final String SHARED_DIRECTORY = "sharing";
@@ -90,6 +98,16 @@ public class BaseActivity extends RxAppCompatActivity {
   private MaterialDialog loading;
   private Realm realm;
   @Nullable private MaterialDialog materialDialog;
+  private boolean isToolbarPretty = false;
+  private Menu menu;
+  private SubMenu subMenuMap;
+  private SearchView.SearchAutoComplete searchSrcTextView;
+  private MenuItem searchItem;
+  private SearchView searchView;
+
+  public void setToolbarPretty(boolean toolbarPretty) {
+    isToolbarPretty = toolbarPretty;
+  }
 
   private void showMessageOnSnakeBar(@NonNull View view, @NonNull String msg) {
     Snackbar.make(view, msg, Snackbar.LENGTH_SHORT).show();
@@ -103,10 +121,12 @@ public class BaseActivity extends RxAppCompatActivity {
 
   @Override protected void onResume() {
     super.onResume();
+    hideKeyboard();
     log("onResume");
     initDB();
     isOnpause = false;
     updateGcm(getUserSync());
+    verCarrito(getUserSync());
   }
 
   @Override protected void onStop() {
@@ -178,19 +198,9 @@ public class BaseActivity extends RxAppCompatActivity {
     return entryResponse.getObject(EntryResponse.class).asObservable();
   }
 
-  protected void configToolbarChild(@NonNull Toolbar toolbar, int idRes) {
-    AppCompatTextView toolbarText = (AppCompatTextView) toolbar.findViewById(R.id.txt_toolbar);
-    toolbarText.setText(getString(idRes));
-    final Drawable upArrow = getResources().getDrawable(R.drawable.btn_flechaizquierda);
-    toolbar.setNavigationIcon(upArrow);
-    toolbar.setNavigationOnClickListener(v -> {
-      finish();
-      overridePendingTransition(R.anim.move_left_in_activity, R.anim.move_right_out_activity);
-    });
-  }
-
   protected void configBackToolbar(@NonNull Toolbar toolbar) {
     final Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.btn_flechaizquierda);
+    setSupportActionBar(toolbar);
     toolbar.setNavigationIcon(upArrow);
     toolbar.setTitle(R.string.app_name);
     toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
@@ -198,6 +208,8 @@ public class BaseActivity extends RxAppCompatActivity {
       finish();
       overridePendingTransition(R.anim.move_left_in_activity, R.anim.move_right_out_activity);
     });
+    setToolbarPretty(true);
+    //setupToolbar(toolbar);
   }
 
   protected void configToolbar(@NonNull Toolbar toolbar, int idRes) {
@@ -207,9 +219,8 @@ public class BaseActivity extends RxAppCompatActivity {
 
   protected void configToolbarChild(@NonNull Toolbar toolbar, String idRes) {
     AppCompatTextView toolbarText = (AppCompatTextView) toolbar.findViewById(R.id.txt_toolbar);
-
     toolbarText.setText(idRes);
-    final Drawable upArrow = getResources().getDrawable(R.drawable.btn_flechaizquierda);
+    final Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.btn_flechaizquierda);
     toolbar.setNavigationIcon(upArrow);
     toolbar.setNavigationOnClickListener(v -> {
       finish();
@@ -255,8 +266,13 @@ public class BaseActivity extends RxAppCompatActivity {
   }
 
   @Override public void onBackPressed() {
-    super.onBackPressed();
-    overridePendingTransition(R.anim.move_left_in_activity, R.anim.move_right_out_activity);
+    if (searchView.isShown()) {
+      searchItem.collapseActionView();
+      searchView.setQuery("", false);
+    } else {
+      super.onBackPressed();
+      overridePendingTransition(R.anim.move_left_in_activity, R.anim.move_right_out_activity);
+    }
   }
 
   public boolean validateEmail(@NonNull String email) {
@@ -424,7 +440,6 @@ public class BaseActivity extends RxAppCompatActivity {
       dismissDialog();
       showErr(msg);
     }
-
   }
 
   public boolean validate(@Nullable EditText autoCompleteTextView) {
@@ -552,53 +567,6 @@ public class BaseActivity extends RxAppCompatActivity {
     });
   }
 
-  @Nullable protected Uri convertFileToContentUri(@NonNull Context context, @NonNull File imageFile)
-      throws Exception {
-
-    String filePath = imageFile.getAbsolutePath();
-    Cursor cursor = context.getContentResolver()
-        .query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-            new String[] { MediaStore.Images.Media._ID }, MediaStore.Images.Media.DATA + "=? ",
-            new String[] { filePath }, null);
-
-    if (cursor != null && cursor.moveToFirst()) {
-      int id = cursor.getInt(cursor.getColumnIndex(MediaStore.MediaColumns._ID));
-      Uri baseUri = Uri.parse("content://media/external/images/media");
-      return Uri.withAppendedPath(baseUri, "" + id);
-    } else {
-      if (imageFile.exists()) {
-        ContentValues values = new ContentValues();
-        values.put(MediaStore.Images.Media.DATA, filePath);
-        return context.getContentResolver()
-            .insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-      } else {
-        return null;
-      }
-    }
-  }
-
-  private static String convertToHex(@NonNull byte[] data) {
-    StringBuilder buf = new StringBuilder();
-    for (byte b : data) {
-      int halfbyte = (b >>> 4) & 0x0F;
-      int two_halfs = 0;
-      do {
-        buf.append((0 <= halfbyte) && (halfbyte <= 9) ? (char) ('0' + halfbyte)
-            : (char) ('a' + (halfbyte - 10)));
-        halfbyte = b & 0x0F;
-      } while (two_halfs++ < 1);
-    }
-    return buf.toString();
-  }
-
-  public static String SHA1(@NonNull String text)
-      throws NoSuchAlgorithmException, UnsupportedEncodingException {
-    MessageDigest md = MessageDigest.getInstance("SHA-1");
-    md.update(text.getBytes("iso-8859-1"), 0, text.length());
-    byte[] sha1hash = md.digest();
-    return convertToHex(sha1hash);
-  }
-
   public void openUrl(String url) {
     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
     startActivity(intent);
@@ -606,47 +574,6 @@ public class BaseActivity extends RxAppCompatActivity {
 
   public void share(@NonNull String body) {
     IntentShare.with(this).chooserTitle(getString(R.string.compartir)).text(body).deliver();
-  }
-
-  @Nullable public Uri getImageContentUri(@NonNull Context context, @NonNull String absPath) {
-    log("getImageContentUri: " + absPath);
-
-    Cursor cursor = context.getContentResolver()
-        .query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-            new String[] { MediaStore.Images.Media._ID }, MediaStore.Images.Media.DATA + "=? ",
-            new String[] { absPath }, null);
-
-    if (cursor != null && cursor.moveToFirst()) {
-      int id = cursor.getInt(cursor.getColumnIndex(MediaStore.MediaColumns._ID));
-      return Uri.withAppendedPath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-          Integer.toString(id));
-    } else if (!absPath.isEmpty()) {
-      ContentValues values = new ContentValues();
-      values.put(MediaStore.Images.Media.DATA, absPath);
-      return context.getContentResolver()
-          .insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-    } else {
-      return null;
-    }
-  }
-
-  public void getFileFromUrl(String url) {
-    RxFile.createFileFromUri(this, Uri.parse(url))
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new Subscriber<File>() {
-          @Override public void onCompleted() {
-            log("onCompleted() for File called");
-          }
-
-          @Override public void onError(@NonNull Throwable e) {
-            log("Error on file fetching:" + e.getMessage());
-          }
-
-          @Override public void onNext(@NonNull File file) {
-            log("onNext() file called:" + file.getAbsolutePath());
-          }
-        });
   }
 
   private Uri getShareableUri(@NonNull Context context, @NonNull Bitmap bitmap) {
@@ -673,5 +600,216 @@ public class BaseActivity extends RxAppCompatActivity {
       log("Fail to create temp file for bitmap sharing.");
     }
     return null;
+  }
+
+  @Override public boolean onQueryTextSubmit(@NonNull String query) {
+    Log(query);
+    if (query.length() > 2) autocompleteSearch(query);
+    return false;
+  }
+
+  private void autocompleteSearch(@NonNull String query) {
+    if (query.length() >= 1) {
+      Map<String, Object> param = new HashMap<>();
+      param.put("palabra", query);
+      REST.getRest()
+          .autoCompletarBusqueda(getUserSync().getToken(), param)
+          .debounce(150, MILLISECONDS)
+          .compose(bindToLifecycle())
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(this::succesAutoComplete, this::errControl);
+    }
+  }
+
+  private void succesAutoComplete(@NonNull ResponseAutoComplete responseAutoComplete) {
+    dismissDialog();
+    if (responseAutoComplete.estado == 1) {
+      searchSrcTextView.setAdapter(new SuggestionAdapter<>(this, R.layout.item_search_auto_complete,
+          responseAutoComplete.palabras));
+      searchSrcTextView.setOnItemClickListener((adapterView, view, i, l) -> {
+        log("autocomplete position: " + i + " data : " + searchSrcTextView.getAdapter()
+            .getItem(i)
+            .toString());
+        Intent goResult = new Intent(this, result.class);
+        goResult.putExtra(result.class.getSimpleName(),
+            searchSrcTextView.getAdapter().getItem(i).toString());
+        goActv(goResult, false);
+      });
+    }
+  }
+
+  @Override public boolean onQueryTextChange(String newText) {
+    Log(newText);
+    autocompleteSearch(newText);
+    return false;
+  }
+
+  public void setupToolbar(Toolbar toolbar) {
+    setSupportActionBar(toolbar);
+    toolbar.setTitle(R.string.app_name);
+    toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
+  }
+
+  @Override public boolean onCreateOptionsMenu(@NonNull Menu menu) {
+    if (isToolbarPretty) {
+      this.menu = menu;
+      getMenuInflater().inflate(R.menu.menu_main, menu);
+      MenuItem map = menu.findItem(R.id.action_map);
+      subMenuMap = map.getSubMenu();
+      Usuario usuario = getUserSync();
+      verCarrito(usuario);
+      getZonas(usuario);
+      searchView =
+          (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+      searchSrcTextView = (SearchView.SearchAutoComplete) searchView.findViewById(
+          android.support.v7.appcompat.R.id.search_src_text);
+      searchSrcTextView.setThreshold(1);
+      searchItem = menu.findItem(R.id.action_search);
+      MenuItemCompat.setOnActionExpandListener(searchItem,
+          new MenuItemCompat.OnActionExpandListener() {
+            @Override public boolean onMenuItemActionCollapse(MenuItem item) {
+              Log("closeMenuSearch");
+              setItemsVisibility(menu, searchItem, true);
+              return true;
+            }
+
+            @Override public boolean onMenuItemActionExpand(MenuItem item) {
+              return true;
+            }
+          });
+      searchView.setOnQueryTextListener(this);
+      searchView.setIconifiedByDefault(true);
+      searchView.setSubmitButtonEnabled(false);
+      searchView.setOnSearchClickListener(v -> {
+        Log("openSearch");
+        setItemsVisibility(menu, searchItem, false);
+      });
+      searchView.setOnCloseListener(() -> {
+        Log("closeSearch");
+        setItemsVisibility(menu, searchItem, true);
+        return false;
+      });
+    }
+    return isToolbarPretty;
+  }
+
+  @Override public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+    switch (item.getItemId()) {
+      case R.id.action_buy:
+        goActv(carritoPedidos.class, false);
+        break;
+
+      case R.id.action_map:
+        log("action map");
+        //goActv(map.class, false);
+        break;
+      case R.id.action_search:
+        log("action search");
+        //Toast.makeText(this, "Search", Toast.LENGTH_SHORT).show();
+        return true;
+      case R.id.action_perfil:
+        goActv(perfil.class, false);
+        break;
+      case R.id.action_direcciones:
+        goActv(direcciones.class, false);
+        break;
+      case R.id.action_salir:
+
+        showMaterialDialog(getString(R.string.salir), new onClickCallback() {
+          @Override public void onPositive(boolean result) {
+            clearDB();
+          }
+
+          @Override public void onDissmis() {
+
+          }
+
+          @Override public void onNegative(boolean result) {
+
+          }
+        });
+        break;
+      case R.id.itemZona1:
+        log("itemZona1");
+        goActv(new Intent(this, map.class).putExtras(item.getIntent().getExtras()), false);
+        break;
+      case R.id.action_pedidos:
+        goActv(pedidos_proceso.class, false);
+        break;
+      case R.id.action_historial:
+        goActv(historial.class, false);
+        break;
+      case R.id.terminos_condiciones:
+        goActv(terminos.class, false);
+        break;
+    }
+    return super.onOptionsItemSelected(item);
+  }
+
+  private void verCarrito(@Nullable Usuario usuario) {
+    if (usuario != null && usuario.getToken() != null) {
+      REST.getRest()
+          .verCarrito(usuario.getToken(), new HashMap<>())
+          .compose(bindToLifecycle())
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(this::succesVerCarrito, this::errControl);
+    }
+  }
+
+  private void succesVerCarrito(ResponseVerCarrito responseVerCarrito) {
+    if (responseVerCarrito != null
+        && responseVerCarrito.getEstado() == 1
+        && responseVerCarrito.getCarrito() != null
+        && responseVerCarrito.getCarrito().getFechaCreacion() != null) {
+
+      showMenuCarrito(responseVerCarrito.getCarrito().getSubtotal() > 0);
+    } else {
+      showMenuCarrito(false);
+    }
+  }
+
+  private void showMenuCarrito(boolean show) {
+    if (menu != null) {
+      MenuItem carrito = menu.findItem(R.id.action_buy);
+      Drawable drawable = show ? ContextCompat.getDrawable(this, R.drawable.btn_carrito_bandera)
+          : ContextCompat.getDrawable(this, R.drawable.btn_carrito);
+      if (carrito != null) carrito.setIcon(drawable);
+    }
+  }
+
+  private void getZonas(Usuario usuario) {
+    if (usuario != null && usuario.getToken() != null && usuario.getToken().length() > 2) {
+      Map<String, Object> param = new HashMap<>();
+      param.put("id", usuario.getId());
+      REST.getRest()
+          .zonas(usuario.getToken(), param)
+          .compose(bindToLifecycle())
+          //.doOnSubscribe(() -> showDialog(getString(R.string.loading)))
+          .subscribeOn(Schedulers.io())
+          //.doOnCompleted(this::dismissDialog)
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(this::renderZonasMenu, this::errControl);
+    }
+  }
+
+  private void renderZonasMenu(Zonas zonas) {
+    dismissDialog();
+    if (zonas != null && zonas.getEstado() == 1 && subMenuMap != null) {
+      for (Zonas.ZonasBean zonasBean : zonas.getZonas()) {
+        switch (zonasBean.nombre) {
+          case "Norte":
+            MenuItem menu = subMenuMap.add(0, R.id.itemZona1, Menu.NONE, zonasBean.nombre);
+            Intent i = new Intent(this, com.co.showcase.ui.map.map.class);
+            i.putExtra(map.class.getSimpleName(), zonasBean.id);
+            menu.setIntent(i);
+            break;
+        }
+      }
+    } else {
+      if (zonas != null) showErr(zonas.getMensaje());
+    }
   }
 }

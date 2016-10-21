@@ -21,12 +21,14 @@
   <string name="Enviar">Enviar</string>
   <string name="recuperar_password">¿No recuerdas tu\ncontraseña?</string>
   <string name="recuperar_password2">¿No recuerdas tu contraseña?</string>
-  <string name="escribe_tu_correo">Escríbe tu correo electrónico y te harémos\nllegar la forma para recuperarla.</string>
+  <string name="escribe_tu_correo">Escríbe tu correo electrónico y te harémos\nllegar la forma para
+    recuperarla.
+  </string>
   <string name="acept">Aceptar</string>
   <string name="cancel">Cancelar</string>
   <string name="err_email">Email invalido</string>
   <string name="err_pass">Password incorrecto</string>
-  <string name="loading">Cargando...</string>
+  <string name="loading">Cargando…</string>
   <string name="internet_err">Ha ocurrido un problema con tu conexion</string>
   <string name="general_err">Ha ocurrido un problema</string>
   <string name="perfil">Mi perfil</string>
@@ -59,7 +61,8 @@
   <string name="ciudad">Ciudad</string>
   <string name="nombre_direccion">Nombre para esta dirección</string>
   <string name="datos_invalidos">Los datos ingresados son inválidos</string>
-  <string name="reserva_ok">Tu pedido %1$s ha sido reservado!, continua con tu carrito de compras</string>
+  <string name="reserva_ok">Tu pedido %1$s ha sido reservado!, continua con tu carrito de compras
+  </string>
   <string name="desc_pedidos">Estos son los artículos de tu pedido</string>
   <string name="siguiente">Siguiente</string>
   <string name="subtotal">Subtotal</string>
@@ -81,16 +84,20 @@
   <string name="cupon_invalido">Código promocional inválido</string>
   <string name="regresar_inicio">Regresar al inicio</string>
   <string name="pedido_recivido">Hemos recibido tu pedido</string>
-  <string name="desc_pedido_ok">En este momento nuestro personal organizará tu pedido y los recibirás en la dirección suministrada</string>
+  <string name="desc_pedido_ok">En este momento nuestro personal organizará tu pedido y los
+    recibirás en la dirección suministrada
+  </string>
   <string name="pedido_enviado">Pedido enviado</string>
   <string name="pedidos_proceso">Pedidos en proceso</string>
-  <string name="estado_color">Estado: </string>
+  <string name="estado_color">Estado:</string>
   <string name="pedido_contaodr">Pedido #%1$s</string>
   <string name="pedido_fecha">Realizado el %1$s</string>
   <string name="historial_pedidos">Historial de pedidos</string>
   <string name="datos_pedido">Datos del pedido #%1$s</string>
   <string name="compartir">Selecciona cómo quieres compartir</string>
   <string name="compartir_cont">%1$s, encuntralo en https://showcase.com.co/</string>
+  <string name="terminos_condiciones">Términos y condiciones</string>
+  <string name="url">https://test.showcase.com.co/</string>
   <string-array name="formas_pago">
     <item>efectivo</item>
     <item>tarjeta</item>

@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.Toolbar;
@@ -62,7 +61,11 @@ public class perfil extends BaseActivity {
     assert edtApellido != null;
     edtApellido.setText(usuario.getApellido() != null ? usuario.getApellido() : "");
     assert edtEmail != null;
-    edtEmail.setText(usuario.getCorreo() != null ? usuario.getCorreo() : "");
+    boolean isEmail = validateEmail(usuario.getCorreo() != null ? usuario.getCorreo() : "");
+    if (!isEmail) {
+      edtEmail.setEnabled(false);
+    }
+    edtEmail.setText(isEmail && usuario.getCorreo() != null ? usuario.getCorreo() : "");
     assert edtPassword != null;
     edtPassword.setText(usuario.getTelefono() != null ? usuario.getTelefono() : "");
     if (usuario.getFoto() != null && usuario.getFoto().length() > 4) {

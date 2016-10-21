@@ -61,10 +61,8 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/_14sdp"
                 android:gravity="center"
-                android:text="@string/Almacenes_de_ropa"
                 android:textSize="@dimen/_15sdp"
-                fontPath="fonts/Circular-Std-Bold.otf"
-                style="@style/txt_white_style"
+                style="@style/txt_white_style_bold"
                 />
 
           </LinearLayout>

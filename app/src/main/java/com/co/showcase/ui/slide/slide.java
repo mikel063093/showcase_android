@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import com.co.showcase.AppMain;
+import com.co.showcase.BuildConfig;
 import com.co.showcase.R;
 import com.co.showcase.api.REST;
 import com.co.showcase.model.Categoria;
@@ -20,6 +22,7 @@ import com.co.showcase.ui.BaseFragment;
 import com.co.showcase.ui.util.CircleTransform;
 import com.pkmmte.view.CircularImageView;
 import com.squareup.picasso.Picasso;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import rx.android.schedulers.AndroidSchedulers;
@@ -42,6 +45,8 @@ public class slide extends BaseFragment {
     ButterKnife.bind(this, view);
     BaseActivity base = (BaseActivity) getActivity();
     updateUi(base.getUserSync());
+
+    if (BuildConfig.DEBUG) setupList(new ArrayList<>());
     return view;
   }
 
@@ -86,7 +91,19 @@ public class slide extends BaseFragment {
   }
 
   private void setupList(List<Categoria> categorias) {
-    adapter = new SlideAdapter(categorias, getActivity());
+    Categoria eventos = new Categoria();
+    eventos.setId(1);
+    eventos.setNombre("Eventos");
+    Categoria showcase = new Categoria();
+    showcase.setId(0);
+    showcase.setNombre(getString(R.string.app_name));
+    showcase.setUrl(getString(R.string.url));
+    List<Categoria> finalList = new ArrayList<>();
+    finalList.add(0, eventos);
+    finalList.add(1, showcase);
+    finalList.addAll(categorias);
+    log(AppMain.getGson().toJson(finalList));
+    adapter = new SlideAdapter(finalList, getActivity());
     assert menu != null;
     menu.setAdapter(adapter);
   }

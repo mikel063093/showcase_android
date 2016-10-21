@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/kelly_green"
+    android:orientation="vertical"
+>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+  >
+    <android.support.v7.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/toolbar_perfil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/kelly_green"
+        android:fitsSystemWindows="true"
+        android:minHeight="?attr/actionBarSize"
+        app:navigationIcon="@drawable/btn_menu_principal"
+        style="@style/MyToolbarStyle"
+    />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_43sdp"
+        android:layout_gravity="center"
+        android:background="@color/orange"
+        android:gravity="center"
+        style="@style/elevation1dp"
+    >
+      <android.support.v7.widget.AppCompatTextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/terminos_condiciones"
+          android:textSize="@dimen/_17sdp"
+          style="@style/txt_white_style"
+      />
+
+
+    </LinearLayout>
+    <WebView android:id="@+id/webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+  </LinearLayout>
+
+
+</LinearLayout>

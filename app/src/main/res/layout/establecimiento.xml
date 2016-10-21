@@ -128,7 +128,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_126sdp"
                     android:gravity="start|center"
-
+                    android:lineSpacingExtra="@dimen/_3sdp"
                     android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla dui lorem, dictum at orci non, rutrum ullamcorper felis. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras pulvinar convallis quam, et pulvinar nisi. Duis consequat vulputate dapibus. Donec eu luctus mauris."
                     android:textSize="@dimen/_10sdp"
                     style="@style/txt_taupe1_open_sans"
@@ -157,9 +157,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/_12sdp"
                         android:layout_marginLeft="@dimen/_12sdp"
+                        android:lineSpacingExtra="@dimen/_4sdp"
                         android:text="Carrera 9 # 18N-343 Apto 301 "
                         android:textSize="13sp"
-                        style="@style/txt_taupe1"
+                        style="@style/txt_taupe1_open_sans"
                     />
                   </LinearLayout>
                   <LinearLayout
@@ -180,9 +181,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/_12sdp"
                         android:layout_marginLeft="@dimen/_12sdp"
+                        android:lineSpacingExtra="@dimen/_4sdp"
                         android:text="300-571234"
                         android:textSize="13sp"
-                        style="@style/txt_taupe1"
+                        style="@style/txt_taupe1_open_sans"
                     />
                   </LinearLayout>
                   <LinearLayout
@@ -202,9 +204,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/_12sdp"
                         android:layout_marginLeft="@dimen/_12sdp"
+                        android:lineSpacingExtra="@dimen/_4sdp"
                         android:text="301-5712345"
                         android:textSize="13sp"
-                        style="@style/txt_taupe1"
+                        style="@style/txt_taupe1_open_sans"
 
                     />
                   </LinearLayout>
@@ -225,9 +228,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/_12sdp"
                         android:layout_marginLeft="@dimen/_12sdp"
+                        android:lineSpacingExtra="@dimen/_4sdp"
                         android:text="ventas@levis.com"
                         android:textSize="13sp"
-                        style="@style/txt_taupe1"
+                        style="@style/txt_taupe1_open_sans"
                     />
                   </LinearLayout>
                   <LinearLayout
@@ -247,9 +251,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/_12sdp"
                         android:layout_marginLeft="@dimen/_12sdp"
+                        android:lineSpacingExtra="@dimen/_4sdp"
                         android:text="levis.com.co"
                         android:textSize="13sp"
-                        style="@style/txt_taupe1"
+                        style="@style/txt_taupe1_open_sans"
                     />
                   </LinearLayout>
 
@@ -314,7 +319,7 @@
           </RelativeLayout>
           <LinearLayout
               android:layout_width="match_parent"
-              android:layout_height="@dimen/_35sdp"
+              android:layout_height="@dimen/_38sdp"
               android:layout_marginBottom="@dimen/_6sdp"
               android:layout_marginLeft="@dimen/_12sdp"
               android:layout_marginRight="@dimen/_12sdp"
@@ -333,7 +338,7 @@
                 android:text="@string/offer"
                 android:textSize="@dimen/_14sdp"
                 android:textStyle="bold"
-                style="@style/txt_white_style"
+                style="@style/txt_white_style_bold"
             />
 
           </LinearLayout>

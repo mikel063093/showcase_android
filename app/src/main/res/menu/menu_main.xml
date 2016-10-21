@@ -16,14 +16,14 @@
       android:icon="@drawable/btn_carrito"
       android:title="@string/action_payment"
       app:showAsAction="always"
-      />
+  />
   <item
       android:id="@+id/action_search"
       android:icon="@drawable/btn_buscar"
       android:title="@string/search"
       app:actionViewClass="android.support.v7.widget.SearchView"
       app:showAsAction="always|collapseActionView"
-      />
+  />
 
   <item
       android:id="@+id/action_settings"
@@ -35,27 +35,32 @@
           android:id="@+id/action_pedidos"
           android:icon="@drawable/ico_pedidosenproceso"
           android:title="Pedidos en proceso"
-          />
+      />
       <item
           android:id="@+id/action_historial"
           android:icon="@drawable/ico_historialdeordenes"
           android:title="Historial de ordenes"
-          />
+      />
       <item
           android:id="@+id/action_perfil"
           android:icon="@drawable/ico_miperfil"
           android:title="Mi perfil"
-          />
+      />
       <item
           android:id="@+id/action_direcciones"
           android:icon="@drawable/ico_direccionesdeenvio"
-          android:title="Direcciones de envio"
-          />
+          android:title="Direcciones de envío"
+      />
       <item
           android:id="@+id/action_salir"
           android:icon="@drawable/ico_cerrarsesion"
-          android:title="Cerrar session"
-          />
+          android:title="Cerrar sesión"
+      />
+      <item
+          android:id="@+id/terminos_condiciones"
+          android:icon="@drawable/ico_cerrarsesion"
+          android:title="@string/terminos_condiciones"
+      />
     </menu>
 
   </item>

@@ -12,6 +12,15 @@ public class Categoria extends BaseModel {
 
   public int id;
   public String nombre;
+  public String url;
+
+  public String getUrl() {
+    return url;
+  }
+
+  public void setUrl(String url) {
+    this.url = url;
+  }
 
   @SerializedName("establecimientos") public List<Establecimiento> establecimientos;
 
