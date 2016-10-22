@@ -46,15 +46,21 @@ public class adapterPedidos extends RecyclerView.Adapter<adapterPedidos.ViewHold
   @Override public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
     Carrito.ItemsBean item = items.get(position);
     if (item != null) {
+      assert holder.txtCantidad != null;
       holder.txtCantidad.setText(item.cantidad + "");
+      assert holder.txtNameItem != null;
       holder.txtNameItem.setText(item.nombre);
+      assert holder.txtPrecioItem != null;
       holder.txtPrecioItem.setText(item.precio + "");
-      Picasso.with(context).load(item.imagen).fit().into(holder.imgItem);
-
+      if (item.getImagen() != null && item.getImagen().length() > 0) {
+        Picasso.with(context).load(item.imagen).fit().into(holder.imgItem);
+      }
+      assert holder.imgItem != null;
       holder.imgItem.setOnClickListener(view -> onClickSubject.onNext(position));
       holder.txtNameItem.setOnClickListener(view -> onClickSubject.onNext(position));
       holder.txtCantidad.setOnClickListener(view -> onClickSubject.onNext(position));
       holder.txtPrecioItem.setOnClickListener(view -> onClickSubject.onNext(position));
+      assert holder.rootSection != null;
       holder.rootSection.setOnClickListener(view -> onClickSubject.onNext(position));
     }
   }
@@ -63,9 +69,7 @@ public class adapterPedidos extends RecyclerView.Adapter<adapterPedidos.ViewHold
     return items != null ? items.size() : 0;
   }
 
-  static
-
-  public class ViewHolder extends RecyclerView.ViewHolder {
+  static public class ViewHolder extends RecyclerView.ViewHolder {
     @Nullable @Bind(R.id.txt_cantidad) AppCompatTextView txtCantidad;
     @Nullable @Bind(R.id.img_item) ImageView imgItem;
     @Nullable @Bind(R.id.txt_name_item) AppCompatTextView txtNameItem;

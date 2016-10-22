@@ -29,6 +29,7 @@ import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.androidannotations.annotations.App;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -70,7 +71,10 @@ public class HomeSection extends StatelessSection {
       assert holder.txtItemMap != null;
       holder.txtItemMap.setText(
           establecimiento.getMarcador() != null ? establecimiento.getMarcador() : "");
-      Picasso.with(context).load(establecimiento.getUrlImagen().get(0)).fit().into(holder.imageView5);
+      Picasso.with(context)
+          .load(establecimiento.getUrlImagen().get(0))
+          .fit()
+          .into(holder.imageView5);
       assert holder.rootSection != null;
       holder.rootSection.setOnClickListener(view -> {
         log(establecimiento.toJson());
@@ -85,10 +89,10 @@ public class HomeSection extends StatelessSection {
     if (user != null) getEstablecimientoDetalle(user, establecimiento);
   }
 
-  private void getEstablecimientoDetalle(@NonNull Usuario usuario,
+  private void getEstablecimientoDetalle(Usuario usuario,
       @NonNull Establecimiento establecimiento) {
     BaseActivity ac = (BaseActivity) context;
-    if (usuario.getToken().length() > 2) {
+    if (usuario != null && usuario.getToken() != null && usuario.getToken().length() > 2) {
       Map<String, String> param = new HashMap<>();
       param.put("id", establecimiento.getId());
       REST.getRest()
@@ -99,6 +103,7 @@ public class HomeSection extends StatelessSection {
           .doOnCompleted(ac::dismissDialog)
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(e1 -> {
+            ac.log("ok " + AppMain.getGson().toJson(e1));
             Intent i = new Intent(context, establecimiento.class);
             i.putExtra(establecimiento.class.getSimpleName(), AppMain.getGson().toJson(e1));
             ac.goActv(i, false);

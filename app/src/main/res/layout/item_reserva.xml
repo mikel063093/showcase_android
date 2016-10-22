@@ -4,20 +4,19 @@
     android:layout_height="match_parent"
     android:background="@color/kelly_green"
     android:orientation="vertical"
+    android:gravity="center"
 >
   <RelativeLayout
 
       android:layout_width="match_parent"
-      android:layout_height="@dimen/_385sdp"
+      android:layout_height="@dimen/_405sdp"
       android:layout_marginLeft="@dimen/_12sdp"
-      android:layout_marginRight="@dimen/_12sdp"
-      android:layout_marginTop="@dimen/_53sdp"
-  >
+      android:layout_marginRight="@dimen/_12sdp">
 
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_385sdp"
+        android:layout_height="@dimen/_405sdp"
         android:layout_marginLeft="@dimen/_13sdp"
         android:layout_marginRight="@dimen/_13sdp"
         android:layout_marginTop="@dimen/_7sdp"
@@ -27,6 +26,7 @@
           android:layout_width="match_parent"
           android:layout_height="match_parent"
           android:layout_alignParentBottom="true"
+          android:background="@color/white_smoke"
           android:gravity="center|bottom"
       >
         <ImageView
@@ -43,7 +43,7 @@
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_361sdp"
+        android:layout_height="@dimen/_381sdp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         style="@style/card_singin"
@@ -98,7 +98,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/_5sdp"
             android:layout_marginRight="@dimen/_5sdp"
-            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_marginTop="@dimen/_2sdp"
             android:gravity="center"
             android:maxLines="1"
             android:text="Chaqueta de Jean"
@@ -107,17 +107,14 @@
         />
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/txt_description_item"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:text="Hola"
             android:layout_marginLeft="@dimen/_5sdp"
             android:layout_marginRight="@dimen/_5sdp"
-            android:layout_marginTop="@dimen/_6sdp"
-            android:gravity="center"
-            android:maxLines="3"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla dui lorem, dictum at orci non, rutrum ullamcorper felis."
-            android:textSize="@dimen/_14sdp"
-            style="@style/txt_outer_space"
+            android:textSize="@dimen/_10sdp"
+            style="@style/txt_taupe1_open_sans"
         />
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/txt_price_item"
@@ -126,11 +123,11 @@
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/_5sdp"
             android:layout_marginRight="@dimen/_5sdp"
-            android:layout_marginTop="@dimen/_7sdp"
+
             android:gravity="center"
             android:maxLines="1"
             android:text="$66.500"
-            android:textSize="@dimen/_19sdp"
+            android:textSize="@dimen/_21sdp"
             fontPath="fonts/Circular-Std-Bold.otf"
             style="@style/txt_dark_tangerine"
         />
@@ -165,8 +162,8 @@
               android:id="@+id/txt_item_count"
               android:layout_width="@dimen/_28sdp"
               android:layout_height="@dimen/_20sdp"
-              android:layout_marginLeft="@dimen/_6sdp"
-              android:layout_marginRight="@dimen/_6sdp"
+              android:layout_marginLeft="@dimen/_3sdp"
+              android:layout_marginRight="@dimen/_3sdp"
               android:gravity="center"
 
               android:textSize="@dimen/_16sdp"

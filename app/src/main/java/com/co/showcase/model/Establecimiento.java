@@ -250,7 +250,7 @@ public class Establecimiento extends BaseModel {
     private String nombre;
     private int precio;
     private String unidades;
-    private int valorUnidades;
+    private String valorUnidades;
     String imagen;
 
     public int getId() {
@@ -285,11 +285,11 @@ public class Establecimiento extends BaseModel {
       this.unidades = unidades;
     }
 
-    public int getValorUnidades() {
+    public String getValorUnidades() {
       return valorUnidades;
     }
 
-    public void setValorUnidades(int valorUnidades) {
+    public void setValorUnidades(String valorUnidades) {
       this.valorUnidades = valorUnidades;
     }
 

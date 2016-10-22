@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatTextView;
+import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 import butterknife.Bind;
@@ -60,6 +61,13 @@ public class producto extends BaseActivity {
     assert txtNameItem != null;
     txtNameItem.setText(articulo.getNombre());
     assert txtDescriptionItem != null;
+    log(articulo.getDescripcion());
+    String html = articulo.getDescripcion().replace("\\r\\n", "<br>").replace("\\n", "<br>");
+    String rm = " <p style=\"padding:0; margin:0;\"> ";
+
+    log(html);
+    log(Html.toHtml(Html.fromHtml(html)));
+
     txtDescriptionItem.setText(articulo.getDescripcion());
     assert txtPriceItem != null;
     txtPriceItem.setText("$" + articulo.getPrecio());

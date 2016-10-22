@@ -51,15 +51,16 @@
           android:icon="@drawable/ico_direccionesdeenvio"
           android:title="Direcciones de envío"
       />
+
+      <item
+          android:id="@+id/terminos_condiciones"
+          android:icon="@drawable/ico_terminos"
+          android:title="@string/terminos_condiciones"
+      />
       <item
           android:id="@+id/action_salir"
           android:icon="@drawable/ico_cerrarsesion"
           android:title="Cerrar sesión"
-      />
-      <item
-          android:id="@+id/terminos_condiciones"
-          android:icon="@drawable/ico_cerrarsesion"
-          android:title="@string/terminos_condiciones"
       />
     </menu>
 

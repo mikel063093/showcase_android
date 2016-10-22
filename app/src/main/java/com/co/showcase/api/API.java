@@ -3,6 +3,7 @@ package com.co.showcase.api;
 import android.support.annotation.NonNull;
 import com.co.showcase.model.EntryResponse;
 import com.co.showcase.model.Establecimiento;
+import com.co.showcase.model.EventoCategoria;
 import com.co.showcase.model.ResponseAgregarCarrito;
 import com.co.showcase.model.ResponseAutoComplete;
 import com.co.showcase.model.ResponseCategorias;
@@ -14,6 +15,7 @@ import com.co.showcase.model.ResponsePuntuacion;
 import com.co.showcase.model.ResponseRealizarPedido;
 import com.co.showcase.model.ResponseResultSearch;
 import com.co.showcase.model.ResponseVerCarrito;
+import com.co.showcase.model.Terminos;
 import com.co.showcase.model.Usuario;
 import com.co.showcase.model.Zonas;
 import com.co.showcase.model.detallePedidos;
@@ -128,5 +130,9 @@ public interface API {
 
   @NonNull @FormUrlEncoded @POST("detallePedido") Observable<detallePedidos> detallePedido(
       @Header("Authorization") String authorization, @FieldMap Map<String, Object> param);
+
+  @GET("eventos") Observable<EventoCategoria> eventos(@Header("Authorization") String authorization);
+
+  @GET("terminos") Observable<Terminos> terminos(@Header("Authorization") String authorization);
 }
 

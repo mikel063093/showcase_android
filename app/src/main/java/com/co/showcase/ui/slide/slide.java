@@ -37,16 +37,17 @@ public class slide extends BaseFragment {
   @Nullable @Bind(R.id.txt_name_person) AppCompatTextView txtNamePerson;
   @Nullable @Bind(R.id.menu) ListView menu;
   private SlideAdapter adapter;
+  private BaseActivity base;
 
   @Nullable @Override
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.slide_menu, container, false);
     ButterKnife.bind(this, view);
-    BaseActivity base = (BaseActivity) getActivity();
+    base = (BaseActivity) getActivity();
     updateUi(base.getUserSync());
 
-    if (BuildConfig.DEBUG) setupList(new ArrayList<>());
+    if (BuildConfig.DEBUG) setupList(new ArrayList<>(), base.getUserSync());
     return view;
   }
 
@@ -71,41 +72,56 @@ public class slide extends BaseFragment {
         .compose(bindToLifecycle())
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(this::succesCategoria, throwable -> {
+        .subscribe(responseCategorias -> {
+          succesCategoria(responseCategorias, usuario);
+        }, throwable -> {
           log(throwable.getMessage());
         });
   }
 
-  private void succesCategoria(@NonNull ResponseCategorias responseCategorias) {
+  private void succesCategoria(@NonNull ResponseCategorias responseCategorias, Usuario usuario) {
     log(responseCategorias.toJson());
     if (responseCategorias.getEstado().equalsIgnoreCase("1")
         && responseCategorias.getCategorias().size() > 1) {
-      setupList(responseCategorias.getCategorias());
+      setupList(responseCategorias.getCategorias(), usuario);
     }
   }
 
   @Override public void onEvent(List<Categoria> categorias) {
     super.onEvent(categorias);
     log("onevent categorias");
-    setupList(categorias);
+    setupList(categorias, base.getUserSync());
   }
 
-  private void setupList(List<Categoria> categorias) {
-    Categoria eventos = new Categoria();
-    eventos.setId(1);
-    eventos.setNombre("Eventos");
-    Categoria showcase = new Categoria();
-    showcase.setId(0);
-    showcase.setNombre(getString(R.string.app_name));
-    showcase.setUrl(getString(R.string.url));
-    List<Categoria> finalList = new ArrayList<>();
-    finalList.add(0, eventos);
-    finalList.add(1, showcase);
-    finalList.addAll(categorias);
-    log(AppMain.getGson().toJson(finalList));
-    adapter = new SlideAdapter(finalList, getActivity());
-    assert menu != null;
-    menu.setAdapter(adapter);
+  private void setupList(List<Categoria> categorias, Usuario usuario) {
+    if (usuario != null) {
+      REST.getRest()
+          .eventos(usuario.getToken())
+          .compose(bindToLifecycle())
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(eventoCategoria -> {
+            Categoria eventos = new Categoria();
+            eventos.setId(
+                eventoCategoria.getEstado() == 1 ? Integer.parseInt(eventoCategoria.getCategoria())
+                    : -1);
+            eventos.setNombre("Eventos");
+            Categoria showcase = new Categoria();
+            showcase.setId(0);
+            showcase.setNombre(getString(R.string.app_name));
+            showcase.setUrl(getString(R.string.url));
+            List<Categoria> finalList = new ArrayList<>();
+            finalList.add(0, eventos);
+            finalList.add(1, showcase);
+            finalList.addAll(categorias);
+            log(AppMain.getGson().toJson(finalList));
+            adapter = new SlideAdapter(finalList, getActivity());
+            assert menu != null;
+            menu.setAdapter(adapter);
+          }, throwable -> {
+            log(throwable.getMessage());
+          });
+    }
   }
 
   @Override public void onDestroyView() {

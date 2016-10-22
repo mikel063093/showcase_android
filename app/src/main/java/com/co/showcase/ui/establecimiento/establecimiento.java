@@ -11,6 +11,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -149,7 +150,7 @@ public class establecimiento extends BaseActivity implements SearchView.OnQueryT
     assert txtNameCompany != null;
     txtNameCompany.setText(establecimiento.getNombre());
     assert txtDescription != null;
-    txtDescription.setText(establecimiento.getDescripcion());
+    txtDescription.setText(Html.fromHtml(establecimiento.getDescripcion()));
     assert txtAddres != null;
     txtAddres.setText(establecimiento.getDireccion());
     assert txtCelphone != null;
