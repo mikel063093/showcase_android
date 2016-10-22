@@ -64,8 +64,8 @@
               android:id="@+id/rv_home"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:layout_marginLeft="@dimen/_4sdp"
-              android:layout_marginRight="@dimen/_4sdp"
+              android:layout_marginLeft="@dimen/_16sdp"
+              android:layout_marginRight="@dimen/_16sdp"
               app:layout_behavior="@string/appbar_scrolling_view_behavior"
               />
         </LinearLayout>

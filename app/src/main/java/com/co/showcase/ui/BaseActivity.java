@@ -41,6 +41,7 @@ import com.co.showcase.ui.direccion.direcciones;
 import com.co.showcase.ui.historial.historial;
 import com.co.showcase.ui.historial.pedidos_proceso;
 import com.co.showcase.ui.home.SuggestionAdapter;
+import com.co.showcase.ui.home.home;
 import com.co.showcase.ui.map.map;
 import com.co.showcase.ui.pedido.carritoPedidos;
 import com.co.showcase.ui.perfil.perfil;
@@ -212,6 +213,25 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
     //setupToolbar(toolbar);
   }
 
+  protected void configBackToolbar(@NonNull Toolbar toolbar, boolean goHome) {
+    final Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.btn_flechaizquierda);
+    setSupportActionBar(toolbar);
+    toolbar.setNavigationIcon(upArrow);
+    toolbar.setTitle(R.string.app_name);
+    toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
+    toolbar.setNavigationOnClickListener(v -> {
+      if (goHome) {
+        goActv(home.class, true);
+      } else {
+        finish();
+      }
+
+      overridePendingTransition(R.anim.move_left_in_activity, R.anim.move_right_out_activity);
+    });
+    setToolbarPretty(true);
+    //setupToolbar(toolbar);
+  }
+
   protected void configToolbar(@NonNull Toolbar toolbar, int idRes) {
     AppCompatTextView toolbarText = (AppCompatTextView) toolbar.findViewById(R.id.txt_toolbar);
     toolbarText.setText(getString(idRes));
@@ -266,7 +286,7 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
   }
 
   @Override public void onBackPressed() {
-    if (searchView.isShown()) {
+    if (searchView != null && searchView.isShown()) {
       searchItem.collapseActionView();
       searchView.setQuery("", false);
     } else {
@@ -660,8 +680,7 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
       Usuario usuario = getUserSync();
       verCarrito(usuario);
       getZonas(usuario);
-      searchView =
-          (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+      searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
       searchSrcTextView = (SearchView.SearchAutoComplete) searchView.findViewById(
           android.support.v7.appcompat.R.id.search_src_text);
       searchSrcTextView.setThreshold(1);

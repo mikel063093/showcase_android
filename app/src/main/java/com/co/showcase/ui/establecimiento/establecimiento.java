@@ -29,6 +29,7 @@ import com.co.showcase.ui.BaseActivity;
 import com.co.showcase.ui.CustomView.CirclePageIndicator;
 import com.co.showcase.ui.home.SlideAdapter;
 import com.co.showcase.ui.perfil.perfil;
+import com.co.showcase.ui.util.ItemDecorationAlbumColumns;
 import com.iarcuschin.simpleratingbar.SimpleRatingBar;
 import java.util.HashMap;
 import java.util.List;
@@ -159,9 +160,7 @@ public class establecimiento extends BaseActivity implements SearchView.OnQueryT
     txtEmail.setText(establecimiento.getCorreo() != null ? establecimiento.getCorreo() : "");
     assert txtWebsite != null;
     txtWebsite.setText(establecimiento.getSitioWeb());
-
     assert ratingBar != null;
-
     ratingBar.setRating(Float.parseFloat(establecimiento.getPuntuacion() + ""));
     assert btnSahreFb != null;
     btnSahreFb.setVisibility(establecimiento.getFacebook() != null ? View.VISIBLE : View.INVISIBLE);
@@ -180,6 +179,9 @@ public class establecimiento extends BaseActivity implements SearchView.OnQueryT
     GridLayoutManager glm = new GridLayoutManager(this, 2);
     assert rvHome != null;
     rvHome.setLayoutManager(glm);
+    rvHome.addItemDecoration(
+        new ItemDecorationAlbumColumns(getResources().getDimensionPixelSize(R.dimen._6sdp),
+            getResources().getInteger(R.integer.photo_list_preview_columns)));
     rvHome.setAdapter(adapter);
 
     ratingBar.setOnRatingBarChangeListener(
@@ -237,7 +239,7 @@ public class establecimiento extends BaseActivity implements SearchView.OnQueryT
     }
   }
 
-  @Override public boolean onQueryTextSubmit(String query) {
+  @Override public boolean onQueryTextSubmit(@NonNull String query) {
     return false;
   }
 

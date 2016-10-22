@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -27,7 +26,7 @@ import com.co.showcase.model.Usuario;
 import com.co.showcase.ui.BaseActivity;
 import com.co.showcase.ui.CustomView.CirclePageIndicator;
 import com.co.showcase.ui.slide.slide;
-import com.co.showcase.ui.util.DividerItemDecoration;
+import com.co.showcase.ui.util.ItemDecorationAlbumColumns;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
@@ -144,9 +143,9 @@ public class home extends BaseActivity {
       }
     });
     mRecyclerView.setLayoutManager(glm);
-    RecyclerView.ItemDecoration dividerItemDecoration =
-        new DividerItemDecoration(ContextCompat.getDrawable(this, R.drawable.divider_item_general));
-    mRecyclerView.addItemDecoration(dividerItemDecoration);
+    mRecyclerView.addItemDecoration(new ItemDecorationAlbumColumns(
+        getResources().getDimensionPixelSize(R.dimen._6sdp),
+        getResources().getInteger(R.integer.photo_list_preview_columns)));
     mRecyclerView.setAdapter(sectionAdapter);
   }
 

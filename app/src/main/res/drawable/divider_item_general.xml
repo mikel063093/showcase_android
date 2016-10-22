@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-  <size android:height="@dimen/_8sdp"
-      android:width="@dimen/_8sdp"/>
+  <size android:height="@dimen/_4sdp"
+      android:width="@dimen/_4sdp"
+
+  />
   <solid android:color="@android:color/transparent"/>
 </shape>
     <!--<?xml version="1.0" encoding="utf-8"?>-->

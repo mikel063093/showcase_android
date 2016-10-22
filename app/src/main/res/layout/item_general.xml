@@ -29,6 +29,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_gravity="top|end"
+          android:layout_marginBottom="@dimen/_2sdp"
           android:layout_marginEnd="8dp"
           android:visibility="gone"
       >
@@ -38,7 +39,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"
             android:layout_marginTop="-5dp"
-            android:src="@drawable/ic_bookmark_48_orange"
+            card_view:srcCompat="@drawable/ic_bookmark_48_orange"
         />
         <TextView
             android:id="@+id/txt_item_map"
@@ -48,7 +49,6 @@
             android:layout_centerInParent="true"
             android:maxLength="2"
             android:maxLines="1"
-            android:text="10"
             android:textSize="@dimen/_9sdp"
             fontPath="fonts/Circular-Std-Bold.otf"
             style="@style/txt_white_style"
@@ -77,7 +77,6 @@
 
             android:gravity="center"
             android:maxLines="1"
-            android:text="Levi’s"
             android:textSize="@dimen/_14sdp"
             fontPath="fonts/Circular-Std-Bold.otf"
             style="@style/txt_black_style"

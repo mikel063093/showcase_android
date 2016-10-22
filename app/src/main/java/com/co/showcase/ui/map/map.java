@@ -1,10 +1,8 @@
 package com.co.showcase.ui.map;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +20,7 @@ import com.co.showcase.model.zonaDetalle;
 import com.co.showcase.ui.BaseActivity;
 import com.co.showcase.ui.home.HomeSection;
 import com.co.showcase.ui.home.home;
+import com.co.showcase.ui.util.ItemDecorationAlbumColumns;
 import com.co.showcase.ui.util.MapUtils;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -81,14 +80,7 @@ public class map extends BaseActivity {
       }
     });
     initMap();
-    final Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.btn_flechaizquierda);
-    toolbar.setNavigationIcon(upArrow);
-    toolbar.setTitle(R.string.app_name);
-    toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
-    toolbar.setNavigationOnClickListener(v -> {
-      goActv(home.class, true);
-      overridePendingTransition(R.anim.move_left_in_activity, R.anim.move_right_out_activity);
-    });
+    configBackToolbar(toolbar, true);
   }
 
   private String getZona() {
@@ -137,6 +129,9 @@ public class map extends BaseActivity {
         }
       }
     });
+    rvHome.addItemDecoration(
+        new ItemDecorationAlbumColumns(getResources().getDimensionPixelSize(R.dimen._6sdp),
+            getResources().getInteger(R.integer.photo_list_preview_columns)));
     rvHome.setLayoutManager(glm);
     rvHome.setAdapter(sectionAdapter);
   }

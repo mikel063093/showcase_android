@@ -4,7 +4,7 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root_item_establecimiento"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/_180sdp"
+    android:layout_height="@dimen/_190sdp"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
     card_view:cardCornerRadius="3dp"
@@ -21,9 +21,8 @@
     <ImageView
         android:id="@+id/img_item"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_90sdp"
-        android:layout_marginLeft="@dimen/_2sdp"
-        android:layout_marginRight="@dimen/_2sdp"
+        android:layout_height="@dimen/_100sdp"
+        android:scaleType="centerInside"
         android:layout_marginTop="@dimen/_4sdp"
         android:src="@drawable/foto_articulo_1"
         />
@@ -38,7 +37,7 @@
         android:gravity="center"
         android:maxLines="1"
         android:text="Chaqueta de Jean"
-        android:textSize="@dimen/_18sdp"
+        android:textSize="@dimen/_15sdp"
         fontPath="fonts/Circular-Std-Bold.otf"
         style="@style/txt_taupe"
         />
@@ -53,8 +52,7 @@
         android:gravity="center"
         android:maxLines="1"
         android:text="$66.500"
-        android:textSize="@dimen/_16sdp"
-        fontPath="fonts/Circular-Std-Bold.otf"
+        android:textSize="@dimen/_13sdp"
         style="@style/txt_dark_tangerine"
         />
     <android.support.v7.widget.AppCompatTextView
@@ -68,8 +66,7 @@
         android:gravity="center"
         android:maxLines="1"
         android:text="2 unidades"
-        android:textSize="@dimen/_14sdp"
-        fontPath="fonts/Circular-Std-Bold.otf"
+        android:textSize="@dimen/_11sdp"
         style="@style/txt_manatee"
         />
   </LinearLayout>
