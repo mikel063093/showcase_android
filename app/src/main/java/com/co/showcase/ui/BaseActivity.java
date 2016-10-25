@@ -17,11 +17,13 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.URLUtil;
 import android.widget.EditText;
 import butterknife.ButterKnife;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -48,6 +50,8 @@ import com.co.showcase.ui.perfil.perfil;
 import com.co.showcase.ui.search_result.result;
 import com.co.showcase.ui.splash.Splash;
 import com.co.showcase.ui.terminos.terminos;
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.CustomEvent;
 import com.facebook.login.LoginManager;
 import com.github.pwittchen.reactivenetwork.library.ReactiveNetwork;
 import com.google.gson.Gson;
@@ -88,11 +92,12 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
   private static final String SHARED_DIRECTORY = "sharing";
   private static final String SHARED_IMAGE_FILE = "shared_img.png";
   private static final String FILE_PROVIDER_AUTHORITY = "com.co.showcase.SharingFileProvider";
+  private static final String URL_ERROR_KEY = "Url_err";
   @NonNull public Gson gson = new Gson();
   private static final String EMAIL_PATTERN =
       "^[a-zA-Z0-9#_~!$&'()*+,;=:.\"(),:;<>@\\[\\]\\\\]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*$";
   private Pattern pattern = Pattern.compile(EMAIL_PATTERN);
-
+  public static String NETWORK_ERROR_KEY = "Netwoerk_error";
   private static final String NAME_PATTERN = "^[\\\\p{L} .'-]+$";
   private Pattern patternName = Pattern.compile(NAME_PATTERN);
   private boolean isOnpause;
@@ -452,6 +457,9 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
       String msg = getString(R.string.general_err);
       dismissDialog();
       showErr(msg);
+      Answers.getInstance()
+          .logCustom(new CustomEvent(NETWORK_ERROR_KEY).putCustomAttribute("ERROR",
+              throwable.getMessage()));
     }
     if (throwable instanceof IOException) {
       // A network or conversion error happened
@@ -459,6 +467,9 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
       String msg = getString(R.string.internet_err);
       dismissDialog();
       showErr(msg);
+      Answers.getInstance()
+          .logCustom(new CustomEvent(NETWORK_ERROR_KEY).putCustomAttribute("ERROR",
+              throwable.getMessage()));
     }
   }
 
@@ -564,14 +575,16 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
   }
 
   public void share(@NonNull String body, String urlImage) {
+    body = Html.fromHtml(body).toString();
+    String finalBody = body;
     Picasso.with(this).load(urlImage).into(new Target() {
       @Override public void onBitmapLoaded(@NonNull Bitmap bitmap, Picasso.LoadedFrom from) {
         Uri uri = getShareableUri(BaseActivity.this, bitmap);
         assert uri != null;
         IntentShare.with(BaseActivity.this)
             .chooserTitle(getString(R.string.compartir))
-            .text(body)
-            .mailBody(body)
+            .text(finalBody)
+            .mailBody(finalBody)
             .mailBody(getAppLable(getBaseContext()))
             .image(uri)
             .deliver();
@@ -588,11 +601,18 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
   }
 
   public void openUrl(String url) {
-    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-    startActivity(intent);
+    if (url != null && url.length() > 0 && URLUtil.isValidUrl(url)) {
+      // URL is valid
+      Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+      startActivity(intent);
+    } else {
+      Answers.getInstance()
+          .logCustom(new CustomEvent(URL_ERROR_KEY).putCustomAttribute("ERROR", url));
+    }
   }
 
   public void share(@NonNull String body) {
+    body = Html.fromHtml(body).toString();
     IntentShare.with(this).chooserTitle(getString(R.string.compartir)).text(body).deliver();
   }
 

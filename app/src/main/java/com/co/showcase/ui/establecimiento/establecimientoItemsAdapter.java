@@ -113,7 +113,11 @@ public class establecimientoItemsAdapter
           && item.getImagen().size() > 0
           && item.getImagen().get(0) != null
           && item.getImagen().get(0).length() > 0) {
-        Picasso.with(mContext).load(item.getImagen().get(0)).fit().into(holder.imgItem);
+        String url = item.getImagen().get(0) != null && item.getImagen().get(0).length() > 1
+            ? item.getImagen().get(0) : null;
+        if (url != null) {
+          Picasso.with(mContext).load(url).fit().into(holder.imgItem);
+        }
       }
       holder.txtDescriptionItem.setText(item.getNombre());
       holder.txtPriceItem.setText("$" + item.getPrecio() + "");

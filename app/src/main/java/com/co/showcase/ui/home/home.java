@@ -27,15 +27,19 @@ import com.co.showcase.ui.BaseActivity;
 import com.co.showcase.ui.CustomView.CirclePageIndicator;
 import com.co.showcase.ui.slide.slide;
 import com.co.showcase.ui.util.ItemDecorationAlbumColumns;
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.CustomEvent;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import retrofit2.HttpException;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -143,9 +147,9 @@ public class home extends BaseActivity {
       }
     });
     mRecyclerView.setLayoutManager(glm);
-    mRecyclerView.addItemDecoration(new ItemDecorationAlbumColumns(
-        getResources().getDimensionPixelSize(R.dimen._6sdp),
-        getResources().getInteger(R.integer.photo_list_preview_columns)));
+    mRecyclerView.addItemDecoration(
+        new ItemDecorationAlbumColumns(getResources().getDimensionPixelSize(R.dimen._6sdp),
+            getResources().getInteger(R.integer.photo_list_preview_columns)));
     mRecyclerView.setAdapter(sectionAdapter);
   }
 
@@ -160,7 +164,50 @@ public class home extends BaseActivity {
           .subscribeOn(Schedulers.io())
           .doOnCompleted(this::dismissDialog)
           .observeOn(AndroidSchedulers.mainThread())
-          .subscribe(this::succesEstablecimiento, this::errControl);
+          .subscribe(this::succesEstablecimiento, throwable -> {
+            dismissDialog();
+            if (throwable instanceof HttpException) {
+              log("F** error" + throwable.getMessage());
+              dismissDialog();
+              Answers.getInstance()
+                  .logCustom(new CustomEvent(NETWORK_ERROR_KEY).putCustomAttribute("ERROR",
+                      throwable.getMessage()));
+
+              showMaterialDialog(getString(R.string.intenar_de_nuevo), new onClickCallback() {
+                @Override public void onPositive(boolean result) {
+                  init(getUserSync());
+                }
+
+                @Override public void onDissmis() {
+
+                }
+
+                @Override public void onNegative(boolean result) {
+
+                }
+              });
+            }
+            if (throwable instanceof IOException) {
+              log("F** error" + throwable.getMessage());
+              dismissDialog();
+              Answers.getInstance()
+                  .logCustom(new CustomEvent(NETWORK_ERROR_KEY).putCustomAttribute("ERROR",
+                      throwable.getMessage()));
+              showMaterialDialog(getString(R.string.intenar_de_nuevo), new onClickCallback() {
+                @Override public void onPositive(boolean result) {
+                  init(getUserSync());
+                }
+
+                @Override public void onDissmis() {
+
+                }
+
+                @Override public void onNegative(boolean result) {
+
+                }
+              });
+            }
+          });
     }
   }
 
