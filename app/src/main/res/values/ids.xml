@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <item name="itemZona1" type="id"/>
-  <item name="itemZona2" type="id"/>
-  <item name="itemZona3" type="id"/>
-  <item name="itemZona4" type="id"/>
-  <item name="itemZona5" type="id"/>
+  <item name="norte" type="id"/>
+  <item name="sur" type="id"/>
+  <item name="oriente" type="id"/>
+  <item name="occidente" type="id"/>
+  <item name="centro" type="id"/>
   <item name="itemZona6" type="id"/>
   <item name="itemZona7" type="id"/>
   <item name="itemZona8" type="id"/>
@@ -12,4 +12,11 @@
   <item name="itemZona10" type="id"/>
   <item name="itemZona11" type="id"/>
   <item name="itemZona12" type="id"/>
+  <array name="zona_ids">
+    <item>@id/norte</item>
+    <item>@id/sur</item>
+    <item>@id/occidente</item>
+    <item>@id/oriente</item>
+    <item>@id/centro</item>
+  </array>
 </resources>

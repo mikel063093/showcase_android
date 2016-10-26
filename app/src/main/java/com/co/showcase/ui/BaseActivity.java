@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -93,6 +94,7 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
   private static final String SHARED_IMAGE_FILE = "shared_img.png";
   private static final String FILE_PROVIDER_AUTHORITY = "com.co.showcase.SharingFileProvider";
   private static final String URL_ERROR_KEY = "Url_err";
+  private static final String ZONA_ERROR_KEY = "Zona_err";
   @NonNull public Gson gson = new Gson();
   private static final String EMAIL_PATTERN =
       "^[a-zA-Z0-9#_~!$&'()*+,;=:.\"(),:;<>@\\[\\]\\\\]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*$";
@@ -387,12 +389,7 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
           .content(body)
           .positiveText(getString(R.string.acept))
           .negativeText(getString(R.string.cancel))
-          //.showListener(dialog -> log("onShow"))
-          //.cancelListener(dialog -> log("onCancel"))
-          .dismissListener(dialog -> {
-            //log("onDismiss");
-            onClickCallback.onDissmis();
-          })
+          .dismissListener(dialog -> onClickCallback.onDissmis())
           .callback(new MaterialDialog.ButtonCallback() {
             @Override public void onPositive(MaterialDialog dialog) {
               onClickCallback.onPositive(true);
@@ -478,7 +475,6 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
     if (autoCompleteTextView != null
         && autoCompleteTextView.getText() != null
         && !autoCompleteTextView.getText().toString().equalsIgnoreCase("")) {
-      // log("act --> " + autoCompleteTextView.getText().toString());
       res = true;
     }
     return res;
@@ -499,11 +495,9 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
   }
 
   public Realm getRealm() {
-
     realm = !realm.isClosed() ? realm = Realm.getDefaultInstance() : realm;
     String status = realm.isClosed() + "";
     String transacction = realm.isInTransaction() + "";
-
     log("getRealm status  isClosed: " + status + " isInTransaction: " + transacction);
     return realm;
   }
@@ -559,13 +553,12 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
     try {
       return getResources().getIdentifier(pVariableName, pResourcename, getPackageName());
     } catch (Exception e) {
-      e.printStackTrace();
+      log(e.getMessage());
       return -1;
     }
   }
 
   public void clearDB() {
-
     getRealm().executeTransaction(realm1 -> {
       realm1.where(Usuario.class).findFirst().removeFromRealm();
       realm1.close();
@@ -734,28 +727,36 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
   }
 
   @Override public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    TypedArray typedArray = getResources().obtainTypedArray(R.array.zona_ids);
 
+    for (int ind = 0; ind < typedArray.length(); ind++) {
+      if (typedArray.getResourceId(ind, 0) == item.getItemId()) {
+        log(this.getClassName());
+        if (this.getClass() != map.class) {
+          goActv(new Intent(this, map.class).putExtras(item.getIntent().getExtras()), false);
+        }
+        break;
+      }
+    }
+
+    typedArray.recycle();
     switch (item.getItemId()) {
       case R.id.action_buy:
-        goActv(carritoPedidos.class, false);
+        if (this.getClass() != carritoPedidos.class) goActv(carritoPedidos.class, false);
         break;
-
       case R.id.action_map:
         log("action map");
-        //goActv(map.class, false);
         break;
       case R.id.action_search:
         log("action search");
-        //Toast.makeText(this, "Search", Toast.LENGTH_SHORT).show();
         return true;
       case R.id.action_perfil:
-        goActv(perfil.class, false);
+        if (this.getClass() != perfil.class) goActv(perfil.class, false);
         break;
       case R.id.action_direcciones:
-        goActv(direcciones.class, false);
+        if (this.getClass() != direcciones.class) goActv(direcciones.class, false);
         break;
       case R.id.action_salir:
-
         showMaterialDialog(getString(R.string.salir), new onClickCallback() {
           @Override public void onPositive(boolean result) {
             clearDB();
@@ -770,18 +771,14 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
           }
         });
         break;
-      case R.id.itemZona1:
-        log("itemZona1");
-        goActv(new Intent(this, map.class).putExtras(item.getIntent().getExtras()), false);
-        break;
       case R.id.action_pedidos:
-        goActv(pedidos_proceso.class, false);
+        if (this.getClass() != pedidos_proceso.class) goActv(pedidos_proceso.class, false);
         break;
       case R.id.action_historial:
-        goActv(historial.class, false);
+        if (this.getClass() != historial.class) goActv(historial.class, false);
         break;
       case R.id.terminos_condiciones:
-        goActv(terminos.class, false);
+        if (this.getClass() != terminos.class) goActv(terminos.class, false);
         break;
     }
     return super.onOptionsItemSelected(item);
@@ -826,9 +823,7 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
       REST.getRest()
           .zonas(usuario.getToken(), param)
           .compose(bindToLifecycle())
-          //.doOnSubscribe(() -> showDialog(getString(R.string.loading)))
           .subscribeOn(Schedulers.io())
-          //.doOnCompleted(this::dismissDialog)
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(this::renderZonasMenu, this::errControl);
     }
@@ -838,13 +833,17 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
     dismissDialog();
     if (zonas != null && zonas.getEstado() == 1 && subMenuMap != null) {
       for (Zonas.ZonasBean zonasBean : zonas.getZonas()) {
-        switch (zonasBean.nombre) {
-          case "Norte":
-            MenuItem menu = subMenuMap.add(0, R.id.itemZona1, Menu.NONE, zonasBean.nombre);
-            Intent i = new Intent(this, com.co.showcase.ui.map.map.class);
-            i.putExtra(map.class.getSimpleName(), zonasBean.id);
-            menu.setIntent(i);
-            break;
+        int id = getResourceId(zonasBean.nombre.toLowerCase(), "id");
+        if (id != -1) {
+          MenuItem menu = subMenuMap.add(0, id, Menu.NONE, zonasBean.nombre);
+          Intent i = new Intent(this, com.co.showcase.ui.map.map.class);
+          i.putExtra(map.class.getSimpleName(), zonasBean.id);
+          menu.setIntent(i);
+        } else {
+          log("err buscado id zona " + zonasBean.nombre.toLowerCase());
+          Answers.getInstance()
+              .logCustom(
+                  new CustomEvent(ZONA_ERROR_KEY).putCustomAttribute("ERROR", zonasBean.nombre));
         }
       }
     } else {

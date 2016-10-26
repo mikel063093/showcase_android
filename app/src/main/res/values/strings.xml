@@ -99,6 +99,7 @@
   <string name="terminos_condiciones">Términos y condiciones</string>
   <string name="url">https://test.showcase.com.co/</string>
   <string name="intenar_de_nuevo">Ha ocurrido un error, desea intentar de nuevo?</string>
+  <string name="err_datos_zona">No hay establecimientos en esta zona</string>
   <string-array name="formas_pago">
     <item>efectivo</item>
     <item>tarjeta</item>

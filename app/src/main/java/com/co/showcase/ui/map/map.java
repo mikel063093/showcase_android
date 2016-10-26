@@ -88,7 +88,7 @@ public class map extends BaseActivity {
         && getIntent().getStringExtra(this.getClass().getSimpleName()) != null) {
       return getIntent().getStringExtra(this.getClass().getSimpleName());
     }
-    return "1";
+    return "-1";
   }
 
   private void initMap() {
@@ -169,9 +169,9 @@ public class map extends BaseActivity {
   }
 
   private void getGeoJson(@NonNull Usuario usuario, String idZona) {
+    log(idZona);
     Map<String, Object> param = new HashMap<>();
     param.put("filtro", idZona);
-
     REST.getRest()
         .categoriasLocalizacion(usuario.getToken(), param)
         .compose(bindToLifecycle())
@@ -196,7 +196,7 @@ public class map extends BaseActivity {
 
   private void succesCategoriasLocalizacion(@NonNull zonaDetalle zonaDetalle) {
 
-    if (zonaDetalle.estado.equalsIgnoreCase("exito")) {
+    if (zonaDetalle.estado.equalsIgnoreCase("exito") && zonaDetalle.categorias.size() > 0) {
       ArrayList<LatLng> latLngs = new ArrayList<>();
       for (feature item : zonaDetalle.localizacion.features) {
         Double lat = item.geometry.coordinates.get(1);
@@ -217,6 +217,20 @@ public class map extends BaseActivity {
       } catch (JSONException e) {
         e.printStackTrace();
       }
+    } else {
+      showMaterialDialog(getString(R.string.err_datos_zona), new onClickCallback() {
+        @Override public void onPositive(boolean result) {
+          goActv(home.class, true);
+        }
+
+        @Override public void onDissmis() {
+          goActv(home.class, true);
+        }
+
+        @Override public void onNegative(boolean result) {
+          goActv(home.class, true);
+        }
+      });
     }
   }
 
