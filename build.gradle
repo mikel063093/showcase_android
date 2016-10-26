@@ -52,7 +52,7 @@ ext {
   rxJava = '1.1.5'
   rxAndroid = '1.2.0'
   rxBinding = '0.4.0'
-  support= '25.0.0'
+  support= '24.2.1'
   // Test dependencies
   junit = '4.12'
 

@@ -55,22 +55,24 @@ public class slide extends BaseFragment {
     base = (BaseActivity) getActivity();
     updateUi(base.getUserSync());
     getCategorias(base.getUserSync());
-    //Realm realm = base.getRealm();
-    //Usuario usuario = realm.where(Usuario.class).findFirst();
-    //updateUi(usuario);
-    //usuario.addChangeListener(element -> {
-    //  log("onChange user" + AppMain.getGson().toJson(element));
-    //  updateUi(usuario);
-    //});
+    Realm realm = base.getRealm();
+    Usuario usuario = realm.where(Usuario.class).findFirst();
+    updateUi(usuario);
+    usuario.addChangeListener(element -> {
+      log("onChange user "+usuario.getNombre());
+      updateUi(usuario);
+    });
     if (BuildConfig.DEBUG) setupList(new ArrayList<>(), base.getUserSync());
     return view;
   }
 
   @Override public void onResume() {
     super.onResume();
+    updateUi(base.getUserSync());
   }
 
   private void updateUi(Usuario usuario) {
+    log("updateui");
     if (usuario != null && usuario.getToken() != null && imgSliderPhoto != null) {
       if (usuario.getFoto() != null && usuario.getFoto().length() > 0) {
         log("updateui");
@@ -144,7 +146,7 @@ public class slide extends BaseFragment {
 
   @Override public void onDestroyView() {
     super.onDestroyView();
-    ButterKnife.unbind(this);
+   // ButterKnife.unbind(this);
   }
 
   @Override public void onEvent(Usuario usuario) {

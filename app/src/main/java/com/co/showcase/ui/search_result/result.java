@@ -18,6 +18,7 @@ import com.co.showcase.model.Usuario;
 import com.co.showcase.ui.BaseActivity;
 import com.co.showcase.ui.establecimiento.establecimientoItemsAdapter;
 import com.co.showcase.ui.home.home;
+import com.co.showcase.ui.util.ItemDecorationAlbumColumns;
 import java.util.HashMap;
 import java.util.Map;
 import rx.android.schedulers.AndroidSchedulers;
@@ -33,7 +34,6 @@ public class result extends BaseActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.search_result);
     ButterKnife.bind(this);
-
     final Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.btn_flechaizquierda);
     toolbar.setNavigationIcon(upArrow);
     toolbar.setTitle(R.string.app_name);
@@ -42,7 +42,9 @@ public class result extends BaseActivity {
       goActv(home.class, true);
       overridePendingTransition(R.anim.move_left_in_activity, R.anim.move_right_out_activity);
     });
+
     log("onCreate");
+
     searchItem(getSearchItem(), getUserSync());
   }
 
@@ -61,7 +63,11 @@ public class result extends BaseActivity {
             .subscribeOn(Schedulers.io())
             .doOnCompleted(this::dismissDialog)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(this::succes, this::errControl, () -> log("onComplete"));
+            .subscribe(this::succes, throwable -> {
+              log("onError");
+              dismissDialog();
+              log(throwable.getMessage());
+            }, () -> log("onComplete"));
       }
     }
   }
@@ -74,6 +80,9 @@ public class result extends BaseActivity {
       GridLayoutManager glm = new GridLayoutManager(this, 2);
       assert rvResult != null;
       rvResult.setLayoutManager(glm);
+      rvResult.addItemDecoration(
+          new ItemDecorationAlbumColumns(getResources().getDimensionPixelSize(R.dimen._6sdp),
+              getResources().getInteger(R.integer.photo_list_preview_columns)));
       rvResult.setAdapter(adapter);
     } else {
       showErr(getString(R.string.general_err));
