@@ -26,6 +26,7 @@ import com.fuck_boilerplate.rx_paparazzo.entities.Size;
 import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 import java.util.Map;
+import org.greenrobot.eventbus.EventBus;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -191,6 +192,7 @@ public class perfil extends BaseActivity {
     dismissDialog();
     if (usuario.getEstado().equalsIgnoreCase("exito")) {
       updateRealmUser(usuario);
+      EventBus.getDefault().post(usuario);
     } else {
       showErr(usuario.getMensaje());
     }

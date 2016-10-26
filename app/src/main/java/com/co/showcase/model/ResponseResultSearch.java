@@ -18,14 +18,31 @@ public class ResponseResultSearch {
 
   public int estado;
   public String mensaje;
-  /**
-   * id : 1
-   * nombre : camisa lacoste
-   * precio : 1000
-   * unidades : talla
-   * valorUnidades : 10
-   * imagen : https://test.showcase.com.co//imagenes/articulos/cc1b91f532c1b888d9056792a282fa8dc7e28f4f.png
-   */
+
 
   public List<Articulo> articulos;
+
+  public int getEstado() {
+    return estado;
+  }
+
+  public void setEstado(int estado) {
+    this.estado = estado;
+  }
+
+  public String getMensaje() {
+    return mensaje;
+  }
+
+  public void setMensaje(String mensaje) {
+    this.mensaje = mensaje;
+  }
+
+  public List<Articulo> getArticulos() {
+    return articulos;
+  }
+
+  public void setArticulos(List<Articulo> articulos) {
+    this.articulos = articulos;
+  }
 }

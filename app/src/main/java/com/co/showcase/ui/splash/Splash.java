@@ -50,7 +50,7 @@ public class Splash extends RxAppCompatActivity {
 
   private void initDB() {
     AppMain appmain = (AppMain) getApplication();
-    appmain.initRxDb();
+    //appmain.initRxDb();
   }
 
   @Override protected void onResume() {
@@ -72,7 +72,7 @@ public class Splash extends RxAppCompatActivity {
         log("handler ok");
         if (clear) intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-      }, 2000);
+      }, 5000);
 
       //overridePendingTransition(R.anim.move_right_in_activity, R.anim.move_left_out_activity);
     });

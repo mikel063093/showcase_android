@@ -26,6 +26,7 @@ public class Articulo {
    * imagen : https://test.showcase.com.co//imagenes/articulos/cc1b91f532c1b888d9056792a282fa8dc7e28f4f.png
    */
 
+
   private int id;
   private String nombre;
   private int precio;

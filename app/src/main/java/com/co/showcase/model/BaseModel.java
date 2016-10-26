@@ -9,8 +9,7 @@ import com.co.showcase.utils.JSONUtils;
 import com.co.showcase.BuildConfig;
 import com.google.gson.Gson;
 import com.orhanobut.logger.Logger;
-import io.supercharge.rxsnappy.RxSnappyClient;
-import io.supercharge.rxsnappy.exception.RxSnappyException;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,24 +24,16 @@ import rx.schedulers.Schedulers;
  */
 public abstract class BaseModel {
 
-  protected static RxSnappyClient rxSnappy;
 
-  static {
-    rxSnappy = AppMain.getRxSnappyClient();
-  }
 
-  public static RxSnappyClient getRxSnappy() {
-    return rxSnappy;
-  }
+
+
+
 
   public abstract String getTag();
 
   public void save() {
-    rxSnappy.setObject(getTag(), this).subscribeOn(Schedulers.io()).subscribe(item -> {
-      Log(item.toJson());
-    }, throwable -> {
-      Log("save fail" + throwable.getMessage());
-    });
+
   }
 
   private static void Log(String txt) {
@@ -77,36 +68,9 @@ public abstract class BaseModel {
     return retMap;
   }
 
-  public static Object getIsntace(@NonNull String TAG, Class T) {
 
-    try {
-      return getRxSnappy().getObject(TAG, T).toBlocking().first();
-    } catch (RxSnappyException ex) {
-      Log(ex.getMessage());
-      return null;
-    }
-  }
 
-  @NonNull public <T> Observable<T> getObject(Class<T> selectedClass) {
-    return getRxSnappy().getObject(getTag(), selectedClass)
-        //.subscribeOn(Schedulers.io())
-        // .observeOn(AndroidSchedulers.mainThread())
-        .asObservable();
-  }
 
-  @NonNull public <T> Observable<T> getObject() {
-    Class<T> selectedClass = (Class<T>) this.getClass();
-    return getRxSnappy().getObject(getTag(), selectedClass);
-  }
-
-  static <T> T getObject(String key, Class<T> selectedClass) {
-    try {
-      return getRxSnappy().getObject(key, null, selectedClass).toBlocking().first();
-    } catch (RxSnappyException ex) {
-      Log.e(key, ex.getMessage());
-      return null;
-    }
-  }
 
   public String toJson() {
     return new Gson().toJson(this);

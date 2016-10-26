@@ -2,7 +2,6 @@ package com.co.showcase.ui.search_result;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatTextView;
@@ -11,9 +10,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import com.co.showcase.AppMain;
 import com.co.showcase.R;
 import com.co.showcase.api.REST;
-import com.co.showcase.model.Establecimiento;
 import com.co.showcase.model.ResponseResultSearch;
 import com.co.showcase.model.Usuario;
 import com.co.showcase.ui.BaseActivity;
@@ -43,14 +42,16 @@ public class result extends BaseActivity {
       goActv(home.class, true);
       overridePendingTransition(R.anim.move_left_in_activity, R.anim.move_right_out_activity);
     });
-
+    log("onCreate");
     searchItem(getSearchItem(), getUserSync());
   }
 
-  private void searchItem(@Nullable String searchItem, @Nullable Usuario usuario) {
+  private void searchItem(@Nullable String searchItem, Usuario usuario) {
+    log("searchItem");
     if (searchItem != null && usuario != null) {
+      assert txtSection != null;
       txtSection.setText(searchItem);
-      if (usuario.getToken().length() > 2) {
+      if (usuario.getToken() != null && usuario.getToken().length() > 0) {
         Map<String, Object> param = new HashMap<>();
         param.put("palabra", searchItem);
         REST.getRest()
@@ -60,17 +61,23 @@ public class result extends BaseActivity {
             .subscribeOn(Schedulers.io())
             .doOnCompleted(this::dismissDialog)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(this::succes, this::errControl);
+            .subscribe(this::succes, this::errControl, () -> log("onComplete"));
       }
     }
   }
 
-  private void succes(@NonNull ResponseResultSearch responseResultSearch) {
-    establecimientoItemsAdapter adapter =
-        new establecimientoItemsAdapter(this, responseResultSearch.articulos);
-    GridLayoutManager glm = new GridLayoutManager(this, 2);
-    rvResult.setLayoutManager(glm);
-    rvResult.setAdapter(adapter);
+  private void succes(ResponseResultSearch responseResultSearch) {
+    log("succes" + AppMain.getGson().toJson(responseResultSearch));
+    if (responseResultSearch.estado == 1) {
+      establecimientoItemsAdapter adapter =
+          new establecimientoItemsAdapter(this, responseResultSearch.articulos);
+      GridLayoutManager glm = new GridLayoutManager(this, 2);
+      assert rvResult != null;
+      rvResult.setLayoutManager(glm);
+      rvResult.setAdapter(adapter);
+    } else {
+      showErr(getString(R.string.general_err));
+    }
   }
 
   @Nullable private String getSearchItem() {

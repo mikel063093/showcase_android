@@ -149,16 +149,16 @@
           android:layout_marginBottom="@dimen/shot_comments_margin_bottom"
           >
 
-        <com.borjabravo.readmoretextview.ReadMoreTextView
-            android:id="@+id/text_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_7sdp"
-            android:textColor="#262626"
-            android:textSize="@dimen/_12sdp"
-            app:colorClickableText="@color/colorPrimary"
-            app:trimLength="128"
-            />
+        <!--<com.borjabravo.readmoretextview.ReadMoreTextView-->
+            <!--android:id="@+id/text_description"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="@dimen/_7sdp"-->
+            <!--android:textColor="#262626"-->
+            <!--android:textSize="@dimen/_12sdp"-->
+            <!--app:colorClickableText="@color/colorPrimary"-->
+            <!--app:trimLength="128"-->
+            <!--/>-->
 
 
       </RelativeLayout>

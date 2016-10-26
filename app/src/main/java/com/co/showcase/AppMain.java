@@ -17,7 +17,6 @@ import io.fabric.sdk.android.Fabric;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmObject;
-import io.supercharge.rxsnappy.RxSnappyClient;
 import org.json.JSONObject;
 import rx_activity_result.RxActivityResult;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
@@ -27,24 +26,10 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
  */
 public class AppMain extends MultiDexApplication {
 
-  private static RxSnappyClient rxSnappyClient;
   private static Gson gson;
 
   @NonNull public static AppMain getApp(@NonNull Context context) {
     return (AppMain) context.getApplicationContext();
-  }
-
-  public static RxSnappyClient getRxSnappyClient() {
-    return rxSnappyClient;
-  }
-
-  public void initRxDb() {
-    // Logger.e("Appmain InitDB");
-    //Log.e("AppMain", "initDB");
-    //if (getApplicationContext() != null) {
-    //  RxSnappy.init(getApplicationContext());
-    //  if (rxSnappyClient == null) rxSnappyClient = new RxSnappyClient();
-    //}
   }
 
   @Override public void onCreate() {
@@ -57,9 +42,9 @@ public class AppMain extends MultiDexApplication {
     Logger.e("onCreate App");
     RxActivityResult.register(this);
 
-    RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(this).build();
+    Realm.init(this);
+    RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().build();
     Realm.setDefaultConfiguration(realmConfiguration);
-
     GsonBuilder gsonBuilder = new GsonBuilder();
 
     gson = gsonBuilder.setExclusionStrategies(new ExclusionStrategy() {
@@ -75,7 +60,6 @@ public class AppMain extends MultiDexApplication {
 
     RxPaparazzo.register(this);
 
-    initRxDb();
     FacebookSdk.sdkInitialize(this.getApplicationContext());
 
     OneSignal.startInit(this)

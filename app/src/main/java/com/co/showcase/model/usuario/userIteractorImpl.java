@@ -35,8 +35,8 @@ public class userIteractorImpl implements userInterator {
     return getManagedRealm().concatMap(realm -> realm.where(Usuario.class)
         .findAllAsync()
         .asObservable()
-        .compose(new NullIfNoRealmObject<Usuario>()));
-        //.map(usuario -> realm.copyFromRealm(usuario)));
+        .compose(new NullIfNoRealmObject<Usuario>())
+        .map(realm::copyFromRealm));
   }
 
   @Override public Observable<Usuario> getLiveUser() {
@@ -51,7 +51,7 @@ public class userIteractorImpl implements userInterator {
     return getUser().map(registroResponse -> {
       if (registroResponse != null) {
         final Realm realm = Realm.getDefaultInstance();
-        realm.executeTransaction(realm1 -> registroResponse.removeFromRealm());
+        realm.executeTransaction(realm1 -> registroResponse.deleteFromRealm());
         realm.close();
       }
       return null;

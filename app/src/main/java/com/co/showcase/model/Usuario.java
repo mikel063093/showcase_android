@@ -19,7 +19,7 @@ import rx.schedulers.Schedulers;
 /**
  * Created by home on 20/06/16.
  */
-@Value.Immutable public class Usuario extends RealmObject {
+public class Usuario extends RealmObject {
 
   @PrimaryKey String id;
   String nombre;

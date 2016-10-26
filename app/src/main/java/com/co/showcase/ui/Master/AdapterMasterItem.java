@@ -3,7 +3,6 @@ package com.co.showcase.ui.Master;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +14,7 @@ import butterknife.ButterKnife;
 import com.co.showcase.BuildConfig;
 import com.co.showcase.R;
 import com.co.showcase.model.Entre;
-import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.orhanobut.logger.Logger;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Transformation;
 import java.util.List;
 
 /**
@@ -48,19 +44,19 @@ public class AdapterMasterItem extends ArrayAdapter<Entre> {
     Entre entry = getItem(position);
     log(entry.toJson());
 
-    holder = new ViewHolder(convertView);
-    Transformation transformation = new RoundedTransformationBuilder().borderColor(
-        ContextCompat.getColor(getContext(), R.color.divider))
-        .borderWidthDp(1)
-        .cornerRadiusDp(5)
-        .oval(false)
-        .build();
-    Picasso.with(getContext()).setLoggingEnabled(BuildConfig.DEBUG);
-    Picasso.with(getContext())
-        .load(entry.imImage.get(1).label)
-        .fit()
-        .transform(transformation)
-        .into(holder.icon);
+    //holder = new ViewHolder(convertView);
+    //Transformation transformation = new RoundedTransformationBuilder().borderColor(
+    //    ContextCompat.getColor(getContext(), R.color.divider))
+    //    .borderWidthDp(1)
+    //    .cornerRadiusDp(5)
+    //    .oval(false)
+    //    .build();
+    //Picasso.with(getContext()).setLoggingEnabled(BuildConfig.DEBUG);
+    //Picasso.with(getContext())
+    //    .load(entry.imImage.get(1).label)
+    //    .fit()
+    //    .transform(transformation)
+    //    .into(holder.icon);
     holder.label.setText(entry.imName.label);
     return convertView;
   }

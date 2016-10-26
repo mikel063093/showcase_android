@@ -151,7 +151,7 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
 
   private void initDB() {
     AppMain appmain = (AppMain) getApplication();
-    appmain.initRxDb();
+    //appmain.initRxDb();
   }
 
   @Override public void onCreate(Bundle savedInstanceState) {
@@ -202,8 +202,8 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
   }
 
   @NonNull protected Observable<EntryResponse> getLocalEntry() {
-    EntryResponse entryResponse = new EntryResponse();
-    return entryResponse.getObject(EntryResponse.class).asObservable();
+
+    return null;
   }
 
   protected void configBackToolbar(@NonNull Toolbar toolbar) {
@@ -442,6 +442,10 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
   @Subscribe public void onEvent(TabPosition tabPosition) {
   }
 
+  @Subscribe public void onEvent(Usuario usuario) {
+    log("onEvent Usuario act");
+  }
+
   @Subscribe public void onEvent(List<Categoria> categorias) {
     log("onEvent categorias");
   }
@@ -528,7 +532,7 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
         u.setTelefono(usuario.getTelefono());
       }
       realm1.copyToRealmOrUpdate(u);
-      u.addChangeListener(() -> log("usuario ha cambiado " + AppMain.getGson().toJson(u)));
+      u.addChangeListener(element -> log("u ha cambiado " ));
     });
   }
 
@@ -560,7 +564,7 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
 
   public void clearDB() {
     getRealm().executeTransaction(realm1 -> {
-      realm1.where(Usuario.class).findFirst().removeFromRealm();
+      realm1.where(Usuario.class).findFirst().deleteFromRealm();
       realm1.close();
       LoginManager.getInstance().logOut();
       runOnUiThread(() -> goActv(Splash.class, true));
@@ -791,7 +795,8 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
           .compose(bindToLifecycle())
           .subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
-          .subscribe(this::succesVerCarrito, this::errControl);
+          .onErrorResumeNext(Observable.empty())
+          .subscribe(this::succesVerCarrito);
     }
   }
 
@@ -825,7 +830,8 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
           .compose(bindToLifecycle())
           .subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
-          .subscribe(this::renderZonasMenu, this::errControl);
+          .onErrorResumeNext(Observable.empty())
+          .subscribe(this::renderZonasMenu);
     }
   }
 

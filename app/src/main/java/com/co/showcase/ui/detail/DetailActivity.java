@@ -14,7 +14,7 @@ import butterknife.OnClick;
 import com.co.showcase.ui.BaseActivity;
 import com.co.showcase.R;
 import com.co.showcase.model.Entre;
-import com.borjabravo.readmoretextview.ReadMoreTextView;
+
 import com.squareup.picasso.Picasso;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -25,7 +25,7 @@ public class DetailActivity extends BaseActivity {
   @Nullable @Bind(R.id.image_app) ImageView imageApp;
   @Nullable @Bind(R.id.toolbar_detail) Toolbar toolbar;
   @Nullable @Bind(R.id.text_title) TextView textTitle;
-  @Nullable @Bind(R.id.text_description) ReadMoreTextView textDescription;
+
   private Entre entry;
 
   @Override public void onCreate(Bundle savedInstanceState) {
@@ -48,7 +48,7 @@ public class DetailActivity extends BaseActivity {
     configToolbarChild(toolbar, entry.imName.label);
     Picasso.with(DetailActivity.this).load(entry.imImage.get(2).label).fit().into(imageApp);
     textTitle.setText(entry.title.label);
-    textDescription.setText(entry.summary.label);
+
   }
 
   @OnClick(R.id.image_price) public void onClick() {

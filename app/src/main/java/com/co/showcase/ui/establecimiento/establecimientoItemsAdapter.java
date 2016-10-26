@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.androidannotations.annotations.App;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -39,7 +41,7 @@ public class establecimientoItemsAdapter
     extends RecyclerView.Adapter<establecimientoItemsAdapter.ViewHolder> {
 
   private Context mContext;
-  @Nullable private List<Articulo> mData;
+  @Nullable private List<Articulo> mData = new ArrayList<>();
 
   public void add(Articulo s, int position) {
     position = position == -1 ? getItemCount() : position;
@@ -58,11 +60,7 @@ public class establecimientoItemsAdapter
 
   public establecimientoItemsAdapter(Context context, @Nullable List<Articulo> data) {
     mContext = context;
-    if (data != null) {
-      mData = data;
-    } else {
-      mData = new ArrayList<>();
-    }
+    mData = data;
   }
 
   @NonNull @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -108,6 +106,8 @@ public class establecimientoItemsAdapter
   @Override public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
     assert mData != null;
     Articulo item = mData.get(position);
+    log(AppMain.getGson().toJson(item));
+
     if (item != null) {
       if (item.getImagen() != null
           && item.getImagen().size() > 0

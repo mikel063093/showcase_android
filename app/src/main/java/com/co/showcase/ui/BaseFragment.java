@@ -7,6 +7,7 @@ import android.widget.EditText;
 import com.co.showcase.BuildConfig;
 
 import com.co.showcase.model.Categoria;
+import com.co.showcase.model.Usuario;
 import com.orhanobut.logger.Logger;
 import com.trello.rxlifecycle.components.support.RxFragment;
 
@@ -32,12 +33,28 @@ public class BaseFragment extends RxFragment {
 
   @Override public void onResume() {
     super.onResume();
+    log("onResume");
+    if(!EventBus.getDefault().isRegistered(this))
     EventBus.getDefault().register(this);
+
   }
 
   @Override public void onPause() {
     super.onPause();
+
+  }
+
+  @Override public void onStop() {
+    super.onStop();
+    log("onStop");
+
+  }
+
+  @Override public void onDestroyView() {
+    super.onDestroyView();
+    log("onDestroyView");
     EventBus.getDefault().unregister(this);
+
   }
 
   @Subscribe public void onEvent(Object obj) {
@@ -46,6 +63,10 @@ public class BaseFragment extends RxFragment {
 
   @Subscribe public void onEvent(List<Categoria> categorias) {
 
+  }
+
+  @Subscribe public void onEvent(Usuario usuario) {
+    log("onEvent Usuario");
   }
 
   public boolean validateEmail(@NonNull String email) {
