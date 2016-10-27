@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.greenrobot.eventbus.EventBus;
 import retrofit2.HttpException;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -74,6 +75,7 @@ public class home extends BaseActivity {
 
   @Override protected void onResume() {
     super.onResume();
+    EventBus.getDefault().post(getUserSync());
   }
 
   @Override public void onStop() {

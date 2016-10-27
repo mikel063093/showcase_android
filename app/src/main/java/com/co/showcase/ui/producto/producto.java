@@ -50,6 +50,7 @@ public class producto extends BaseActivity {
     if (getIntent() != null
         && getIntent().getStringExtra(this.getClass().getSimpleName()) != null) {
       String json = getIntent().getStringExtra(this.getClass().getSimpleName());
+      log(json);
       Articulo articulo = AppMain.getGson().fromJson(json, Articulo.class);
       updateUi(articulo);
     }
@@ -93,8 +94,10 @@ public class producto extends BaseActivity {
   public void onClick(@NonNull View view) {
     switch (view.getId()) {
       case R.id.share_general:
-        share(getString(R.string.compartir_cont, articulo.getDescripcion()),
-            articulo.getImagen().get(0));
+        String url = articulo.getImagen() != null
+            && articulo.getImagen().size() > 0
+            && articulo.getImagen().get(0) != null ? articulo.getImagen().get(0) : null;
+        share(getString(R.string.compartir_cont, articulo.getDescripcion()), url);
         break;
       case R.id.btn_less:
         if (articulo != null) {

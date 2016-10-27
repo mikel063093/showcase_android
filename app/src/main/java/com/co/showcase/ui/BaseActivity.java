@@ -129,8 +129,8 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
 
   @Override protected void onResume() {
     super.onResume();
-    hideKeyboard();
     log("onResume");
+    hideKeyboard();
     initDB();
     isOnpause = false;
     updateGcm(getUserSync());
@@ -532,7 +532,7 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
         u.setTelefono(usuario.getTelefono());
       }
       realm1.copyToRealmOrUpdate(u);
-      u.addChangeListener(element -> log("u ha cambiado " ));
+      u.addChangeListener(element -> log("u ha cambiado "));
     });
   }
 
@@ -572,29 +572,31 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
   }
 
   public void share(@NonNull String body, String urlImage) {
-    body = Html.fromHtml(body).toString();
-    String finalBody = body;
-    Picasso.with(this).load(urlImage).into(new Target() {
-      @Override public void onBitmapLoaded(@NonNull Bitmap bitmap, Picasso.LoadedFrom from) {
-        Uri uri = getShareableUri(BaseActivity.this, bitmap);
-        assert uri != null;
-        IntentShare.with(BaseActivity.this)
-            .chooserTitle(getString(R.string.compartir))
-            .text(finalBody)
-            .mailBody(finalBody)
-            .mailBody(getAppLable(getBaseContext()))
-            .image(uri)
-            .deliver();
-      }
+    if (urlImage != null) {
+      body = Html.fromHtml(body).toString();
+      String finalBody = body;
+      Picasso.with(this).load(urlImage).into(new Target() {
+        @Override public void onBitmapLoaded(@NonNull Bitmap bitmap, Picasso.LoadedFrom from) {
+          Uri uri = getShareableUri(BaseActivity.this, bitmap);
+          assert uri != null;
+          IntentShare.with(BaseActivity.this)
+              .chooserTitle(getString(R.string.compartir))
+              .text(finalBody)
+              .mailBody(finalBody)
+              .mailBody(getAppLable(getBaseContext()))
+              .image(uri)
+              .deliver();
+        }
 
-      @Override public void onBitmapFailed(Drawable errorDrawable) {
-        log("bitmapFailed");
-      }
+        @Override public void onBitmapFailed(Drawable errorDrawable) {
+          log("bitmapFailed");
+        }
 
-      @Override public void onPrepareLoad(Drawable placeHolderDrawable) {
-        log("onPrepareload");
-      }
-    });
+        @Override public void onPrepareLoad(Drawable placeHolderDrawable) {
+          log("onPrepareload");
+        }
+      });
+    }
   }
 
   public void openUrl(String url) {

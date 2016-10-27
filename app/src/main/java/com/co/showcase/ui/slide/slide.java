@@ -1,7 +1,5 @@
 package com.co.showcase.ui.slide;
 
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,18 +19,11 @@ import com.co.showcase.model.ResponseCategorias;
 import com.co.showcase.model.Usuario;
 import com.co.showcase.ui.BaseActivity;
 import com.co.showcase.ui.BaseFragment;
-import com.co.showcase.ui.util.CircleTransform;
 import com.pkmmte.view.CircularImageView;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
-import io.realm.Realm;
-import io.realm.RealmChangeListener;
-import io.realm.RealmModel;
-import io.realm.RealmResults;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import org.androidannotations.annotations.App;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -55,30 +46,29 @@ public class slide extends BaseFragment {
     base = (BaseActivity) getActivity();
     updateUi(base.getUserSync());
     getCategorias(base.getUserSync());
-    Realm realm = base.getRealm();
-    Usuario usuario = realm.where(Usuario.class).findFirst();
-    updateUi(usuario);
-    usuario.addChangeListener(element -> {
-      log("onChange user "+usuario.getNombre());
-      updateUi(usuario);
-    });
+    //Realm realm = base.getRealm();
+    //Usuario usuario = realm.where(Usuario.class).findFirst();
+    //updateUi(usuario);
+    //usuario.addChangeListener(element -> {
+    //  log("onChange user "+usuario.getNombre());
+    //  updateUi(usuario);
+    //});
     if (BuildConfig.DEBUG) setupList(new ArrayList<>(), base.getUserSync());
     return view;
   }
 
   @Override public void onResume() {
     super.onResume();
-    updateUi(base.getUserSync());
+   // updateUi(base.getUserSync());
   }
 
   private void updateUi(Usuario usuario) {
     log("updateui");
     if (usuario != null && usuario.getToken() != null && imgSliderPhoto != null) {
       if (usuario.getFoto() != null && usuario.getFoto().length() > 0) {
-        log("updateui");
-        float diemen = getResources().getDimension(R.dimen._3sdp);
+        log("updateui ok");
         Picasso.with(getContext()).load(usuario.getFoto())
-            // .transform(new CircleTransform(diemen))
+
             .fit().into(imgSliderPhoto);
       }
       assert txtNamePerson != null;
@@ -146,7 +136,7 @@ public class slide extends BaseFragment {
 
   @Override public void onDestroyView() {
     super.onDestroyView();
-   // ButterKnife.unbind(this);
+    ButterKnife.unbind(this);
   }
 
   @Override public void onEvent(Usuario usuario) {
