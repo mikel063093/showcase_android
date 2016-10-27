@@ -84,7 +84,7 @@ public interface API {
 
   @NonNull @FormUrlEncoded @POST("autoCompletarBusqueda")
   Observable<ResponseAutoComplete> autoCompletarBusqueda(
-      @Header("Authorization") String authorization, @FieldMap Map<String, Object> param);
+      @Header("Authorization") String authorization, @FieldMap Map<String, String> param);
 
   @NonNull @FormUrlEncoded @POST("realizarBusqueda")
   Observable<ResponseResultSearch> realizarBusqueda(@Header("Authorization") String authorization,
@@ -131,7 +131,8 @@ public interface API {
   @NonNull @FormUrlEncoded @POST("detallePedido") Observable<detallePedidos> detallePedido(
       @Header("Authorization") String authorization, @FieldMap Map<String, Object> param);
 
-  @GET("eventos") Observable<EventoCategoria> eventos(@Header("Authorization") String authorization);
+  @GET("eventos") Observable<EventoCategoria> eventos(
+      @Header("Authorization") String authorization);
 
   @GET("terminos") Observable<Terminos> terminos(@Header("Authorization") String authorization);
 }

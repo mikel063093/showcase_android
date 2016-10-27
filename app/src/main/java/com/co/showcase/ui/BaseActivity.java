@@ -68,7 +68,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -159,6 +161,8 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
     log("onCreate");
     realm = Realm.getDefaultInstance();
     initDB();
+    autocompleteSearch("", true);
+
     new ReactiveNetwork().observeConnectivity(this)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -648,21 +652,40 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
   }
 
   private void autocompleteSearch(@NonNull String query) {
-    if (query.length() >= 1) {
-      Map<String, Object> param = new HashMap<>();
+    Usuario user = getUserSync();
+    if (query.length() >= 1 && user != null && user.getToken() != null) {
+      Map<String, String> param = new HashMap<>();
       param.put("palabra", query);
       REST.getRest()
-          .autoCompletarBusqueda(getUserSync().getToken(), param)
+          .autoCompletarBusqueda(user.getToken(), param)
           .debounce(150, MILLISECONDS)
           .compose(bindToLifecycle())
           .subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
-          .subscribe(this::succesAutoComplete, this::errControl);
+          .onErrorResumeNext(Observable.empty())
+          .subscribe(this::succesAutoComplete);
+    }
+  }
+
+  private void autocompleteSearch(String query, boolean first) {
+    Usuario user = getUserSync();
+    log("autocompletSearch");
+    if (query != null && first && user != null && user.getToken() != null) {
+      log("autocompletSearch OK");
+      Map<String, String> param = new HashMap<>();
+      param.put("palabra",query);
+      REST.getRest()
+          .autoCompletarBusqueda(user.getToken(), param)
+          .debounce(150, MILLISECONDS)
+          .compose(bindToLifecycle())
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .onErrorResumeNext(Observable.empty())
+          .subscribe(this::succesAutoComplete);
     }
   }
 
   private void succesAutoComplete(@NonNull ResponseAutoComplete responseAutoComplete) {
-    dismissDialog();
     if (responseAutoComplete.estado == 1) {
       searchSrcTextView.setAdapter(new SuggestionAdapter<>(this, R.layout.item_search_auto_complete,
           responseAutoComplete.palabras));
@@ -702,7 +725,9 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
       searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
       searchSrcTextView = (SearchView.SearchAutoComplete) searchView.findViewById(
           android.support.v7.appcompat.R.id.search_src_text);
-      searchSrcTextView.setThreshold(1);
+      searchSrcTextView.setThreshold(0);
+      autocompleteSearch("", true);
+      autocompleteSearch("", true);
       searchItem = menu.findItem(R.id.action_search);
       MenuItemCompat.setOnActionExpandListener(searchItem,
           new MenuItemCompat.OnActionExpandListener() {
@@ -838,7 +863,6 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
   }
 
   private void renderZonasMenu(Zonas zonas) {
-    dismissDialog();
     if (zonas != null && zonas.getEstado() == 1 && subMenuMap != null) {
       for (Zonas.ZonasBean zonasBean : zonas.getZonas()) {
         int id = getResourceId(zonasBean.nombre.toLowerCase(), "id");
@@ -854,8 +878,6 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
                   new CustomEvent(ZONA_ERROR_KEY).putCustomAttribute("ERROR", zonasBean.nombre));
         }
       }
-    } else {
-      if (zonas != null) showErr(zonas.getMensaje());
     }
   }
 }
