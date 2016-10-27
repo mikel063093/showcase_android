@@ -24,7 +24,7 @@
         android:layout_height="@dimen/_100sdp"
         android:scaleType="centerInside"
         android:layout_marginTop="@dimen/_4sdp"
-        android:src="@drawable/foto_articulo_1"
+
         />
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/txt_description_item"
@@ -36,7 +36,7 @@
         android:layout_marginTop="@dimen/_6sdp"
         android:gravity="center"
         android:maxLines="1"
-        android:text="Chaqueta de Jean"
+
         android:textSize="@dimen/_15sdp"
         fontPath="fonts/Circular-Std-Bold.otf"
         style="@style/txt_taupe"
@@ -51,7 +51,7 @@
         android:layout_marginTop="@dimen/_2sdp"
         android:gravity="center"
         android:maxLines="1"
-        android:text="$66.500"
+
         android:textSize="@dimen/_13sdp"
         style="@style/txt_dark_tangerine"
         />
@@ -65,7 +65,7 @@
         android:layout_marginTop="@dimen/_2sdp"
         android:gravity="center"
         android:maxLines="1"
-        android:text="2 unidades"
+
         android:textSize="@dimen/_11sdp"
         style="@style/txt_manatee"
         />

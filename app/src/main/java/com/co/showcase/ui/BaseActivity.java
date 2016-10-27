@@ -211,8 +211,12 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
   }
 
   protected void configBackToolbar(@NonNull Toolbar toolbar) {
-    final Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.btn_flechaizquierda);
+    setToolbarPretty(true);
     setSupportActionBar(toolbar);
+    toolbar.setTitle(R.string.app_name);
+    toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
+
+    final Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.btn_flechaizquierda);
     toolbar.setNavigationIcon(upArrow);
     toolbar.setTitle(R.string.app_name);
     toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
@@ -220,14 +224,16 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
       finish();
       overridePendingTransition(R.anim.move_left_in_activity, R.anim.move_right_out_activity);
     });
-    setToolbarPretty(true);
-    //setupToolbar(toolbar);
+
   }
 
   protected void configBackToolbar(@NonNull Toolbar toolbar, boolean goHome) {
-    final Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.btn_flechaizquierda);
+    setToolbarPretty(true);
     setSupportActionBar(toolbar);
-    toolbar.setNavigationIcon(upArrow);
+    toolbar.setTitle(R.string.app_name);
+    toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
+
+    final Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.btn_flechaizquierda);
     toolbar.setTitle(R.string.app_name);
     toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
     toolbar.setNavigationOnClickListener(v -> {
@@ -236,28 +242,26 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
       } else {
         finish();
       }
-
       overridePendingTransition(R.anim.move_left_in_activity, R.anim.move_right_out_activity);
     });
-    setToolbarPretty(true);
-    //setupToolbar(toolbar);
+
   }
 
-  protected void configToolbar(@NonNull Toolbar toolbar, int idRes) {
-    AppCompatTextView toolbarText = (AppCompatTextView) toolbar.findViewById(R.id.txt_toolbar);
-    toolbarText.setText(getString(idRes));
-  }
-
-  protected void configToolbarChild(@NonNull Toolbar toolbar, String idRes) {
-    AppCompatTextView toolbarText = (AppCompatTextView) toolbar.findViewById(R.id.txt_toolbar);
-    toolbarText.setText(idRes);
-    final Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.btn_flechaizquierda);
-    toolbar.setNavigationIcon(upArrow);
-    toolbar.setNavigationOnClickListener(v -> {
-      finish();
-      overridePendingTransition(R.anim.move_left_in_activity, R.anim.move_right_out_activity);
-    });
-  }
+  //protected void configToolbar(@NonNull Toolbar toolbar, int idRes) {
+  //  AppCompatTextView toolbarText = (AppCompatTextView) toolbar.findViewById(R.id.txt_toolbar);
+  //  toolbarText.setText(getString(idRes));
+  //}
+  //
+  //protected void configToolbarChild(@NonNull Toolbar toolbar, String idRes) {
+  //  AppCompatTextView toolbarText = (AppCompatTextView) toolbar.findViewById(R.id.txt_toolbar);
+  //  toolbarText.setText(idRes);
+  //  final Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.btn_flechaizquierda);
+  //  toolbar.setNavigationIcon(upArrow);
+  //  toolbar.setNavigationOnClickListener(v -> {
+  //    finish();
+  //    overridePendingTransition(R.anim.move_left_in_activity, R.anim.move_right_out_activity);
+  //  });
+  //}
 
   public void goActv(Class<?> cls, boolean clear) {
     Intent intent = new Intent(getApplicationContext(), cls);
@@ -506,7 +510,7 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
     realm = !realm.isClosed() ? realm = Realm.getDefaultInstance() : realm;
     String status = realm.isClosed() + "";
     String transacction = realm.isInTransaction() + "";
-    log("getRealm status  isClosed: " + status + " isInTransaction: " + transacction);
+    //    log("getRealm status  isClosed: " + status + " isInTransaction: " + transacction);
     return realm;
   }
 
@@ -645,17 +649,17 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
     return null;
   }
 
-  @Override public boolean onQueryTextSubmit(@NonNull String query) {
+  @Override public boolean onQueryTextSubmit(String query) {
     Log(query);
-    if (query.length() > 2) autocompleteSearch(query);
-    return false;
+    if (query.length() > 0) autocompleteSearch(query);
+    return query != null;
   }
 
-  private void autocompleteSearch(@NonNull String query) {
+  private void autocompleteSearch(String query) {
     Usuario user = getUserSync();
-    if (query.length() >= 1 && user != null && user.getToken() != null) {
+    if (user != null && user.getToken() != null) {
       Map<String, String> param = new HashMap<>();
-      param.put("palabra", query);
+      param.put("palabra", query != null ? query.toLowerCase() : "");
       REST.getRest()
           .autoCompletarBusqueda(user.getToken(), param)
           .debounce(150, MILLISECONDS)
@@ -673,7 +677,7 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
     if (query != null && first && user != null && user.getToken() != null) {
       log("autocompletSearch OK");
       Map<String, String> param = new HashMap<>();
-      param.put("palabra",query);
+      param.put("palabra", query);
       REST.getRest()
           .autoCompletarBusqueda(user.getToken(), param)
           .debounce(150, MILLISECONDS)
@@ -704,7 +708,7 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
   @Override public boolean onQueryTextChange(String newText) {
     Log(newText);
     autocompleteSearch(newText);
-    return false;
+    return newText != null;
   }
 
   public void setupToolbar(Toolbar toolbar) {

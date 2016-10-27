@@ -43,12 +43,12 @@ public class MasterActivity extends BaseActivity {
           .subscribeOn(Schedulers.io())
           .subscribe(o -> {
             List<Entre> entreList = (List<Entre>) o;
-            configToolbarChild(toolbar, entreList.get(0).category.attributes.label);
+            //configToolbarChild(toolbar, entreList.get(0).category.attributes.label);
             renderList_(entreList);
           });
     } else {
       getApps();
-      configToolbar(toolbar, R.string.category);
+      //configToolbar(toolbar, R.string.category);
     }
   }
 

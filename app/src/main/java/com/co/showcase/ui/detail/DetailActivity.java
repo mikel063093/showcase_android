@@ -45,7 +45,7 @@ public class DetailActivity extends BaseActivity {
 
   private void rederDetail(@NonNull Entre entry) {
     this.entry = entry;
-    configToolbarChild(toolbar, entry.imName.label);
+    //configToolbarChild(toolbar, entry.imName.label);
     Picasso.with(DetailActivity.this).load(entry.imImage.get(2).label).fit().into(imageApp);
     textTitle.setText(entry.title.label);
 

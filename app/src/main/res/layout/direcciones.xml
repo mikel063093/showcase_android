@@ -7,6 +7,17 @@
     android:background="@color/kelly_green"
     android:orientation="vertical"
     >
+  <android.support.v7.widget.Toolbar
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      android:id="@+id/toolbar_perfil"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/kelly_green"
+      android:fitsSystemWindows="true"
+      android:minHeight="?attr/actionBarSize"
+      app:navigationIcon="@drawable/btn_menu_principal"
+      style="@style/MyToolbarStyle"
+  />
   <android.support.v4.widget.NestedScrollView
       xmlns:android="http://schemas.android.com/apk/res/android"
       android:layout_width="match_parent"
@@ -17,17 +28,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
-      <android.support.v7.widget.Toolbar
-          xmlns:android="http://schemas.android.com/apk/res/android"
-          android:id="@+id/toolbar_perfil"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:background="@color/kelly_green"
-          android:fitsSystemWindows="true"
-          android:minHeight="?attr/actionBarSize"
-          app:navigationIcon="@drawable/btn_menu_principal"
-          style="@style/MyToolbarStyle"
-          />
+
 
       <LinearLayout
           android:layout_width="match_parent"
