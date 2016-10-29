@@ -221,6 +221,18 @@ public class perfil extends BaseActivity {
   }
 
   private void showUserCanceled() {
-    Toast.makeText(this, getString(R.string.user_canceled), Toast.LENGTH_SHORT).show();
+    showMaterialDialog(getString(R.string.user_canceled), new onClickCallback() {
+      @Override public void onPositive(boolean result) {
+
+      }
+
+      @Override public void onDissmis() {
+
+      }
+
+      @Override public void onNegative(boolean result) {
+
+      }
+    });
   }
 }

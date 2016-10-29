@@ -31,10 +31,10 @@ import com.co.showcase.ui.CustomView.CirclePageIndicator;
 import com.co.showcase.ui.home.SlideAdapter;
 import com.co.showcase.ui.perfil.perfil;
 import com.co.showcase.ui.util.ItemDecorationAlbumColumns;
-import com.iarcuschin.simpleratingbar.SimpleRatingBar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -52,11 +52,14 @@ public class establecimiento extends BaseActivity implements SearchView.OnQueryT
   @Nullable @Bind(R.id.txt_website) AppCompatTextView txtWebsite;
   @Nullable @Bind(R.id.btn_sahre_fb) ImageView btnSahreFb;
   @Nullable @Bind(R.id.btn_sahre_tw) ImageView btnSahreTw;
-  @Nullable @Bind(R.id.ratingBar) SimpleRatingBar ratingBar;
+  @Nullable @Bind(R.id.ratingBar) MaterialRatingBar ratingBar;
   @Nullable @Bind(R.id.rv_home) RecyclerView rvHome;
   @Nullable @Bind(R.id.drawer) RelativeLayout drawer;
   @Nullable @Bind(R.id.drawer_layout) DrawerLayout drawerLayout;
   @Nullable @Bind(R.id.share_general) ImageView shareGeneral;
+  @Bind(R.id.btn_snap) ImageView btnSnap;
+  @Bind(R.id.btn_instagram) ImageView btnInstagram;
+  @Bind(R.id.btn_youtube) ImageView btnYoutube;
   private MenuItem searchItem;
 
   @Override public void onCreate(Bundle savedInstanceState) {
@@ -164,13 +167,26 @@ public class establecimiento extends BaseActivity implements SearchView.OnQueryT
     assert ratingBar != null;
     ratingBar.setRating(Float.parseFloat(establecimiento.getPuntuacion() + ""));
     assert btnSahreFb != null;
-    btnSahreFb.setVisibility(establecimiento.getFacebook() != null ? View.VISIBLE : View.INVISIBLE);
+    btnSahreFb.setVisibility(establecimiento.getFacebook() != null ? View.VISIBLE : View.GONE);
     btnSahreFb.setOnClickListener(view -> openUrl(
         establecimiento.getFacebook() != null ? establecimiento.getFacebook() : ""));
     assert btnSahreTw != null;
-    btnSahreTw.setVisibility(establecimiento.getTwitter() != null ? View.VISIBLE : View.INVISIBLE);
+    btnSahreTw.setVisibility(establecimiento.getTwitter() != null ? View.VISIBLE : View.GONE);
     btnSahreTw.setOnClickListener(
         view -> openUrl(establecimiento.getTwitter() != null ? establecimiento.getTelefono() : ""));
+
+    btnSnap.setVisibility(establecimiento.getSnapchat() != null ? View.VISIBLE : View.GONE);
+    btnSnap.setOnClickListener(view -> openUrl(
+        establecimiento.getSnapchat() != null ? establecimiento.getSnapchat() : ""));
+
+    btnInstagram.setVisibility(establecimiento.getInstagram() != null ? View.VISIBLE : View.GONE);
+    btnSnap.setOnClickListener(view -> openUrl(
+        establecimiento.getInstagram() != null ? establecimiento.getInstagram() : ""));
+
+    btnYoutube.setVisibility(establecimiento.getYoutube() != null ? View.VISIBLE : View.GONE);
+    btnYoutube.setOnClickListener(
+        view -> openUrl(establecimiento.getYoutube() != null ? establecimiento.getYoutube() : ""));
+
     renderSlideImages(establecimiento.getUrlImagen());
     assert shareGeneral != null;
     shareGeneral.setOnClickListener(view -> share(establecimiento.getDescripcion()));
@@ -227,8 +243,10 @@ public class establecimiento extends BaseActivity implements SearchView.OnQueryT
     }
   }
 
-  @OnClick({ R.id.btn_sahre_fb, R.id.btn_sahre_tw, R.id.share_general })
-  public void onClick(@NonNull View view) {
+  @OnClick({
+      R.id.btn_sahre_fb, R.id.btn_sahre_tw, R.id.share_general, R.id.btn_snap, R.id.btn_instagram,
+      R.id.btn_youtube
+  }) public void onClick(@NonNull View view) {
     switch (view.getId()) {
       case R.id.btn_sahre_fb:
         break;
@@ -236,6 +254,12 @@ public class establecimiento extends BaseActivity implements SearchView.OnQueryT
         break;
       case R.id.share_general:
 
+        break;
+      case R.id.btn_snap:
+        break;
+      case R.id.btn_instagram:
+        break;
+      case R.id.btn_youtube:
         break;
     }
   }

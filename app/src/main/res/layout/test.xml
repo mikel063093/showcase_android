@@ -6,75 +6,259 @@
     android:background="@color/kelly_green"
     android:orientation="vertical"
 >
+  <me.zhanghai.android.materialratingbar.MaterialRatingBar
+      android:id="@+id/library_tinted_decimal_ratingbar"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:stepSize="0.01"
+      app:mrb_progressTint="@color/usc_gold"
+      app:mrb_secondaryProgressTint="@color/usc_gold"
+      style="@style/RatingBarSmall"
+      />
 
-
-  <!--<android.support.v7.widget.Toolbar-->
-  <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
-  <!--android:id="@+id/toolbar_home"-->
-  <!--android:layout_width="match_parent"-->
-  <!--android:layout_height="wrap_content"-->
-  <!--android:background="@color/kelly_green"-->
-  <!--android:fitsSystemWindows="true"-->
-  <!--android:minHeight="?attr/actionBarSize"-->
-  <!--app:navigationIcon="@drawable/btn_menu_principal"-->
-  <!--style="@style/MyToolbarStyle"-->
-  <!--/>-->
-
-
-  <!--<LinearLayout-->
-  <!--android:layout_width="match_parent"-->
-  <!--android:layout_height="match_parent"-->
-  <!--android:orientation="vertical"-->
-  <!--&gt;-->
-  <!--<android.support.v7.widget.CardView-->
-  <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
-  <!--android:id="@+id/root_section"-->
-  <!--android:layout_width="match_parent"-->
-  <!--android:layout_height="@dimen/_48sdp"-->
-  <!--android:layout_marginLeft="@dimen/_4sdp"-->
-  <!--android:layout_marginRight="@dimen/_4sdp"-->
-  <!--android:layout_marginTop="@dimen/_6sdp"-->
-  <!--android:gravity="center_vertical"-->
-  <!--android:orientation="horizontal"-->
-  <!--style="@style/card_orange_peel"-->
+  <!--<RelativeLayout-->
+      <!--android:layout_width="match_parent"-->
+      <!--android:layout_height="@dimen/_384sdp"-->
+      <!--android:layout_marginLeft="@dimen/_12sdp"-->
+      <!--android:layout_marginRight="@dimen/_12sdp"-->
+      <!--android:layout_marginTop="@dimen/_11sdp"-->
   <!--&gt;-->
 
-  <!--<LinearLayout-->
-  <!--android:layout_width="match_parent"-->
-  <!--android:layout_height="@dimen/_48sdp"-->
-  <!--android:layout_gravity="center"-->
-  <!--android:gravity="center"-->
-  <!--android:orientation="vertical"-->
-  <!--&gt;-->
-  <!--<android.support.v7.widget.AppCompatTextView-->
-  <!--android:layout_width="wrap_content"-->
-  <!--android:layout_height="wrap_content"-->
-  <!--android:layout_gravity="center"-->
-  <!--android:gravity="center"-->
-  <!--android:text="@string/resultados_para"-->
-  <!--android:textColor="@color/dandelion"-->
-  <!--android:textSize="@dimen/_10sdp"-->
-  <!--style="@style/txt_white_style"-->
-  <!--/>-->
-  <!--<android.support.v7.widget.AppCompatTextView-->
-  <!--android:id="@+id/txt_section"-->
-  <!--android:layout_width="wrap_content"-->
-  <!--android:layout_height="wrap_content"-->
-  <!--android:layout_gravity="center"-->
-  <!--android:gravity="center"-->
-  <!--android:text="Camisetas LaCoste"-->
-  <!--android:textSize="@dimen/_12sdp"-->
-  <!--fontPath="fonts/Circular-Std-Bold.otf"-->
-  <!--style="@style/txt_white_style"-->
-  <!--/>-->
 
-  <!--</LinearLayout>-->
+    <!--<android.support.v7.widget.CardView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/_384sdp"-->
+        <!--android:layout_marginLeft="@dimen/_13sdp"-->
+        <!--android:layout_marginRight="@dimen/_13sdp"-->
+        <!--android:layout_marginTop="@dimen/_7sdp"-->
+        <!--style="@style/card_singin_small"-->
+    <!--&gt;-->
+      <!--<RelativeLayout-->
+          <!--android:layout_width="match_parent"-->
+          <!--android:layout_height="match_parent"-->
+          <!--android:layout_alignParentBottom="true"-->
+          <!--android:background="@color/white_smoke"-->
+          <!--android:gravity="center|bottom"-->
+      <!--&gt;-->
+        <!--<ImageView-->
+            <!--android:id="@+id/share_general"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:layout_marginBottom="@dimen/_8sdp"-->
+            <!--android:background="@drawable/btn_compartir"-->
+        <!--/>-->
+      <!--</RelativeLayout>-->
+
+    <!--</android.support.v7.widget.CardView>-->
+
+    <!--<android.support.v7.widget.CardView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/_356sdp"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_alignParentTop="true" style="@style/card_singin">-->
+
+      <!--<LinearLayout-->
+          <!--android:layout_width="match_parent"-->
+          <!--android:layout_height="match_parent"-->
+          <!--android:layout_marginBottom="@dimen/_10sdp"-->
+          <!--android:layout_marginLeft="@dimen/_18sdp"-->
+          <!--android:layout_marginRight="@dimen/_18sdp"-->
+          <!--android:layout_marginTop="@dimen/_10sdp"-->
+          <!--android:orientation="vertical"-->
+      <!--&gt;-->
+        <!--<android.support.v7.widget.AppCompatTextView-->
+            <!--android:id="@+id/txt_name_company"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="@dimen/_27sdp"-->
+            <!--android:text="Levi's"-->
+            <!--android:textColor="@color/napier_green"-->
+            <!--android:textSize="@dimen/_19sdp"-->
+            <!--style="@style/txt_medium_turquoise"-->
+        <!--/>-->
+        <!--<android.support.v7.widget.AppCompatTextView-->
+            <!--android:id="@+id/txt_description"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="@dimen/_126sdp"-->
+            <!--android:gravity="start|center"-->
+            <!--android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla dui lorem, dictum at orci non, rutrum ullamcorper felis. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras pulvinar convallis quam, et pulvinar nisi. Duis consequat vulputate dapibus. Donec eu luctus mauris."-->
+            <!--android:textSize="@dimen/_10sdp"-->
+            <!--style="@style/txt_taupe1_open_sans"-->
+
+        <!--/>-->
+        <!--<LinearLayout-->
+            <!--android:layout_width="336dp"-->
+            <!--android:layout_height="@dimen/_90sdp"-->
+            <!--android:layout_marginTop="@dimen/_4sdp"-->
+            <!--android:orientation="vertical"-->
+
+        <!--&gt;-->
+          <!--<LinearLayout-->
+              <!--android:layout_width="match_parent"-->
+              <!--android:layout_height="@dimen/_15sdp"-->
+              <!--android:layout_marginTop="@dimen/_1sdp"-->
+              <!--android:gravity="center|left"-->
+              <!--android:orientation="horizontal"-->
+          <!--&gt;-->
+            <!--<ImageView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:background="@drawable/ico_direccion"-->
+            <!--/>-->
+            <!--<android.support.v7.widget.AppCompatTextView-->
+                <!--android:id="@+id/txt_addres"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="@dimen/_14sdp"-->
+                <!--android:layout_marginLeft="@dimen/_12sdp"-->
+                <!--android:lineSpacingExtra="@dimen/_4sdp"-->
+                <!--android:text="Carrera 9 # 18N-343 Apto 301 "-->
+                <!--android:textSize="13sp"-->
+                <!--style="@style/txt_taupe1_open_sans"-->
+            <!--/>-->
+          <!--</LinearLayout>-->
+          <!--<LinearLayout-->
+              <!--android:layout_width="match_parent"-->
+              <!--android:layout_height="@dimen/_15sdp"-->
+              <!--android:layout_marginTop="@dimen/_1sdp"-->
+              <!--android:gravity="center|left"-->
+              <!--android:orientation="horizontal"-->
+
+          <!--&gt;-->
+            <!--<ImageView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:background="@drawable/ico_telefono"-->
+            <!--/>-->
+            <!--<android.support.v7.widget.AppCompatTextView-->
+                <!--android:id="@+id/txt_phone"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="@dimen/_14sdp"-->
+                <!--android:layout_marginLeft="@dimen/_12sdp"-->
+                <!--android:text="300-571234"-->
+                <!--android:textSize="13sp"-->
+                <!--style="@style/txt_taupe1_open_sans"-->
+            <!--/>-->
+          <!--</LinearLayout>-->
+          <!--<LinearLayout-->
+              <!--android:layout_width="match_parent"-->
+              <!--android:layout_height="@dimen/_15sdp"-->
+              <!--android:layout_marginTop="@dimen/_1sdp"-->
+              <!--android:gravity="center|left"-->
+              <!--android:orientation="horizontal"-->
+          <!--&gt;-->
+            <!--<ImageView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:background="@drawable/ico_whatsapp"-->
+            <!--/>-->
+            <!--<android.support.v7.widget.AppCompatTextView-->
+                <!--android:id="@+id/txt_celphone"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="@dimen/_14sdp"-->
+                <!--android:layout_marginLeft="@dimen/_12sdp"-->
+
+                <!--android:text="301-5712345"-->
+                <!--android:textSize="13sp"-->
+                <!--style="@style/txt_taupe1_open_sans"-->
+
+            <!--/>-->
+          <!--</LinearLayout>-->
+          <!--<LinearLayout-->
+              <!--android:layout_width="match_parent"-->
+              <!--android:layout_height="@dimen/_15sdp"-->
+              <!--android:layout_marginTop="@dimen/_1sdp"-->
+              <!--android:gravity="center|left"-->
+              <!--android:orientation="horizontal"-->
+          <!--&gt;-->
+            <!--<ImageView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:background="@drawable/ico_correo_establecimiento"-->
+            <!--/>-->
+            <!--<android.support.v7.widget.AppCompatTextView-->
+                <!--android:id="@+id/txt_email"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="@dimen/_14sdp"-->
+                <!--android:layout_marginLeft="@dimen/_12sdp"-->
+                <!--android:text="pilatos@levis.com"-->
+                <!--android:textSize="13sp"-->
+                <!--style="@style/txt_taupe1_open_sans"-->
+            <!--/>-->
+          <!--</LinearLayout>-->
+          <!--<LinearLayout-->
+              <!--android:layout_width="match_parent"-->
+              <!--android:layout_height="@dimen/_15sdp"-->
+              <!--android:layout_marginTop="@dimen/_1sdp"-->
+              <!--android:gravity="center|left"-->
+              <!--android:orientation="horizontal"-->
+          <!--&gt;-->
+            <!--<ImageView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:background="@drawable/ico_sitioweb"-->
+            <!--/>-->
+            <!--<android.support.v7.widget.AppCompatTextView-->
+                <!--android:id="@+id/txt_website"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="@dimen/_14sdp"-->
+                <!--android:layout_marginLeft="@dimen/_12sdp"-->
+
+                <!--android:text="levis.com.co"-->
+                <!--android:textSize="13sp"-->
+                <!--style="@style/txt_taupe1_open_sans"-->
+            <!--/>-->
+          <!--</LinearLayout>-->
+
+        <!--</LinearLayout>-->
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:layout_marginTop="@dimen/_16sdp"-->
+            <!--android:gravity="center"-->
+            <!--android:orientation="horizontal"-->
+        <!--&gt;-->
+          <!--<ImageView-->
+              <!--android:id="@+id/btn_sahre_fb"-->
+              <!--android:layout_width="wrap_content"-->
+              <!--android:layout_height="wrap_content"-->
+              <!--android:src="@drawable/btn_facebook_compartir"-->
+          <!--/>-->
+          <!--<ImageView-->
+              <!--android:id="@+id/btn_sahre_tw"-->
+              <!--android:layout_width="wrap_content"-->
+              <!--android:layout_height="wrap_content"-->
+              <!--android:layout_marginStart="@dimen/_24sdp"-->
+              <!--android:src="@drawable/btn_twitter_compartir"-->
+          <!--/>-->
+        <!--</LinearLayout>-->
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="@dimen/_10sdp"-->
+            <!--android:gravity="center"-->
+            <!--android:orientation="vertical"-->
+        <!--&gt;-->
+          <!--<com.iarcuschin.simpleratingbar.SimpleRatingBar-->
+              <!--android:id="@+id/ratingBar"-->
+              <!--android:layout_width="wrap_content"-->
+              <!--android:layout_height="wrap_content"-->
+              <!--app:srb_borderColor="@color/usc_gold"-->
+              <!--app:srb_fillColor="@color/usc_gold"-->
+              <!--app:srb_numberOfStars="5"-->
+              <!--app:srb_rating="5"-->
+              <!--app:srb_starSize="26dp"-->
+              <!--app:srb_stepSize="0.5"-->
+          <!--/>-->
 
 
-  <!--</android.support.v7.widget.CardView>-->
+        <!--</LinearLayout>-->
 
-  <!---->
-  <!--</LinearLayout>-->
+
+      <!--</LinearLayout>-->
+    <!--</android.support.v7.widget.CardView>-->
+  <!--</RelativeLayout>-->
 
 
 </LinearLayout>

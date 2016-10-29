@@ -188,7 +188,7 @@ public class map extends BaseActivity {
         .subscribe(googleMap -> {
           CameraPosition cameraPosition = new CameraPosition.Builder().target(
               latLngBounds.getCenter())      // Sets the center of the map to Mountain View
-              .zoom(15)                   // Sets the zoom
+              .zoom(13)                   // Sets the zoom
               .build();
           googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         });
