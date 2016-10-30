@@ -148,6 +148,7 @@ public class home extends BaseActivity {
         }
       }
     });
+    mRecyclerView.setNestedScrollingEnabled(false);
     mRecyclerView.setLayoutManager(glm);
     mRecyclerView.addItemDecoration(
         new ItemDecorationAlbumColumns(getResources().getDimensionPixelSize(R.dimen._6sdp),

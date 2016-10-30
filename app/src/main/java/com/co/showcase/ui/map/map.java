@@ -129,6 +129,7 @@ public class map extends BaseActivity {
         }
       }
     });
+    rvHome.setNestedScrollingEnabled(false);
     rvHome.addItemDecoration(
         new ItemDecorationAlbumColumns(getResources().getDimensionPixelSize(R.dimen._6sdp),
             getResources().getInteger(R.integer.photo_list_preview_columns)));

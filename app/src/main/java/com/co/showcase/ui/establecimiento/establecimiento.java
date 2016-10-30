@@ -3,17 +3,13 @@ package com.co.showcase.ui.establecimiento;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -29,7 +25,6 @@ import com.co.showcase.model.Usuario;
 import com.co.showcase.ui.BaseActivity;
 import com.co.showcase.ui.CustomView.CirclePageIndicator;
 import com.co.showcase.ui.home.SlideAdapter;
-import com.co.showcase.ui.perfil.perfil;
 import com.co.showcase.ui.util.ItemDecorationAlbumColumns;
 import java.util.HashMap;
 import java.util.List;
@@ -38,7 +33,7 @@ import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class establecimiento extends BaseActivity implements SearchView.OnQueryTextListener {
+public class establecimiento extends BaseActivity {
 
   @Nullable @Bind(R.id.toolbar_home) Toolbar toolbar;
   @Nullable @Bind(R.id.indicator_home) CirclePageIndicator indicatorHome;
@@ -60,7 +55,6 @@ public class establecimiento extends BaseActivity implements SearchView.OnQueryT
   @Bind(R.id.btn_snap) ImageView btnSnap;
   @Bind(R.id.btn_instagram) ImageView btnInstagram;
   @Bind(R.id.btn_youtube) ImageView btnYoutube;
-  private MenuItem searchItem;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -76,66 +70,6 @@ public class establecimiento extends BaseActivity implements SearchView.OnQueryT
         updateUI(establecimiento);
       }
     }
-  }
-
-  @Override public boolean onCreateOptionsMenu(@NonNull Menu menu) {
-    getMenuInflater().inflate(R.menu.menu_main, menu);
-    SearchView searchView =
-        (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
-    searchItem = menu.findItem(R.id.action_search);
-    MenuItemCompat.setOnActionExpandListener(searchItem,
-        new MenuItemCompat.OnActionExpandListener() {
-          @Override public boolean onMenuItemActionCollapse(MenuItem item) {
-            Log("closeMenuSearch");
-            setItemsVisibility(menu, searchItem, true);
-            return true;
-          }
-
-          @Override public boolean onMenuItemActionExpand(MenuItem item) {
-            return true;
-          }
-        });
-    searchView.setOnQueryTextListener(this);
-    searchView.setIconifiedByDefault(true);
-    searchView.setSubmitButtonEnabled(false);
-    searchView.setOnSearchClickListener(v -> {
-      Log("openSearch");
-      setItemsVisibility(menu, searchItem, false);
-    });
-    searchView.setOnCloseListener(() -> {
-      Log("closeSearch");
-      setItemsVisibility(menu, searchItem, true);
-      return false;
-    });
-    return true;
-  }
-
-  @Override public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-    switch (item.getItemId()) {
-      case R.id.action_search:
-        log("action search");
-        return true;
-      case R.id.action_perfil:
-        goActv(perfil.class, false);
-        break;
-      case R.id.action_salir:
-        showMaterialDialog(getString(R.string.salir), new onClickCallback() {
-          @Override public void onPositive(boolean result) {
-
-          }
-
-          @Override public void onDissmis() {
-
-          }
-
-          @Override public void onNegative(boolean result) {
-
-          }
-        });
-        break;
-    }
-    return super.onOptionsItemSelected(item);
   }
 
   private void renderSlideImages(@NonNull List<String> imgs) {
@@ -188,6 +122,7 @@ public class establecimiento extends BaseActivity implements SearchView.OnQueryT
         view -> openUrl(establecimiento.getYoutube() != null ? establecimiento.getYoutube() : ""));
 
     renderSlideImages(establecimiento.getUrlImagen());
+
     assert shareGeneral != null;
     shareGeneral.setOnClickListener(view -> share(establecimiento.getDescripcion()));
 
@@ -195,6 +130,7 @@ public class establecimiento extends BaseActivity implements SearchView.OnQueryT
         new establecimientoItemsAdapter(this, establecimiento.getArticulos());
     GridLayoutManager glm = new GridLayoutManager(this, 2);
     assert rvHome != null;
+    rvHome.setNestedScrollingEnabled(false);
     rvHome.setLayoutManager(glm);
     rvHome.addItemDecoration(
         new ItemDecorationAlbumColumns(getResources().getDimensionPixelSize(R.dimen._6sdp),
@@ -262,13 +198,5 @@ public class establecimiento extends BaseActivity implements SearchView.OnQueryT
       case R.id.btn_youtube:
         break;
     }
-  }
-
-  @Override public boolean onQueryTextSubmit(@NonNull String query) {
-    return false;
-  }
-
-  @Override public boolean onQueryTextChange(String newText) {
-    return false;
   }
 }

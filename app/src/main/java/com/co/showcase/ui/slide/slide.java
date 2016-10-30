@@ -68,8 +68,7 @@ public class slide extends BaseFragment {
       if (usuario.getFoto() != null && usuario.getFoto().length() > 0) {
         log("updateui ok");
         Picasso.with(getContext()).load(usuario.getFoto())
-
-            .fit().into(imgSliderPhoto);
+            .into(imgSliderPhoto);
       }
       assert txtNamePerson != null;
       txtNamePerson.setText(usuario.getFullName());
