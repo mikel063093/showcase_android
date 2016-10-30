@@ -224,7 +224,6 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
       finish();
       overridePendingTransition(R.anim.move_left_in_activity, R.anim.move_right_out_activity);
     });
-
   }
 
   protected void configBackToolbar(@NonNull Toolbar toolbar, boolean goHome) {
@@ -235,6 +234,7 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
 
     final Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.btn_flechaizquierda);
     toolbar.setTitle(R.string.app_name);
+    toolbar.setNavigationIcon(upArrow);
     toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
     toolbar.setNavigationOnClickListener(v -> {
       if (goHome) {
@@ -244,7 +244,6 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
       }
       overridePendingTransition(R.anim.move_left_in_activity, R.anim.move_right_out_activity);
     });
-
   }
 
   //protected void configToolbar(@NonNull Toolbar toolbar, int idRes) {
@@ -837,14 +836,17 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
         && responseVerCarrito.getCarrito() != null
         && responseVerCarrito.getCarrito().getFechaCreacion() != null) {
 
-      showMenuCarrito(responseVerCarrito.getCarrito().getSubtotal() > 0);
+      showMenuCarrito(responseVerCarrito.getCarrito().getItems() != null
+          && responseVerCarrito.getCarrito().getItems().size() > 0);
     } else {
       showMenuCarrito(false);
     }
   }
 
   private void showMenuCarrito(boolean show) {
+    log("shoeMenuCarrito");
     if (menu != null) {
+      log("shoeMenuCarrito ok");
       MenuItem carrito = menu.findItem(R.id.action_buy);
       Drawable drawable = show ? ContextCompat.getDrawable(this, R.drawable.btn_carrito_bandera)
           : ContextCompat.getDrawable(this, R.drawable.btn_carrito);

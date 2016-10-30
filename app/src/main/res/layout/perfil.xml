@@ -5,215 +5,203 @@
     android:layout_height="match_parent"
     android:background="@color/kelly_green"
     android:orientation="vertical"
-    >
-  <android.support.v4.widget.DrawerLayout
-      android:id="@+id/drawer_layout"
+>
+
+  <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
+      android:orientation="vertical"
+  >
+    <android.support.v7.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/toolbar_perfil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/kelly_green"
+        android:fitsSystemWindows="true"
+        android:minHeight="?attr/actionBarSize"
+        app:navigationIcon="@drawable/btn_menu_principal"
+        style="@style/MyToolbarStyle"
+    />
 
-      >
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
-      <android.support.v7.widget.Toolbar
-          xmlns:android="http://schemas.android.com/apk/res/android"
-          android:id="@+id/toolbar_perfil"
-          android:layout_width="match_parent"
+        android:layout_height="@dimen/_43sdp"
+        android:layout_gravity="center"
+        android:background="@color/orange"
+        android:gravity="center"
+        style="@style/elevation1dp"
+    >
+      <android.support.v7.widget.AppCompatTextView
+          android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:background="@color/kelly_green"
-          android:fitsSystemWindows="true"
-          android:minHeight="?attr/actionBarSize"
-          app:navigationIcon="@drawable/btn_menu_principal"
-          style="@style/MyToolbarStyle"
-          />
+          android:text="@string/perfil"
+          android:textSize="@dimen/_17sdp"
+          style="@style/txt_white_style"
+      />
 
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal|center_vertical"
+
+    >
+
+      <FrameLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_margin="10dp"
+      >
+
+        <ImageView
+            android:id="@+id/img.perfil"
+            android:layout_width="@dimen/_78sdp"
+            android:layout_height="@dimen/_78sdp"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:background="@drawable/circulo_icocamara"
+            android:scaleType="fitXY"
+        />
+
+        <!--<TextView-->
+        <!--android:id="@+id/textView2"-->
+        <!--style="@style/TxtTitleHelveticRegularStyleShadow"-->
+        <!--android:layout_width="@dimen/_70sdp"-->
+        <!--android:layout_height="@dimen/_30sdp"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_gravity="center_horizontal|bottom"-->
+        <!--android:layout_toEndOf="@+id/imgCar"-->
+        <!--android:background="@drawable/shape_image_remplace"-->
+        <!--android:drawableEnd="@drawable/change_image_car"-->
+        <!--android:gravity="center"-->
+        <!--android:paddingEnd="10dp"-->
+        <!--android:visibility="gone"-->
+        <!--android:text="@string/remplace"-->
+
+        <!--/>-->
+      </FrameLayout>
+
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_230sdp"
+        android:layout_marginLeft="@dimen/_18sdp"
+        android:layout_marginRight="@dimen/_18sdp"
+        style="@style/card_singin"
+
+    >
       <LinearLayout
           android:layout_width="match_parent"
-          android:layout_height="@dimen/_43sdp"
+          android:layout_height="wrap_content"
           android:layout_gravity="center"
-          android:background="@color/orange"
-          android:gravity="center"
-          style="@style/elevation1dp"
-          >
-        <android.support.v7.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/perfil"
-            android:textSize="@dimen/_17sdp"
-            style="@style/txt_white_style"
-            />
+          android:layout_marginBottom="@dimen/_17sdp"
+          android:layout_marginLeft="@dimen/_16sdp"
+          android:layout_marginRight="@dimen/_16sdp"
+          android:layout_marginTop="@dimen/_17sdp"
+          android:orientation="vertical"
+      >
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/nombreWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_45sdp"
+            android:hint="@string/nombre"
 
+            android:textColorHint="@color/manatee"
+            app:hintTextAppearance="@style/hint_perfil"
+        >
+          <android.support.v7.widget.AppCompatEditText
+              android:id="@+id/edt_nombre"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:drawablePadding="@dimen/_8sdp"
+              android:inputType="textPersonName"
+              android:textColor="@color/outer_space"
+              android:textColorHint="@color/manatee"
+              android:theme="@style/edt_perfil"
+          />
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/apellidoWrapper"
+
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_45sdp"
+            android:hint="@string/apellido"
+            android:textColorHint="@color/manatee"
+            app:hintTextAppearance="@style/hint_perfil"
+        >
+          <android.support.v7.widget.AppCompatEditText
+              android:id="@+id/edt_apellido"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:inputType="textPersonName"
+              android:textColor="@color/outer_space"
+              android:textColorHint="@color/manatee"
+              android:theme="@style/edt_perfil"
+
+          />
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/passwordWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_45sdp"
+
+            android:hint="@string/telefono_contacto"
+            android:textColorHint="@color/manatee"
+            app:hintTextAppearance="@style/hint_perfil"
+        >
+          <android.support.v7.widget.AppCompatEditText
+              android:id="@+id/edt_password"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:drawablePadding="@dimen/_8sdp"
+              android:inputType="phone"
+              android:textColor="@color/outer_space"
+              android:textColorHint="@color/manatee"
+              android:theme="@style/edt_perfil"
+
+          />
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/emailWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_45sdp"
+            android:hint="@string/correo"
+            android:textColorHint="@color/manatee"
+            app:hintTextAppearance="@style/hint_perfil"
+        >
+          <android.support.v7.widget.AppCompatEditText
+              android:id="@+id/edt_email"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:drawablePadding="@dimen/_8sdp"
+              android:inputType="textEmailAddress"
+              android:textColor="@color/outer_space"
+              android:textColorHint="@color/manatee"
+              android:theme="@style/edt_perfil"
+
+          />
+        </android.support.design.widget.TextInputLayout>
       </LinearLayout>
 
-      <RelativeLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:gravity="center_horizontal|center_vertical"
 
-          >
+    </android.support.v7.widget.CardView>
 
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            >
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btn.guardar"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_13sdp"
+        android:background="@drawable/btn_naranja_selector"
+        android:paddingLeft="@dimen/_36sdp"
+        android:paddingRight="@dimen/_36sdp"
+        android:text="@string/Guardar"
+        style="@style/txt_white_style"
+    />
+  </LinearLayout>
 
-          <ImageView
-              android:id="@+id/img.perfil"
-              android:layout_width="@dimen/_78sdp"
-              android:layout_height="@dimen/_78sdp"
-              android:layout_gravity="center_vertical|center_horizontal"
-              android:background="@drawable/circulo_icocamara"
-              android:scaleType="fitXY"
-              />
-
-          <!--<TextView-->
-          <!--android:id="@+id/textView2"-->
-          <!--style="@style/TxtTitleHelveticRegularStyleShadow"-->
-          <!--android:layout_width="@dimen/_70sdp"-->
-          <!--android:layout_height="@dimen/_30sdp"-->
-          <!--android:layout_centerVertical="true"-->
-          <!--android:layout_gravity="center_horizontal|bottom"-->
-          <!--android:layout_toEndOf="@+id/imgCar"-->
-          <!--android:background="@drawable/shape_image_remplace"-->
-          <!--android:drawableEnd="@drawable/change_image_car"-->
-          <!--android:gravity="center"-->
-          <!--android:paddingEnd="10dp"-->
-          <!--android:visibility="gone"-->
-          <!--android:text="@string/remplace"-->
-
-          <!--/>-->
-        </FrameLayout>
-
-
-      </RelativeLayout>
-
-      <android.support.v7.widget.CardView
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/_230sdp"
-          android:layout_marginLeft="@dimen/_18sdp"
-          android:layout_marginRight="@dimen/_18sdp"
-          style="@style/card_singin"
-
-          >
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/_17sdp"
-            android:layout_marginLeft="@dimen/_16sdp"
-            android:layout_marginRight="@dimen/_16sdp"
-            android:layout_marginTop="@dimen/_17sdp"
-            android:orientation="vertical"
-            >
-          <android.support.design.widget.TextInputLayout
-              android:id="@+id/nombreWrapper"
-              android:layout_width="match_parent"
-              android:layout_height="@dimen/_45sdp"
-              android:hint="@string/nombre"
-
-              android:textColorHint="@color/manatee"
-              app:hintTextAppearance="@style/hint_perfil"
-              >
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/edt_nombre"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawablePadding="@dimen/_8sdp"
-                android:inputType="textPersonName"
-                android:textColor="@color/outer_space"
-                android:textColorHint="@color/manatee"
-                android:theme="@style/edt_perfil"
-                />
-          </android.support.design.widget.TextInputLayout>
-          <android.support.design.widget.TextInputLayout
-              android:id="@+id/apellidoWrapper"
-
-              android:layout_width="match_parent"
-              android:layout_height="@dimen/_45sdp"
-              android:hint="@string/apellido"
-              android:textColorHint="@color/manatee"
-              app:hintTextAppearance="@style/hint_perfil"
-              >
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/edt_apellido"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:textColor="@color/outer_space"
-                android:textColorHint="@color/manatee"
-                android:theme="@style/edt_perfil"
-
-                />
-          </android.support.design.widget.TextInputLayout>
-          <android.support.design.widget.TextInputLayout
-              android:id="@+id/passwordWrapper"
-              android:layout_width="match_parent"
-              android:layout_height="@dimen/_45sdp"
-
-              android:hint="@string/telefono_contacto"
-              android:textColorHint="@color/manatee"
-              app:hintTextAppearance="@style/hint_perfil"
-              >
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/edt_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawablePadding="@dimen/_8sdp"
-                android:inputType="phone"
-                android:textColor="@color/outer_space"
-                android:textColorHint="@color/manatee"
-                android:theme="@style/edt_perfil"
-
-                />
-          </android.support.design.widget.TextInputLayout>
-          <android.support.design.widget.TextInputLayout
-              android:id="@+id/emailWrapper"
-              android:layout_width="match_parent"
-              android:layout_height="@dimen/_45sdp"
-              android:hint="@string/correo"
-              android:textColorHint="@color/manatee"
-              app:hintTextAppearance="@style/hint_perfil"
-              >
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/edt_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawablePadding="@dimen/_8sdp"
-                android:inputType="textEmailAddress"
-                android:textColor="@color/outer_space"
-                android:textColorHint="@color/manatee"
-                android:theme="@style/edt_perfil"
-
-                />
-          </android.support.design.widget.TextInputLayout>
-        </LinearLayout>
-
-
-      </android.support.v7.widget.CardView>
-
-      <android.support.v7.widget.AppCompatButton
-          android:id="@+id/btn.guardar"
-          android:layout_width="wrap_content"
-          android:layout_height="@dimen/_40sdp"
-          android:layout_gravity="center"
-          android:layout_marginTop="@dimen/_13sdp"
-          android:background="@drawable/btn_naranja_selector"
-          android:paddingLeft="@dimen/_36sdp"
-          android:paddingRight="@dimen/_36sdp"
-          android:text="@string/Guardar"
-          style="@style/txt_white_style"
-          />
-    </LinearLayout>
-    <RelativeLayout
-        android:id="@+id/drawer"
-        android:layout_width="280dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:choiceMode="singleChoice"
-        />
-  </android.support.v4.widget.DrawerLayout>
 
 </LinearLayout>

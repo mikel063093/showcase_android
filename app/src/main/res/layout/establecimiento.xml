@@ -31,6 +31,7 @@
           xmlns:android="http://schemas.android.com/apk/res/android"
           android:layout_width="match_parent"
           android:layout_height="match_parent"
+          android:fillViewport="true"
       >
         <LinearLayout
             android:layout_width="match_parent"
@@ -308,37 +309,37 @@
                     android:orientation="vertical"
                 >
                   <!--<com.iarcuschin.simpleratingbar.SimpleRatingBar-->
-                      <!--android:id="@+id/ratingBar"-->
-                      <!--android:layout_width="wrap_content"-->
-                      <!--android:layout_height="wrap_content"-->
-                      <!--app:srb_borderColor="@color/usc_gold"-->
-                      <!--app:srb_fillColor="@color/usc_gold"-->
-                      <!--app:srb_numberOfStars="5"-->
-                      <!--app:srb_rating="5"-->
-                      <!--app:srb_starSize="23dp"-->
-                      <!--app:srb_stepSize="0.5"-->
+                  <!--android:id="@+id/ratingBar"-->
+                  <!--android:layout_width="wrap_content"-->
+                  <!--android:layout_height="wrap_content"-->
+                  <!--app:srb_borderColor="@color/usc_gold"-->
+                  <!--app:srb_fillColor="@color/usc_gold"-->
+                  <!--app:srb_numberOfStars="5"-->
+                  <!--app:srb_rating="5"-->
+                  <!--app:srb_starSize="23dp"-->
+                  <!--app:srb_stepSize="0.5"-->
                   <!--/>-->
                   <me.zhanghai.android.materialratingbar.MaterialRatingBar
                       android:id="@+id/ratingBar"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:stepSize="0.5"
                       android:layout_marginLeft="-3dp"
                       android:layout_marginRight="-3dp"
+                      android:stepSize="0.5"
                       app:mrb_progressTint="@color/usc_gold"
                       app:mrb_secondaryProgressTint="@color/usc_gold"
                       style="@style/RatingBarSmall"
                   />
                   <!--<RatingBar-->
-                      <!--android:id="@+id/ratingBar"-->
-                      <!--android:layout_width="wrap_content"-->
-                      <!--android:layout_height="wrap_content"-->
-                      <!--android:minHeight="16dp"-->
-                      <!--android:maxHeight="16dp"-->
-                      <!--android:numStars="5"-->
-                      <!--android:rating="0.5"-->
-                      <!--style="@style/RatingBarSmall"-->
-                      <!--app:theme="@style/RatingBarCompany"-->
+                  <!--android:id="@+id/ratingBar"-->
+                  <!--android:layout_width="wrap_content"-->
+                  <!--android:layout_height="wrap_content"-->
+                  <!--android:minHeight="16dp"-->
+                  <!--android:maxHeight="16dp"-->
+                  <!--android:numStars="5"-->
+                  <!--android:rating="0.5"-->
+                  <!--style="@style/RatingBarSmall"-->
+                  <!--app:theme="@style/RatingBarCompany"-->
 
                   <!--/>-->
                   <!--<RatingBar-->
@@ -402,10 +403,9 @@
           <android.support.v7.widget.RecyclerView
               android:id="@+id/rv_home"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
+              android:layout_height="wrap_content"
               android:layout_marginLeft="@dimen/_16sdp"
               android:layout_marginRight="@dimen/_16sdp"
-              app:layout_behavior="@string/appbar_scrolling_view_behavior"
           />
         </LinearLayout>
 
