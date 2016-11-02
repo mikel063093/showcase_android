@@ -8,6 +8,7 @@ import com.co.showcase.model.usuario.userIteractorImpl;
 import com.co.showcase.utils.JSONUtils;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.Required;
 import java.util.HashMap;
 import java.util.Map;
 import org.immutables.value.Value;
@@ -20,8 +21,7 @@ import rx.schedulers.Schedulers;
  * Created by home on 20/06/16.
  */
 public class Usuario extends RealmObject {
-
-  @PrimaryKey String id;
+  @Required @PrimaryKey String id;
   String nombre;
   String apellido;
   String correo;
