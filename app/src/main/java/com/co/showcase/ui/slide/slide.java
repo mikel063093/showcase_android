@@ -1,5 +1,6 @@
 package com.co.showcase.ui.slide;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,8 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import com.co.showcase.AppMain;
 import com.co.showcase.BuildConfig;
 import com.co.showcase.R;
@@ -20,6 +19,7 @@ import com.co.showcase.model.Usuario;
 import com.co.showcase.ui.BaseActivity;
 import com.co.showcase.ui.BaseFragment;
 import com.pkmmte.view.CircularImageView;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,9 +32,9 @@ import rx.schedulers.Schedulers;
  */
 
 public class slide extends BaseFragment {
-  @Nullable @Bind(R.id.img_slider_photo) CircularImageView imgSliderPhoto;
-  @Nullable @Bind(R.id.txt_name_person) AppCompatTextView txtNamePerson;
-  @Nullable @Bind(R.id.menu) ListView menu;
+  CircularImageView imgSliderPhoto;
+  AppCompatTextView txtNamePerson;
+  ListView menu;
   private SlideAdapter adapter;
   private BaseActivity base;
 
@@ -42,7 +42,10 @@ public class slide extends BaseFragment {
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.slide_menu, container, false);
-    ButterKnife.bind(this, view);
+    //  ButterKnife.bind(this, view);
+    imgSliderPhoto = (CircularImageView) view.findViewById(R.id.img_slider_photo);
+    txtNamePerson = (AppCompatTextView) view.findViewById(R.id.txt_name_person);
+    menu = (ListView) view.findViewById(R.id.menu);
     base = (BaseActivity) getActivity();
     updateUi(base.getUserSync());
     getCategorias(base.getUserSync());
@@ -59,7 +62,17 @@ public class slide extends BaseFragment {
 
   @Override public void onResume() {
     super.onResume();
-   // updateUi(base.getUserSync());
+  }
+
+  @Override public void onStart() {
+    super.onStart();
+    log("onStart");
+    //updateUi(base.getUserSync());
+  }
+
+  @Override public void onAttach(Context context) {
+    super.onAttach(context);
+    log("onAttach");
   }
 
   private void updateUi(Usuario usuario) {
@@ -67,7 +80,11 @@ public class slide extends BaseFragment {
     if (usuario != null && usuario.getToken() != null && imgSliderPhoto != null) {
       if (usuario.getFoto() != null && usuario.getFoto().length() > 0) {
         log("updateui ok");
-        Picasso.with(getContext()).load(usuario.getFoto())
+        Picasso.with(this.getContext())
+            .load(usuario.getFoto())
+            .priority(Picasso.Priority.HIGH)
+            .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
+            .fit()
             .into(imgSliderPhoto);
       }
       assert txtNamePerson != null;
@@ -133,13 +150,8 @@ public class slide extends BaseFragment {
     }
   }
 
-  @Override public void onDestroyView() {
-    super.onDestroyView();
-    ButterKnife.unbind(this);
-  }
-
   @Override public void onEvent(Usuario usuario) {
     super.onEvent(usuario);
-    updateUi(usuario);
+    base.runOnUiThread(() -> updateUi(usuario));
   }
 }

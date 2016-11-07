@@ -1,5 +1,7 @@
 package com.co.showcase.ui.producto;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,6 +22,8 @@ import com.co.showcase.model.Usuario;
 import com.co.showcase.ui.BaseActivity;
 import com.co.showcase.ui.CustomView.CirclePageIndicator;
 import com.co.showcase.ui.home.SlideAdapter;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
@@ -41,11 +45,13 @@ public class producto extends BaseActivity {
   private Articulo articulo;
   @NonNull private DecimalFormat df = new DecimalFormat("###.#");
   private Usuario usuario;
+  private ImageView tmp;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.item_reserva);
     ButterKnife.bind(this);
+    tmp = new ImageView(this);
     usuario = getUserSync();
     if (getIntent() != null
         && getIntent().getStringExtra(this.getClass().getSimpleName()) != null) {
@@ -53,6 +59,19 @@ public class producto extends BaseActivity {
       log(json);
       Articulo articulo = AppMain.getGson().fromJson(json, Articulo.class);
       updateUi(articulo);
+      Picasso.with(this)
+          .load(articulo.getImagen().get(0))
+          .resize(MAX_WIDTH, MAX_HEIGHT)
+          .onlyScaleDown()
+          .into(tmp, new Callback() {
+            @Override public void onSuccess() {
+              log("Picasso onSucces");
+            }
+
+            @Override public void onError() {
+              log("Picasso onErr");
+            }
+          });
     }
   }
 
@@ -94,10 +113,12 @@ public class producto extends BaseActivity {
   public void onClick(@NonNull View view) {
     switch (view.getId()) {
       case R.id.share_general:
-        String url = articulo.getImagen() != null
-            && articulo.getImagen().size() > 0
-            && articulo.getImagen().get(0) != null ? articulo.getImagen().get(0) : null;
-        share(getString(R.string.compartir_cont, articulo.getDescripcion()), url);
+        if (tmp.getDrawable() != null) {
+          Bitmap bitmap = ((BitmapDrawable) tmp.getDrawable()).getBitmap();
+          String share = getString(R.string.compartir_articulo, articulo.getNombre(),
+              articulo.getEstablecimiento() != null ? articulo.getEstablecimiento() : " ");
+          share(share, bitmap);
+        }
         break;
       case R.id.btn_less:
         if (articulo != null) {

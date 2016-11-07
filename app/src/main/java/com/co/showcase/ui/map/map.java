@@ -15,7 +15,6 @@ import com.co.showcase.R;
 import com.co.showcase.api.REST;
 import com.co.showcase.model.Categoria;
 import com.co.showcase.model.Usuario;
-import com.co.showcase.model.geoJson.feature;
 import com.co.showcase.model.zonaDetalle;
 import com.co.showcase.ui.BaseActivity;
 import com.co.showcase.ui.home.HomeSection;
@@ -33,7 +32,6 @@ import com.google.maps.android.geojson.GeoJsonLayer;
 import com.google.maps.android.geojson.GeoJsonPointStyle;
 import com.sdoward.rxgooglemap.MapObservableProvider;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,6 +53,8 @@ public class map extends BaseActivity {
   private GeoJsonLayer geoJsonLayer;
   private MapObservableProvider mapObservableProvider;
   private SectionedRecyclerViewAdapter sectionAdapter;
+  private LatLng lantLongCenter;
+  private int zoom;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -195,22 +195,33 @@ public class map extends BaseActivity {
         });
   }
 
+  private void centerMap(@NonNull LatLng latLng, int zoom) {
+    mapObservableProvider.getMapReadyObservable()
+        .compose(bindToLifecycle())
+        .subscribe(googleMap -> {
+          CameraPosition cameraPosition = new CameraPosition.Builder().target(
+              latLng)      // Sets the center of the map to Mountain View
+              .zoom(zoom)                   // Sets the zoom
+              .build();
+          googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        });
+  }
+
   private void succesCategoriasLocalizacion(@NonNull zonaDetalle zonaDetalle) {
 
-    if (zonaDetalle.estado.equalsIgnoreCase("exito") && zonaDetalle.categorias.size() > 0) {
-      ArrayList<LatLng> latLngs = new ArrayList<>();
-      for (feature item : zonaDetalle.localizacion.features) {
-        Double lat = item.geometry.coordinates.get(1);
-        Double lng = item.geometry.coordinates.get(0);
-        LatLng latLng = new LatLng(lat, lng);
-        latLngs.add(latLng);
-      }
-      LatLngBounds.Builder builder = new LatLngBounds.Builder();
-      builder.include(latLngs.get(0));
-      builder.include(latLngs.get(1));
-      centerMap(builder.build());
+    if (zonaDetalle.estado.equalsIgnoreCase("exito")
+        && zonaDetalle.categorias.size() > 0
+        && zonaDetalle.centro != null
+        && zonaDetalle.centro.length() > 0
+        && zonaDetalle.zoom != null) {
+
       try {
+        Double lat = Double.parseDouble(zonaDetalle.centro.split(",")[0]);
+        Double lng = Double.parseDouble(zonaDetalle.centro.split(",")[1]);
+        this.lantLongCenter = new LatLng(lat, lng);
         String json = getGson().toJson(zonaDetalle.localizacion);
+        this.zoom = Integer.parseInt(zonaDetalle.zoom);
+        centerMap(lantLongCenter, zoom);
         log(json);
         JSONObject jsonObj = new JSONObject(json);
         updateMap(jsonObj);

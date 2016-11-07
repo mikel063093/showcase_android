@@ -28,6 +28,7 @@ public class Articulo {
 
 
   private int id;
+  private  String establecimiento;
   private String nombre;
   private int precio;
   private String unidades;
@@ -96,6 +97,14 @@ public class Articulo {
 
   public void setCantidad(Double cantidad) {
     this.cantidad = cantidad;
+  }
+
+  public String getEstablecimiento() {
+    return establecimiento;
+  }
+
+  public void setEstablecimiento(String establecimiento) {
+    this.establecimiento = establecimiento;
   }
 
   @Override public String toString() {

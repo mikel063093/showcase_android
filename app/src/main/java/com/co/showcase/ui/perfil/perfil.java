@@ -188,7 +188,7 @@ public class perfil extends BaseActivity {
     dismissDialog();
     if (usuario.getEstado().equalsIgnoreCase("exito")) {
       updateRealmUser(usuario);
-      EventBus.getDefault().post(usuario);
+
     } else {
       showErr(usuario.getMensaje());
     }

@@ -58,6 +58,7 @@ import com.github.pwittchen.reactivenetwork.library.ReactiveNetwork;
 import com.google.gson.Gson;
 import com.onesignal.OneSignal;
 import com.orhanobut.logger.Logger;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -519,6 +520,7 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
 
   public void updateRealmUser(@NonNull Usuario usuario) {
     log("upDateRealmUser");
+    runOnUiThread(() -> EventBus.getDefault().post(usuario));
 
     getRealm().executeTransaction(realm1 -> {
       Usuario u = realm1.where(Usuario.class).findFirst();
@@ -539,7 +541,10 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
         u.setTelefono(usuario.getTelefono());
       }
       realm1.copyToRealmOrUpdate(u);
-      u.addChangeListener(element -> log("u ha cambiado "));
+
+      u.addChangeListener(element -> {
+        log("u ha cambiado ");
+      });
     });
   }
 
@@ -578,31 +583,57 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
     });
   }
 
+  public static final int MAX_WIDTH = 1024;
+  public static final int MAX_HEIGHT = 768;
+
   public void share(@NonNull String body, String urlImage) {
     if (urlImage != null) {
       body = Html.fromHtml(body).toString();
       String finalBody = body;
-      Picasso.with(this).load(urlImage).into(new Target() {
-        @Override public void onBitmapLoaded(@NonNull Bitmap bitmap, Picasso.LoadedFrom from) {
-          Uri uri = getShareableUri(BaseActivity.this, bitmap);
-          assert uri != null;
-          IntentShare.with(BaseActivity.this)
-              .chooserTitle(getString(R.string.compartir))
-              .text(finalBody)
-              .mailBody(finalBody)
-              .mailBody(getAppLable(getBaseContext()))
-              .image(uri)
-              .deliver();
-        }
 
-        @Override public void onBitmapFailed(Drawable errorDrawable) {
-          log("bitmapFailed");
-        }
+      Picasso.with(this)
+          .load(urlImage)
+          .resize(MAX_WIDTH, MAX_HEIGHT)
+          .onlyScaleDown()
+          .into(new Target() {
+            @Override public void onBitmapLoaded(@NonNull Bitmap bitmap, Picasso.LoadedFrom from) {
+              log(finalBody + " img size " + bitmap.getRowBytes());
+              Uri uri = getShareableUri(BaseActivity.this, bitmap);
+              assert uri != null;
+              IntentShare.with(BaseActivity.this)
+                  .chooserTitle(getString(R.string.compartir))
+                  .text(finalBody)
+                  .mailBody(finalBody)
+                  .mailBody(getAppLable(getBaseContext()))
+                  .image(uri)
+                  .deliver();
+            }
 
-        @Override public void onPrepareLoad(Drawable placeHolderDrawable) {
-          log("onPrepareload");
-        }
-      });
+            @Override public void onBitmapFailed(Drawable errorDrawable) {
+              log("bitmapFailed");
+            }
+
+            @Override public void onPrepareLoad(Drawable placeHolderDrawable) {
+              log("onPrepareload");
+            }
+          });
+    }
+  }
+
+  public void share(@NonNull String body, Bitmap bitmap) {
+    if (bitmap != null) {
+      body = Html.fromHtml(body).toString();
+      String finalBody = body;
+      log(finalBody + " img size " + bitmap.getRowBytes());
+      Uri uri = getShareableUri(BaseActivity.this, bitmap);
+      assert uri != null;
+      IntentShare.with(BaseActivity.this)
+          .chooserTitle(getString(R.string.compartir))
+          .text(finalBody)
+          .mailBody(finalBody)
+          .mailBody(getAppLable(getBaseContext()))
+          .image(uri)
+          .deliver();
     }
   }
 

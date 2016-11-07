@@ -1,5 +1,7 @@
 package com.co.showcase.ui.establecimiento;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -26,6 +28,8 @@ import com.co.showcase.ui.BaseActivity;
 import com.co.showcase.ui.CustomView.CirclePageIndicator;
 import com.co.showcase.ui.home.SlideAdapter;
 import com.co.showcase.ui.util.ItemDecorationAlbumColumns;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -123,8 +127,24 @@ public class establecimiento extends BaseActivity {
 
     renderSlideImages(establecimiento.getUrlImagen());
 
+    String share = getString(R.string.compartir_establecimiento, establecimiento.getNombre());
     assert shareGeneral != null;
-    shareGeneral.setOnClickListener(view -> share(establecimiento.getDescripcion()));
+    ImageView tmp = new ImageView(this);
+    Picasso.with(this)
+        .load(establecimiento.getUrlImagen().get(0))
+        .resize(MAX_WIDTH, MAX_HEIGHT)
+        .onlyScaleDown()
+        .into(tmp, new Callback() {
+          @Override public void onSuccess() {
+            log("Picasso onSucces");
+            Bitmap bitmap = ((BitmapDrawable) tmp.getDrawable()).getBitmap();
+            if (shareGeneral != null) shareGeneral.setOnClickListener(view -> share(share, bitmap));
+          }
+
+          @Override public void onError() {
+            log("Picasso onErr");
+          }
+        });
 
     establecimientoItemsAdapter adapter =
         new establecimientoItemsAdapter(this, establecimiento.getArticulos());

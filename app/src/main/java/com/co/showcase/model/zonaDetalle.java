@@ -24,7 +24,8 @@ public class zonaDetalle {
   public String mensaje;
   public int totalPaginas;
   public int pagina;
-
+  public String centro;
+  public String zoom;
   /**
    * id : 1
    * nombre : Almacenes

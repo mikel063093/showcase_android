@@ -75,7 +75,10 @@ public class home extends BaseActivity {
 
   @Override protected void onResume() {
     super.onResume();
-    EventBus.getDefault().post(getUserSync());
+    runOnUiThread(() -> {
+      EventBus.getDefault().post(getUserSync());
+    });
+
   }
 
   @Override public void onStop() {

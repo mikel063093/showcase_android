@@ -24,8 +24,8 @@ android {
     applicationId "com.co.showcase"
     minSdkVersion 17
     targetSdkVersion 23
-    versionCode 7
-    versionName "1.0.0.7"
+    versionCode 8
+    versionName "1.0.0.8"
     multiDexEnabled true
     manifestPlaceholders = [manifestApplicationId          : "${applicationId}",
                             onesignal_app_id               : "159e39de-2bc7-41ea-bb84-627091bb7a0e",
