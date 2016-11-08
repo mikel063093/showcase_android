@@ -3,16 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/kelly_green"
-    android:orientation="vertical"
     android:gravity="center"
+    android:orientation="vertical"
 >
   <RelativeLayout
-
       android:layout_width="match_parent"
       android:layout_height="@dimen/_405sdp"
       android:layout_marginLeft="@dimen/_12sdp"
       android:layout_marginRight="@dimen/_12sdp">
-
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -41,9 +39,10 @@
 
     </android.support.v7.widget.CardView>
 
+
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_381sdp"
+        android:layout_height="@dimen/_377sdp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         style="@style/card_singin"
@@ -51,8 +50,8 @@
     >
       <LinearLayout
           android:layout_width="@dimen/_243sdp"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center"
+          android:layout_height="@dimen/_362sdp"
+          android:layout_gravity="top|center"
           android:orientation="vertical"
       >
         <RelativeLayout
@@ -110,12 +109,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Hola"
             android:layout_marginLeft="@dimen/_5sdp"
             android:layout_marginRight="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_marginBottom="@dimen/_2sdp"
             android:textSize="@dimen/_10sdp"
-            style="@style/txt_taupe1_open_sans"
-        />
+            style="@style/txt_taupe1_open_sans"/>
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/txt_price_item"
             android:layout_width="match_parent"
@@ -123,7 +122,6 @@
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/_5sdp"
             android:layout_marginRight="@dimen/_5sdp"
-
             android:gravity="center"
             android:maxLines="1"
             android:text="$66.500"
@@ -162,14 +160,11 @@
               android:id="@+id/txt_item_count"
               android:layout_width="@dimen/_28sdp"
               android:layout_height="@dimen/_20sdp"
-              android:layout_marginLeft="@dimen/_3sdp"
-              android:layout_marginRight="@dimen/_3sdp"
+              android:layout_marginLeft="@dimen/_2sdp"
+              android:layout_marginRight="@dimen/_2sdp"
               android:gravity="center"
-
-              android:textSize="@dimen/_16sdp"
-              style="@style/txt_pearl_aqua"
-
-          />
+              android:textSize="@dimen/_18sdp"
+              style="@style/txt_pearl_aqua"/>
           <ImageButton
               android:id="@+id/btm_more"
               android:layout_width="wrap_content"
@@ -182,7 +177,7 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_28sdp"
             android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/_3sdp"
+            android:layout_marginBottom="@dimen/_4sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:background="@drawable/btn_naranja_selector"
             android:paddingLeft="@dimen/_20sdp"
@@ -194,22 +189,6 @@
 
     </android.support.v7.widget.CardView>
   </RelativeLayout>
-  <!--<android.support.v7.widget.CardView-->
-  <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
-  <!--xmlns:card_view="http://schemas.android.com/apk/res-auto"-->
-  <!--android:id="@+id/root_item_establecimiento"-->
-  <!--android:layout_width="@dimen/_243sdp"-->
-  <!--android:layout_height="match_parent"-->
-  <!--android:clickable="true"-->
-  <!--android:foreground="?android:attr/selectableItemBackground"-->
-  <!--card_view:cardCornerRadius="3dp"-->
-  <!--card_view:cardElevation="4dp"-->
-  <!--card_view:cardPreventCornerOverlap="true"-->
-  <!--card_view:cardUseCompatPadding="true"-->
-  <!--style="@style/card_white"-->
-  <!--&gt;-->
 
-
-  <!--</android.support.v7.widget.CardView>-->
 </LinearLayout>
 

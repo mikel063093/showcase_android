@@ -12,32 +12,33 @@
     card_view:cardPreventCornerOverlap="true"
     card_view:cardUseCompatPadding="true"
     style="@style/card_white"
-    >
+>
   <FrameLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
 
-      >
+  >
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+    >
       <android.support.v7.widget.AppCompatTextView
           android:id="@+id/txt_cantidad"
-          android:layout_width="wrap_content"
+          android:gravity="center"
+          android:background="@color/white_smoke"
+          android:layout_width="@dimen/_20sdp"
           android:layout_height="@dimen/_18sdp"
           android:layout_alignParentEnd="true"
           android:layout_centerHorizontal="true"
           android:layout_centerInParent="true"
           android:layout_marginEnd="@dimen/_16sdp"
           android:foregroundGravity="right"
-          android:maxLength="4"
+          android:maxLength="2"
           android:maxLines="1"
-
           android:textSize="@dimen/_16sdp"
           fontPath="fonts/Circular-Std-Book.otf"
           style="@style/txt_manatee"
-          />
+      />
     </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -45,14 +46,14 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:orientation="horizontal"
-        >
+    >
       <ImageView
           android:id="@+id/img_item"
           android:layout_width="@dimen/_40sdp"
           android:layout_height="@dimen/_60sdp"
           android:layout_marginStart="@dimen/_12sdp"
           android:scaleType="centerCrop"
-          />
+      />
       <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="match_parent"
@@ -60,7 +61,7 @@
           android:layout_marginStart="@dimen/_14sdp"
           android:gravity="center"
           android:orientation="vertical"
-          >
+      >
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/txt_name_item"
             android:layout_width="match_parent"
@@ -69,7 +70,7 @@
             android:textSize="@dimen/_14sdp"
             fontPath="fonts/Circular-Std-Book.otf"
             style="@style/txt_taupe"
-            />
+        />
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/txt_precio_item"
             android:layout_width="match_parent"
@@ -80,7 +81,7 @@
             android:textSize="@dimen/_12sdp"
             fontPath="fonts/Circular-Std-Book.otf"
             style="@style/txt_dark_tangerine"
-            />
+        />
       </LinearLayout>
     </LinearLayout>
 

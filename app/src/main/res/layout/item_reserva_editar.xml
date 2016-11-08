@@ -32,8 +32,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="top|end"
             android:layout_marginEnd="@dimen/_16sdp"
-            android:layout_marginTop="@dimen/_8sdp"
-
             >
 
           <ImageView

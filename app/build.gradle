@@ -2,11 +2,12 @@ buildscript {
   repositories {
     maven { url 'https://maven.fabric.io/public' }
     jcenter()
+    mavenCentral()
   }
 
   dependencies {
     classpath 'io.fabric.tools:gradle:1.+'
-    classpath 'me.tatarka:gradle-retrolambda:3.2.5'
+    //classpath 'me.tatarka:gradle-retrolambda:3.3.1'
   }
 }
 
@@ -35,12 +36,14 @@ android {
     multiDexEnabled true
     resValue "string", "API_KEY", "AIzaSyA96NoTdiN7FM9ohgSiiQlyJuvIRhXYKZQ"
     vectorDrawables.useSupportLibrary = true
+//    jackOptions {
+//      enabled true
+//    }
   }
   dexOptions {
     javaMaxHeapSize rootProject.ext.heapSize
   }
   compileOptions {
-
     sourceCompatibility JavaVersion.VERSION_1_8
     targetCompatibility JavaVersion.VERSION_1_8
   }
@@ -97,14 +100,14 @@ retrolambda {
 dependencies {
   final RETROFIT_VERSION = '2.0.0-beta3'
   compile "com.android.support:multidex:$rootProject.ext.multidex" //MultiDex Support
+
   compile 'fr.tvbarthel.intentshare:library:0.0.2'
-  //UI
   compile "com.android.support:support-annotations:$rootProject.ext.support"
   compile "com.android.support:design:$rootProject.ext.support"
   compile "com.android.support:appcompat-v7:$rootProject.ext.support"
   compile "com.android.support:cardview-v7:$rootProject.ext.support"
   compile "com.android.support:recyclerview-v7:$rootProject.ext.support"
-
+  compile 'com.weiwangcn.betterspinner:library-material:1.1.0'
   compile 'com.jakewharton:butterknife:7.0.1'
   compile 'com.intuit.sdp:sdp-android:1.0.3'
   compile 'com.pkmmte.view:circularimageview:1.1'
@@ -113,11 +116,8 @@ dependencies {
   compile('com.github.afollestad.material-dialogs:core:0.8.5.6@aar') {
     transitive = true
   }
-  compile 'com.iarcuschin:simpleratingbar:0.1.3'
   compile 'me.zhanghai.android.materialratingbar:library:1.0.2'
   compile 'io.github.luizgrp.sectionedrecyclerviewadapter:sectionedrecyclerviewadapter:1.0.4'
-
-  //facebook
   compile 'com.facebook.android:facebook-android-sdk:4.0.0'
 
   //retrofit  api rest web service
@@ -128,51 +128,43 @@ dependencies {
   compile 'com.squareup.okhttp3:logging-interceptor:3.2.0'
   compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
   compile 'com.squareup.okhttp:okhttp:2.4.0'
-  //compile 'com.squareup.okio:okio:1.0.1'
   compile 'com.google.code.gson:gson:2.6.1'
 
-  //rxAndroid
 
-  compile "io.reactivex:rxjava:$rootProject.ext.rxJava"
-  compile "io.reactivex:rxandroid:$rootProject.ext.rxAndroid"
-  compile "com.jakewharton.rxbinding:rxbinding:$rootProject.ext.rxBinding" //rxAndroid
-  compile "com.jakewharton.rxbinding:rxbinding-appcompat-v7:$rootProject.ext.rxBinding"
-
-  //Logger
   compile 'com.github.orhanobut:logger:1.12'
-
   apt "org.immutables:value:2.1.16" // <-- for annotation processor
   provided "org.immutables:value:2.1.16" // <-- for annotation api
   provided "org.immutables:gson:2.1.16" // for annotations
   compile 'com.google.guava:guava:19.0'
-  //networkStatus
   compile 'com.github.pwittchen:reactivenetwork:0.2.0'
-
-  //lifecycle
   compile('com.trello:rxlifecycle-components:0.5.0')
   compile 'org.greenrobot:eventbus:3.0.0'
-  //rxMaps
-  compile 'com.sdoward:rxgooglemaps:1.0@aar'
-  compile group: 'com.google.maps.android', name: 'android-maps-utils', version: '0.4.3'
 
-  //notify
+  //GPLAY SERVICES
   compile 'com.onesignal:OneSignal:2.+@aar'
   compile 'com.google.android.gms:play-services-gcm:9.2.0'
   compile 'com.google.android.gms:play-services-analytics:9.2.0'
   compile "com.google.android.gms:play-services-location:9.2.0"
   compile 'com.google.android.gms:play-services-maps:9.2.0'
+  compile 'com.google.android.gms:play-services-appindexing:9.2.0'
+  compile group: 'com.google.maps.android', name: 'android-maps-utils', version: '0.4.3'
+
+  //RX
+  compile "io.reactivex:rxjava:$rootProject.ext.rxJava"
+  compile "io.reactivex:rxandroid:$rootProject.ext.rxAndroid"
+  compile "com.jakewharton.rxbinding:rxbinding:$rootProject.ext.rxBinding" //rxAndroid
+  compile "com.jakewharton.rxbinding:rxbinding-appcompat-v7:$rootProject.ext.rxBinding"
   compile 'pl.charmas.android:android-reactive-location:0.8@aar' //rxLocation
   compile 'com.github.akashandroid90.googlesupport:google-support-location:1.0' // geocoderInverse
-
+  compile 'com.sdoward:rxgooglemaps:1.0@aar'
   compile "com.github.FuckBoilerplate:RxPaparazzo:0.1.4"
   compile 'com.tbruyelle.rxpermissions:rxpermissions:0.7.1@aar'
   compile "com.github.VictorAlbertos:RxActivityResult:0.3.6"
-  compile 'com.weiwangcn.betterspinner:library-material:1.1.0'
+
   retrolambdaConfig "net.orfjackal.retrolambda:retrolambda:$rootProject.ext.retrolambda"
-  compile 'com.google.android.gms:play-services-appindexing:9.2.0'
-    compile('com.crashlytics.sdk.android:crashlytics:2.6.2@aar') {
+  compile('com.crashlytics.sdk.android:crashlytics:2.6.2@aar') {
         transitive = true;
-    }
+  }
 
 
 }

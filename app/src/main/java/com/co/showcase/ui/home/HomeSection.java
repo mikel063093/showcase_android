@@ -29,13 +29,8 @@ import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.androidannotations.annotations.App;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-
-/**
- * Created by miguel alegria on 6/07/16.
- */
 
 public class HomeSection extends StatelessSection {
 
