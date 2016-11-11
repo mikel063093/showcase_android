@@ -11,12 +11,7 @@
     </menu>
   </item>
 
-  <item
-      android:id="@+id/action_buy"
-      android:icon="@drawable/btn_carrito"
-      android:title="@string/action_payment"
-      app:showAsAction="always"
-  />
+
   <item
       android:id="@+id/action_search"
       android:icon="@drawable/btn_buscar"
@@ -24,7 +19,12 @@
       app:actionViewClass="android.support.v7.widget.SearchView"
       app:showAsAction="always|collapseActionView"
   />
-
+  <item
+      android:id="@+id/action_buy"
+      android:icon="@drawable/btn_carrito"
+      android:title="@string/action_payment"
+      app:showAsAction="always"
+  />
   <item
       android:id="@+id/action_settings"
       android:icon="@drawable/btn_menu_secundario"
