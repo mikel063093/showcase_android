@@ -720,7 +720,7 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
   }
 
   private void succesAutoComplete(@NonNull ResponseAutoComplete responseAutoComplete) {
-    if (responseAutoComplete.estado == 1) {
+    if (responseAutoComplete.estado == 1 && searchView != null) {
       searchSrcTextView.setAdapter(new SuggestionAdapter<>(this, R.layout.item_search_auto_complete,
           responseAutoComplete.palabras));
       searchSrcTextView.setOnItemClickListener((adapterView, view, i, l) -> {

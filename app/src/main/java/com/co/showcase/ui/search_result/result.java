@@ -34,6 +34,8 @@ public class result extends BaseActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.search_result);
     ButterKnife.bind(this);
+    setToolbarPretty(true);
+    setSupportActionBar(toolbar);
     final Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.btn_flechaizquierda);
     toolbar.setNavigationIcon(upArrow);
     toolbar.setTitle(R.string.app_name);

@@ -20,6 +20,7 @@ import com.co.showcase.ui.util.Base64Utils;
 import com.co.showcase.ui.util.CircleTransform;
 import com.fuck_boilerplate.rx_paparazzo.RxPaparazzo;
 import com.fuck_boilerplate.rx_paparazzo.entities.Size;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 import java.util.Map;
@@ -66,10 +67,14 @@ public class perfil extends BaseActivity {
     assert edtPassword != null;
     edtPassword.setText(usuario.getTelefono() != null ? usuario.getTelefono() : "");
     if (usuario.getFoto() != null && usuario.getFoto().length() > 4) {
-      float diemen = getResources().getDimension(R.dimen._3sdp);
+      float diemen = getResources().getDimension(R.dimen._2sdp);
       Picasso.with(getApplicationContext())
           .load(usuario.getFoto())
-          .transform(new CircleTransform(diemen))
+          .fit()
+          .centerCrop()
+          .priority(Picasso.Priority.HIGH)
+          .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
+          .transform(new CircleTransform(diemen, "#ff50e3c2"))
           .into(perfil);
     }
   }
@@ -188,7 +193,6 @@ public class perfil extends BaseActivity {
     dismissDialog();
     if (usuario.getEstado().equalsIgnoreCase("exito")) {
       updateRealmUser(usuario);
-
     } else {
       showErr(usuario.getMensaje());
     }
@@ -209,10 +213,14 @@ public class perfil extends BaseActivity {
     this.filePath = filePath;
     Picasso.with(getApplicationContext()).setLoggingEnabled(true);
     Picasso.with(getApplicationContext()).invalidate("file://" + filePath);
-    float diemen = getResources().getDimension(R.dimen._3sdp);
+    float diemen = getResources().getDimension(R.dimen._1sdp);
     Picasso.with(getApplicationContext())
         .load("file://" + filePath)
-        .transform(new CircleTransform(diemen))
+        .fit()
+        .centerCrop()
+        .priority(Picasso.Priority.HIGH)
+        .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
+        .transform(new CircleTransform(diemen, "#ff50e3c2"))
         .into(perfil);
   }
 

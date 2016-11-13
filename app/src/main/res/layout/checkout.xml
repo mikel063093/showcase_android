@@ -147,7 +147,7 @@
                 android:drawableEnd="@drawable/btn_editar"
                 android:drawablePadding="@dimen/_8sdp"
                 android:inputType="phone"
-                android:textColor="@color/napier_green"
+                android:textColor="@color/outer_space"
                 android:theme="@style/edt_singin"
 
                 />
@@ -159,8 +159,12 @@
               android:layout_marginLeft="@dimen/_16sdp"
               android:layout_marginRight="@dimen/_16sdp"
               android:hint="@string/forma_pago"
-              android:textColorHint="@color/manatee"
+              android:text="mike"
+              android:textColorHint="#4A4A4A"
+              android:textColor="#4A4A4A"
               app:met_floatingLabel="normal"
+              android:textSize="@dimen/_12sdp"
+
               />
           <android.support.design.widget.TextInputLayout
               android:id="@+id/cupon_wrapper"
@@ -350,7 +354,7 @@
           android:layout_width="wrap_content"
           android:layout_height="@dimen/_40sdp"
           android:layout_gravity="center"
-          android:layout_marginTop="@dimen/_16sdp"
+          android:layout_marginTop="@dimen/_12sdp"
           android:background="@drawable/btn_naranja_selector"
           android:paddingLeft="@dimen/_36sdp"
           android:paddingRight="@dimen/_36sdp"
@@ -362,7 +366,8 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_gravity="center"
-          android:layout_marginTop="@dimen/_20sdp"
+          android:layout_marginTop="@dimen/_10sdp"
+          android:layout_marginBottom="@dimen/_10sdp"
           android:gravity="center"
           android:text="@string/cancelar_pedido"
           style="@style/txt_white_style"

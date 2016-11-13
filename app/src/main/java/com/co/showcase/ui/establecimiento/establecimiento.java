@@ -57,6 +57,12 @@ public class establecimiento extends BaseActivity {
   @Bind(R.id.btn_instagram) ImageView btnInstagram;
   @Bind(R.id.btn_youtube) ImageView btnYoutube;
 
+  @Bind(R.id.ico_direccion) ImageView icoDireccion;
+  @Bind(R.id.ico_telefono) ImageView icoTelefono;
+  @Bind(R.id.ico_whatsapp) ImageView icoWhatsapp;
+  @Bind(R.id.ico_correo_establecimiento) ImageView icoCorreoEstablecimiento;
+  @Bind(R.id.ico_sitioweb) ImageView icoSitioweb;
+
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.establecimiento);
@@ -90,15 +96,40 @@ public class establecimiento extends BaseActivity {
     assert txtDescription != null;
     txtDescription.setText(Html.fromHtml(establecimiento.getDescripcion()));
     assert txtAddres != null;
-    txtAddres.setText(establecimiento.getDireccion());
+    if (establecimiento.getDireccion() != null && establecimiento.getDireccion().length() > 0) {
+      txtAddres.setText(establecimiento.getDireccion());
+    } else {
+      icoDireccion.setVisibility(View.GONE);
+      txtAddres.setVisibility(View.GONE);
+    }
     assert txtCelphone != null;
-    txtCelphone.setText(establecimiento.getCelular() != null ? establecimiento.getCelular() : "");
+    if (establecimiento.getCelular() != null && establecimiento.getCelular().length() > 0) {
+      txtCelphone.setText(establecimiento.getCelular() != null ? establecimiento.getCelular() : "");
+    } else {
+      icoWhatsapp.setVisibility(View.GONE);
+      txtCelphone.setVisibility(View.GONE);
+    }
     assert txtPhone != null;
-    txtPhone.setText(establecimiento.getTelefono());
+    if (establecimiento.getTelefono() != null && establecimiento.getTelefono().length() > 0) {
+      txtPhone.setText(establecimiento.getTelefono());
+    } else {
+      icoTelefono.setVisibility(View.GONE);
+      txtPhone.setVisibility(View.GONE);
+    }
     assert txtEmail != null;
-    txtEmail.setText(establecimiento.getCorreo() != null ? establecimiento.getCorreo() : "");
+    if (establecimiento.getCorreo() != null && establecimiento.getCorreo().length() > 0) {
+      txtEmail.setText(establecimiento.getCorreo() != null ? establecimiento.getCorreo() : "");
+    } else {
+      icoCorreoEstablecimiento.setVisibility(View.GONE);
+      txtEmail.setVisibility(View.GONE);
+    }
     assert txtWebsite != null;
-    txtWebsite.setText(establecimiento.getSitioWeb());
+    if (establecimiento.getSitioWeb() != null && establecimiento.getSitioWeb().length() > 0) {
+      txtWebsite.setText(establecimiento.getSitioWeb());
+    } else {
+      icoSitioweb.setVisibility(View.GONE);
+      txtWebsite.setVisibility(View.GONE);
+    }
     assert ratingBar != null;
     ratingBar.setRating(Float.parseFloat(establecimiento.getPuntuacion() + ""));
     assert btnSahreFb != null;
@@ -108,7 +139,7 @@ public class establecimiento extends BaseActivity {
     assert btnSahreTw != null;
     btnSahreTw.setVisibility(establecimiento.getTwitter() != null ? View.VISIBLE : View.GONE);
     btnSahreTw.setOnClickListener(
-        view -> openUrl(establecimiento.getTwitter() != null ? establecimiento.getTelefono() : ""));
+        view -> openUrl(establecimiento.getTwitter() != null ? establecimiento.getTwitter() : ""));
 
     btnSnap.setVisibility(establecimiento.getSnapchat() != null ? View.VISIBLE : View.GONE);
     btnSnap.setOnClickListener(view -> openUrl(

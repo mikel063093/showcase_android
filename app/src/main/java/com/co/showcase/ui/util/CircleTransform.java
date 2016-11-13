@@ -16,9 +16,16 @@ import com.squareup.picasso.Transformation;
 public class CircleTransform implements Transformation {
   private final int BORDER_COLOR = Color.WHITE;
   private int BORDER_RADIUS = 10;
+  int color;
 
   public CircleTransform(float diemen) {
     BORDER_RADIUS = Math.round(diemen);
+    color = Color.parseColor("#ff50e3c2");
+  }
+
+  public CircleTransform(float diemen, String color) {
+    BORDER_RADIUS = Math.round(diemen);
+    this.color = Color.parseColor(color);
   }
 
   @Override public Bitmap transform(@NonNull Bitmap source) {
@@ -43,7 +50,6 @@ public class CircleTransform implements Transformation {
     paint.setAntiAlias(true);
     //paint.setStyle(Paint.Style.STROKE);
     float r = size / 2f;
-    int color = Color.parseColor("#ff50e3c2");
     // Prepare the background
     Paint paintBg = new Paint();
     paintBg.setColor(color);

@@ -154,6 +154,7 @@
                     android:orientation="horizontal"
                 >
                   <ImageView
+                      android:id="@+id/ico_direccion"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:background="@drawable/ico_direccion"
@@ -178,6 +179,7 @@
 
                 >
                   <ImageView
+                      android:id="@+id/ico_telefono"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:background="@drawable/ico_telefono"
@@ -200,6 +202,7 @@
                     android:orientation="horizontal"
                 >
                   <ImageView
+                      android:id="@+id/ico_whatsapp"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:background="@drawable/ico_whatsapp"
@@ -224,6 +227,7 @@
                     android:orientation="horizontal"
                 >
                   <ImageView
+                      android:id="@+id/ico_correo_establecimiento"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:background="@drawable/ico_correo_establecimiento"
@@ -246,6 +250,7 @@
                     android:orientation="horizontal"
                 >
                   <ImageView
+                      android:id="@+id/ico_sitioweb"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:background="@drawable/ico_sitioweb"
