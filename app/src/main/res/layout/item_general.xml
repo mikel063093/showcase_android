@@ -47,9 +47,10 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"
-            android:maxLength="2"
+            android:maxLength="3"
+
             android:maxLines="1"
-            android:textSize="@dimen/_9sdp"
+            android:textSize="@dimen/_8sdp"
             fontPath="fonts/Circular-Std-Bold.otf"
             style="@style/txt_white_style"
         />

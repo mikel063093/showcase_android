@@ -74,6 +74,8 @@ public class direcciones extends BaseActivity {
       adapter = new adapterDireccion(this, responseDirecciones.getDirecciones());
 
       mLinearLayoutManager = new LinearLayoutManager(this);
+      assert rvDirecciones != null;
+      rvDirecciones.setNestedScrollingEnabled(false);
       rvDirecciones.setLayoutManager(mLinearLayoutManager);
 
       //rvDirecciones.addItemDecoration(new DividerItemDecoration(this),

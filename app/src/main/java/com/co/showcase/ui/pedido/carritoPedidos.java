@@ -103,6 +103,8 @@ public class carritoPedidos extends BaseActivity {
 
     adapter = new adapterPedidos(responseVerCarrito.getCarrito().getItems(), this);
     mLinearLayoutManager = new LinearLayoutManager(this);
+    assert rv != null;
+    rv.setNestedScrollingEnabled(false);
     rv.setLayoutManager(mLinearLayoutManager);
     rv.setAdapter(adapter);
     adapter.getPositionClicks().subscribe(position -> {

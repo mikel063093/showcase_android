@@ -75,6 +75,7 @@ public class categoria extends BaseActivity {
         new establecimientoAdapter(this, categoria.getEstablecimientos());
     GridLayoutManager glm = new GridLayoutManager(this, 2);
     assert rvHome != null;
+    rvHome.setNestedScrollingEnabled(false);
     rvHome.setLayoutManager(glm);
     rvHome.setAdapter(adapter);
   }

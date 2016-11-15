@@ -67,6 +67,8 @@ public class historial extends BaseActivity {
   private void updateUi(@NonNull responsePedidos responsePedidos) {
     adapter = new adapterProcesoPedidos(this, responsePedidos.getPedidos());
     mLinearLayoutManager = new LinearLayoutManager(this);
+    assert rvPedidos != null;
+    rvPedidos.setNestedScrollingEnabled(false);
     rvPedidos.setLayoutManager(mLinearLayoutManager);
     rvPedidos.setAdapter(adapter);
     adapter.getPositionClicks().subscribe(position -> {

@@ -93,6 +93,8 @@ public class detallePedido extends BaseActivity {
 
     adapter = new adapterPedidos(response.getPedido().getItems(), this);
     mLinearLayoutManager = new LinearLayoutManager(this);
+    assert rvItems != null;
+    rvItems.setNestedScrollingEnabled(false);
     rvItems.setLayoutManager(mLinearLayoutManager);
     rvItems.setAdapter(adapter);
 

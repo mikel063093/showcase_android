@@ -66,6 +66,7 @@ public class pedidos_proceso extends BaseActivity {
     adapter = new adapterProcesoPedidos(this, responsePedidos.getPedidos());
     mLinearLayoutManager = new LinearLayoutManager(this);
     assert rvPedidos != null;
+    rvPedidos.setNestedScrollingEnabled(false);
     rvPedidos.setLayoutManager(mLinearLayoutManager);
     rvPedidos.setAdapter(adapter);
     adapter.getPositionClicks().subscribe(position -> {

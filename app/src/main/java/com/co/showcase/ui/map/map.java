@@ -165,7 +165,13 @@ public class map extends BaseActivity {
     int drawable =
         baseActivity.getResourceId(baseRes + feature.getProperty("marker-symbol"), "drawable");
     pointStyle.setIcon(BitmapDescriptorFactory.fromResource(drawable));
-    pointStyle.setTitle(feature.getProperty("marker-symbol"));
+    try {
+      pointStyle.setTitle(
+          feature.getProperty("marker-title") != null ? feature.getProperty("marker-title") : "");
+    } catch (Throwable e) {
+      log(e.getMessage());
+    }
+
     feature.setPointStyle(pointStyle);
   }
 
