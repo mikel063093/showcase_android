@@ -1,8 +1,7 @@
 package com.co.showcase.ui.slide;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
+
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,10 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
-import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
+
 import com.co.showcase.AppMain;
 import com.co.showcase.BuildConfig;
 import com.co.showcase.R;
@@ -26,18 +22,17 @@ import com.co.showcase.model.Usuario;
 import com.co.showcase.ui.BaseActivity;
 import com.co.showcase.ui.BaseFragment;
 import com.co.showcase.ui.util.CircleTransform;
-import com.pkmmte.view.CircularImageView;
+
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-import static com.co.showcase.ui.BaseActivity.MAX_HEIGHT;
-import static com.co.showcase.ui.BaseActivity.MAX_WIDTH;
+
 
 /**
  * Created by home on 7/07/16.

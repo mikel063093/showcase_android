@@ -59,19 +59,23 @@ public class producto extends BaseActivity {
       log(json);
       Articulo articulo = AppMain.getGson().fromJson(json, Articulo.class);
       updateUi(articulo);
-      Picasso.with(this)
-          .load(articulo.getImagen().get(0))
-          .resize(MAX_WIDTH, MAX_HEIGHT)
-          .onlyScaleDown()
-          .into(tmp, new Callback() {
-            @Override public void onSuccess() {
-              log("Picasso onSucces");
-            }
+      if (articulo.getImagen() != null
+          && articulo.getImagen().size() > 0
+          && articulo.getImagen().get(0) != null) {
+        Picasso.with(this)
+            .load(articulo.getImagen().get(0))
+            .resize(MAX_WIDTH, MAX_HEIGHT)
+            .onlyScaleDown()
+            .into(tmp, new Callback() {
+              @Override public void onSuccess() {
+                log("Picasso onSucces");
+              }
 
-            @Override public void onError() {
-              log("Picasso onErr");
-            }
-          });
+              @Override public void onError() {
+                log("Picasso onErr");
+              }
+            });
+      }
     }
   }
 
@@ -83,7 +87,7 @@ public class producto extends BaseActivity {
     assert txtDescriptionItem != null;
     log(articulo.getDescripcion());
     String html = articulo.getDescripcion().replace("\\r\\n", "<br>").replace("\\n", "<br>");
-    String rm = " <p style=\"padding:0; margin:0;\"> ";
+   // String rm = " <p style=\"padding:0; margin:0;\"> ";
 
     log(html);
     log(Html.toHtml(Html.fromHtml(html)));

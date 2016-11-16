@@ -1,7 +1,7 @@
 package com.co.showcase.ui.home;
 
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
+
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -29,10 +29,7 @@ import com.co.showcase.ui.slide.slide;
 import com.co.showcase.ui.util.ItemDecorationAlbumColumns;
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.CustomEvent;
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
-import com.google.android.gms.common.api.GoogleApiClient;
+
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -54,7 +51,7 @@ public class home extends BaseActivity {
   @Nullable @Bind(R.id.drawer_layout) DrawerLayout drawerLayout;
 
   private SectionedRecyclerViewAdapter sectionAdapter;
-  private GoogleApiClient client;
+
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -64,13 +61,11 @@ public class home extends BaseActivity {
     setToolbarPretty(true);
     setupToolbar(toolbar);
     setupSlider();
-    client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
   }
 
   @Override public void onStart() {
     super.onStart();
-    client.connect();
-    AppIndex.AppIndexApi.start(client, getIndexApiAction());
+
   }
 
   @Override protected void onResume() {
@@ -79,12 +74,6 @@ public class home extends BaseActivity {
       EventBus.getDefault().post(getUserSync());
     });
 
-  }
-
-  @Override public void onStop() {
-    super.onStop();
-    AppIndex.AppIndexApi.end(client, getIndexApiAction());
-    client.disconnect();
   }
 
   private void init(@NonNull Usuario userSync) {
@@ -259,13 +248,7 @@ public class home extends BaseActivity {
     }
   }
 
-  @NonNull public Action getIndexApiAction() {
-    Thing object =
-        new Thing.Builder().setName("home Page").setUrl(Uri.parse(getString(R.string.url))).build();
-    return new Action.Builder(Action.TYPE_VIEW).setObject(object)
-        .setActionStatus(Action.STATUS_TYPE_COMPLETED)
-        .build();
-  }
+
 
   @Override public void onBackPressed() {
     super.onBackPressed();
