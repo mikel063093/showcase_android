@@ -19,12 +19,12 @@ apply plugin: 'realm-android'
 
 android {
   compileSdkVersion 23
-  buildToolsVersion "25"
+  buildToolsVersion "25.0.0"
 
   defaultConfig {
     applicationId "com.co.showcase"
     minSdkVersion 17
-    targetSdkVersion 23
+    targetSdkVersion 25
     versionCode 12
     versionName "1.0.0.12"
     multiDexEnabled true
@@ -68,6 +68,7 @@ android {
     def apiKey = "AIzaSyA96NoTdiN7FM9ohgSiiQlyJuvIRhXYKZQ"
     release {
       minifyEnabled false
+      shrinkResources false
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
       signingConfig signingConfigs.release
       resValue "string", "google_maps_key", apiKey
@@ -153,8 +154,8 @@ dependencies {
   //RX
   compile "io.reactivex:rxjava:$rootProject.ext.rxJava"
   compile "io.reactivex:rxandroid:$rootProject.ext.rxAndroid"
-  compile "com.jakewharton.rxbinding:rxbinding:$rootProject.ext.rxBinding" //rxAndroid
-  compile "com.jakewharton.rxbinding:rxbinding-appcompat-v7:$rootProject.ext.rxBinding"
+//  compile "com.jakewharton.rxbinding:rxbinding:$rootProject.ext.rxBinding" //rxAndroid
+//  compile "com.jakewharton.rxbinding:rxbinding-appcompat-v7:$rootProject.ext.rxBinding"
   compile 'pl.charmas.android:android-reactive-location:0.8@aar' //rxLocation
  // compile 'com.github.akashandroid90.googlesupport:google-support-location:1.0' // geocoderInverse
   compile 'com.sdoward:rxgooglemaps:1.0@aar'
