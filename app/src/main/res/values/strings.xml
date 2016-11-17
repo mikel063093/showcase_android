@@ -104,7 +104,7 @@
     <item>efectivo</item>
     <item>tarjeta</item>
   </string-array>
-  <string name="compartir_establecimiento">Encuentra toda la información de %1$s en Showcase App.</string>
+  <string name="compartir_establecimiento">Encuentra toda la información de %1$s en %2$s</string>
   <string name="compartir_articulo">Encuentra %1$s en %2$s. Esta y más información de nuestros afiliados en Showcase App.</string>
   <string name="msg_sitio_web">Sitio web Showcase</string>
 </resources>

@@ -121,7 +121,8 @@ public class producto extends BaseActivity {
           Bitmap bitmap = ((BitmapDrawable) tmp.getDrawable()).getBitmap();
           String share = getString(R.string.compartir_articulo, articulo.getNombre(),
               articulo.getEstablecimiento() != null ? articulo.getEstablecimiento() : " ");
-          share(share, bitmap);
+
+          share(share, bitmap, null);
         }
         break;
       case R.id.btn_less:

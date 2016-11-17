@@ -55,7 +55,7 @@ public class establecimientoItemsAdapter
     }
   }
 
-  public establecimientoItemsAdapter(Context context, @Nullable List<Articulo> data) {
+  public  establecimientoItemsAdapter(Context context, @Nullable List<Articulo> data) {
     mContext = context;
     mData = data;
   }

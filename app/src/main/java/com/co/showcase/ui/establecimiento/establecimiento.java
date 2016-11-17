@@ -155,7 +155,8 @@ public class establecimiento extends BaseActivity {
 
     renderSlideImages(establecimiento.getUrlImagen());
 
-    String share = getString(R.string.compartir_establecimiento, establecimiento.getNombre());
+    String share = getString(R.string.compartir_establecimiento, establecimiento.getNombre(),
+        getString(R.string.url) + "establecimiento/" + establecimiento.getId());
     assert shareGeneral != null;
     ImageView tmp = new ImageView(this);
     Picasso.with(this)
@@ -166,7 +167,7 @@ public class establecimiento extends BaseActivity {
           @Override public void onSuccess() {
             log("Picasso onSucces");
             Bitmap bitmap = ((BitmapDrawable) tmp.getDrawable()).getBitmap();
-            if (shareGeneral != null) shareGeneral.setOnClickListener(view -> share(share, bitmap));
+            if (shareGeneral != null) shareGeneral.setOnClickListener(view -> share(share, bitmap, getString(R.string.url) + "establecimiento/" + establecimiento.getId()));
           }
 
           @Override public void onError() {

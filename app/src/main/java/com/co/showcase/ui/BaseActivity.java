@@ -615,20 +615,35 @@ public class BaseActivity extends RxAppCompatActivity implements SearchView.OnQu
     }
   }
 
-  public void share(@NonNull String body, Bitmap bitmap) {
+  public void share(@NonNull String body, Bitmap bitmap, String url) {
     if (bitmap != null) {
       body = Html.fromHtml(body).toString();
       String finalBody = body;
       log(finalBody + " img size " + bitmap.getRowBytes());
       Uri uri = getShareableUri(BaseActivity.this, bitmap);
       assert uri != null;
-      IntentShare.with(BaseActivity.this)
-          .chooserTitle(getString(R.string.compartir))
-          .text(finalBody)
-          .mailBody(finalBody)
-          .mailBody(getAppLable(getBaseContext()))
-          .image(uri)
-          .deliver();
+
+      if(url!=null){
+        IntentShare.with(BaseActivity.this)
+            .chooserTitle(getString(R.string.compartir))
+            .text(finalBody)
+            .facebookBody(Uri.parse( url))
+            .mailBody(finalBody)
+            .mailSubject(this.validateEmail(finalBody)? finalBody:"")
+            .twitterBody(finalBody)
+            .image(uri)
+            .deliver();
+      }else {
+        IntentShare.with(BaseActivity.this)
+            .chooserTitle(getString(R.string.compartir))
+            .text(finalBody)
+            .mailBody(finalBody)
+            .mailSubject(this.validateEmail(finalBody)? finalBody:"")
+            .twitterBody(finalBody)
+            .image(uri)
+            .deliver();
+      }
+
     }
   }
 
