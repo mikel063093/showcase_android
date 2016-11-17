@@ -16,5 +16,6 @@ public class propertie {
 
   @SerializedName("marker-color") public String marker_color;
   @SerializedName("marker-size") public String marker_size;
+  @SerializedName("marker-title") public String marker_title;
   @SerializedName("marker-symbol") public int marker_symbol;
 }
