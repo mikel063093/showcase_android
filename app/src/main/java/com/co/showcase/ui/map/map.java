@@ -18,6 +18,7 @@ import com.co.showcase.model.Establecimiento;
 import com.co.showcase.model.Usuario;
 import com.co.showcase.model.zonaDetalle;
 import com.co.showcase.ui.BaseActivity;
+import com.co.showcase.ui.home.HomeSection;
 import com.co.showcase.ui.home.home;
 import com.co.showcase.ui.util.ItemDecorationAlbumColumns;
 import com.co.showcase.ui.util.MapUtils;
@@ -31,6 +32,7 @@ import com.google.maps.android.geojson.GeoJsonFeature;
 import com.google.maps.android.geojson.GeoJsonLayer;
 import com.google.maps.android.geojson.GeoJsonPointStyle;
 import com.sdoward.rxgooglemap.MapObservableProvider;
+import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -55,6 +57,7 @@ public class map extends BaseActivity {
   //private SectionedRecyclerViewAdapter sectionAdapter;
   private LatLng lantLongCenter;
   private int zoom;
+  private SectionedRecyclerViewAdapter sectionAdapter;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -106,41 +109,41 @@ public class map extends BaseActivity {
   }
 
   private void setUpRV(@Nullable List<Categoria> categorias) {
-    //sectionAdapter = new SectionedRecyclerViewAdapter();
-    //if (categorias != null
-    //    && categorias.get(0) != null
-    //    && categorias.get(0).getEstablecimientos() != null
-    //    && categorias.get(0).getEstablecimientos().size() > 0) {
-    //
-    //  for (Categoria categoria : categorias) {
-    //    sectionAdapter.addSection(
-    //        new HomeSection(this, categoria, categoria.getEstablecimientos()));
-    //  }
-    //}
-    List<Establecimiento> establecimientos = new ArrayList<>();
-    for (Categoria categoria : categorias) {
-      establecimientos.addAll(categoria.getEstablecimientos());
+    sectionAdapter = new SectionedRecyclerViewAdapter();
+    if (categorias != null
+        && categorias.get(0) != null
+        && categorias.get(0).getEstablecimientos() != null
+        && categorias.get(0).getEstablecimientos().size() > 0) {
+
+      for (Categoria categoria : categorias) {
+        sectionAdapter.addSection(
+            new HomeSection(this, categoria, categoria.getEstablecimientos(),false));
+      }
     }
-    itemMapadapter mapadapter = new itemMapadapter(this,establecimientos);
+    //List<Establecimiento> establecimientos = new ArrayList<>();
+    //for (Categoria categoria : categorias) {
+    //  establecimientos.addAll(categoria.getEstablecimientos());
+    //}
+    //itemMapadapter mapadapter = new itemMapadapter(this,establecimientos);
 
     GridLayoutManager glm = new GridLayoutManager(this, 2);
-    //glm.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-    //  @Override public int getSpanSize(int position) {
-    //    switch (sectionAdapter.getSectionItemViewType(position)) {
-    //      case SectionedRecyclerViewAdapter.VIEW_TYPE_HEADER:
-    //        return 2;
-    //      default:
-    //        return 1;
-    //    }
-    //  }
-    //});
+    glm.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+      @Override public int getSpanSize(int position) {
+        switch (sectionAdapter.getSectionItemViewType(position)) {
+          case SectionedRecyclerViewAdapter.VIEW_TYPE_HEADER:
+            return 2;
+          default:
+            return 1;
+        }
+      }
+    });
 
     rvHome.setNestedScrollingEnabled(false);
     rvHome.addItemDecoration(
         new ItemDecorationAlbumColumns(getResources().getDimensionPixelSize(R.dimen._6sdp),
             getResources().getInteger(R.integer.photo_list_preview_columns)));
     rvHome.setLayoutManager(glm);
-    rvHome.setAdapter(mapadapter);
+    rvHome.setAdapter(sectionAdapter);
   }
 
   private void updateMap(@NonNull JSONObject jsonObject) {

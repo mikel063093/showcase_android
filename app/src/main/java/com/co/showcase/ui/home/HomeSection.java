@@ -37,12 +37,22 @@ public class HomeSection extends StatelessSection {
   private Categoria categoria;
   private List<Establecimiento> list;
   private Context context;
+  private boolean more = true;
 
   public HomeSection(Context context, Categoria categoria, List<Establecimiento> list) {
     super(R.layout.section_item, R.layout.item_general);
     this.categoria = categoria;
     this.list = list;
     this.context = context;
+  }
+
+  public HomeSection(Context context, Categoria categoria, List<Establecimiento> list,
+      boolean more) {
+    super(R.layout.section_item, R.layout.item_general);
+    this.categoria = categoria;
+    this.list = list;
+    this.context = context;
+    this.more = more;
   }
 
   @Override public int getContentItemsTotal() {
@@ -122,9 +132,15 @@ public class HomeSection extends StatelessSection {
     assert holder.txtSection != null;
     holder.txtSection.setText(categoria.getNombre());
     assert holder.rootSection != null;
-    holder.rootSection.setOnClickListener(view -> ((BaseActivity) context).goCategoria(categoria));
-    assert holder.btnSection != null;
-    holder.btnSection.setOnClickListener(view -> ((BaseActivity) context).goCategoria(categoria));
+    if (more) {
+      holder.rootSection.setOnClickListener(
+          view -> ((BaseActivity) context).goCategoria(categoria));
+      assert holder.btnSection != null;
+      holder.btnSection.setOnClickListener(view -> ((BaseActivity) context).goCategoria(categoria));
+    } else {
+      assert holder.btnSection != null;
+      holder.btnSection.setVisibility(View.GONE);
+    }
   }
 
   static class SectionViewHolder extends RecyclerView.ViewHolder {
