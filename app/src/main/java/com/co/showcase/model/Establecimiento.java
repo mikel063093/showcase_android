@@ -44,11 +44,20 @@ public class Establecimiento extends BaseModel {
   String snapchat;
   String youtube;
   String instagram;
+  String slug;
   String puntuacionUsuario;
   Double puntuacion;
   ArrayList<BeanArticulo> articulos;
   @SerializedName("whatsapp") String celular;
   String correo;
+
+  public String getSlug() {
+    return slug;
+  }
+
+  public void setSlug(String slug) {
+    this.slug = slug;
+  }
 
   public String getCorreo() {
     return correo;

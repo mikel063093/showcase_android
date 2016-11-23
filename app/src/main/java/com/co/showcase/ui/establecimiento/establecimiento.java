@@ -167,7 +167,11 @@ public class establecimiento extends BaseActivity {
           @Override public void onSuccess() {
             log("Picasso onSucces");
             Bitmap bitmap = ((BitmapDrawable) tmp.getDrawable()).getBitmap();
-            if (shareGeneral != null) shareGeneral.setOnClickListener(view -> share(share, bitmap, getString(R.string.url) + "establecimiento/" + establecimiento.getId()));
+            if (shareGeneral != null) {
+              shareGeneral.setOnClickListener(view -> share(share, bitmap,
+                  getString(R.string.url) + "establecimiento/" + (establecimiento.getSlug() != null
+                      ? establecimiento.getSlug() : "")));
+            }
           }
 
           @Override public void onError() {
