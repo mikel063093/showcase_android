@@ -25,7 +25,7 @@ public class REST {
     OkHttpClient client = httpClient.build();
 
     Retrofit retrofit =
-        new Retrofit.Builder().baseUrl("https://test.showcase.com.co/app_dev.php/movil/")
+        new Retrofit.Builder().baseUrl("https://showcase.com.co/app_dev.php/movil/")
             .client(client)
             .addConverterFactory(GsonConverterFactory.create(AppMain.getGson()))
             .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
