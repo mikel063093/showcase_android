@@ -11,6 +11,7 @@ buildscript {
   }
 }
 
+
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 apply plugin: 'com.neenbedankt.android-apt'
@@ -41,7 +42,8 @@ android {
 //    }
   }
   dexOptions {
-    javaMaxHeapSize rootProject.ext.heapSize
+    maxProcessCount 6
+    javaMaxHeapSize "4g"
   }
   compileOptions {
     sourceCompatibility JavaVersion.VERSION_1_8
@@ -64,6 +66,8 @@ android {
       minSdkVersion 17
     }
   }
+
+
   buildTypes {
     def apiKey = "AIzaSyA96NoTdiN7FM9ohgSiiQlyJuvIRhXYKZQ"
     release {

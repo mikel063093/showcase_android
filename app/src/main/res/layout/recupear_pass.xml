@@ -27,7 +27,7 @@
       android:layout_height="@dimen/_206sdp"
       android:layout_alignParentBottom="true"
       android:layout_alignParentStart="true"
-      android:src="@drawable/rana_contrasena"
+
   />
 
   <LinearLayout
