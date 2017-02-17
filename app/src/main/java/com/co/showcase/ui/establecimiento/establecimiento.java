@@ -156,8 +156,7 @@ public class establecimiento extends BaseActivity {
     renderSlideImages(establecimiento.getUrlImagen());
 
     String share = getString(R.string.compartir_establecimiento, establecimiento.getNombre(),
-        getString(R.string.url) + "establecimiento/" + (establecimiento.getSlug() != null
-            ? establecimiento.getSlug() : ""));
+        getString(R.string.url_share));
     assert shareGeneral != null;
     ImageView tmp = new ImageView(this);
     Picasso.with(this)

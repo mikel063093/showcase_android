@@ -98,14 +98,15 @@
   <string name="compartir_cont">%1$s, encuntralo en https://showcase.com.co/</string>
   <string name="terminos_condiciones">Términos y condiciones</string>
   <string name="url">https://showcase.com.co/</string>
+  <string name="url_share">http://bit.ly/2h0i6Pc</string>
   <string name="intenar_de_nuevo">Ha ocurrido un error, desea intentar de nuevo?</string>
   <string name="err_datos_zona">No hay establecimientos en esta zona</string>
   <string-array name="formas_pago">
     <item>efectivo</item>
     <item>tarjeta</item>
   </string-array>
-  <string name="compartir_establecimiento">Encuentra toda la información de %1$s en %2$s</string>
-  <string name="compartir_articulo">Encuentra %1$s en %2$s. Esta y más información de nuestros afiliados en Showcase App.</string>
+  <string name="compartir_establecimiento">Encuentra %1$s en Showcase App. Más información de nuestros afiliados en %2$s</string>
+  <string name="compartir_articulo">Encuentra %1$s en %2$s. Más información de nuestros afiliados en %3$s</string>
   <string name="msg_sitio_web">Sitio web Showcase</string>
 </resources>
 

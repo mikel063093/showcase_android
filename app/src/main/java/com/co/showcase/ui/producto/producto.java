@@ -87,7 +87,7 @@ public class producto extends BaseActivity {
     assert txtDescriptionItem != null;
     log(articulo.getDescripcion());
     String html = articulo.getDescripcion().replace("\\r\\n", "<br>").replace("\\n", "<br>");
-   // String rm = " <p style=\"padding:0; margin:0;\"> ";
+    // String rm = " <p style=\"padding:0; margin:0;\"> ";
 
     log(html);
     log(Html.toHtml(Html.fromHtml(html)));
@@ -120,8 +120,8 @@ public class producto extends BaseActivity {
         if (tmp.getDrawable() != null) {
           Bitmap bitmap = ((BitmapDrawable) tmp.getDrawable()).getBitmap();
           String share = getString(R.string.compartir_articulo, articulo.getNombre(),
-              articulo.getEstablecimiento() != null ? articulo.getEstablecimiento() : " ");
-
+              articulo.getEstablecimiento() != null ? articulo.getEstablecimiento() : " ",
+              getString(R.string.url_share));
           share(share, bitmap, null);
         }
         break;
